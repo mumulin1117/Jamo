@@ -1,0 +1,23 @@
+{
+  "images" : [
+    {
+      "filename" : "jamo_cocreate_publish_work_cover.png",
+      "idiom" : "universal",
+      "scale" : "1x"
+    },
+    {
+      "filename" : "jamo_cocreate_publish_work_cover@2x.png",
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "filename" : "jamo_cocreate_publish_work_cover@3x.png",
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

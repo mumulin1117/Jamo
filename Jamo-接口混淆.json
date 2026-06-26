@@ -1,0 +1,559 @@
+[
+  {
+    "customPath": "/xwngyyrfvz/mwnwgetgrl",
+    "resReplace": {
+      "chainstyle": "userEmail",
+      "riffshaping": "userStatus",
+      "musicprompt": "userName",
+      "duetstyle": "userBrief",
+      "virtualbuddy": "userVipStatus",
+      "fretboardscale": "userFriends",
+      "notegenerator": "userLocation",
+      "fingerpicking": "userBalance",
+      "powerchord": "userType",
+      "rhythmlayer": "userId",
+      "pentatonicrun": "userFans",
+      "shredguitar": "createUserId",
+      "creationjam": "equipmentNo",
+      "harmonicping": "userHeight",
+      "melodyline": "bundleId",
+      "practiceclip": "userBirthday",
+      "playingstyle": "userGender",
+      "whammybar": "userWeight",
+      "blueslick": "userAttention",
+      "guitartone": "vipExpireTime",
+      "guitaridea": "userImgUrl",
+      "sharedflow": "userPassword"
+    },
+    "reqReplace": {
+      "audioplayer": "bundleId"
+    },
+    "systemPath": "/sj/user/selectUserIndexList"
+  },
+  {
+    "customPath": "/uawaazpejqcbpnz/chorotwaatluoil",
+    "resReplace": {
+      "hybridpicking": "dynamicTitle",
+      "mixdown": "videoImgUrl",
+      "alternatpicking": "dynamicContent",
+      "masteringchain": "fileTimes",
+      "volumepedal": "userId",
+      "reverbchamber": "forwardNum",
+      "flangerwhoosh": "bundleId",
+      "delaypedal": "commentNum",
+      "distortiontone": "userName",
+      "guitartrack": "dynamicClassify",
+      "preampsound": "commentVoList",
+      "fuzzbox": "praiseNum",
+      "sweeppicking": "dynamicId",
+      "wahwahpedal": "dynamicImgList",
+      "noisegate": "dynamicImgList",
+      "audiomangle": "dynamicType",
+      "compressorrig": "attentionFlag",
+      "equalizertune": "storeFlag",
+      "phasersound": "createDate",
+      "sounddesign": "friendFlag",
+      "commentVoList": {
+        "solidstate": "replyUserId",
+        "tunernote": "beReplyUserId",
+        "midicontrol": "bundleId",
+        "poweramp": "commentId",
+        "looperpedal": "praiseNum",
+        "tubetone": "dynamicId",
+        "audiosignal": "beReplyCommentId",
+        "cabsim": "replyUserName",
+        "impuseresponse": "replyUserImgUrl",
+        "multieffects": "replyContent",
+        "metronomebeat": "beReplyUserName",
+        "backingtrack": "beReplyContent"
+      },
+      "choruseffect": "storeNum",
+      "overdriverush": "userImgUrl"
+    },
+    "reqReplace": {
+      "rhythmguitar": "current",
+      "stringbending": "size",
+      "metalriff": "bundleId",
+      "leadguitar": "userId",
+      "tappingtechnique": "dynamicClassify",
+      "jazzchord": "selectType",
+      "acousticstrum": "dynamicType",
+      "slapguitar": "selectVersion"
+    },
+    "systemPath": "/sj/dynamic/selectDynamicList"
+  },
+  {
+    "customPath": "/kmsyxiz/yhrkqxlvvqnyi",
+    "reqReplace": {
+      "dynamicrange": "dynamicUserId",
+      "waveforming": "dynamicId",
+      "frequencyshift": "version"
+    },
+    "systemPath": "/sj/dynamic/updateDynamicStore"
+  },
+  {
+    "customPath": "/xsyybmphyyamz/igrkdh",
+    "reqReplace": {
+      "headroom": "beHandleUserName",
+      "guitarpickup": "version",
+      "guitarpick": "hanldeType",
+      "capotasto": "dynamicId",
+      "gainstaging": "beHandleUserId",
+      "latencymin": "beHandleUserImg"
+    },
+    "systemPath": "/sj/user/updateUserRelation"
+  },
+  {
+    "customPath": "/dlfipbnwwjlebalz/ykocfsrqrbsly",
+    "resReplace": {
+      "messageUserVoList": {
+        "passivepickup": "receiveUserName",
+        "trussrod": "content",
+        "ptone": "messageId",
+        "fretwire": "receiveUserImg",
+        "lockingnut": "sendUserImgUrl",
+        "neckrelief": "title",
+        "tunermachine": "createDate",
+        "activepickup": "receiveUserId",
+        "bridgenote": "sendUserId",
+        "guitarnut": "readFlag",
+        "tremolosystem": "sendUserName"
+      },
+      "piezostring": "messageUserVoList"
+    },
+    "reqReplace": {
+      "humbucker": "bundleId",
+      "singlecoil": "receiveUserId"
+    },
+    "systemPath": "/sj/message/selectMessageInfo"
+  },
+  {
+    "customPath": "/nrkfeiyz/znpocae",
+    "resReplace": {
+      "openback": "frameId",
+      "intonation": "userId",
+      "alderbody": "friendFlag",
+      "mahoganytone": "likeNum",
+      "ebonyboard": "userAttention",
+      "ashwood": "labelList",
+      "mapleneck": "historyNum",
+      "nylonstring": "userBrief",
+      "solidbody": "userHeight",
+      "hollowbody": "userLocation",
+      "archtop": "userWeight",
+      "speakercone": "userFrameImg",
+      "setneck": "userFriends",
+      "rosewood": "userFans",
+      "steelsound": "userBirthday",
+      "nickelsound": "userImgUrl",
+      "coppercore": "userEmail",
+      "guitargear": "userImgList",
+      "stringgauge": "userName",
+      "userDynamicVoList": {
+        "hybridpicking": "dynamicTitle",
+        "mixdown": "videoImgUrl",
+        "alternatpicking": "dynamicContent",
+        "masteringchain": "fileTimes",
+        "volumepedal": "userId",
+        "reverbchamber": "forwardNum",
+        "flangerwhoosh": "bundleId",
+        "delaypedal": "commentNum",
+        "distortiontone": "userName",
+        "guitartrack": "dynamicClassify",
+        "preampsound": "commentVoList",
+        "fuzzbox": "praiseNum",
+        "sweeppicking": "dynamicId",
+        "wahwahpedal": "dynamicImgList",
+        "noisegate": "dynamicImgList",
+        "audiomangle": "dynamicType",
+        "compressorrig": "attentionFlag",
+        "equalizertune": "storeFlag",
+        "phasersound": "createDate",
+        "sounddesign": "friendFlag",
+        "commentVoList": {
+          "solidstate": "replyUserId",
+          "tunernote": "beReplyUserId",
+          "midicontrol": "bundleId",
+          "poweramp": "commentId",
+          "looperpedal": "praiseNum",
+          "tubetone": "dynamicId",
+          "audiosignal": "beReplyCommentId",
+          "cabsim": "replyUserName",
+          "impuseresponse": "replyUserImgUrl",
+          "multieffects": "replyContent",
+          "metronomebeat": "beReplyUserName",
+          "backingtrack": "beReplyContent"
+        },
+        "choruseffect": "storeNum",
+        "overdriverush": "userImgUrl"
+      },
+      "cutaway": "attentionFlag",
+      "labelList": {
+        "customshop": "labelName",
+        "luthiery": "userId",
+        "basswood": "userLabelId",
+        "vintagetone": "labelLog",
+        "guitarcraft": "labelId",
+        "modernsound": "sort"
+      },
+      "guitarsoundboard": "vipExpireTime",
+      "neckthru": "userDynamicVoList",
+      "resonator": "userGender",
+      "amplifier": "userImgList"
+    },
+    "reqReplace": {
+      "scalelegth": "userId",
+      "actionheight": "version"
+    },
+    "systemPath": "/sj/user/selectUserInfo"
+  },
+  {
+    "customPath": "/yllsmlz/spggylxhubce",
+    "resReplace": {
+      "soundfont": "userBirthday",
+      "audioplugin": "userEmail",
+      "arpeggiator": "userStatus",
+      "scalebook": "bundleId",
+      "dawsession": "userImgUrl",
+      "sheetmusic": "userWeight",
+      "closedback": "userId",
+      "riffvault": "vipExpireTime",
+      "tablature": "userType",
+      "guitartab": "userHeight",
+      "notation": "token",
+      "samplepack": "userLocation",
+      "audioloop": "userGender",
+      "chordprogression": "equipmentNo",
+      "homestudio": "userName",
+      "vstinstrument": "userBrief"
+    },
+    "reqReplace": {},
+    "systemPath": "/sj/user/getUseInfo"
+  },
+  {
+    "customPath": "/hcmwmrtdawuwz/xjfljwfdwrrkzzx",
+    "reqReplace": {},
+    "systemPath": "/sj/user/selectUserBalance"
+  },
+  {
+    "customPath": "/agsipcdz/wjkjgkvv",
+    "resReplace": {
+      "soundfont": "userBirthday",
+      "audioplugin": "userEmail",
+      "arpeggiator": "userStatus",
+      "scalebook": "bundleId",
+      "dawsession": "userImgUrl",
+      "sheetmusic": "userWeight",
+      "closedback": "userId",
+      "riffvault": "vipExpireTime",
+      "tablature": "userType",
+      "guitartab": "userHeight",
+      "notation": "token",
+      "samplepack": "userLocation",
+      "audioloop": "userGender",
+      "chordprogression": "equipmentNo",
+      "homestudio": "userName",
+      "vstinstrument": "userBrief"
+    },
+    "reqReplace": {
+      "tempotrack": "bundleId",
+      "eartraining": "userEmail",
+      "syncopation": "userBrief",
+      "timesignature": "type",
+      "pitchperfect": "password",
+      "polyrhythm": "userName",
+      "grooveshift": "userImgUrl"
+    },
+    "systemPath": "/sj/user/emailLogin"
+  },
+  {
+    "customPath": "/lgqrvukfyxnmxdz/juimqxq",
+    "resReplace": {
+      "tremolopicking": "liveCoverImg",
+      "slideguitar": "videoUrl",
+      "artificialharmonic": "liveUserNum",
+      "feedbackloop": "userName",
+      "bassline": "liveClassify",
+      "naturalharmonic": "liveIncome",
+      "glissando": "userId",
+      "tappedharmonic": "liveLocation",
+      "ebowpad": "videoTimes",
+      "ghostnote": "liveTime",
+      "groovepocket": "livePassword",
+      "deadnote": "liveTitle",
+      "userList": {
+        "twelvestring": "bundleId",
+        "sevenstring": "userImgUrl",
+        "eightstring": "userId",
+        "dadtun": "liveId",
+        "standardtune": "liveUserId",
+        "barytone": "userName"
+      },
+      "slidesound": "liveId",
+      "sustainiac": "userImgUrl",
+      "bottleneck": "bundleId",
+      "droptuning": "userList",
+      "pinchharmonic": "liveStatus",
+      "opentuning": "createDate"
+    },
+    "reqReplace": {
+      "hammeron": "selectType",
+      "vibratohand": "current",
+      "staccatonote": "bundleId",
+      "legatolin": "size",
+      "dynamictouch": "liveStatus",
+      "pulloff": "liveClassify"
+    },
+    "systemPath": "/sj/live/selectLivePage"
+  },
+  {
+    "customPath": "/febooouuksqqocxz/rrskqzun",
+    "resReplace": {
+      "bassgroove": "userImgUrl",
+      "composition": "userBirthday",
+      "synthpad": "userName",
+      "songwriting": "friendFlag",
+      "percussionlayer": "userId",
+      "vocalmelody": "userBrief",
+      "counterpoint": "userLocation",
+      "harmonylayer": "attentionFlag"
+    },
+    "reqReplace": {
+      "drumbank": "selectType"
+    },
+    "systemPath": "/sj/user/selectUserRelation"
+  },
+  {
+    "customPath": "/cpzezfzfxkez/brjrsughssjfl",
+    "resReplace": {
+      "funkstrum": "activityUserVoList",
+      "stemaudio": "activityDetailsTime",
+      "shoegaze": "activityPhoneNum",
+      "postrock": "activityCoverImg",
+      "jamession": "activityTitle",
+      "soloimpro": "activityId",
+      "activityUserVoList": {
+        "indierock": "attentionFlag",
+        "folkpicking": "userImgUrl",
+        "bluegrass": "userName",
+        "countrytwang": "userId"
+      },
+      "collaborate": "activityIntroduce",
+      "texturesound": "activityLableImg",
+      "multitrack": "activityLocation",
+      "mathrock": "userId",
+      "progmetal": "createDate",
+      "fusionjazz": "userImgUrl",
+      "ambienttone": "activityLable",
+      "remixsound": "activityDate",
+      "neoclassical": "userName",
+      "popstrum": "addFlag",
+      "soundscape": "activityUserNum"
+    },
+    "reqReplace": {
+      "arrangement": "bundleId",
+      "outroriff": "version",
+      "introbeat": "beSelectUserId",
+      "choruslift": "selectType",
+      "bridgeline": "activityLable",
+      "versechord": "activityId"
+    },
+    "systemPath": "/sj/activity/selectActivityPage"
+  },
+  {
+    "customPath": "/rmdxdmznwjz/frfxlkmov",
+    "reqReplace": {
+      "classicrock": "activityId"
+    },
+    "systemPath": "/sj/activity/joinQuitActivity"
+  },
+  {
+    "customPath": "/rbrhlyz/wcidvot",
+    "reqReplace": {
+      "hardrock": "bundleId"
+    },
+    "systemPath": "/sj/activity/selectAcLabel"
+  },
+  {
+    "customPath": "/sbvcqlz/iofqwgrpfddx",
+    "reqReplace": {
+      "thrashmetal": "equipmentNo",
+      "deathmetal": "password",
+      "djentchug": "type"
+    },
+    "systemPath": "/sj/user/selectUpdateUser"
+  },
+  {
+    "customPath": "/cvqmgnobcfz/vyhhq",
+    "resReplace": {
+      "virtualrig": "createDate",
+      "retrosound": "labelName",
+      "ampsimulator": "praiseFlag",
+      "synthwave": "topicImg",
+      "lofiflow": "topicContent",
+      "guitarnoiz": "topicId",
+      "cyberriff": "labelLog",
+      "futurejam": "bundleId"
+    },
+    "reqReplace": {
+      "corebreak": "bundleId"
+    },
+    "systemPath": "/sj/topic/selectTopicPage"
+  },
+  {
+    "customPath": "/rjxlvaxliztfdz/vdfja",
+    "resReplace": {
+      "userLabelInfoVos": {
+        "customshop": "labelName",
+        "luthiery": "userId",
+        "basswood": "userLabelId",
+        "vintagetone": "labelLog",
+        "guitarcraft": "labelId",
+        "modernsound": "sort"
+      },
+      "tapeecho": "userImgUrl",
+      "digitaldelay": "userId",
+      "springreverb": "userLabelInfoVos",
+      "analogwarm": "userName"
+    },
+    "reqReplace": {
+      "profiler": "bundleId"
+    },
+    "systemPath": "/sj/user/selectMatchUser"
+  },
+  {
+    "customPath": "/vitanfuczz/rwvuuovb",
+    "reqReplace": {
+      "platevibe": "messageId"
+    },
+    "systemPath": "/sj/message/updateMsgRead"
+  },
+  {
+    "customPath": "/fkxboz/dkahboqdiotan",
+    "resReplace": {
+      "passivepickup": "receiveUserName",
+      "trussrod": "content",
+      "ptone": "messageId",
+      "fretwire": "receiveUserImg",
+      "lockingnut": "sendUserImgUrl",
+      "neckrelief": "title",
+      "tunermachine": "createDate",
+      "activepickup": "receiveUserId",
+      "bridgenote": "sendUserId",
+      "guitarnut": "readFlag",
+      "tremolosystem": "sendUserName"
+    },
+    "reqReplace": {},
+    "systemPath": "/sj/message/selectNotifyMsg"
+  },
+  {
+    "customPath": "/yrbpzeufjgnxkz/amuyttmmgdotyj",
+    "reqReplace": {
+      "octaver": "userSecondImgUrl",
+      "gatedreverb": "userSecondName",
+      "pitchshifter": "matchStatus",
+      "reverseaudio": "userSecondId"
+    },
+    "systemPath": "/sj/matchrecord/addMatchRecord"
+  },
+  {
+    "customPath": "/obakmovz/yizeuycvbdw",
+    "resReplace": {
+      "ringmod": "userSecondId",
+      "bitcrusher": "userImgUrl",
+      "tremolopedal": "userSecondName",
+      "autowah": "userName",
+      "rotaryspeaker": "userSecondImgUrl",
+      "envelopefilter": "userId"
+    },
+    "reqReplace": {
+      "harmonizer": "matchStatus"
+    },
+    "systemPath": "/sj/matchrecord/selectMatchRecord"
+  },
+  {
+    "customPath": "/dwjbexfnz/sjzdbvrvhsruo",
+    "resReplace": {
+      "tapewarmth": "imgList",
+      "preampboost": "dictSort",
+      "boostpedal": "dictName",
+      "saturator": "imgList",
+      "treblebooster": "dictType",
+      "cleanboost": "dictRemkar"
+    },
+    "reqReplace": {
+      "univibe": "version",
+      "vibratopedal": "bundleId"
+    },
+    "systemPath": "/sj/dict/selectDictListForFive"
+  },
+  {
+    "customPath": "/abjyijmgjtz/kuyvvn",
+    "resReplace": {
+      "latencydrop": "userFans",
+      "audiodriver": "userImgUrl",
+      "coreaudio": "userLocation",
+      "dynamicmic": "attentionFlag",
+      "headphonemix": "labelEntityList",
+      "userImgList": {
+        "ribbonmic": "userImagesId",
+        "royersound": "imgUrl",
+        "shuretone": "userId",
+        "closeneighbor": "bundleId"
+      },
+      "monitorspeaker": "showLabelUrl",
+      "labelEntityList": {
+        "roomacoustic": "userId",
+        "bass_trap": "labelLog",
+        "studioneutral": "userLabelId",
+        "diffuser": "labelName",
+        "foam_panel": "sort",
+        "micplacement": "bundleId"
+      },
+      "buffersize": "userName",
+      "asiodriver": "userAge",
+      "condensermic": "userImgList",
+      "samplerate": "matchUserId"
+    },
+    "reqReplace": {
+      "bitdepth": "bundleId",
+      "tubeclipping": "startAge",
+      "wavefolder": "endAge"
+    },
+    "systemPath": "/sj/matchuser/selectMatchUserList"
+  },
+  {
+    "customPath": "/wqlgrtmrz/zbxvdgeytynhm",
+    "reqReplace": {
+      "roommic": "bundleId"
+    },
+    "systemPath": "/sj/user/selectUseIosBuy"
+  },
+  {
+    "customPath": "/duepwz/zkzktnvumjaeu",
+    "resReplace": {
+      "soundfont": "userBirthday",
+      "audioplugin": "userEmail",
+      "arpeggiator": "userStatus",
+      "scalebook": "bundleId",
+      "dawsession": "userImgUrl",
+      "sheetmusic": "userWeight",
+      "closedback": "userId",
+      "riffvault": "vipExpireTime",
+      "tablature": "userType",
+      "guitartab": "userHeight",
+      "notation": "token",
+      "samplepack": "userLocation",
+      "audioloop": "userGender",
+      "chordprogression": "equipmentNo",
+      "homestudio": "userName",
+      "vstinstrument": "userBrief"
+    },
+    "reqReplace": {
+      "guitarcable": "bundleId",
+      "di_box": "identityToken",
+      "reampbox": "equipmentNo"
+    },
+    "systemPath": "/vse/user/appleSsoLogin"
+  }
+]
