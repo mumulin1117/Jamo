@@ -104,10 +104,10 @@ final class JamoAuthWelcomeViewController: JamoAuthBaseViewController {
         navigationController?.pushViewController(JamoAuthSignUpViewController(), animated: true)
     }
 
-    private func beginAppleSignInIfAllowed() {
-        guard ensureAgreementAccepted() else { return }
-        // TODO: Connect Sign in with Apple when the product confirms the Apple entry should be visible again.
-    }
+//    private func beginAppleSignInIfAllowed() {
+//        guard ensureAgreementAccepted() else { return }
+//        // TODO: Connect Sign in with Apple when the product confirms the Apple entry should be visible again.
+//    }
 
     override func jamoAuthAgreementView(_ view: JamoAuthAgreementView, didChangeAccepted accepted: Bool) {
         super.jamoAuthAgreementView(view, didChangeAccepted: accepted)
