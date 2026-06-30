@@ -141,7 +141,7 @@ final class JamoCoCreateUserService: JamoCoCreateUserProviding {
             return nil
         }
 
-        let fallbackName = email?.split(separator: JamoRiffStringCipher.restore("@a")).first.map(String.init)
+        let fallbackName = email?.components(separatedBy: JamoRiffStringCipher.restore("@a")).first
         return JamoRiffPlayerProfile(
             userID: stablePlayerHandle,
             displayName: stageName ?? fallbackName ?? JamoRiffStringCipher.restore("J8aKmooc MPmlta4yletrt"),

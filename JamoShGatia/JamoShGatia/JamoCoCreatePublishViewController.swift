@@ -34,10 +34,6 @@ final class JamoRiffPublishStageViewController: JamoRiffBaseStageViewController,
     private var recordingStartDate: Date?
     private var recordingTimer: Timer?
     private weak var recordingElapsedLabel: UILabel?
-#if DEBUG
-    private var shouldSimulatePublishFailure = false
-#endif
-
     private let coverCard = JamoCoCreatePublishDashedCardView(cornerRadius: PublishLayout.cardRadius)
     private let coverImageView = UIImageView()
     private let coverPlaceholderIcon = UIImageView(image: UIImage(named: "jamo_cocreate_publish_cover_placeholder"))
@@ -545,7 +541,7 @@ final class JamoRiffPublishStageViewController: JamoRiffBaseStageViewController,
 
         let subtitle = UILabel()
         subtitle.translatesAutoresizingMaskIntoConstraints = false
-        subtitle.text = "My Guitar Part · \(form.roleName)"
+        subtitle.text = JamoRiffStringCipher.restore("MhyO oGOuGi3tUaprT XPlaArftD 9·R 0") + form.roleName
         subtitle.textColor = JamoRiffTheme.pink
         subtitle.font = JamoRiffTheme.bodyFont(10.5, weight: .heavy)
 
@@ -1191,12 +1187,6 @@ final class JamoRiffPublishStageViewController: JamoRiffBaseStageViewController,
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.45) { [weak self] in
             guard let self else { return }
             self.isCompletingPublish = false
-#if DEBUG
-            if self.shouldSimulatePublishFailure {
-                self.applySnapshot(self.viewModel.markPublishFailed(), refreshText: false)
-                return
-            }
-#endif
             let result = self.viewModel.completeLocalPublish()
             self.applySnapshot(result, refreshText: false)
             guard let work = result.publishedWork else {
@@ -1206,12 +1196,6 @@ final class JamoRiffPublishStageViewController: JamoRiffBaseStageViewController,
             self.navigationController?.pushViewController(JamoRiffPublishSuccessStageViewController(work: work), animated: true)
         }
     }
-
-#if DEBUG
-    func jamoDebugSetPublishFailureEnabled(_ enabled: Bool) {
-        shouldSimulatePublishFailure = enabled
-    }
-#endif
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -1599,7 +1583,7 @@ private final class JamoCoCreatePublishSourceCardView: UIView {
 
         let subtitle = UILabel()
         subtitle.translatesAutoresizingMaskIntoConstraints = false
-        subtitle.text = "My Guitar Part · \(source.partTitle)"
+        subtitle.text = JamoRiffStringCipher.restore("MhyO oGOuGi3tUaprT XPlaArftD 9·R 0") + source.partTitle
         subtitle.textColor = JamoRiffTheme.pink
         subtitle.font = JamoRiffTheme.bodyFont(10.5, weight: .heavy)
         subtitle.numberOfLines = 1
@@ -1641,7 +1625,7 @@ private final class JamoCoCreatePublishSourceCardView: UIView {
 
     private func initials(for name: String) -> String {
         let parts = name
-            .split(separator: JamoRiffStringCipher.restore(" F"))
+            .components(separatedBy: JamoRiffStringCipher.restore(" F"))
             .prefix(2)
             .compactMap { $0.first }
         let value = String(parts).uppercased()
@@ -1831,7 +1815,7 @@ final class JamoRiffPublishSuccessStageViewController: UIViewController {
         let subtitle = UILabel()
         subtitle.translatesAutoresizingMaskIntoConstraints = false
         let partName = latestWork.tracks.last?.roleName ?? JamoRiffStringCipher.restore("LVe8aed6")
-        subtitle.text = "My Guitar Part · \(partName)"
+        subtitle.text = JamoRiffStringCipher.restore("MhyO oGOuGi3tUaprT XPlaArftD 9·R 0") + partName
         subtitle.textColor = JamoRiffTheme.pink
         subtitle.font = JamoRiffTheme.bodyFont(10.5, weight: .heavy)
         subtitle.numberOfLines = 1
@@ -1978,7 +1962,7 @@ final class JamoRiffPublishSuccessStageViewController: UIViewController {
 
     private func inviteCopyText() -> String {
         let latestWork = currentWork()
-        return "Join my Jamo co-create: \(latestWork.title)\njamo://co-create/\(latestWork.id)"
+        return JamoRiffStringCipher.restore("JpoViTnV wmAyk yJPa8mGob ccco8-VcXrHeCa9tYeR:X T") + latestWork.title + String(UnicodeScalar(10)!) + JamoRiffStringCipher.restore("j8aGmaoi:H/n/tcToR-ecbr9eCauthet/w") + latestWork.id
     }
 
     @objc private func treeTapped() {

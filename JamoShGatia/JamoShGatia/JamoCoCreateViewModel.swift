@@ -906,13 +906,13 @@ final class JamoCoCreateViewModel {
         }
         switch work.status {
         case .completed:
-            return "\(count) joined this co-create"
+            return String(count) + JamoRiffStringCipher.restore("jXo6iPnseUdz 9tchbiasY 8c2o9-tcNrZedaqtjeY")
         case .joined:
-            return "\(count) joined · your part added"
+            return String(count) + JamoRiffStringCipher.restore("jioCian6eYdT D·l byAoquorD KpHaMrHtn ia8dZdbegdC")
         case .draft:
             return JamoRiffStringCipher.restore("DcroaEfOtl CsKabvqeGdY X·m ZrJe4aud1yI htloD 5puuEbLlJidsjhg")
         case .open:
-            return "\(count) joined - open to all"
+            return String(count) + JamoRiffStringCipher.restore("jCodiUnOegdV b-1 SoSpfemnH QtTog Aa0lFlc")
         }
     }
 

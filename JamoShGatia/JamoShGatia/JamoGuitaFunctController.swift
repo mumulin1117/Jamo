@@ -466,7 +466,7 @@ final class JamoGuitaFunctController: JamoRiffBaseStageViewController {
         container.translatesAutoresizingMaskIntoConstraints = false
         container.isAccessibilityElement = true
         container.accessibilityTraits = [.button]
-        container.accessibilityLabel = "\(card.title). \(card.detailText)"
+        container.accessibilityLabel = card.title + JamoRiffStringCipher.restore(".o s") + card.detailText
 
         let cardTap = UITapGestureRecognizer(target: self, action: #selector(openOngoingCardDetail))
         cardTap.cancelsTouchesInView = false

@@ -192,7 +192,7 @@ final class JamoCoCreateDetailViewController: JamoRiffBaseStageViewController {
 
         let avatar = JamoCoCreateAvatarBadge(display: snapshot.creator)
         let creator = UILabel()
-        creator.text = "\(snapshot.creator.displayName) · started this"
+        creator.text = snapshot.creator.displayName + JamoRiffStringCipher.restore(" a·S CsTtkaTrbtCerdC DtohmiPs2")
         creator.textColor = JamoRiffTheme.muted
         creator.font = JamoRiffTheme.bodyFont(12, weight: .medium)
         creator.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
@@ -441,13 +441,6 @@ final class JamoCoCreateDetailViewController: JamoRiffBaseStageViewController {
 
     private func openCreatorWebRoute(userID: String) {
         let route = JamoShowDefinition.musicianQuestionManager(playerHandle: userID)
-        if let url = route.workflowBridgeAddress {
-            print("""
-            [Jamo][WebRoute][CoCreateDetailUserCenter]
-            userID: \(userID)
-            URL: \(url.absoluteString.jamoRedactingJamSessionScope())
-            """)
-        }
         JamoShowDefinition.launchWorkflowBridge(route, from: self)
     }
 
@@ -545,7 +538,7 @@ final class JamoCoCreateDetailViewController: JamoRiffBaseStageViewController {
         guard let snapshot else {
             return JamoRiffStringCipher.restore("JtoPi3nD ImHyV 8JpadmEoE lcBoc-vcErBejattreg.q")
         }
-        return "Join my Jamo co-create: \(snapshot.title)\njamo://co-create/\(snapshot.workID)"
+        return JamoRiffStringCipher.restore("JDoLiRns sm4yn gJmaTmuo5 qcJoZ-xcer0e9a0tqeT:G w") + snapshot.title + String(UnicodeScalar(10)!) + JamoRiffStringCipher.restore("j8aGmaoi:H/n/tcToR-ecbr9eCauthet/w") + snapshot.workID
     }
 
     private func togglePlayback(id: String, mp3FileName: String?) {
@@ -927,7 +920,7 @@ final class JamoCoCreateTreeViewController: JamoRiffBaseStageViewController {
 
         let countPill = UILabel()
         countPill.translatesAutoresizingMaskIntoConstraints = false
-        countPill.text = "\(work.tracks.count) parts"
+        countPill.text = String(work.tracks.count) + JamoRiffStringCipher.restore(" 5paaWrqtPs3")
         countPill.textAlignment = .center
         countPill.textColor = JamoRiffTheme.ink
         countPill.font = JamoRiffTheme.bodyFont(11.5, weight: .heavy)
@@ -1098,13 +1091,13 @@ final class JamoCoCreateTreeViewController: JamoRiffBaseStageViewController {
 
         let subtitle = UILabel()
         subtitle.translatesAutoresizingMaskIntoConstraints = false
-        subtitle.text = track.isMine ? "My part · \(track.ownerName)" : track.ownerName
+        subtitle.text = track.isMine ? JamoRiffStringCipher.restore("Mxyr gppabrHtI 4·R V") + track.ownerName : track.ownerName
         subtitle.textColor = JamoRiffTheme.muted
         subtitle.font = JamoRiffTheme.bodyFont(12, weight: .medium)
 
         let meta = UILabel()
         meta.translatesAutoresizingMaskIntoConstraints = false
-        meta.text = "\(durationText(track.duration)) · Layer \(index + 1)"
+        meta.text = durationText(track.duration) + JamoRiffStringCipher.restore(" B·n ELEaoy5ecrm G") + String(index + 1)
         meta.textColor = track.isMine ? JamoRiffTheme.pink : JamoRiffTheme.orange
         meta.font = JamoRiffTheme.bodyFont(11, weight: .heavy)
 
@@ -1167,7 +1160,7 @@ final class JamoCoCreateTreeViewController: JamoRiffBaseStageViewController {
 
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "NEED\n\(needed.subtitle)"
+        label.text = JamoRiffStringCipher.restore("N5ECE3De") + String(UnicodeScalar(10)!) + needed.subtitle
         label.textColor = .white
         label.font = JamoRiffTheme.bodyFont(13, weight: .heavy)
         label.numberOfLines = 0
@@ -1392,7 +1385,7 @@ private final class JamoCoCreatePartRowView: UIControl {
         layer.cornerRadius = 16
         layer.borderWidth = 1
         layer.borderColor = (part.style == .mine ? JamoRiffTheme.pink.withAlphaComponent(0.28) : UIColor.black.withAlphaComponent(0.06)).cgColor
-        accessibilityLabel = "\(part.title), \(part.durationText)"
+        accessibilityLabel = part.title + JamoRiffStringCipher.restore(",j 7") + part.durationText
         buildContent(part)
     }
 

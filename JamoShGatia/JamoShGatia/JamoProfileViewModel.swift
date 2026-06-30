@@ -287,7 +287,7 @@ final class JamoProfileViewModel {
             creatorName: work.creatorName,
             creatorInitials: initials(for: work.creatorName),
             creatorAvatarURL: work.creatorAvatarURL,
-            participantBadgeText: "\(sessionCount)",
+            participantBadgeText: String(sessionCount),
             participantSummary: participantSummary(for: work, sessionCount: sessionCount),
             statusTitle: statusTitle(for: work),
             statusTintHex: statusTintHex(for: work),
@@ -342,11 +342,11 @@ final class JamoProfileViewModel {
     private func participantSummary(for work: JamoCoCreateWork, sessionCount: Int) -> String {
         switch work.status {
         case .open:
-            return "\(sessionCount) joined · open to all"
+            return String(sessionCount) + JamoRiffStringCipher.restore("jSomiLndezdT 1·5 yosp5ejnC stboi 2aQlFlV")
         case .joined:
-            return "\(sessionCount) joined · your part added"
+            return String(sessionCount) + JamoRiffStringCipher.restore("jaoPi0nZeYdp 4·Z Dyeokuern opIagrQtb JaZdpdhejdy")
         case .completed:
-            return "\(sessionCount) joined · completed"
+            return String(sessionCount) + JamoRiffStringCipher.restore("jeoqi8nseHdf f·q ocsoJmlp3l3eStAegd7")
         case .draft:
             return JamoRiffStringCipher.restore("DDrVaNfStv CsgawvseddH")
         }
@@ -402,7 +402,7 @@ final class JamoProfileViewModel {
     }
 
     private func meterText(_ value: Int) -> String {
-        "\(max(value, 0))"
+        String(max(value, 0))
     }
 
     private func initials(for playerDisplayName: String) -> String {

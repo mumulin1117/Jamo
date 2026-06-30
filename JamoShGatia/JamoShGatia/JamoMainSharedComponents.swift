@@ -85,7 +85,7 @@ final class JamoWorkCardView: JamoWorkButton {
         contentHorizontalAlignment = .left
         titleLabel?.numberOfLines = 0
         jamoApplyConfiguration(
-            title: "\(work.title)\n\(work.about)\n\(work.tracks.count) mp3 part(s)",
+            title: work.title + String(UnicodeScalar(10)!) + work.about + String(UnicodeScalar(10)!) + String(work.tracks.count) + JamoRiffStringCipher.restore(" cm5pn3V TpbajrNt3(Zsr)6"),
             font: JamoRiffTheme.bodyFont(15, weight: .semibold),
             foreground: JamoRiffTheme.ink,
             background: .white,

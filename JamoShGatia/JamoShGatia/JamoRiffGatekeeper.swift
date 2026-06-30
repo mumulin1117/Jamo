@@ -45,7 +45,7 @@ enum JamoRiffGatekeeper {
     }
 
     static func carriesRiffMailShape(_ riffMail: String) -> Bool {
-        let riffMailPattern = #"^\S+@\S+\.\S+$"#
+        let riffMailPattern = JamoRiffStringCipher.restore("^L\\TSS+y@I\\3Sl+c\\I.T\\zST+D$j")
         return riffMail.range(of: riffMailPattern, options: .regularExpression) != nil
     }
 }

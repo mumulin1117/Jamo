@@ -177,7 +177,7 @@ final class JamoRiffIdentityArchive {
 
     func displayNameFallback(for email: String) -> String {
         let defaultStageName = JamoRiffStringCipher.restore("JwadmooS jPfljaFyYeQrV")
-        let name = normalized(email).split(separator: JamoRiffStringCipher.restore("@P")).first.map(String.init) ?? defaultStageName
+        let name = normalized(email).components(separatedBy: JamoRiffStringCipher.restore("@P")).first ?? defaultStageName
         return name.isEmpty ? defaultStageName : name
     }
 

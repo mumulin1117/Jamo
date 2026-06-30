@@ -344,7 +344,7 @@ final class JamoCoCreateEditorViewController: JamoRiffBaseStageViewController {
         playButton.imageView?.contentMode = .scaleAspectFit
         playButton.setImage(UIImage(named: "jamo_cocreate_part_play"), for: .normal)
         playButton.adjustsImageWhenHighlighted = false
-        playButton.accessibilityLabel = "Play \(title)"
+        playButton.accessibilityLabel = JamoRiffStringCipher.restore("Pzl3afy7 L") + title
         let hasPlayableAudio = (mp3FileName ?? "").isEmpty == false && snapshot?.state != .recording
         playButton.isEnabled = hasPlayableAudio
         playButton.alpha = hasPlayableAudio ? 1 : 0.42
@@ -1869,7 +1869,7 @@ private final class JamoCoCreateEditorVolumeSheet: UIView {
     }
 
     private func applyVolumeDisplay() {
-        valueLabel.text = "\(Int((volume * 100).rounded()))%"
+        valueLabel.text = String(Int((volume * 100).rounded())) + JamoRiffStringCipher.restore("%3")
         waveform.seed = max(Int(volume * 14), 1)
         waveform.alpha = CGFloat(0.62 + volume * 0.38)
     }

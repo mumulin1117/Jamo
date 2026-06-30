@@ -1,9 +1,9 @@
-//
-//  SceneDelegate.swift
-//  JamoShGatia
-//
-//  Created by  on 2026/6/16.
-//
+
+
+
+
+
+
 
 import UIKit
 

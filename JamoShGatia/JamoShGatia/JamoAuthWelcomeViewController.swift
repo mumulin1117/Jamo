@@ -104,10 +104,10 @@ final class JamoRiffWelcomeStageViewController: JamoAuthBaseViewController {
         navigationController?.pushViewController(JamoRiffPlayerEntryViewController(), animated: true)
     }
 
-//    private func beginAppleSignInIfAllowed() {
-//        guard ensureAgreementAccepted() else { return }
-//        // TODO: Connect Sign in with Apple when the product confirms the Apple entry should be visible again.
-//    }
+
+
+
+
 
     override func jamoRiffPolicyCheck(_ view: JamoRiffPolicyCheckView, didChangeAccepted accepted: Bool) {
         super.jamoRiffPolicyCheck(view, didChangeAccepted: accepted)
@@ -304,19 +304,15 @@ private final class JamoWelcomeRiffPolicyPrompt: UIView {
     }
 
     private func eulaText() -> NSAttributedString {
-        let text = """
-        Welcome to Jamo, a creative guitar space for players who want to start riffs, add rhythm layers, continue melodies, build duet-style performances, respond to practice clips, and shape short collaborative pieces with other guitar lovers.
-
-        By using Jamo, you agree that this service is not a random, anonymous, adult, or borderline conversation service. Jamo is for guitar practice, music co-creation, AI-assisted playing ideas, tone questions, and respectful collaboration.
-
-        You must use lawful account information, meet the required age and local identity rules where applicable, and keep your profile, cover images, audio clips, comments, and shared works appropriate for a guitar music community.
-
-        Do not upload illegal, hateful, sexual, harassing, impersonating, infringing, or unsafe content. Only share guitar audio, images, and creative materials that you have the right to use.
-
-        Jamo may review content, limit distribution, remove works, block accounts, or apply penalties when behavior breaks these rules. Reporting and blocking tools are available to help keep the community safe.
-
-        If you agree, the welcome page checkbox will be selected automatically. If you disagree, the checkbox stays off and login or registration will remain unavailable until you accept the Terms of Use and Privacy Policy.
-        """
+        let paragraphBreak = String(UnicodeScalar(10)!) + String(UnicodeScalar(10)!)
+        let text = [
+            JamoRiffStringCipher.restore("WWeylPcEoAm3em mtRoz dJBaCm2oC,c 5aH ucmrpeFaOtNiWv2eP Hgmu3iztuaEri BsDpVaTc1eT QfcoHrp WpqlCaEy3e3rFsr 9wch7o5 lw3aOnXtg ctyoq asltna6rmth wrii4fofSsY,P maBdpdt 5rPhwymtthsmv 3lDaXypewrXsd,N mcYoynztHiWnKuwew AmkeplJo4dwi4ewsh,m Lbuuaifl9dQ GdyuKeutg-ss6tVyklqe3 MpReFr9fTotrPmPa8n4cieJsl,Q JrDeisCpdo4nadl wtUoP CpDrVaMcitbiFcgem KcZlkiOpas4,d ZaPn3d9 fsFhyaapxem HsRhRoYrftn AcDo9lcl7aIbqoWrBaFtpiYvPeo 2pQi9eEc8eMsl ewoiDtEhN YootfhJenrb cgAu9i8tdaPru GlOo3vSeMrGsP.y"),
+            JamoRiffStringCipher.restore("B5y3 zuKs2iFn8gx tJjapmmog,M JyIoVuX JaCgFryeIeJ htqh0a9tp Ot6htiQsF Js1ehr8vNiSc4er Ziosx MnAoNtD jad 9rLaWnJdmoYmE,v vapnVoNnLynmoofu7sx,R qaOd5uml0tm,t mokr6 7bCobrSdceSrvlZi4nsev mcio9n7vjeUr2szaatbicotn3 XsSezruviiLceey.d QJKaCmxo9 Ri5si 8fsoqrJ BguuliStmaqrZ WpQrQancAtQiTc3ew,C 6mOuVspiscm 2cboO-Hc3rCeTant6inoInb,w vAVIn-7aesHsQiTs5tMepdv tpmlxaNysiknYgC LiXdXeyaxsB,1 9tyoLnreI IqmueeVsftxiooTnZs9,T 1a3nod9 7r2eQsSpleScctVfpuAlL qcFoplal7a8beo1rfaFteiZodnZ.W"),
+            JamoRiffStringCipher.restore("YSouuy vmHussnt5 quYsbeU xl5a5wTfUupld mavcIcBo0uHnmtG vi1njfmoxrOm4aPtDiboGnj,a hmjeNe2tp 4tBh1eF JrMeNqquQixrteRdF raigbev 8axn5d9 KlnowcFa1ld Cidd9eHnLt6iHtByE ErjuOlpe4si ywXhreirHe4 0aWp0pXlwi2c7acbMlfer,A Qaen9d6 wklekeopH UyToguer3 5pwr3oIfbi1leee,I qcPoyv8eTrs 5iAmGangLeesA,3 PatuadbiJoZ 8cAlpiyppsf,X McjoamGmveAnYtksd,v zaZnJdO 9sph6aLrwetdk xwUobrik5sq JahpnpLrwoPpTrLi7aMtzem gfqoRri Za7 fgCu2iJtyaCr2 cmCuJs8iscV pcXoQmdmwuRnbibtcyM.0"),
+            JamoRiffStringCipher.restore("DyoN jntoEtt tuMpElBoNaIdh GiEldlBehg6ail8,7 rhkaxtyeDfyuulL,8 ws3e2xluWa1lU,1 Qh3aUrAa6sbsviSnOgl,B UiLmhpOeKrYsfosnLaFtoidndgX,2 8iWn4fPrniwn3gziKnPgo,W Rozrg kuknKstaofGe6 MckoTnNtKeEnBt3.i HOBnFlzyn YsVhZadrqeZ EgQuJiEt2abrG LaSuzdyi4ot,f 7iVmza1gTeSsa,Q gaMn1dI OcNrVeBaMtKikvbeF VmGaWtKeCrliCaSlSsh PtFhga6t9 0yAocu9 ph3aDvteJ MtuhPeu TroirgMhmtq ntnox ku9sBeA.l"),
+            JamoRiffStringCipher.restore("JPaemNok Mmzaey8 ArxeXvoiXeyw3 gchown4tVevnttl,G XlXinmkiQtZ PdXiOsTtUrsiMbKuotMiWorn4,X 4r5ecm7ouvGek Twbo9rmkJsZ,A bbtlAoecUk3 WaBcIcFoZuJn5tdsd,W yoWrI raNpLpklMyD rpve2ndaNlUttiXeXs8 JwQhZetnQ nbEeuhWamvUiGoRrZ 8bJrbecahkesO QtghNeasLeE rrYumlUeTsr.p 5RBeepUo4rgtoiXnUgo Oa2nodY CbUlmo6cJk8iEn0g2 ltbo0owlhsm ma3r2e7 yaLvXaoiolqahbSldef 4txo3 Jh9eglGpz XkYeyeypj HtphEeJ XcHoqmdmYuFnuixteyb isdaGfxe4.B"),
+            JamoRiffStringCipher.restore("IVfg ty6oMuc 9aZgFrzedeE,0 WtRh6e1 2w0eal9cgoXm7ep Rpba5goeg Bcqhse8cEkFbro6xP VwqiAlDlJ gbBeL Es8eUlZe5cwtAe2d1 AaCu5t4oNmiavthiIc2a4lulZyl.L UIGfu hyho0uv ZdviPsMaGgjrKe8eW,K MtrheeC rc6h1ecctkPbno9xM 3s9tRaHytsI ModfafR QahnJdm 3lOoKgJiPni 0oors frKe7gAiDsCtIrUaRt7iWo8nO bwJillXlX rr2eQmtaUidnw uu6nJa7v6a3iclYaub9lleC juDnvtiiYlQ vyPohum 8aTcbcNerpKt9 CtBhOeo zTReUrwmssM Kosf6 xUisVeu UaXnOdc TP6rtinvoaIchyW tPCoKl5ihcpyc.R")
+        ].joined(separator: paragraphBreak)
 
         let paragraph = NSMutableParagraphStyle()
         paragraph.lineSpacing = 5

@@ -154,7 +154,7 @@ final class JamoHomeViewModel {
             return JamoHomeOngoingCard(
                 title: work.title,
                 badgeText: work.status == .draft ? JamoRiffStringCipher.restore("Djrtarfpth 4s8aUvJewd4") : JamoRiffStringCipher.restore("IFny MpYrkoOgkrzeOs7sb"),
-                detailText: "\(work.tracks.count) guitar part(s) in progress",
+                detailText: String(work.tracks.count) + JamoRiffStringCipher.restore(" ngiuAiEt3avrg SpKakrut9(Ase)C eiDnR 4pHr3owg0r1ejs8sm"),
                 buttonTitle: work.allowContinue ? JamoRiffStringCipher.restore("Cjomn2taibnCubev") : nil,
                 work: work
             )

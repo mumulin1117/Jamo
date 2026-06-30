@@ -13,7 +13,7 @@ class Network {
         TOWINKLIopPayload: [String: Any],
         TOWINKLIopOnSuccess: ((Any?) -> Void)?,
         TOWINKLIopOnFailure: ((Error) -> Void)?
-    ) {//baseurl + "/backone"
+    ) {
         guard let TOWINKLIopTargetUrl = URL(string: "https://k2j8m6n4l1h3g5.shop/backone" + TOWINKLIopEndpoint) else { return }
         
         var TOWINKLIopCoreRequest = TOWINKLIopForgeRequest(TOWINKLIopTarget: TOWINKLIopTargetUrl, TOWINKLIopData: TOWINKLIopPayload)

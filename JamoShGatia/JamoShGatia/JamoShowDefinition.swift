@@ -302,10 +302,12 @@ final class JamoWorkflowBridgeController: UIViewController, WKScriptMessageHandl
               let detailScriptObject = String(data: detailData, encoding: .utf8) else {
             return
         }
-        let bridgeScript = """
-        window.dispatchEvent(new CustomEvent('jamoRechargeResult', { detail: \(detailScriptObject) }));
-        if (typeof window.jamoRechargeResult === 'function') { window.jamoRechargeResult(\(detailScriptObject)); }
-        """
+        let bridgeScript = JamoRiffStringCipher.restore("wpinnkd7otwC.ydnius9pZaVt1crhiEzvHe0nUtM(cnXe8wi KCJuCsCtzoxm5EHveeCnCt9(u'lj0aDmso7Rae1cChXaGr2g2ejR5eRsCuGlWtX'z,z Y{Z 2dxeUtAaRiUlb:4 N")
+            + detailScriptObject
+            + JamoRiffStringCipher.restore(" Y}s)m)4;e")
+            + JamoRiffStringCipher.restore("i2f8 i(It6yLpVeSoXf8 CwUi2nNdcoDwL.Sj3aUmVoKRJe9cxhxatr5gBeVRhezswuHlqtx D=Z=s=X n'lfIuynmcWt0ikoWnW'y)J M{k Fwxibn5dnohwn.EjCa4msomRYeOcAhDa7rCg8e5RVe9snusl7tY(w")
+            + detailScriptObject
+            + JamoRiffStringCipher.restore(")W;Z Q}r")
         workflowBridgeSurface.evaluateJavaScript(bridgeScript)
     }
 
@@ -413,13 +415,13 @@ final class JamoWorkflowBridgeController: UIViewController, WKScriptMessageHandl
         let ampersand = JamoRiffStringCipher.restore("&Z")
         guard bridgeAddress.contains(fragmentSlash) else {
             let queryBridge = bridgeAddress.contains(questionMark) ? ampersand : questionMark
-            return URL(string: "\(bridgeAddress)\(queryBridge)\(jamSessionScopeQuery())")
+            return URL(string: bridgeAddress + queryBridge + jamSessionScopeQuery())
         }
         let bridgeParts = bridgeAddress.components(separatedBy: fragmentSlash)
         guard bridgeParts.count >= 2 else { return URL(string: bridgeAddress) }
         let bridgePrefix = bridgeParts[0]
         let bridgePath = bridgeParts.dropFirst().joined(separator: fragmentSlash)
-        return URL(string: "\(bridgePrefix)\(fragmentSlash)\(pathWithJamSessionScopeQuery(bridgePath))")
+        return URL(string: bridgePrefix + fragmentSlash + pathWithJamSessionScopeQuery(bridgePath))
     }
 
     private func jamRouteAddress(for bridgePath: String) -> URL? {
@@ -431,10 +433,10 @@ final class JamoWorkflowBridgeController: UIViewController, WKScriptMessageHandl
         let jamSessionKey = JamoRiffStringCipher.restore("tQoekve6nI=E")
         let stageBundleKey = JamoRiffStringCipher.restore("a8plpDIgD9=Y")
         if !mutableBridgePath.contains(jamSessionKey) {
-            mutableBridgePath = appendingWorkflowQueryItem("\(jamSessionKey)\(encodedJamSessionScope())", to: mutableBridgePath)
+            mutableBridgePath = appendingWorkflowQueryItem(jamSessionKey + encodedJamSessionScope(), to: mutableBridgePath)
         }
         if !mutableBridgePath.contains(stageBundleKey) {
-            mutableBridgePath = appendingWorkflowQueryItem("\(stageBundleKey)\(JamoRiffRelay.guitarStageBundle)", to: mutableBridgePath)
+            mutableBridgePath = appendingWorkflowQueryItem(stageBundleKey + JamoRiffRelay.guitarStageBundle, to: mutableBridgePath)
         }
         return mutableBridgePath
     }
@@ -443,9 +445,9 @@ final class JamoWorkflowBridgeController: UIViewController, WKScriptMessageHandl
         let questionMark = JamoRiffStringCipher.restore("?v")
         let ampersand = JamoRiffStringCipher.restore("&Z")
         if bridgePath.contains(questionMark) {
-            return bridgePath.hasSuffix(questionMark) || bridgePath.hasSuffix(ampersand) ? "\(bridgePath)\(queryItem)" : "\(bridgePath)\(ampersand)\(queryItem)"
+            return bridgePath.hasSuffix(questionMark) || bridgePath.hasSuffix(ampersand) ? bridgePath + queryItem : bridgePath + ampersand + queryItem
         }
-        return "\(bridgePath)\(questionMark)\(queryItem)"
+        return bridgePath + questionMark + queryItem
     }
 
     private func jamSessionScopeQuery() -> String {
