@@ -1,13 +1,13 @@
 import UIKit
 
-final class JamoMessagesViewController: JamoMainBaseViewController {
+final class JamoRiffQuietInboxViewController: JamoRiffBaseStageViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = nil
         contentStack.addArrangedSubview(makeMessagesHeader())
 
         let empty = JamoCardView()
-        let label = makeBodyLabel("No friend messages yet.")
+        let label = makeBodyLabel(JamoRiffStringCipher.restore("Nfot vfZruiyeRnXdN 1mEeosIsMaEg7e0s9 Gyoect6.b"))
         label.textAlignment = .center
         empty.addPinnedSubview(label, inset: 24)
         contentStack.addArrangedSubview(empty)
@@ -29,9 +29,9 @@ final class JamoMessagesViewController: JamoMainBaseViewController {
 
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.text = "Messages"
-        titleLabel.textColor = JamoMainTheme.ink
-        titleLabel.font = JamoMainTheme.titleFont(28)
+        titleLabel.text = JamoRiffStringCipher.restore("MleRs8s9a0gZewsQ")
+        titleLabel.textColor = JamoRiffTheme.ink
+        titleLabel.font = JamoRiffTheme.titleFont(28)
         titleLabel.numberOfLines = 1
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.minimumScaleFactor = 0.82

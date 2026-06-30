@@ -1,6 +1,6 @@
 import UIKit
 
-enum JamoMainTheme {
+enum JamoRiffTheme {
     static let background = UIColor(red: 254 / 255, green: 251 / 255, blue: 245 / 255, alpha: 1)
     static let ink = UIColor(red: 30 / 255, green: 29 / 255, blue: 34 / 255, alpha: 1)
     static let muted = UIColor(red: 118 / 255, green: 111 / 255, blue: 106 / 255, alpha: 1)
@@ -25,7 +25,7 @@ extension UIImage {
             return assetImage
         }
 
-        if let mediaURL = JamoLocalJamMediaCatalog.resourceURL(named: name),
+        if let mediaURL = JamoRiffLocalMediaShelf.resourceURL(named: name),
            let image = UIImage(contentsOfFile: mediaURL.path) {
             return image
         }
@@ -55,7 +55,7 @@ extension UIImage {
 extension UIColor {
     static func jamoHex(_ value: String) -> UIColor? {
         var text = value.trimmingCharacters(in: .whitespacesAndNewlines)
-        if text.hasPrefix("#") {
+        if text.hasPrefix(JamoRiffStringCipher.restore("#C")) {
             text.removeFirst()
         }
         guard text.count == 6, let hex = Int(text, radix: 16) else {

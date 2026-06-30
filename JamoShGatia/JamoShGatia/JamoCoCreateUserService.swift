@@ -1,164 +1,190 @@
 import Foundation
 
-struct JamoCoCreateUserProfile: Hashable {
+struct JamoRiffPlayerProfile: Hashable {
     let userID: String
     let displayName: String
     let email: String?
     let avatarURL: String?
     var followingCount: Int? = nil
     var followersCount: Int? = nil
-    var coinBalance: Int? = nil
+    var pickCount: Int? = nil
+}
+
+extension JamoRiffPlayerProfile {
+    init(
+        jamoPlayerHandle: String,
+        displayName: String,
+        email: String?,
+        avatarURL: String?,
+        followingCount: Int? = nil,
+        followersCount: Int? = nil,
+        pickCount: Int? = nil
+    ) {
+        self.init(
+            userID: jamoPlayerHandle,
+            displayName: displayName,
+            email: email,
+            avatarURL: avatarURL,
+            followingCount: followingCount,
+            followersCount: followersCount,
+            pickCount: pickCount
+        )
+    }
+
+    var jamoPlayerHandle: String {
+        userID
+    }
 }
 
 protocol JamoCoCreateUserProviding {
-    var cachedJamUsers: [JamoCoCreateUserProfile] { get }
+    var cachedJamUsers: [JamoRiffPlayerProfile] { get }
 
-    func fetchJamUsers(completion: @escaping (Result<[JamoCoCreateUserProfile], Error>) -> Void)
+    func fetchJamUsers(onRosterReady: @escaping (Result<[JamoRiffPlayerProfile], Error>) -> Void)
 }
 
 final class JamoCoCreateUserService: JamoCoCreateUserProviding {
     static let shared = JamoCoCreateUserService()
-    private var jamUserCache: [JamoCoCreateUserProfile] = []
+    private var jamUserCache: [JamoRiffPlayerProfile] = []
 
-    var cachedJamUsers: [JamoCoCreateUserProfile] {
+    var cachedJamUsers: [JamoRiffPlayerProfile] {
         jamUserCache
     }
 
     private init() {}
 
-    func fetchJamUsers(completion: @escaping (Result<[JamoCoCreateUserProfile], Error>) -> Void) {
+    func fetchJamUsers(onRosterReady: @escaping (Result<[JamoRiffPlayerProfile], Error>) -> Void) {
         JamoRiffRelay.sendRiffRequest(
             endpoint: JamoCoCreateUserEndpoint.jamUserIndex,
-            payload: [JamoCoCreateUserEndpoint.bundleIDField: JamoRiffRelay.guitarAppID]
-        ) { [weak self] result in
+            riffPacket: [JamoCoCreateUserEndpoint.bundleIDField: JamoRiffRelay.guitarStageBundle]
+        ) { [weak self] rosterSignal in
             guard let self else { return }
-            let profiles = self.parseUsers(from: result)
-            self.jamUserCache = profiles
-            completion(.success(profiles))
-        } onFailure: { error in
-            completion(.failure(error))
+            let playerRoster = self.parseJamRoster(from: rosterSignal)
+            self.jamUserCache = playerRoster
+            onRosterReady(.success(playerRoster))
+        } onBrokenString: { brokenString in
+            onRosterReady(.failure(brokenString))
         }
     }
 
-    private func parseUsers(from result: Any?) -> [JamoCoCreateUserProfile] {
-        let items = extractUserItems(from: result)
-        let profiles = items.compactMap { makeProfile(from: $0) }
-        var seenIDs = Set<String>()
-        return profiles.filter { seenIDs.insert($0.userID).inserted }
+    private func parseJamRoster(from rosterSignal: Any?) -> [JamoRiffPlayerProfile] {
+        let riffPlayers = extractRosterItems(from: rosterSignal)
+        let playerProfiles = riffPlayers.compactMap { makePlayerProfile(from: $0) }
+        var usedPlayerHandles = Set<String>()
+        return playerProfiles.filter { usedPlayerHandles.insert($0.userID).inserted }
     }
 
-    private func extractUserItems(from value: Any?) -> [[String: Any]] {
-        if let array = value as? [[String: Any]] {
-            return array
+    private func extractRosterItems(from riffValue: Any?) -> [[String: Any]] {
+        if let riffArray = riffValue as? [[String: Any]] {
+            return riffArray
         }
 
-        guard let dictionary = value as? [String: Any] else {
+        guard let riffDictionary = riffValue as? [String: Any] else {
             return []
         }
 
-        if looksLikeUser(dictionary) {
-            return [dictionary]
+        if looksLikePlayer(riffDictionary) {
+            return [riffDictionary]
         }
 
         let nestedKeys = [
-            "data",
-            "list",
-            "records",
-            "rows",
-            "userList",
-            "result",
-            "reResJson",
-            "page"
+            JamoRiffStringCipher.restore("dnaft3aR"),
+            JamoRiffStringCipher.restore("lriss0tW"),
+            JamoRiffStringCipher.restore("rve1cfoOrbdlsu"),
+            JamoRiffStringCipher.restore("rOoGwHsr"),
+            JamoRiffStringCipher.restore("uUs5ejrzLjihsytY"),
+            JamoRiffStringCipher.restore("rjeiseuQlIt0"),
+            JamoRiffStringCipher.restore("roebRFeNsaJvs7o3nw"),
+            JamoRiffStringCipher.restore("p1algUeb")
         ]
 
-        for key in nestedKeys {
-            let nested = extractUserItems(from: dictionary[key])
-            if !nested.isEmpty {
-                return nested
+        for nestedKey in nestedKeys {
+            let nestedRoster = extractRosterItems(from: riffDictionary[nestedKey])
+            if !nestedRoster.isEmpty {
+                return nestedRoster
             }
         }
 
-        return dictionary.values.flatMap { extractUserItems(from: $0) }
+        return riffDictionary.values.flatMap { extractRosterItems(from: $0) }
     }
 
-    private func makeProfile(from item: [String: Any]) -> JamoCoCreateUserProfile? {
-        let userID = firstString(
-            in: item,
+    private func makePlayerProfile(from riffItem: [String: Any]) -> JamoRiffPlayerProfile? {
+        let playerHandle = firstString(
+            in: riffItem,
             keys: JamoCoCreateUserEndpoint.userIDFields
         )
         let email = firstString(
-            in: item,
+            in: riffItem,
             keys: JamoCoCreateUserEndpoint.emailFields
         )
-        let displayName = firstString(
-            in: item,
+        let stageName = firstString(
+            in: riffItem,
             keys: JamoCoCreateUserEndpoint.displayNameFields
         )
-        let avatarURL = firstString(
-            in: item,
+        let playerArtwork = firstString(
+            in: riffItem,
             keys: JamoCoCreateUserEndpoint.avatarURLFields
         )
         let followingCount = firstInt(
-            in: item,
+            in: riffItem,
             keys: JamoCoCreateUserEndpoint.followingCountFields
         )
         let followersCount = firstInt(
-            in: item,
+            in: riffItem,
             keys: JamoCoCreateUserEndpoint.followersCountFields
         )
-        let coinBalance = firstInt(
-            in: item,
-            keys: JamoCoCreateUserEndpoint.coinBalanceFields
+        let pickCount = firstInt(
+            in: riffItem,
+            keys: JamoCoCreateUserEndpoint.pickCountFields
         )
 
-        guard let stableID = userID ?? email, !stableID.isEmpty else {
+        guard let stablePlayerHandle = playerHandle ?? email, !stablePlayerHandle.isEmpty else {
             return nil
         }
 
-        let fallbackName = email?.split(separator: "@").first.map(String.init)
-        return JamoCoCreateUserProfile(
-            userID: stableID,
-            displayName: displayName ?? fallbackName ?? "Jamo Player",
+        let fallbackName = email?.split(separator: JamoRiffStringCipher.restore("@a")).first.map(String.init)
+        return JamoRiffPlayerProfile(
+            userID: stablePlayerHandle,
+            displayName: stageName ?? fallbackName ?? JamoRiffStringCipher.restore("J8aKmooc MPmlta4yletrt"),
             email: email,
-            avatarURL: avatarURL,
+            avatarURL: playerArtwork,
             followingCount: followingCount,
             followersCount: followersCount,
-            coinBalance: coinBalance
+            pickCount: pickCount
         )
     }
 
-    private func looksLikeUser(_ item: [String: Any]) -> Bool {
-        firstString(in: item, keys: JamoCoCreateUserEndpoint.userIDFields) != nil
-            || firstString(in: item, keys: JamoCoCreateUserEndpoint.emailFields) != nil
-            || firstString(in: item, keys: JamoCoCreateUserEndpoint.displayNameFields) != nil
+    private func looksLikePlayer(_ riffItem: [String: Any]) -> Bool {
+        firstString(in: riffItem, keys: JamoCoCreateUserEndpoint.userIDFields) != nil
+            || firstString(in: riffItem, keys: JamoCoCreateUserEndpoint.emailFields) != nil
+            || firstString(in: riffItem, keys: JamoCoCreateUserEndpoint.displayNameFields) != nil
     }
 
-    private func firstString(in source: [String: Any], keys: [String]) -> String? {
-        for key in keys {
-            if let value = source[key] as? String,
-               !value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                return value
+    private func firstString(in riffSource: [String: Any], keys: [String]) -> String? {
+        for riffKey in keys {
+            if let riffValue = riffSource[riffKey] as? String,
+               !riffValue.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                return riffValue
             }
-            if let value = source[key] as? Int {
-                return String(value)
+            if let riffValue = riffSource[riffKey] as? Int {
+                return String(riffValue)
             }
-            if let value = source[key] as? NSNumber {
-                return value.stringValue
+            if let riffValue = riffSource[riffKey] as? NSNumber {
+                return riffValue.stringValue
             }
         }
         return nil
     }
 
-    private func firstInt(in source: [String: Any], keys: [String]) -> Int? {
-        for key in keys {
-            if let value = source[key] as? Int {
-                return value
+    private func firstInt(in riffSource: [String: Any], keys: [String]) -> Int? {
+        for riffKey in keys {
+            if let riffValue = riffSource[riffKey] as? Int {
+                return riffValue
             }
-            if let value = source[key] as? NSNumber {
-                return value.intValue
+            if let riffValue = riffSource[riffKey] as? NSNumber {
+                return riffValue.intValue
             }
-            if let value = source[key] as? String {
-                let clean = value.trimmingCharacters(in: .whitespacesAndNewlines)
+            if let riffValue = riffSource[riffKey] as? String {
+                let clean = riffValue.trimmingCharacters(in: .whitespacesAndNewlines)
                 if let intValue = Int(clean) {
                     return intValue
                 }
@@ -169,13 +195,44 @@ final class JamoCoCreateUserService: JamoCoCreateUserProviding {
 }
 
 enum JamoCoCreateUserEndpoint {
-    static let jamUserIndex = "/xwngyyrfvz/mwnwgetgrl"
-    static let bundleIDField = "audioplayer"
-    static let userIDFields = ["rhythmlayer"]
-    static let emailFields = ["chainstyle", "userEmail", "audioplugin", "leaderboardRankingLoraua", "email"]
-    static let displayNameFields = ["musicprompt", "userName", "homestudio", "nickname", "name"]
-    static let avatarURLFields = ["guitaridea", "userImgUrl", "dawsession", "avatar", "avatarUrl"]
-    static let followingCountFields = ["fretboardscale", "userFriends", "followingCount", "following"]
-    static let followersCountFields = ["pentatonicrun", "userFans", "followersCount", "followers"]
-    static let coinBalanceFields = ["fingerpicking", "userBalance", "coinBalance", "coins"]
+    static let jamUserIndex = JamoRiffStringCipher.restore("/UxFwinDgAyXyxrNfJvPzG/7mKwnnyw0gWeStogUr2lN")
+    static let bundleIDField = JamoRiffStringCipher.restore("a7uIdOi2oIpZleaSykeIrG")
+    static let userIDFields = [JamoRiffStringCipher.restore("r6hEywtVhUmTlIaLyne4rX")]
+    static let emailFields = [
+        JamoRiffStringCipher.restore("cHh3aji4nVsHtxy2l7eo"),
+        JamoRiffStringCipher.restore("uVs7eRroEEmuagiYlc"),
+        JamoRiffStringCipher.restore("auu0d4iSoJpwlBuygRiFnu"),
+        JamoRiffStringCipher.restore("l7eOa8dnezrabXozakrWdyRzapnhkDiWnygFLboBr3afuWal"),
+        JamoRiffStringCipher.restore("esmva3imlx")
+    ]
+    static let displayNameFields = [
+        JamoRiffStringCipher.restore("mXujsfiMcfpmr1okmNpfte"),
+        JamoRiffStringCipher.restore("u7syevrPNyaJmTeT"),
+        JamoRiffStringCipher.restore("hyo4mIelsztOu1dqiaoZ"),
+        JamoRiffStringCipher.restore("naiRcvk2nfakm5eQ"),
+        JamoRiffStringCipher.restore("nhaUmzeX")
+    ]
+    static let avatarURLFields = [
+        JamoRiffStringCipher.restore("g1ugistSaBrQiDdWeVah"),
+        JamoRiffStringCipher.restore("uqseePr4I4mTgfUtrXl0"),
+        JamoRiffStringCipher.restore("dFaywUsQeospsnimoZne"),
+        JamoRiffStringCipher.restore("anvMaBtwaqrQ"),
+        JamoRiffStringCipher.restore("ahvOa3tQagrvUSrMlA")
+    ]
+    static let followingCountFields = [
+        JamoRiffStringCipher.restore("f0raeStUbdoAaerMdCsfciaClBe8"),
+        JamoRiffStringCipher.restore("ubsHeyrEFtrii9eLnSdAsX"),
+        JamoRiffStringCipher.restore("f8o2l9lVoDwGiCnigECSotugnctP"),
+        JamoRiffStringCipher.restore("fNoml2lpo1wci1nXgc")
+    ]
+    static let followersCountFields = [
+        JamoRiffStringCipher.restore("pEecnHtBaotUognIi5c4rXuOnO"),
+        JamoRiffStringCipher.restore("uSsceprcFDaZnGsk"),
+        JamoRiffStringCipher.restore("fIoLlClYowwDedrKsmCaoLu3nstr"),
+        JamoRiffStringCipher.restore("fDoXlplVoLwSe7rOsx")
+    ]
+    static let pickCountFields = [
+        JamoRiffStringCipher.restore("fminntgNeprFpIiacakFitnKgC"),
+        JamoRiffStringCipher.restore("u7sseorvByaVlxaPnAcUe8")
+    ]
 }

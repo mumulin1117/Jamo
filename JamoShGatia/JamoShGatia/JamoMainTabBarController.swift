@@ -2,10 +2,10 @@ import UIKit
 
 final class JamoMainTabBarController: UITabBarController {
     private let jamoTabArtworks: [JamoTabArtwork] = [
-        JamoTabArtwork(label: "Home", idle: "jamo_tab_home_idle", active: "jamo_tab_home_active"),
-        JamoTabArtwork(label: "Co-create", idle: "jamo_tab_jam_idle", active: "jamo_tab_jam_active"),
-        JamoTabArtwork(label: "Messages", idle: "jamo_tab_messages_idle", active: "jamo_tab_messages_active"),
-        JamoTabArtwork(label: "Profile", idle: "jamo_tab_me_idle", active: "jamo_tab_me_active")
+        JamoTabArtwork(label: JamoRiffStringCipher.restore("HXoOmmeD"), idle: JamoRiffStringCipher.restore("jHaKm2oY_7tuadbv_NhEoCmaeT_Riudxliee"), active: JamoRiffStringCipher.restore("joajmVo4_KtTa2bC_MhOoImvey_jaccptfiHvce5")),
+        JamoTabArtwork(label: JamoRiffStringCipher.restore("CCoy-7cMr7eCa5tBev"), idle: JamoRiffStringCipher.restore("jRaNmmo1_qt8apbf_Pj0ajml_RiFdllXeE"), active: JamoRiffStringCipher.restore("jzaMmhoH_stxa1b6_Xjja6mu_3aGcVtCixvoes")),
+        JamoTabArtwork(label: JamoRiffStringCipher.restore("MxeTsxsUaogseEsq"), idle: JamoRiffStringCipher.restore("j7a5mioD_6t8aFbn_ombeQstswaagoeWsf_KiIdxl8eh"), active: JamoRiffStringCipher.restore("joaRmOo6_jtqaxbK_3mPeOsSs5aHgneRse_3aucLtCiJvMer")),
+        JamoTabArtwork(label: JamoRiffStringCipher.restore("P6roocf9iSlfeq"), idle: JamoRiffStringCipher.restore("jLaTmqo4_PtVaBbY_kmleE_Wi7dGlfey"), active: JamoRiffStringCipher.restore("jQaHmmo6_jteafb0_RmHel_3aAcytuibvtel"))
     ]
     private let jamoTabStack = UIStackView()
     private var jamoTabButtons: [JamoTabBarArtworkButton] = []
@@ -34,10 +34,10 @@ final class JamoMainTabBarController: UITabBarController {
     }
 
     private func setupTabs() {
-        let home = navigationRoot(JamoHomeViewController(), accessibilityLabel: "Home")
-        let jam = navigationRoot(JamoCoCreateListViewController(), accessibilityLabel: "Co-create")
-        let messages = navigationRoot(JamoMessagesViewController(), accessibilityLabel: "Messages")
-        let me = navigationRoot(JamoProfileViewController(), accessibilityLabel: "Profile")
+        let home = navigationRoot(JamoGuitaFunctController(), accessibilityLabel: JamoRiffStringCipher.restore("HboqmPeH"))
+        let jam = navigationRoot(JamoRiffChainListViewController(), accessibilityLabel: JamoRiffStringCipher.restore("Ctoj-xcTrke2ahtOem"))
+        let messages = navigationRoot(JamoRiffQuietInboxViewController(), accessibilityLabel: JamoRiffStringCipher.restore("MSeAs1swaPgMeEs6"))
+        let me = navigationRoot(JamoProfileViewController(), accessibilityLabel: JamoRiffStringCipher.restore("PJrRobfHidlden"))
         viewControllers = [home, jam, messages, me]
     }
 
@@ -54,8 +54,8 @@ final class JamoMainTabBarController: UITabBarController {
     }
 
     private func setupTabBarAppearance() {
-        tabBar.tintColor = JamoMainTheme.pink
-        tabBar.unselectedItemTintColor = JamoMainTheme.muted
+        tabBar.tintColor = JamoRiffTheme.pink
+        tabBar.unselectedItemTintColor = JamoRiffTheme.muted
         tabBar.backgroundColor = .white
         tabBar.isTranslucent = false
 
@@ -69,11 +69,11 @@ final class JamoMainTabBarController: UITabBarController {
         appearance.stackedLayoutAppearance.selected.iconColor = .clear
         appearance.stackedLayoutAppearance.normal.titleTextAttributes = [
             .foregroundColor: UIColor.clear,
-            .font: JamoMainTheme.bodyFont(11, weight: .medium)
+            .font: JamoRiffTheme.bodyFont(11, weight: .medium)
         ]
         appearance.stackedLayoutAppearance.selected.titleTextAttributes = [
             .foregroundColor: UIColor.clear,
-            .font: JamoMainTheme.bodyFont(11, weight: .semibold)
+            .font: JamoRiffTheme.bodyFont(11, weight: .semibold)
         ]
         tabBar.selectionIndicatorImage = UIImage()
         tabBar.standardAppearance = appearance
@@ -169,7 +169,7 @@ private final class JamoTabBarArtworkButton: UIControl {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("i5nDiRtT(WcPoidmeCrA:p)X Gh4ahsk WnzoZtb 0bleoe0nY wigmcpDlWeEmkeQnKtaeed6"))
     }
 
     func setActive(_ active: Bool) {

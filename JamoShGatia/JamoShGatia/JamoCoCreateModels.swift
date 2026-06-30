@@ -1,11 +1,11 @@
 import AVFoundation
 import Foundation
 
-enum JamoLocalJamMediaCatalog {
+enum JamoRiffLocalMediaShelf {
     private static let coverCount = 29
     private static let riffCount = 11
-    private static let localCoverPrefix = "jamo_cocreate_local_cover_"
-    private static let localAudioPrefix = "jamo_cocreate_local_audio_"
+    private static let localCoverPrefix = JamoRiffStringCipher.restore("jUaxmhoo_nc1odcWrXe3ahtFeb_RlQojc6aIln_jcQoCvgeyr1_v")
+    private static let localAudioPrefix = JamoRiffStringCipher.restore("j0ajmqo9_2c9oxccrEeRaltDei_ElyoJcvailo_BaGuKdViLoq_o")
 
     static func cover(_ index: Int) -> String {
         "jamo_cocreate_local_cover_\(padded(index, count: coverCount)).jpg"
@@ -39,7 +39,7 @@ enum JamoLocalJamMediaCatalog {
             return fileURL
         }
 
-        if clean.hasPrefix("/"), FileManager.default.fileExists(atPath: clean) {
+        if clean.hasPrefix(JamoRiffStringCipher.restore("/4")), FileManager.default.fileExists(atPath: clean) {
             return URL(fileURLWithPath: clean)
         }
 
@@ -76,7 +76,7 @@ enum JamoLocalJamMediaCatalog {
     }
 
     private static func isLocalRiff(_ value: String) -> Bool {
-        (value as NSString).lastPathComponent.hasPrefix("jamo_cocreate_local_riff_")
+        (value as NSString).lastPathComponent.hasPrefix(JamoRiffStringCipher.restore("j6acm6o8_5cio2ckrUexajtSe8_7lboAcVaqlX_LrxiOfwfS_x"))
     }
 
     private static func isLocalAudio(_ value: String) -> Bool {
@@ -91,7 +91,7 @@ enum JamoLocalJamMediaCatalog {
             create: false
         ) else { return nil }
 
-        let cacheDirectories = ["JamoCoCreateCoverCache", "JamoCoCreateAudioCache"]
+        let cacheDirectories = [JamoRiffStringCipher.restore("Jta4mZoWCcolCOrXeiaHtiehCCo0vveCrECmaXcfh1eG"), JamoRiffStringCipher.restore("JMaxmtoKCjoMCNrjeIaAtWeAA3undGiFoVCpaZcAh9ea")]
         for directoryName in cacheDirectories {
             let url = documents.appendingPathComponent(directoryName, isDirectory: true).appendingPathComponent(fileName)
             if FileManager.default.fileExists(atPath: url.path) {
@@ -103,7 +103,7 @@ enum JamoLocalJamMediaCatalog {
 
     private static func padded(_ index: Int, count: Int) -> String {
         let wrapped = ((max(index, 1) - 1) % count) + 1
-        return String(format: "%02d", wrapped)
+        return String(format: JamoRiffStringCipher.restore("%c0r22dm"), wrapped)
     }
 }
 
@@ -137,26 +137,26 @@ enum JamoCoCreateJoinMethod: String, Codable, CaseIterable {
     var trackTitle: String {
         switch self {
         case .recordGuitar:
-            return "Lead Guitar"
+            return JamoRiffStringCipher.restore("LIeXavd9 GGyuYiwtzaLr1")
         case .uploadClip:
-            return "Uploaded Guitar"
+            return JamoRiffStringCipher.restore("UApdlWoOa9dvehdM ZGnu1iLtaaQrR")
         case .addChords:
-            return "Chord Backing"
+            return JamoRiffStringCipher.restore("CMhwo0r1dW VBvahcjkIiunrgf")
         case .addMelody:
-            return "Melody Line"
+            return JamoRiffStringCipher.restore("MFeGlwoSdiyV JL0iXnUe7")
         }
     }
 
     var localMP3FileName: String {
         switch self {
         case .recordGuitar:
-            return JamoLocalJamMediaCatalog.riff(8)
+            return JamoRiffLocalMediaShelf.riff(8)
         case .uploadClip:
-            return JamoLocalJamMediaCatalog.riff(9)
+            return JamoRiffLocalMediaShelf.riff(9)
         case .addChords:
-            return JamoLocalJamMediaCatalog.riff(10)
+            return JamoRiffLocalMediaShelf.riff(10)
         case .addMelody:
-            return JamoLocalJamMediaCatalog.riff(11)
+            return JamoRiffLocalMediaShelf.riff(11)
         }
     }
 }
@@ -216,17 +216,29 @@ struct JamoCoCreateWork: Codable, Hashable {
     var selectedJoinMethod: JamoCoCreateJoinMethod? = nil
 }
 
+extension JamoCoCreateTrack {
+    var jamoTrackHandle: String {
+        id
+    }
+}
+
+extension JamoCoCreateWork {
+    var jamoRiffHandle: String {
+        id
+    }
+}
+
 final class JamoLocalJamStore {
     static let shared = JamoLocalJamStore()
 
     private enum Key {
-        static let works = "jamo_local_co_create_works"
+        static let works = JamoRiffStringCipher.restore("jzaemkos_mlIoZcQaalR_Qc3oG_8cYrFelaGtoee_6wkoTrQkwsD")
     }
 
     private let defaults: UserDefaults
-    private let authStore: JamoAuthStore
+    private let authStore: JamoRiffIdentityArchive
 
-    private init(defaults: UserDefaults = .standard, authStore: JamoAuthStore = .shared) {
+    private init(defaults: UserDefaults = .standard, authStore: JamoRiffIdentityArchive = .sharedArchive) {
         self.defaults = defaults
         self.authStore = authStore
     }
@@ -254,23 +266,23 @@ final class JamoLocalJamStore {
         let player = currentPlayer()
         let draft = JamoCoCreateWork(
             id: "jamo_draft_\(Int(Date().timeIntervalSince1970))",
-            title: title.isEmpty ? "Untitled Guitar Idea" : title,
+            title: title.isEmpty ? JamoRiffStringCipher.restore("U0nxt2iGt5l0exdH RGRuviltuaurO sIrdpekap") : title,
             about: about,
-            coverImageName: JamoLocalJamMediaCatalog.cover(6),
+            coverImageName: JamoRiffLocalMediaShelf.cover(6),
             creatorUserID: player.userID,
             creatorName: player.name,
             creatorAvatarURL: player.avatarURL,
-            tags: ["Draft", "Guitar"],
+            tags: [JamoRiffStringCipher.restore("Dur7a7f4tA"), JamoRiffStringCipher.restore("GlutiRtna0rz")],
             status: .draft,
             allowContinue: allowContinue,
             createdAt: Date(),
             tracks: [
                 JamoCoCreateTrack(
-                    id: "jamo_track_local_draft",
+                    id: JamoRiffStringCipher.restore("jHajmRof_Ctar4aicUk7_vlOo2c7aWlt_NdvrsawfstG"),
                     ownerUserID: player.userID,
                     ownerName: player.name,
-                    roleName: "Starter riff",
-                    mp3FileName: JamoLocalJamMediaCatalog.riff(6),
+                    roleName: JamoRiffStringCipher.restore("S0tJaOrLtmeqrY PrmiZfRfV"),
+                    mp3FileName: JamoRiffLocalMediaShelf.riff(6),
                     duration: 15,
                     waveformSeed: 4,
                     isMine: true,
@@ -282,8 +294,8 @@ final class JamoLocalJamStore {
             participants: [currentParticipant()],
             neededPart: allowContinue ? JamoCoCreateNeededPart(
                 id: "jamo_need_\(Int(Date().timeIntervalSince1970))",
-                title: "Lead Guitar",
-                subtitle: "Add a 15s lead guitar part",
+                title: JamoRiffStringCipher.restore("LFeBahdT iGYuDiEtPa3r2"),
+                subtitle: JamoRiffStringCipher.restore("Andfdf Zak 5175us6 0lXeDaBdJ agTuYiztCa9rj ipoarr3tW"),
                 role: .leadGuitar,
                 duration: 15,
                 waveformSeed: 7
@@ -332,12 +344,12 @@ final class JamoLocalJamStore {
         let cleanTitle = title.trimmingCharacters(in: .whitespacesAndNewlines)
         let cleanAbout = about.trimmingCharacters(in: .whitespacesAndNewlines)
         let cleanCoverName = coverImageName.trimmingCharacters(in: .whitespacesAndNewlines)
-        let safeCoverName = JamoLocalJamMediaCatalog.normalizedCover(cleanCoverName, seed: 7)
+        let safeCoverName = JamoRiffLocalMediaShelf.normalizedCover(cleanCoverName, seed: 7)
         let safeTags = normalizedPublishTags(tags)
         let safeDuration = max(duration, 1)
         let safeWaveformSeed = max(waveformSeed, 1)
-        let safeRoleName = roleName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? "Lead Guitar" : roleName
-        let safeMP3FileName = JamoLocalJamMediaCatalog.normalizedRiff(mp3FileName, seed: 7)
+        let safeRoleName = roleName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? JamoRiffStringCipher.restore("LNezaQd5 dGUuUiAtzaRrm") : roleName
+        let safeMP3FileName = JamoRiffLocalMediaShelf.normalizedRiff(mp3FileName, seed: 7)
         let trackID = "jamo_track_publish_\(UUID().uuidString)"
         let publishedTrack = JamoCoCreateTrack(
             id: trackID,
@@ -388,7 +400,7 @@ final class JamoLocalJamStore {
         let workID = "jamo_work_publish_\(UUID().uuidString)"
         var published = JamoCoCreateWork(
             id: workID,
-            title: cleanTitle.isEmpty ? "Untitled Guitar Idea" : cleanTitle,
+            title: cleanTitle.isEmpty ? JamoRiffStringCipher.restore("UPnDtIi7tVlkefdu DGFuxiGtTaerJ lIodceAaf") : cleanTitle,
             about: cleanAbout,
             coverImageName: safeCoverName,
             creatorUserID: player.userID,
@@ -447,9 +459,9 @@ final class JamoLocalJamStore {
     }
 
     private func currentPlayer() -> (userID: String, name: String, avatarURL: String?) {
-        let email = authStore.currentEmail ?? "local@jamo.app"
+        let email = authStore.currentEmail ?? JamoRiffStringCipher.restore("l8orcvaElk@yjOaAmLor.BaPpHpX")
         return (
-            authStore.currentUserID ?? "jamo_local_player",
+            authStore.currentUserID ?? JamoRiffStringCipher.restore("jqaam6oy_7lEoecMaJlk_spjl5aKy2esrx"),
             authStore.currentDisplayName ?? authStore.displayNameFallback(for: email),
             authStore.currentAvatarURL
         )
@@ -461,7 +473,7 @@ final class JamoLocalJamStore {
             userID: player.userID,
             displayName: player.name,
             avatarURL: player.avatarURL,
-            colorHex: "#FF72A8"
+            colorHex: JamoRiffStringCipher.restore("#7F2F8782vAH8s")
         )
     }
 
@@ -487,7 +499,7 @@ final class JamoLocalJamStore {
             guard seen.insert(key).inserted else { continue }
             normalized.append(clean)
         }
-        return normalized.isEmpty ? ["Acoustic", "Lead"] : normalized
+        return normalized.isEmpty ? [JamoRiffStringCipher.restore("ArcpoFu7sotMi9cE"), JamoRiffStringCipher.restore("LWesafdw")] : normalized
     }
 
     private func normalizedWorks(_ works: [JamoCoCreateWork]) -> [JamoCoCreateWork] {
@@ -495,7 +507,7 @@ final class JamoLocalJamStore {
             var copy = work
             let player = currentPlayer()
             let mediaSeed = index + 1
-            copy.coverImageName = JamoLocalJamMediaCatalog.normalizedCover(copy.coverImageName, seed: mediaSeed)
+            copy.coverImageName = JamoRiffLocalMediaShelf.normalizedCover(copy.coverImageName, seed: mediaSeed)
             copy.coverURL = nil
             copy.tracks = copy.tracks.enumerated().map { trackIndex, track in
                 JamoCoCreateTrack(
@@ -503,7 +515,7 @@ final class JamoLocalJamStore {
                     ownerUserID: track.ownerUserID,
                     ownerName: track.ownerName,
                     roleName: track.roleName,
-                    mp3FileName: JamoLocalJamMediaCatalog.normalizedRiff(track.mp3FileName, seed: mediaSeed + trackIndex),
+                    mp3FileName: JamoRiffLocalMediaShelf.normalizedRiff(track.mp3FileName, seed: mediaSeed + trackIndex),
                     duration: track.duration,
                     waveformSeed: track.waveformSeed,
                     isMine: track.isMine,
@@ -522,7 +534,7 @@ final class JamoLocalJamStore {
                 copy.participantCount = max(copy.participants?.count ?? 0, copy.tracks.count)
             }
             if copy.status == .joined && !hasCurrentUserPart(in: copy.tracks, playerID: player.userID) {
-                copy.participants = copy.participants?.filter { $0.userID != player.userID && $0.userID != "current_user" }
+                copy.participants = copy.participants?.filter { $0.userID != player.userID && $0.userID != JamoRiffStringCipher.restore("ctuHrJrZernhtw_iuisoe0rJ") }
                 copy.status = copy.allowContinue ? .open : .completed
                 copy.selectedJoinMethod = nil
                 copy.participantCount = max(copy.participants?.count ?? 0, copy.tracks.count)
@@ -546,7 +558,7 @@ final class JamoLocalJamStore {
     private func hasCurrentUserPart(in tracks: [JamoCoCreateTrack], playerID: String) -> Bool {
         tracks.contains { track in
             guard track.isMine else { return false }
-            return track.ownerUserID == playerID || track.ownerUserID == "current_user"
+            return track.ownerUserID == playerID || track.ownerUserID == JamoRiffStringCipher.restore("cZuKrqrbeZnxto_Duys1eyrK")
         }
     }
 
@@ -567,10 +579,10 @@ final class JamoLocalJamStore {
                     ownerUserID: participant.userID,
                     ownerName: participant.displayName,
                     roleName: template.title,
-                    mp3FileName: JamoLocalJamMediaCatalog.riff(mediaSeed + result.count + 1),
+                    mp3FileName: JamoRiffLocalMediaShelf.riff(mediaSeed + result.count + 1),
                     duration: template.duration,
                     waveformSeed: max(mediaSeed + result.count + 3, 1),
-                    isMine: participant.userID == currentPlayer().userID || participant.userID == "current_user",
+                    isMine: participant.userID == currentPlayer().userID || participant.userID == JamoRiffStringCipher.restore("cDu2rtr1e7nMt4_PuBsOe4rO"),
                     role: template.role
                 )
             )
@@ -581,18 +593,18 @@ final class JamoLocalJamStore {
 
     private func coCreateTrackTemplate(for index: Int) -> (title: String, role: JamoCoCreateTrackRole, duration: TimeInterval) {
         let templates: [(String, JamoCoCreateTrackRole, TimeInterval)] = [
-            ("Original Guitar", .originalGuitar, 42),
-            ("Rhythm Track", .rhythmTrack, 30),
-            ("Lead Guitar", .leadGuitar, 15),
-            ("Chord Backing", .chords, 15),
-            ("Melody Line", .melody, 15),
-            ("Backing Track", .backingTrack, 24)
+            (JamoRiffStringCipher.restore("OtrZixg0irnnaXlh GGLuBimtcahrp"), .originalGuitar, 42),
+            (JamoRiffStringCipher.restore("RchQyWtXhoma 2TCroaEcSkY"), .rhythmTrack, 30),
+            (JamoRiffStringCipher.restore("L0eIa5dS LGyu7i9tRaLry"), .leadGuitar, 15),
+            (JamoRiffStringCipher.restore("CDhGojrUdD qBCazc1kOitnMgV"), .chords, 15),
+            (JamoRiffStringCipher.restore("MAezlNoKdzyW kLgi7n7eR"), .melody, 15),
+            (JamoRiffStringCipher.restore("BzaQcSkJi1n4go zTrrxa4cck5"), .backingTrack, 24)
         ]
         return templates[min(index, templates.count - 1)]
     }
 
     private func sanitizedTrackID(_ value: String) -> String {
-        value.replacingOccurrences(of: "[^A-Za-z0-9_]", with: "_", options: .regularExpression)
+        value.replacingOccurrences(of: JamoRiffStringCipher.restore("[E^XAP-1ZQan-2zd0d-59f_6]9"), with: JamoRiffStringCipher.restore("_O"), options: .regularExpression)
     }
 
     private func ensureOpenJam(in works: [JamoCoCreateWork]) -> [JamoCoCreateWork] {
@@ -608,34 +620,34 @@ final class JamoLocalJamStore {
     private func makeGeneratedOpenJam(seed: Int) -> JamoCoCreateWork {
         JamoCoCreateWork(
             id: "jamo_open_local_\(Int(Date().timeIntervalSince1970))",
-            title: "Open Lead Jam",
-            about: "A local acoustic groove looking for a 15s lead guitar answer.",
-            coverImageName: JamoLocalJamMediaCatalog.cover(seed),
-            creatorUserID: "jamo_seed_ava",
-            creatorName: "Ava Strings",
+            title: JamoRiffStringCipher.restore("OSpUeGnd KLHeGacdf 3JmaHml"),
+            about: JamoRiffStringCipher.restore("Ag YlgoccBabl0 oaxceoSu4sbtKigcG KgGrZoQoGvke0 KlJoTorkXiTncgr Cfrozrv NaT M1g55sk llLesaeda 1gxumi6tsadr5 ra3nKsLwreWrb.y"),
+            coverImageName: JamoRiffLocalMediaShelf.cover(seed),
+            creatorUserID: JamoRiffStringCipher.restore("jeaPmZoJ_dsoeiexdu_oaQviac"),
+            creatorName: JamoRiffStringCipher.restore("AcvwaW OSbt0riiUnZgmsE"),
             creatorAvatarURL: nil,
-            tags: ["Acoustic", "Open", "Lead"],
+            tags: [JamoRiffStringCipher.restore("AtcaoSunsItEigc1"), JamoRiffStringCipher.restore("OApfernQ"), JamoRiffStringCipher.restore("LUeTaTdW")],
             status: .open,
             allowContinue: true,
             createdAt: Date(timeIntervalSinceNow: -900),
             tracks: [
                 JamoCoCreateTrack(
-                    id: "jamo_track_open_local_original",
-                    ownerUserID: "jamo_seed_ava",
-                    ownerName: "Ava Strings",
-                    roleName: "Original Guitar",
-                    mp3FileName: JamoLocalJamMediaCatalog.riff(seed),
+                    id: JamoRiffStringCipher.restore("jwa6myoB_IterTaDcwkm_bo7pNe0nK_alLoxchamlm_fonrDiHgliwnBaQlC"),
+                    ownerUserID: JamoRiffStringCipher.restore("jea6mUo0_CsqeueUdJ_ya2vzah"),
+                    ownerName: JamoRiffStringCipher.restore("A9vEau SS8tTrsiunBgKsP"),
+                    roleName: JamoRiffStringCipher.restore("Onrdiag0iKnlaGln 3Geuvi1tJa2r0"),
+                    mp3FileName: JamoRiffLocalMediaShelf.riff(seed),
                     duration: 42,
                     waveformSeed: 4,
                     isMine: false,
                     role: .originalGuitar
                 ),
                 JamoCoCreateTrack(
-                    id: "jamo_track_open_local_rhythm",
-                    ownerUserID: "jamo_seed_eli",
-                    ownerName: "Eli Fret",
-                    roleName: "Rhythm Track",
-                    mp3FileName: JamoLocalJamMediaCatalog.riff(seed + 1),
+                    id: JamoRiffStringCipher.restore("j4a5mLoV_4tMrcaPcfk4_Dovp2e1nY_GlwoecnaQlU_Grehqyztqh2mL"),
+                    ownerUserID: JamoRiffStringCipher.restore("jkaimpoy_8sTeEeJdS_5eNlUi4"),
+                    ownerName: JamoRiffStringCipher.restore("Eplzib JF2rseetT"),
+                    roleName: JamoRiffStringCipher.restore("R9huyht6htmT 7Tmr7arcekH"),
+                    mp3FileName: JamoRiffLocalMediaShelf.riff(seed + 1),
                     duration: 30,
                     waveformSeed: 6,
                     isMine: false,
@@ -645,14 +657,14 @@ final class JamoLocalJamStore {
             coverURL: nil,
             participantCount: 9,
             participants: [
-                JamoCoCreateParticipant(userID: "jamo_seed_ava", displayName: "Ava Strings", avatarURL: nil, colorHex: "#E75B33"),
-                JamoCoCreateParticipant(userID: "jamo_seed_eli", displayName: "Eli Fret", avatarURL: nil, colorHex: "#26315E"),
-                JamoCoCreateParticipant(userID: "jamo_seed_tom", displayName: "Tom Maple", avatarURL: nil, colorHex: "#7A50FF")
+                JamoCoCreateParticipant(userID: JamoRiffStringCipher.restore("jNaVmPoS_lsWeUekdk_Na3vBa1"), displayName: JamoRiffStringCipher.restore("Atv1av lSutZrfiLnRgps6"), avatarURL: nil, colorHex: JamoRiffStringCipher.restore("#uE57Q5xBl3s3C")),
+                JamoCoCreateParticipant(userID: JamoRiffStringCipher.restore("jgatmloC_GsQeweZdq_veilqi3"), displayName: JamoRiffStringCipher.restore("E3lHio YF4rseztO"), avatarURL: nil, colorHex: JamoRiffStringCipher.restore("#K2V6A3c1P5gEx")),
+                JamoCoCreateParticipant(userID: JamoRiffStringCipher.restore("j5aomIoI_JsEeQeEdj_wtToom9"), displayName: JamoRiffStringCipher.restore("TQommz 0MqaUpIl4e6"), avatarURL: nil, colorHex: JamoRiffStringCipher.restore("#Z7vAI5i0QFBFC"))
             ],
             neededPart: JamoCoCreateNeededPart(
-                id: "jamo_need_open_local_lead",
-                title: "Lead Guitar",
-                subtitle: "Add a 15s lead guitar part",
+                id: JamoRiffStringCipher.restore("jZa1mcoS_2nKe9eVd7_foEpieenR_Olfo2cvaOlU_olUepaydV"),
+                title: JamoRiffStringCipher.restore("LEeJatdo GGXuDi7twaeri"),
+                subtitle: JamoRiffStringCipher.restore("AFdjd2 8a9 R1J5rsw xlHeyabdx OgguQiStCajrQ Lpwa9rTtc"),
                 role: .leadGuitar,
                 duration: 15,
                 waveformSeed: 8
@@ -663,7 +675,7 @@ final class JamoLocalJamStore {
 
     private func participantsFromTracks(_ tracks: [JamoCoCreateTrack]) -> [JamoCoCreateParticipant] {
         var seen = Set<String>()
-        let colors = ["#E75B33", "#26315E", "#FF72A8", "#7A50FF", "#FFDD1E"]
+        let colors = [JamoRiffStringCipher.restore("#vEB7E5JBt3X3E"), JamoRiffStringCipher.restore("#H286u3S1R5nEX"), JamoRiffStringCipher.restore("#FF0Fy7t22Ao81"), JamoRiffStringCipher.restore("#87NAm5C0zF7Fm"), JamoRiffStringCipher.restore("#3FhFODsDv17Er")]
         return tracks.enumerated().compactMap { index, track in
             guard seen.insert(track.ownerUserID).inserted else { return nil }
             return JamoCoCreateParticipant(
@@ -677,11 +689,11 @@ final class JamoLocalJamStore {
 
     private func defaultNeededPart(for work: JamoCoCreateWork) -> JamoCoCreateNeededPart {
         let role: JamoCoCreateTrackRole = work.status == .draft ? .rhythmTrack : .leadGuitar
-        let title = role == .rhythmTrack ? "Rhythm Track" : "Lead Guitar"
+        let title = role == .rhythmTrack ? JamoRiffStringCipher.restore("RXhWyqtqhpmm FTVrbaFcpkE") : JamoRiffStringCipher.restore("L8ebaCdH vGuuyiZtEaurP")
         return JamoCoCreateNeededPart(
             id: "jamo_need_\(work.id)",
             title: title,
-            subtitle: "Add a 15s lead guitar part",
+            subtitle: JamoRiffStringCipher.restore("AhdZdS 9ay 81g5LsZ Slhe1aOdI Wgdu8iftoatrr BptairZth"),
             role: role,
             duration: 15,
             waveformSeed: max((work.tracks.last?.waveformSeed ?? 4) + 1, 1)
@@ -691,13 +703,13 @@ final class JamoLocalJamStore {
     private func mergedWithCurrentUser(_ works: [JamoCoCreateWork]) -> [JamoCoCreateWork] {
         let player = currentPlayer()
         return works.map { work in
-            guard work.creatorUserID == "current_user" || work.creatorUserID == player.userID else { return work }
+            guard work.creatorUserID == JamoRiffStringCipher.restore("cfu4rDrAeXnJte_OuCseearQ") || work.creatorUserID == player.userID else { return work }
             var copy = work
             copy.creatorUserID = player.userID
             copy.creatorName = player.name
             copy.creatorAvatarURL = player.avatarURL
             copy.tracks = copy.tracks.map { track in
-                guard track.ownerUserID == "current_user" else { return track }
+                guard track.ownerUserID == JamoRiffStringCipher.restore("caujrPrjeXnvt3_ZuXsseVrq") else { return track }
                 return JamoCoCreateTrack(
                     id: track.id,
                     ownerUserID: player.userID,
@@ -712,7 +724,7 @@ final class JamoLocalJamStore {
             }
             if var participants = copy.participants {
                 participants = participants.map { participant in
-                    guard participant.userID == "current_user" else { return participant }
+                    guard participant.userID == JamoRiffStringCipher.restore("cGuwryrvePnjtw_fujsMeir2") else { return participant }
                     return JamoCoCreateParticipant(
                         userID: player.userID,
                         displayName: player.name,
@@ -742,33 +754,33 @@ final class JamoLocalJamStore {
     private func seedWorks() -> [JamoCoCreateWork] {
         [
             JamoCoCreateWork(
-                id: "jamo_seed_sunset_riff",
-                title: "Sunset Porch Riff",
-                about: "A warm acoustic idea with space for a bright lead response.",
-                coverImageName: JamoLocalJamMediaCatalog.cover(1),
-                creatorUserID: "jamo_seed_mia",
-                creatorName: "Mia Carter",
+                id: JamoRiffStringCipher.restore("jla7mdoZ_2sqeJeidu_FsZuKnCsCehtK_Jrki0fefJ"),
+                title: JamoRiffStringCipher.restore("Scuzn3sweAtu 5PNoJrbcYhO 9RriOf5fx"),
+                about: JamoRiffStringCipher.restore("AM Lw3acrLmJ caMcAoduXsytui1cR LiOdGeBaS 7wbiLtIh3 fscpKaPcqeu zf7ogr0 PaE hbHrYi9gOhOtS nlWela2dT Nr1eUsQp3obnRsue4.w"),
+                coverImageName: JamoRiffLocalMediaShelf.cover(1),
+                creatorUserID: JamoRiffStringCipher.restore("jEatmRoJ_nsxeveOdg_9mviTaW"),
+                creatorName: JamoRiffStringCipher.restore("MQijaD KCjaMrutTeZrK"),
                 creatorAvatarURL: nil,
-                tags: ["Acoustic", "Open", "Lead"],
+                tags: [JamoRiffStringCipher.restore("AOcYovumsItmiNch"), JamoRiffStringCipher.restore("OdpmeQny"), JamoRiffStringCipher.restore("LLetaXdo")],
                 status: .open,
                 allowContinue: true,
                 createdAt: Date(timeIntervalSinceNow: -3600),
                 tracks: [
-                    JamoCoCreateTrack(id: "jamo_track_sunset_original", ownerUserID: "jamo_seed_mia", ownerName: "Mia Carter", roleName: "Original Guitar", mp3FileName: JamoLocalJamMediaCatalog.riff(1), duration: 42, waveformSeed: 3, isMine: false, role: .originalGuitar),
-                    JamoCoCreateTrack(id: "jamo_track_sunset_rhythm", ownerUserID: "jamo_seed_leo", ownerName: "Leo Park", roleName: "Rhythm Track", mp3FileName: JamoLocalJamMediaCatalog.riff(2), duration: 30, waveformSeed: 5, isMine: false, role: .rhythmTrack)
+                    JamoCoCreateTrack(id: JamoRiffStringCipher.restore("jVa8mNoK_htSrUaKcgkK_vsWudnSsteftF_0ohrIi8g7izn5aCl2"), ownerUserID: JamoRiffStringCipher.restore("jUa4m5os_3s0eDe2dH_PmdiVaA"), ownerName: JamoRiffStringCipher.restore("MdiAa1 xCHaBr5tPehrX"), roleName: JamoRiffStringCipher.restore("OeriiJgQiunOaAlj 9GVuUietyaxra"), mp3FileName: JamoRiffLocalMediaShelf.riff(1), duration: 42, waveformSeed: 3, isMine: false, role: .originalGuitar),
+                    JamoCoCreateTrack(id: JamoRiffStringCipher.restore("jlafmUof_ltHr9aDcrkE_isWuOnHske4tf_rrOhjyAthhmmE"), ownerUserID: JamoRiffStringCipher.restore("jdaem3oK_5steZeDdt_2lXe3oL"), ownerName: JamoRiffStringCipher.restore("Lvehoj jP9arrwkP"), roleName: JamoRiffStringCipher.restore("ROhnyItZhXmD rTyrda9cckb"), mp3FileName: JamoRiffLocalMediaShelf.riff(2), duration: 30, waveformSeed: 5, isMine: false, role: .rhythmTrack)
                 ],
                 coverURL: nil,
                 participantCount: 12,
                 participants: [
-                    JamoCoCreateParticipant(userID: "jamo_seed_mia", displayName: "Mia Carter", avatarURL: nil, colorHex: "#E75B33"),
-                    JamoCoCreateParticipant(userID: "jamo_seed_leo", displayName: "Leo Park", avatarURL: nil, colorHex: "#26315E"),
-                    JamoCoCreateParticipant(userID: "jamo_seed_ava", displayName: "Ava Strings", avatarURL: nil, colorHex: "#FF72A8"),
-                    JamoCoCreateParticipant(userID: "jamo_seed_tom", displayName: "Tom Maple", avatarURL: nil, colorHex: "#7A50FF")
+                    JamoCoCreateParticipant(userID: JamoRiffStringCipher.restore("jVaNm7o7_asGeOeid7_TmjiYau"), displayName: JamoRiffStringCipher.restore("M9ima1 bC1aMrUtKevr0"), avatarURL: nil, colorHex: JamoRiffStringCipher.restore("#RE17k59BO3E3e")),
+                    JamoCoCreateParticipant(userID: JamoRiffStringCipher.restore("jpa8mTo2_dsOese5dL_glSefoQ"), displayName: JamoRiffStringCipher.restore("LIeko6 WPxarrJkf"), avatarURL: nil, colorHex: JamoRiffStringCipher.restore("#22R6O3l1m5FEW")),
+                    JamoCoCreateParticipant(userID: JamoRiffStringCipher.restore("jpaimBo8_NsPecefdU_2aTvCab"), displayName: JamoRiffStringCipher.restore("APv2ad HSBtYrCiFnEgssv"), avatarURL: nil, colorHex: JamoRiffStringCipher.restore("#TFiFc7q2QAt8R")),
+                    JamoCoCreateParticipant(userID: JamoRiffStringCipher.restore("jVahm7oU_YsDeleRdL_ZttoemR"), displayName: JamoRiffStringCipher.restore("TPo2ma yMFappXlaeO"), avatarURL: nil, colorHex: JamoRiffStringCipher.restore("#U7iAt5H0tFFFW"))
                 ],
                 neededPart: JamoCoCreateNeededPart(
-                    id: "jamo_need_sunset_lead",
-                    title: "Lead Guitar",
-                    subtitle: "Add a 15s lead guitar part",
+                    id: JamoRiffStringCipher.restore("jea3moon_LnVeoendA_UswumnXsue3tK_ZlReMa2d4"),
+                    title: JamoRiffStringCipher.restore("LCepacdR XGquvidtBaDrg"),
+                    subtitle: JamoRiffStringCipher.restore("AwdMd9 ZaE 01e5rsX Al3eMatdf agQuoipt8aYrb ZpoairUt0"),
                     role: .leadGuitar,
                     duration: 15,
                     waveformSeed: 9
@@ -776,32 +788,32 @@ final class JamoLocalJamStore {
                 selectedJoinMethod: nil
             ),
             JamoCoCreateWork(
-                id: "jamo_seed_city_duet",
-                title: "Clean Chord Loop",
-                about: "A compact rhythm bed ready for a melodic guitar layer.",
-                coverImageName: JamoLocalJamMediaCatalog.cover(2),
-                creatorUserID: "current_user",
-                creatorName: "Jamo Player",
+                id: JamoRiffStringCipher.restore("jxaGmNow_0she4evdh_qcHiJtOyb_bdIu3edtk"),
+                title: JamoRiffStringCipher.restore("CVlDeqaynn vCFhXoKrtdV cLpocoVpx"),
+                about: JamoRiffStringCipher.restore("AK TctoBm0pwaacttJ truhMyNtahcmT wbieXdz Vr3eJaVdsyl dfCoUrz iaj Fmle7lEoDdJicc1 BgsueiNteaWrN TljanyseDry.B"),
+                coverImageName: JamoRiffLocalMediaShelf.cover(2),
+                creatorUserID: JamoRiffStringCipher.restore("cZuOrxr7efnXtx_IulsEearY"),
+                creatorName: JamoRiffStringCipher.restore("J8a0m0o7 EPrloawyEe1rZ"),
                 creatorAvatarURL: nil,
-                tags: ["Acoustic", "Joined"],
+                tags: [JamoRiffStringCipher.restore("AAc9oLu0s1t2iTcE"), JamoRiffStringCipher.restore("J8o5ieniecdI")],
                 status: .joined,
                 allowContinue: true,
                 createdAt: Date(timeIntervalSinceNow: -7200),
                 tracks: [
-                    JamoCoCreateTrack(id: "jamo_track_city_original", ownerUserID: "jamo_seed_noah", ownerName: "Noah Tone", roleName: "Original Guitar", mp3FileName: JamoLocalJamMediaCatalog.riff(3), duration: 42, waveformSeed: 5, isMine: false, role: .originalGuitar),
-                    JamoCoCreateTrack(id: "jamo_track_city_mine", ownerUserID: "current_user", ownerName: "Jamo Player", roleName: "Lead Guitar", mp3FileName: JamoLocalJamMediaCatalog.riff(4), duration: 15, waveformSeed: 8, isMine: true, role: .leadGuitar)
+                    JamoCoCreateTrack(id: JamoRiffStringCipher.restore("juasmiox_rtorYawcIk5_3ckimtIy7_woirkiagWiqn9aAli"), ownerUserID: JamoRiffStringCipher.restore("j7a2mqoK_QsoegeadP_rntoYaDh3"), ownerName: JamoRiffStringCipher.restore("Nzo4akhH bTIoWn1e5"), roleName: JamoRiffStringCipher.restore("O2roiVgvibnBaclh pG7uWiktiaDro"), mp3FileName: JamoRiffLocalMediaShelf.riff(3), duration: 42, waveformSeed: 5, isMine: false, role: .originalGuitar),
+                    JamoCoCreateTrack(id: JamoRiffStringCipher.restore("jcaimPoy_NtirHaLcukj_CcjimtFy6_gmTiPnBen"), ownerUserID: JamoRiffStringCipher.restore("cSu6rurZeQnwty_tuPsAeurJ"), ownerName: JamoRiffStringCipher.restore("JfaVmcoL APClZaNykeArx"), roleName: JamoRiffStringCipher.restore("Lpeha9dF kGjuqijtDaGre"), mp3FileName: JamoRiffLocalMediaShelf.riff(4), duration: 15, waveformSeed: 8, isMine: true, role: .leadGuitar)
                 ],
                 coverURL: nil,
                 participantCount: 8,
                 participants: [
-                    JamoCoCreateParticipant(userID: "jamo_seed_noah", displayName: "Noah Tone", avatarURL: nil, colorHex: "#26315E"),
-                    JamoCoCreateParticipant(userID: "current_user", displayName: "Jamo Player", avatarURL: nil, colorHex: "#FF72A8"),
-                    JamoCoCreateParticipant(userID: "jamo_seed_ivy", displayName: "Ivy Capo", avatarURL: nil, colorHex: "#FFDD1E")
+                    JamoCoCreateParticipant(userID: JamoRiffStringCipher.restore("jDaamYoU_hsTePemdW_8n4otauhO"), displayName: JamoRiffStringCipher.restore("N2oLaUh8 9T2ocn7eN"), avatarURL: nil, colorHex: JamoRiffStringCipher.restore("#k2m6M331H5aE0")),
+                    JamoCoCreateParticipant(userID: JamoRiffStringCipher.restore("cSujrmrmeUnVtO_ouEsuexr9"), displayName: JamoRiffStringCipher.restore("JdakmEoh 9P3lJaJyleHrp"), avatarURL: nil, colorHex: JamoRiffStringCipher.restore("#kF1Ff7U2WAy8f")),
+                    JamoCoCreateParticipant(userID: JamoRiffStringCipher.restore("jjaVm8oA_SsTeheUdg_7iWvnyz"), displayName: JamoRiffStringCipher.restore("IqvTyN GCIaDpuot"), avatarURL: nil, colorHex: JamoRiffStringCipher.restore("#2FLFBDpDb1OEt"))
                 ],
                 neededPart: JamoCoCreateNeededPart(
-                    id: "jamo_need_city_chord",
-                    title: "Need",
-                    subtitle: "Add a 15s lead guitar part",
+                    id: JamoRiffStringCipher.restore("jEaimbo2_7nnebexdJ_Mc2iutUyq_mcshnofrhdq"),
+                    title: JamoRiffStringCipher.restore("Nfekeodj"),
+                    subtitle: JamoRiffStringCipher.restore("AldzdA 8aB 31k5nsk pl0e2a3d9 ngJuvivtGaDru bpoaDr4tj"),
                     role: .leadGuitar,
                     duration: 15,
                     waveformSeed: 6
@@ -809,29 +821,29 @@ final class JamoLocalJamStore {
                 selectedJoinMethod: .recordGuitar
             ),
             JamoCoCreateWork(
-                id: "jamo_seed_finished_chain",
-                title: "Morning Chain Jam",
-                about: "Three short guitar clips stitched into one finished co-create.",
-                coverImageName: JamoLocalJamMediaCatalog.cover(3),
-                creatorUserID: "jamo_seed_mia",
-                creatorName: "Mia Capo",
+                id: JamoRiffStringCipher.restore("jRa2mLo7_psCeXe9dU_ffQiUndizsVhHefdo_IcHh5ariSnx"),
+                title: JamoRiffStringCipher.restore("M6oZrZnmiTn8gV wC9hqauiynu ZJmaYmM"),
+                about: JamoRiffStringCipher.restore("TShbrHeVeM bszhfoKrstv lgKuJibtDaCr6 gcxlZiQpjso Js1txiOt0cIhmeBdO oiBn6t3oC OoinIec Of7icn8i4shhVeMdq 3cYoh-0cqrIekaftbem.z"),
+                coverImageName: JamoRiffLocalMediaShelf.cover(3),
+                creatorUserID: JamoRiffStringCipher.restore("jSaEmZo1_isPepe6db_zmGioab"),
+                creatorName: JamoRiffStringCipher.restore("MpiZaf dCWaHpnoQ"),
                 creatorAvatarURL: nil,
-                tags: ["Acoustic", "Completed"],
+                tags: [JamoRiffStringCipher.restore("AIcRoeuMsFtmiSc5"), JamoRiffStringCipher.restore("CxoWmgp4lremtJeCdh")],
                 status: .completed,
                 allowContinue: false,
                 createdAt: Date(timeIntervalSinceNow: -10800),
                 tracks: [
-                    JamoCoCreateTrack(id: "jamo_track_morning_original", ownerUserID: "jamo_seed_mia", ownerName: "Mia Capo", roleName: "Original Guitar", mp3FileName: JamoLocalJamMediaCatalog.riff(5), duration: 42, waveformSeed: 2, isMine: false, role: .originalGuitar),
-                    JamoCoCreateTrack(id: "jamo_track_morning_rhythm", ownerUserID: "jamo_seed_eli", ownerName: "Eli Fret", roleName: "Rhythm Track", mp3FileName: JamoLocalJamMediaCatalog.riff(6), duration: 30, waveformSeed: 6, isMine: false, role: .rhythmTrack),
-                    JamoCoCreateTrack(id: "jamo_track_morning_lead", ownerUserID: "current_user", ownerName: "Jamo Player", roleName: "Lead Guitar", mp3FileName: JamoLocalJamMediaCatalog.riff(7), duration: 15, waveformSeed: 9, isMine: true, role: .leadGuitar)
+                    JamoCoCreateTrack(id: JamoRiffStringCipher.restore("jxaQmvoN_wtcrya9cRkg_1mVoJrgn9ihnLgP_eoPrYiAg2ianPanle"), ownerUserID: JamoRiffStringCipher.restore("jZaRmVoC_esdeoexd3_4mBiyag"), ownerName: JamoRiffStringCipher.restore("MEiDaJ WCbakpAoZ"), roleName: JamoRiffStringCipher.restore("OgrziGg0innqabla CGbuKi3t7aEre"), mp3FileName: JamoRiffLocalMediaShelf.riff(5), duration: 42, waveformSeed: 2, isMine: false, role: .originalGuitar),
+                    JamoCoCreateTrack(id: JamoRiffStringCipher.restore("j6aymloZ_CtErQaBcTkb_umdoBrEnZivnOgM_Vrkhgy2t6hSmE"), ownerUserID: JamoRiffStringCipher.restore("jaavmvol_5sfeGeRdO_IeklTim"), ownerName: JamoRiffStringCipher.restore("EJlXiZ 8F8rfektN"), roleName: JamoRiffStringCipher.restore("RkhQybtzhFm0 2TQr2aocqk1"), mp3FileName: JamoRiffLocalMediaShelf.riff(6), duration: 30, waveformSeed: 6, isMine: false, role: .rhythmTrack),
+                    JamoCoCreateTrack(id: JamoRiffStringCipher.restore("jUaimzor_9tirFaQc5kN_Wm6owrKngiunGgp_xl1eJaydg"), ownerUserID: JamoRiffStringCipher.restore("ccuKrWrdeanUtP_wuqsReErG"), ownerName: JamoRiffStringCipher.restore("Jca4m5oR 8PhliaHySe3rC"), roleName: JamoRiffStringCipher.restore("LYevaJdu 8G9uwivtMaDrs"), mp3FileName: JamoRiffLocalMediaShelf.riff(7), duration: 15, waveformSeed: 9, isMine: true, role: .leadGuitar)
                 ],
                 coverURL: nil,
                 participantCount: 12,
                 participants: [
-                    JamoCoCreateParticipant(userID: "jamo_seed_mia", displayName: "Mia Capo", avatarURL: nil, colorHex: "#E75B33"),
-                    JamoCoCreateParticipant(userID: "jamo_seed_eli", displayName: "Eli Fret", avatarURL: nil, colorHex: "#26315E"),
-                    JamoCoCreateParticipant(userID: "current_user", displayName: "Jamo Player", avatarURL: nil, colorHex: "#FF72A8"),
-                    JamoCoCreateParticipant(userID: "jamo_seed_tom", displayName: "Tom Maple", avatarURL: nil, colorHex: "#7A50FF")
+                    JamoCoCreateParticipant(userID: JamoRiffStringCipher.restore("jEaSmuon_qsJezejdI_SmXiLad"), displayName: JamoRiffStringCipher.restore("MJiSa8 ECAaCpfoG"), avatarURL: nil, colorHex: JamoRiffStringCipher.restore("#7Ec7O5BBC313a")),
+                    JamoCoCreateParticipant(userID: JamoRiffStringCipher.restore("j3aXm0oL_ts5eRerdK_XesloiC"), displayName: JamoRiffStringCipher.restore("EmlciE 5FQrUevtx"), avatarURL: nil, colorHex: JamoRiffStringCipher.restore("#52M6V351e5WEG")),
+                    JamoCoCreateParticipant(userID: JamoRiffStringCipher.restore("cZuzrxrIeTnVtE_DussMevrj"), displayName: JamoRiffStringCipher.restore("J9axmWoJ CPYlja1y1e8rN"), avatarURL: nil, colorHex: JamoRiffStringCipher.restore("#zFfF97d2OAq8C")),
+                    JamoCoCreateParticipant(userID: JamoRiffStringCipher.restore("jUaRm4oV_tsWepemd3_vtyosmd"), displayName: JamoRiffStringCipher.restore("THotmc ZMDaupzlmec"), avatarURL: nil, colorHex: JamoRiffStringCipher.restore("#X79AV5g0XFuFo"))
                 ],
                 neededPart: nil,
                 selectedJoinMethod: .recordGuitar

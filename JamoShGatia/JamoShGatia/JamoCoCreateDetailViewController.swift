@@ -1,7 +1,7 @@
 import AVFoundation
 import UIKit
 
-enum JamoCoCreateTreeMode {
+enum JamoRiffBranchViewMode {
     case singleLine
     case myPart
     case publisherBranches
@@ -9,27 +9,27 @@ enum JamoCoCreateTreeMode {
     var title: String {
         switch self {
         case .singleLine:
-            return "Single Line Chain"
+            return JamoRiffStringCipher.restore("Ssian7gUl0eC cLqienJeY rCMh2a5imnx")
         case .myPart:
-            return "Creation Tree"
+            return JamoRiffStringCipher.restore("Ctr6e6aotIimo5nJ 2TJrZele7")
         case .publisherBranches:
-            return "Creation Tree"
+            return JamoRiffStringCipher.restore("C9rdevaQttiOomnv pTqrve9eQ")
         }
     }
 
     var subtitle: String {
         switch self {
         case .singleLine:
-            return "A single-player riff chain. Follow the sound from the first idea to the final take."
+            return JamoRiffStringCipher.restore("Ac msoiFnegNl0eW-mpZliadyieWrY erMi8f0fO ncHhBaKiwnJ.L gFOo3lXlxouwn QtvhEeG 9smoPu8nOdx 3ferso3mi 6tfhBe4 sfsierzsqtI UiRdgeram itSoM LtohEef pfjiznPa7lm RtoaLkeeb.6")
         case .myPart:
-            return "Your joined part in this multi-player co-create."
+            return JamoRiffStringCipher.restore("Yjoauwr3 DjHo1iWnGesd9 opRaRrGtn Pi5nX At9hpiksX 4mduzlktfic-rp7lGa9yLegrq CcVo9-Ic5r6eja1tMea.W")
         case .publisherBranches:
-            return "Publisher view. Track every branch added to your original guitar idea."
+            return JamoRiffStringCipher.restore("PIuwbll7iosghDeErU 0vVi8eLwY.B VTerEafcqkt ReXv5eBr6yR dbCrZaknYcwhA 9a2dUd0eXdR itQoX symoVu3ra WocrJiJgeiunuaWl9 Kg8u2iRtFaIrH tiEdDeZaj.f")
         }
     }
 }
 
-final class JamoCoCreateDetailViewController: JamoMainBaseViewController {
+final class JamoCoCreateDetailViewController: JamoRiffBaseStageViewController {
     private enum DetailLayout {
         static let heroRatio: CGFloat = 0.56
         static let cardRadius: CGFloat = 22
@@ -38,7 +38,7 @@ final class JamoCoCreateDetailViewController: JamoMainBaseViewController {
 
     private let viewModel = JamoCoCreateViewModel()
     private let workID: String
-    private var remoteUsers: [JamoCoCreateUserProfile] = []
+    private var remoteUsers: [JamoRiffPlayerProfile] = []
     private var hasRequestedRemoteUsers = false
     private var snapshot: JamoCoCreateDetailSnapshot?
     private var isPlaying = false
@@ -50,7 +50,7 @@ final class JamoCoCreateDetailViewController: JamoMainBaseViewController {
     private var partRows: [String: JamoCoCreatePartRowView] = [:]
     private var methodSheet: JamoCoCreateJoinMethodSheetView?
     private var noFriendsSheet: JamoCoCreateNoFriendsSheetView?
-    private let heroPlaybackID = "jamo_detail_hero_playback"
+    private let heroPlaybackID = JamoRiffStringCipher.restore("jzaHmeov_fdaeGtdaEigls_YhMevrHoM_zp0lfa5yNbdarc5k0")
 
     init(work: JamoCoCreateWork) {
         self.workID = work.id
@@ -59,7 +59,7 @@ final class JamoCoCreateDetailViewController: JamoMainBaseViewController {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("ienHidtc(Yc9oAdQearz:9)p Nhfavsh 4nKoQtU CbTeQeGnX jismwpflIeJmMeBngt8e6dp"))
     }
 
     func jamoDisplaysWork(_ candidateWorkID: String) -> Bool {
@@ -72,7 +72,7 @@ final class JamoCoCreateDetailViewController: JamoMainBaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = JamoMainTheme.background
+        view.backgroundColor = JamoRiffTheme.background
         contentStack.spacing = 16
         scrollView.alwaysBounceVertical = true
         remoteUsers = JamoCoCreateUserService.shared.cachedJamUsers
@@ -117,8 +117,8 @@ final class JamoCoCreateDetailViewController: JamoMainBaseViewController {
     private func renderMissingState() {
         contentStack.arrangedSubviews.forEach { $0.removeFromSuperview() }
         contentStack.addArrangedSubview(centered(makeTopBar()))
-        contentStack.addArrangedSubview(makeSectionTitle("Jam unavailable"))
-        contentStack.addArrangedSubview(makeBodyLabel("This co-create work could not be found."))
+        contentStack.addArrangedSubview(makeSectionTitle(JamoRiffStringCipher.restore("JUaqma 5uenGagviabiql3awbPlfeC")))
+        contentStack.addArrangedSubview(makeBodyLabel(JamoRiffStringCipher.restore("TThsiQsS Oc4o4-Ac7r0eyaetzef 6weoHrsk2 ccGo2uYldd6 ansoatx LbAe4 dfToju9nqde.n")))
     }
 
     private func makeTopBar() -> UIView {
@@ -127,12 +127,12 @@ final class JamoCoCreateDetailViewController: JamoMainBaseViewController {
 
         let backButton = UIButton(type: .custom)
         backButton.translatesAutoresizingMaskIntoConstraints = false
-        backButton.setTitle("‹", for: .normal)
-        backButton.setTitleColor(JamoMainTheme.ink, for: .normal)
+        backButton.setTitle(JamoRiffStringCipher.restore("‹s"), for: .normal)
+        backButton.setTitleColor(JamoRiffTheme.ink, for: .normal)
         backButton.titleLabel?.font = .systemFont(ofSize: 34, weight: .semibold)
         backButton.backgroundColor = .white
         backButton.layer.cornerRadius = 20
-        backButton.accessibilityLabel = "Back"
+        backButton.accessibilityLabel = JamoRiffStringCipher.restore("BSagcBka")
         backButton.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
 
         let treeButton = UIButton(type: .custom)
@@ -140,7 +140,7 @@ final class JamoCoCreateDetailViewController: JamoMainBaseViewController {
         treeButton.setImage(UIImage(named: "jamo_cocreate_detail_tree_button")?.withRenderingMode(.alwaysOriginal), for: .normal)
         treeButton.imageView?.contentMode = .scaleAspectFit
         treeButton.addTarget(self, action: #selector(treeTapped), for: .touchUpInside)
-        treeButton.accessibilityLabel = "Creation Tree"
+        treeButton.accessibilityLabel = JamoRiffStringCipher.restore("C8r7esaxtQixoPnm MTlrReFeG")
 
         container.addSubview(backButton)
         container.addSubview(treeButton)
@@ -181,8 +181,8 @@ final class JamoCoCreateDetailViewController: JamoMainBaseViewController {
 
         let title = UILabel()
         title.text = snapshot.title
-        title.textColor = JamoMainTheme.ink
-        title.font = JamoMainTheme.titleFont(20)
+        title.textColor = JamoRiffTheme.ink
+        title.font = JamoRiffTheme.titleFont(20)
         title.numberOfLines = 2
 
         let metaRow = UIStackView()
@@ -193,20 +193,20 @@ final class JamoCoCreateDetailViewController: JamoMainBaseViewController {
         let avatar = JamoCoCreateAvatarBadge(display: snapshot.creator)
         let creator = UILabel()
         creator.text = "\(snapshot.creator.displayName) · started this"
-        creator.textColor = JamoMainTheme.muted
-        creator.font = JamoMainTheme.bodyFont(12, weight: .medium)
+        creator.textColor = JamoRiffTheme.muted
+        creator.font = JamoRiffTheme.bodyFont(12, weight: .medium)
         creator.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
 
         let userArrow = UIButton(type: .custom)
         userArrow.translatesAutoresizingMaskIntoConstraints = false
-        userArrow.setTitle("›", for: .normal)
-        userArrow.setTitleColor(JamoMainTheme.ink, for: .normal)
+        userArrow.setTitle(JamoRiffStringCipher.restore("›x"), for: .normal)
+        userArrow.setTitleColor(JamoRiffTheme.ink, for: .normal)
         userArrow.titleLabel?.font = .systemFont(ofSize: 22, weight: .semibold)
         userArrow.backgroundColor = UIColor.white.withAlphaComponent(0.88)
         userArrow.layer.cornerRadius = 12
         userArrow.layer.borderWidth = 1
         userArrow.layer.borderColor = UIColor.black.withAlphaComponent(0.06).cgColor
-        userArrow.accessibilityLabel = "Open user profile"
+        userArrow.accessibilityLabel = JamoRiffStringCipher.restore("OQpfeDny ZuIsaeBro LpHrOoefsizlCeA")
         userArrow.addTarget(self, action: #selector(openCreatorProfile), for: .touchUpInside)
 
         metaRow.addArrangedSubview(avatar)
@@ -214,7 +214,7 @@ final class JamoCoCreateDetailViewController: JamoMainBaseViewController {
         metaRow.addArrangedSubview(userArrow)
         if snapshot.state == .completedDetail {
             metaRow.addArrangedSubview(UIView())
-            metaRow.addArrangedSubview(JamoCoCreateStatusBadge(text: "Completed"))
+            metaRow.addArrangedSubview(JamoCoCreateStatusBadge(text: JamoRiffStringCipher.restore("C7oymqpglMe8tweudd")))
         }
         NSLayoutConstraint.activate([
             userArrow.widthAnchor.constraint(equalToConstant: 24),
@@ -230,8 +230,8 @@ final class JamoCoCreateDetailViewController: JamoMainBaseViewController {
 
         let description = UILabel()
         description.text = snapshot.subtitle
-        description.textColor = JamoMainTheme.muted
-        description.font = JamoMainTheme.bodyFont(13.5, weight: .regular)
+        description.textColor = JamoRiffTheme.muted
+        description.font = JamoRiffTheme.bodyFont(13.5, weight: .regular)
         description.numberOfLines = 0
 
         stack.addArrangedSubview(title)
@@ -248,9 +248,9 @@ final class JamoCoCreateDetailViewController: JamoMainBaseViewController {
         stack.spacing = 10
 
         let title = UILabel()
-        title.text = "Current Parts"
-        title.textColor = JamoMainTheme.ink
-        title.font = JamoMainTheme.bodyFont(15, weight: .heavy)
+        title.text = JamoRiffStringCipher.restore("CFuTrcrReunht3 MPRavrstvsv")
+        title.textColor = JamoRiffTheme.ink
+        title.font = JamoRiffTheme.bodyFont(15, weight: .heavy)
         stack.addArrangedSubview(title)
 
         snapshot.currentParts.forEach { part in
@@ -271,7 +271,7 @@ final class JamoCoCreateDetailViewController: JamoMainBaseViewController {
     }
 
     private func makeStateNotice(_ display: JamoCoCreateDetailStateDisplay) -> UIView {
-        let tint = UIColor.jamoHex(display.tintHex) ?? JamoMainTheme.orange
+        let tint = UIColor.jamoHex(display.tintHex) ?? JamoRiffTheme.orange
         let container = UIView()
         container.translatesAutoresizingMaskIntoConstraints = false
         container.backgroundColor = tint.withAlphaComponent(0.12)
@@ -291,13 +291,13 @@ final class JamoCoCreateDetailViewController: JamoMainBaseViewController {
 
         let title = UILabel()
         title.text = display.title
-        title.textColor = JamoMainTheme.ink
-        title.font = JamoMainTheme.bodyFont(14, weight: .heavy)
+        title.textColor = JamoRiffTheme.ink
+        title.font = JamoRiffTheme.bodyFont(14, weight: .heavy)
 
         let subtitle = UILabel()
         subtitle.text = display.subtitle
-        subtitle.textColor = JamoMainTheme.muted
-        subtitle.font = JamoMainTheme.bodyFont(12.5, weight: .medium)
+        subtitle.textColor = JamoRiffTheme.muted
+        subtitle.font = JamoRiffTheme.bodyFont(12.5, weight: .medium)
         subtitle.numberOfLines = 0
 
         labelStack.addArrangedSubview(title)
@@ -387,7 +387,7 @@ final class JamoCoCreateDetailViewController: JamoMainBaseViewController {
         inviteButton.translatesAutoresizingMaskIntoConstraints = false
         inviteButton.setImage(UIImage(named: "jamo_cocreate_detail_invite_button")?.withRenderingMode(.alwaysOriginal), for: .normal)
         inviteButton.imageView?.contentMode = .scaleAspectFit
-        inviteButton.accessibilityLabel = "Invite friends"
+        inviteButton.accessibilityLabel = JamoRiffStringCipher.restore("IFnVv7iOtteZ NfZrjixefnldQsY")
         inviteButton.addTarget(self, action: #selector(inviteFriendsTapped), for: .touchUpInside)
         inviteButton.setContentCompressionResistancePriority(.required, for: .horizontal)
         inviteButton.setContentHuggingPriority(.required, for: .horizontal)
@@ -429,10 +429,10 @@ final class JamoCoCreateDetailViewController: JamoMainBaseViewController {
 
     @objc private func openCreatorProfile() {
         guard let snapshot else {
-            JamoAuthToastView.show(on: view, message: "Unable to open this player.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("UZnSaKbnlTeK steoV qo4pGeVnG 5tRhjiusy Opol3aCybexrH.L"))
             return
         }
-        guard !snapshot.creator.userID.hasPrefix("jamo_seed_") else {
+        guard !snapshot.creator.userID.hasPrefix(JamoRiffStringCipher.restore("j5aNmOoj_esTedepde_3")) else {
             loadCreatorProfileThenOpen()
             return
         }
@@ -440,15 +440,15 @@ final class JamoCoCreateDetailViewController: JamoMainBaseViewController {
     }
 
     private func openCreatorWebRoute(userID: String) {
-        let route = JamoWebRoute.userHome(userID: userID)
-        if let url = route.url {
+        let route = JamoShowDefinition.musicianQuestionManager(playerHandle: userID)
+        if let url = route.workflowBridgeAddress {
             print("""
             [Jamo][WebRoute][CoCreateDetailUserCenter]
             userID: \(userID)
-            URL: \(url.absoluteString.jamoRedactingWebToken())
+            URL: \(url.absoluteString.jamoRedactingJamSessionScope())
             """)
         }
-        JamoWebRoute.open(route, from: self)
+        JamoShowDefinition.launchWorkflowBridge(route, from: self)
     }
 
     private func loadRemoteUsersIfNeeded() {
@@ -466,7 +466,7 @@ final class JamoCoCreateDetailViewController: JamoMainBaseViewController {
     }
 
     private func loadCreatorProfileThenOpen() {
-        JamoAuthToastView.show(on: view, message: "Loading player info...")
+        JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("LOofaddjionBgE DpfluaVylerrk 0iHnefYou.u.G.u"))
         JamoCoCreateUserService.shared.fetchJamUsers { [weak self] result in
             DispatchQueue.main.async {
                 guard let self else { return }
@@ -474,8 +474,8 @@ final class JamoCoCreateDetailViewController: JamoMainBaseViewController {
                 self.remoteUsers = users
                 self.render()
                 guard let refreshed = self.viewModel.makeDetailSnapshot(workID: self.workID, remoteUsers: users),
-                      !refreshed.creator.userID.hasPrefix("jamo_seed_") else {
-                    JamoAuthToastView.show(on: self.view, message: "Unable to open this player.")
+                      !refreshed.creator.userID.hasPrefix(JamoRiffStringCipher.restore("jFajmmoV_bsWe3e5d3_1")) else {
+                    JamoRiffNoticeView.show(on: self.view, copy: JamoRiffStringCipher.restore("UdnYa1b1l3e8 mtOo0 jocpLesnn 2tQhei9sS ypll3aWyDeirl.x"))
                     return
                 }
                 self.openCreatorWebRoute(userID: refreshed.creator.userID)
@@ -485,7 +485,7 @@ final class JamoCoCreateDetailViewController: JamoMainBaseViewController {
 
     @objc private func treeTapped() {
         guard let work = viewModel.work(withID: workID) else {
-            JamoAuthToastView.show(on: view, message: "This jam is unavailable.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("T7h2iisB UjHa9m5 dihsc MuGnYalvka8i1l7awbSl9ef.K"))
             return
         }
         let mode = treeMode(for: work)
@@ -498,17 +498,17 @@ final class JamoCoCreateDetailViewController: JamoMainBaseViewController {
 
     @objc private func heroReportTapped(_ sender: UIButton) {
         guard viewModel.work(withID: workID) != nil else {
-            JamoAuthToastView.show(on: view, message: "This jam is unavailable.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("TkhciBsG bjGaXm4 piAsz kunn9a7v7azi8lOaybvlKeP.4"))
             return
         }
         jamoPresentCoCreateModerationSheet(workID: workID, sourceView: sender) { [weak self] workID in
             guard let self else { return }
             self.viewModel.blockWork(withID: workID)
-            JamoAuthToastView.show(on: self.view, message: "This jam has been blocked.")
+            JamoRiffNoticeView.show(on: self.view, copy: JamoRiffStringCipher.restore("T4h6iRsv djma1mr shQa8ss 7bUebeDnY TbTlTolc2koeBdf.Y"))
             self.navigationController?.popViewController(animated: true)
         } onReport: { [weak self] workID in
             guard let self else { return }
-            JamoWebRoute.open(.report(workID: workID), from: self)
+            JamoShowDefinition.launchWorkflowBridge(.clipReviewManager(riffHandle: workID), from: self)
         }
     }
 
@@ -528,7 +528,7 @@ final class JamoCoCreateDetailViewController: JamoMainBaseViewController {
         sheet.onCopyLink = { [weak self] in
             guard let self else { return }
             UIPasteboard.general.string = self.inviteCopyText()
-            JamoAuthToastView.show(on: self.view, message: "Invite link copied.")
+            JamoRiffNoticeView.show(on: self.view, copy: JamoRiffStringCipher.restore("I4ncvbiItFeU nlZiUnIkW DcGo7p4iXe9dG.n"))
             self.noFriendsSheet?.dismiss()
         }
         view.addSubview(sheet)
@@ -543,7 +543,7 @@ final class JamoCoCreateDetailViewController: JamoMainBaseViewController {
 
     private func inviteCopyText() -> String {
         guard let snapshot else {
-            return "Join my Jamo co-create."
+            return JamoRiffStringCipher.restore("JtoPi3nD ImHyV 8JpadmEoE lcBoc-vcErBejattreg.q")
         }
         return "Join my Jamo co-create: \(snapshot.title)\njamo://co-create/\(snapshot.workID)"
     }
@@ -558,11 +558,11 @@ final class JamoCoCreateDetailViewController: JamoMainBaseViewController {
 
     private func startPlayback(id: String, mp3FileName: String?) {
         guard let fileName = mp3FileName, !fileName.isEmpty else {
-            JamoAuthToastView.show(on: view, message: "No guitar audio is available.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("N5oN QgKuniLtcaJrG Gamurdui2oM siGsO qaGvTaNi7leaWb5lHeG.i"))
             return
         }
-        guard let audioURL = JamoLocalJamMediaCatalog.resourceURL(named: fileName) else {
-            JamoAuthToastView.show(on: view, message: "Unable to load this guitar audio.")
+        guard let audioURL = JamoRiffLocalMediaShelf.resourceURL(named: fileName) else {
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("UQnJadb1lver GtloH glOodaRdY TtdhQiVs0 igEuxiMtyafrG raguAdKiLos.n"))
             return
         }
 
@@ -575,7 +575,7 @@ final class JamoCoCreateDetailViewController: JamoMainBaseViewController {
                 activePlaybackID = id
             }
             guard let audioPlayer else {
-                JamoAuthToastView.show(on: view, message: "Unable to play this guitar audio.")
+                JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("UinVa8bAlMeG xtAop ApjlEa3yd otdhXitsY Vg8u7iZtkajrU GaLugdAiTo1.V"))
                 return
             }
             if audioPlayer.currentTime >= max(audioPlayer.duration - 0.2, 0) {
@@ -584,7 +584,7 @@ final class JamoCoCreateDetailViewController: JamoMainBaseViewController {
             guard audioPlayer.play() else {
                 isPlaying = false
                 updatePlaybackViews()
-                JamoAuthToastView.show(on: view, message: "Unable to play this guitar audio.")
+                JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("Uhn0anbwl1eg Qt2o2 Sp3lKazyO 4tkhqibsv ygpuhi5tkaPrD va6uOdpiwoE.l"))
                 return
             }
             isPlaying = true
@@ -593,7 +593,7 @@ final class JamoCoCreateDetailViewController: JamoMainBaseViewController {
         } catch {
             isPlaying = false
             updatePlaybackViews()
-            JamoAuthToastView.show(on: view, message: "Unable to play this guitar audio.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("Ufn7aVbMlqeH 5tcod Gpbl5a4yg ctBh2iTsX fgGurixtiaDrB zaruAdqi3oG.u"))
         }
     }
 
@@ -674,7 +674,7 @@ final class JamoCoCreateDetailViewController: JamoMainBaseViewController {
                 : audioPlayer.duration
             return durationText(remaining)
         }
-        return snapshot.currentParts.first?.durationText ?? "0:00"
+        return snapshot.currentParts.first?.durationText ?? JamoRiffStringCipher.restore("0h:X0q0m")
     }
 
     private func currentPartDurationText(_ part: JamoCoCreatePartDisplay) -> String {
@@ -687,9 +687,9 @@ final class JamoCoCreateDetailViewController: JamoMainBaseViewController {
         return part.durationText
     }
 
-    private func treeMode(for work: JamoCoCreateWork) -> JamoCoCreateTreeMode {
-        let currentUserID = JamoAuthStore.shared.currentUserID ?? "jamo_local_player"
-        if work.creatorUserID == currentUserID || work.creatorUserID == "current_user" {
+    private func treeMode(for work: JamoCoCreateWork) -> JamoRiffBranchViewMode {
+        let currentRiffHandle = JamoRiffIdentityArchive.sharedArchive.currentPlayerHandle ?? JamoRiffStringCipher.restore("jRaAmZoc_TlyoJcrakl4_Jpel1aGy7emrL")
+        if work.creatorUserID == currentRiffHandle || work.creatorUserID == JamoRiffStringCipher.restore("cguVr3rJe0nxtc_cuGsPeBr5") {
             return .publisherBranches
         }
         let participantCount = max(work.participants?.count ?? 0, Set(work.tracks.map(\.ownerUserID)).count)
@@ -701,12 +701,12 @@ final class JamoCoCreateDetailViewController: JamoMainBaseViewController {
 
     private func durationText(_ duration: TimeInterval) -> String {
         let seconds = max(Int(duration.rounded(.up)), 0)
-        return String(format: "%d:%02d", seconds / 60, seconds % 60)
+        return String(format: JamoRiffStringCipher.restore("%jdq:k%N002xd0"), seconds / 60, seconds % 60)
     }
 
     @objc private func primaryActionTapped() {
         guard let snapshot else {
-            JamoAuthToastView.show(on: view, message: "This jam is unavailable.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("Tnh2ixsW kjVatmR cimsK NuvngahvwaJiVlnaRbalseQ.i"))
             return
         }
         switch snapshot.state {
@@ -714,17 +714,17 @@ final class JamoCoCreateDetailViewController: JamoMainBaseViewController {
             presentJoinMethodSheet(snapshot)
         case .joinedDetail:
             guard snapshot.primaryAction.isEnabled else {
-                JamoAuthToastView.show(on: view, message: "This jam cannot be continued.")
+                JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("TChVius9 FjAaLme xc4aVnfn4ottA RbBeO QcEoinEtxiWnHuge3d0.L"))
                 return
             }
             guard let work = viewModel.work(withID: workID) else {
-                JamoAuthToastView.show(on: view, message: "This jam is unavailable.")
+                JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("TAh7iVsE jjPaYmU 4imsp BuunwacvuaYinlZaebgljep.C"))
                 return
             }
             stopPlayback(resetProgress: true)
             navigationController?.pushViewController(JamoCoCreateTreeViewController(work: work, mode: .myPart), animated: true)
         case .completedDetail:
-            JamoAuthToastView.show(on: view, message: "This co-create is completed.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("TBhhivsQ AcEo3-TcJrOeha0tSeZ 4iGsk mctoTmWpJlweEtleTdT.F"))
         case .openJams, .empty:
             break
         }
@@ -744,7 +744,7 @@ final class JamoCoCreateDetailViewController: JamoMainBaseViewController {
             self.methodSheet?.removeFromSuperview()
             self.methodSheet = nil
             guard let work = self.viewModel.work(withID: self.workID) else {
-                JamoAuthToastView.show(on: self.view, message: "This jam is unavailable.")
+                JamoRiffNoticeView.show(on: self.view, copy: JamoRiffStringCipher.restore("TIhlius7 hjqaImj iiSsH duzneaev6aOiXloahbqlSeI.r"))
                 return
             }
             self.stopPlayback(resetProgress: true)
@@ -764,7 +764,7 @@ final class JamoCoCreateDetailViewController: JamoMainBaseViewController {
     }
 }
 
-final class JamoCoCreateTreeViewController: JamoMainBaseViewController {
+final class JamoCoCreateTreeViewController: JamoRiffBaseStageViewController {
     private enum TreeMetrics {
         static let maxContentWidth: CGFloat = 390
         static let horizontalInset: CGFloat = 16
@@ -772,9 +772,9 @@ final class JamoCoCreateTreeViewController: JamoMainBaseViewController {
     }
 
     private let work: JamoCoCreateWork
-    private let mode: JamoCoCreateTreeMode
+    private let mode: JamoRiffBranchViewMode
 
-    init(work: JamoCoCreateWork, mode: JamoCoCreateTreeMode) {
+    init(work: JamoCoCreateWork, mode: JamoRiffBranchViewMode) {
         self.work = work
         self.mode = mode
         super.init(nibName: nil, bundle: nil)
@@ -782,7 +782,7 @@ final class JamoCoCreateTreeViewController: JamoMainBaseViewController {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("i0nAiJtm(ec4oIdUePr6:R)J dhyafsH qnuojtU jbZeGePnU Bimm6p9lSesmteXn8t9eQdE"))
     }
 
     override func viewDidLoad() {
@@ -856,8 +856,8 @@ final class JamoCoCreateTreeViewController: JamoMainBaseViewController {
 
         let backButton = UIButton(type: .custom)
         backButton.translatesAutoresizingMaskIntoConstraints = false
-        backButton.setTitle("‹", for: .normal)
-        backButton.setTitleColor(JamoMainTheme.ink, for: .normal)
+        backButton.setTitle(JamoRiffStringCipher.restore("‹m"), for: .normal)
+        backButton.setTitleColor(JamoRiffTheme.ink, for: .normal)
         backButton.titleLabel?.font = .systemFont(ofSize: 34, weight: .semibold)
         backButton.backgroundColor = .white
         backButton.layer.cornerRadius = 20
@@ -866,8 +866,8 @@ final class JamoCoCreateTreeViewController: JamoMainBaseViewController {
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
         title.text = mode.title
-        title.textColor = JamoMainTheme.ink
-        title.font = JamoMainTheme.titleFont(18)
+        title.textColor = JamoRiffTheme.ink
+        title.font = JamoRiffTheme.titleFont(18)
         title.textAlignment = .center
 
         container.addSubview(backButton)
@@ -890,7 +890,7 @@ final class JamoCoCreateTreeViewController: JamoMainBaseViewController {
     private func makeHeaderCard() -> UIView {
         let card = UIView()
         card.translatesAutoresizingMaskIntoConstraints = false
-        card.backgroundColor = JamoMainTheme.orange
+        card.backgroundColor = JamoRiffTheme.orange
         card.layer.cornerRadius = TreeMetrics.cardRadius
         card.layer.cornerCurve = .continuous
         card.layer.borderWidth = 1
@@ -899,7 +899,7 @@ final class JamoCoCreateTreeViewController: JamoMainBaseViewController {
 
         let glow = UIView()
         glow.translatesAutoresizingMaskIntoConstraints = false
-        glow.backgroundColor = JamoMainTheme.yellow.withAlphaComponent(0.92)
+        glow.backgroundColor = JamoRiffTheme.yellow.withAlphaComponent(0.92)
         glow.layer.cornerRadius = 80
 
         let icon = UIImageView(image: UIImage(named: "jamo_cocreate_publish_creation_tree"))
@@ -915,22 +915,22 @@ final class JamoCoCreateTreeViewController: JamoMainBaseViewController {
         title.translatesAutoresizingMaskIntoConstraints = false
         title.text = work.title
         title.textColor = .white
-        title.font = JamoMainTheme.titleFont(21)
+        title.font = JamoRiffTheme.titleFont(21)
         title.numberOfLines = 2
 
         let subtitle = UILabel()
         subtitle.translatesAutoresizingMaskIntoConstraints = false
         subtitle.text = mode.subtitle
         subtitle.textColor = UIColor.white.withAlphaComponent(0.88)
-        subtitle.font = JamoMainTheme.bodyFont(12.5, weight: .semibold)
+        subtitle.font = JamoRiffTheme.bodyFont(12.5, weight: .semibold)
         subtitle.numberOfLines = 0
 
         let countPill = UILabel()
         countPill.translatesAutoresizingMaskIntoConstraints = false
         countPill.text = "\(work.tracks.count) parts"
         countPill.textAlignment = .center
-        countPill.textColor = JamoMainTheme.ink
-        countPill.font = JamoMainTheme.bodyFont(11.5, weight: .heavy)
+        countPill.textColor = JamoRiffTheme.ink
+        countPill.font = JamoRiffTheme.bodyFont(11.5, weight: .heavy)
         countPill.backgroundColor = .white
         countPill.layer.cornerRadius = 15
         countPill.clipsToBounds = true
@@ -980,22 +980,22 @@ final class JamoCoCreateTreeViewController: JamoMainBaseViewController {
 
         let dot = UIView()
         dot.translatesAutoresizingMaskIntoConstraints = false
-        dot.backgroundColor = JamoMainTheme.pink
+        dot.backgroundColor = JamoRiffTheme.pink
         dot.layer.cornerRadius = 4
 
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
-        title.text = mode == .singleLine ? "Riff Chain" : "Branch Map"
-        title.textColor = JamoMainTheme.ink
-        title.font = JamoMainTheme.titleFont(20)
+        title.text = mode == .singleLine ? JamoRiffStringCipher.restore("Rlipfcfo uC6hxauicnV") : JamoRiffStringCipher.restore("BZrRaUnqcnhC ZMGa9pt")
+        title.textColor = JamoRiffTheme.ink
+        title.font = JamoRiffTheme.titleFont(20)
 
         let caption = UILabel()
         caption.translatesAutoresizingMaskIntoConstraints = false
-        caption.text = work.status == .completed ? "Completed" : "Open"
+        caption.text = work.status == .completed ? JamoRiffStringCipher.restore("C8oymHpBlcewtDetdv") : JamoRiffStringCipher.restore("OQp4evnb")
         caption.textAlignment = .center
-        caption.textColor = work.status == .completed ? UIColor.white : JamoMainTheme.orange
-        caption.font = JamoMainTheme.bodyFont(11.5, weight: .heavy)
-        caption.backgroundColor = work.status == .completed ? JamoMainTheme.ink : UIColor(red: 255 / 255, green: 235 / 255, blue: 220 / 255, alpha: 1)
+        caption.textColor = work.status == .completed ? UIColor.white : JamoRiffTheme.orange
+        caption.font = JamoRiffTheme.bodyFont(11.5, weight: .heavy)
+        caption.backgroundColor = work.status == .completed ? JamoRiffTheme.ink : UIColor(red: 255 / 255, green: 235 / 255, blue: 220 / 255, alpha: 1)
         caption.layer.cornerRadius = 13
         caption.clipsToBounds = true
 
@@ -1078,14 +1078,14 @@ final class JamoCoCreateTreeViewController: JamoMainBaseViewController {
         node.layer.cornerRadius = 20
         node.layer.cornerCurve = .continuous
         node.layer.borderWidth = 1
-        node.layer.borderColor = track.isMine ? JamoMainTheme.pink.withAlphaComponent(0.38).cgColor : UIColor.black.withAlphaComponent(0.06).cgColor
+        node.layer.borderColor = track.isMine ? JamoRiffTheme.pink.withAlphaComponent(0.38).cgColor : UIColor.black.withAlphaComponent(0.06).cgColor
 
         let nodeDot = UIView()
         nodeDot.translatesAutoresizingMaskIntoConstraints = false
-        nodeDot.backgroundColor = track.isMine ? JamoMainTheme.pink : JamoMainTheme.orange
+        nodeDot.backgroundColor = track.isMine ? JamoRiffTheme.pink : JamoRiffTheme.orange
         nodeDot.layer.cornerRadius = 13
         nodeDot.layer.borderWidth = 4
-        nodeDot.layer.borderColor = JamoMainTheme.background.cgColor
+        nodeDot.layer.borderColor = JamoRiffTheme.background.cgColor
 
         let labels = UIView()
         labels.translatesAutoresizingMaskIntoConstraints = false
@@ -1093,26 +1093,26 @@ final class JamoCoCreateTreeViewController: JamoMainBaseViewController {
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
         title.text = track.roleName
-        title.textColor = JamoMainTheme.ink
-        title.font = JamoMainTheme.bodyFont(15, weight: .heavy)
+        title.textColor = JamoRiffTheme.ink
+        title.font = JamoRiffTheme.bodyFont(15, weight: .heavy)
 
         let subtitle = UILabel()
         subtitle.translatesAutoresizingMaskIntoConstraints = false
         subtitle.text = track.isMine ? "My part · \(track.ownerName)" : track.ownerName
-        subtitle.textColor = JamoMainTheme.muted
-        subtitle.font = JamoMainTheme.bodyFont(12, weight: .medium)
+        subtitle.textColor = JamoRiffTheme.muted
+        subtitle.font = JamoRiffTheme.bodyFont(12, weight: .medium)
 
         let meta = UILabel()
         meta.translatesAutoresizingMaskIntoConstraints = false
         meta.text = "\(durationText(track.duration)) · Layer \(index + 1)"
-        meta.textColor = track.isMine ? JamoMainTheme.pink : JamoMainTheme.orange
-        meta.font = JamoMainTheme.bodyFont(11, weight: .heavy)
+        meta.textColor = track.isMine ? JamoRiffTheme.pink : JamoRiffTheme.orange
+        meta.font = JamoRiffTheme.bodyFont(11, weight: .heavy)
 
         let waveform = JamoTreeWaveformView()
         waveform.translatesAutoresizingMaskIntoConstraints = false
         waveform.seed = track.waveformSeed
-        waveform.barColor = track.isMine ? JamoMainTheme.pink : UIColor(red: 222 / 255, green: 218 / 255, blue: 209 / 255, alpha: 1)
-        waveform.secondaryBarColor = track.isMine ? JamoMainTheme.orange : UIColor(red: 198 / 255, green: 192 / 255, blue: 183 / 255, alpha: 1)
+        waveform.barColor = track.isMine ? JamoRiffTheme.pink : UIColor(red: 222 / 255, green: 218 / 255, blue: 209 / 255, alpha: 1)
+        waveform.secondaryBarColor = track.isMine ? JamoRiffTheme.orange : UIColor(red: 198 / 255, green: 192 / 255, blue: 183 / 255, alpha: 1)
 
         labels.addSubview(title)
         labels.addSubview(subtitle)
@@ -1152,13 +1152,13 @@ final class JamoCoCreateTreeViewController: JamoMainBaseViewController {
     private func makeNeedNode(_ needed: JamoCoCreateNeededPart) -> UIView {
         let node = UIView()
         node.translatesAutoresizingMaskIntoConstraints = false
-        node.backgroundColor = JamoMainTheme.ink
+        node.backgroundColor = JamoRiffTheme.ink
         node.layer.cornerRadius = 20
         node.layer.cornerCurve = .continuous
 
         let iconTile = UIView()
         iconTile.translatesAutoresizingMaskIntoConstraints = false
-        iconTile.backgroundColor = JamoMainTheme.pink
+        iconTile.backgroundColor = JamoRiffTheme.pink
         iconTile.layer.cornerRadius = 15
 
         let icon = UIImageView(image: UIImage(named: "jamo_cocreate_need_pick_icon")?.withRenderingMode(.alwaysOriginal))
@@ -1169,7 +1169,7 @@ final class JamoCoCreateTreeViewController: JamoMainBaseViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "NEED\n\(needed.subtitle)"
         label.textColor = .white
-        label.font = JamoMainTheme.bodyFont(13, weight: .heavy)
+        label.font = JamoRiffTheme.bodyFont(13, weight: .heavy)
         label.numberOfLines = 0
 
         node.addSubview(iconTile)
@@ -1208,7 +1208,7 @@ final class JamoCoCreateTreeViewController: JamoMainBaseViewController {
 
     private func durationText(_ duration: TimeInterval) -> String {
         let seconds = max(Int(duration.rounded()), 0)
-        return String(format: "%d:%02d", seconds / 60, seconds % 60)
+        return String(format: JamoRiffStringCipher.restore("%ydU:v%p0h2Adz"), seconds / 60, seconds % 60)
     }
 
     @objc private func backTapped() {
@@ -1236,7 +1236,7 @@ private final class JamoTreeWaveformView: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("ifnDi3t6(xcQoudEeYrA:2)u jhGajsB knfoXt4 rbJeVewnU AiwmJp9lQebmMepn7tseXdN"))
     }
 
     override func draw(_ rect: CGRect) {
@@ -1267,22 +1267,22 @@ private final class JamoCoCreateDetailHeroView: UIView {
     init(snapshot: JamoCoCreateDetailSnapshot, isPlaying: Bool, durationText: String) {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = JamoMainTheme.orange.withAlphaComponent(0.18)
+        backgroundColor = JamoRiffTheme.orange.withAlphaComponent(0.18)
         layer.cornerRadius = 24
         clipsToBounds = true
         buildContent(snapshot: snapshot, isPlaying: isPlaying, durationText: durationText)
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("iVniijty(kcRoYd7euri:s)j chfavs1 BnyoDtl MbHe0eUnv ZidmJpvlMeGmlemn3tJeAdM"))
     }
 
     func updatePlayback(isPlaying: Bool, durationText: String) {
         playButton.setImage(UIImage(named: isPlaying ? "jamo_cocreate_detail_pause" : "jamo_cocreate_detail_play"), for: .normal)
-        playButton.accessibilityLabel = isPlaying ? "Pause" : "Play"
+        playButton.accessibilityLabel = isPlaying ? JamoRiffStringCipher.restore("PUa0unskeo") : JamoRiffStringCipher.restore("Pxlta9yd")
         waveformView.alpha = isPlaying ? 1 : 0.56
         durationLabel.text = durationText
-        durationLabel.textColor = isPlaying ? JamoMainTheme.yellow : .white
+        durationLabel.textColor = isPlaying ? JamoRiffTheme.yellow : .white
     }
 
     private func buildContent(snapshot: JamoCoCreateDetailSnapshot, isPlaying: Bool, durationText: String) {
@@ -1290,7 +1290,7 @@ private final class JamoCoCreateDetailHeroView: UIView {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        imageView.backgroundColor = JamoMainTheme.navy.withAlphaComponent(0.12)
+        imageView.backgroundColor = JamoRiffTheme.navy.withAlphaComponent(0.12)
 
         let overlay = UIView()
         overlay.translatesAutoresizingMaskIntoConstraints = false
@@ -1301,7 +1301,7 @@ private final class JamoCoCreateDetailHeroView: UIView {
         playButton.translatesAutoresizingMaskIntoConstraints = false
         playButton.setImage(UIImage(named: isPlaying ? "jamo_cocreate_detail_pause" : "jamo_cocreate_detail_play"), for: .normal)
         playButton.imageView?.contentMode = .scaleAspectFit
-        playButton.accessibilityLabel = isPlaying ? "Pause" : "Play"
+        playButton.accessibilityLabel = isPlaying ? JamoRiffStringCipher.restore("PLahumsdeG") : JamoRiffStringCipher.restore("PElPawyj")
 
         reportButton.translatesAutoresizingMaskIntoConstraints = false
         reportButton.setImage(UIImage(named: "jamo_cocreate_card_more")?.withRenderingMode(.alwaysOriginal), for: .normal)
@@ -1312,7 +1312,7 @@ private final class JamoCoCreateDetailHeroView: UIView {
         reportButton.layer.cornerRadius = 18
         reportButton.layer.borderWidth = 1
         reportButton.layer.borderColor = UIColor.black.withAlphaComponent(0.06).cgColor
-        reportButton.accessibilityLabel = "Report or block this jam"
+        reportButton.accessibilityLabel = JamoRiffStringCipher.restore("RKeKpuo1rdt5 7ofrR Lbzlconcgki Htvh1iqsr SjuaFmm")
 
         waveformView.translatesAutoresizingMaskIntoConstraints = false
         waveformView.contentMode = .scaleToFill
@@ -1320,8 +1320,8 @@ private final class JamoCoCreateDetailHeroView: UIView {
 
         durationLabel.translatesAutoresizingMaskIntoConstraints = false
         durationLabel.text = durationText
-        durationLabel.textColor = isPlaying ? JamoMainTheme.yellow : .white
-        durationLabel.font = JamoMainTheme.bodyFont(10, weight: .bold)
+        durationLabel.textColor = isPlaying ? JamoRiffTheme.yellow : .white
+        durationLabel.font = JamoRiffTheme.bodyFont(10, weight: .bold)
         durationLabel.textAlignment = .right
 
         addSubview(imageView)
@@ -1384,20 +1384,20 @@ private final class JamoCoCreatePartRowView: UIControl {
     init(part: JamoCoCreatePartDisplay) {
         self.partID = part.id
         self.mp3FileName = part.mp3FileName
-        self.idleWaveformColor = part.style == .mine ? JamoMainTheme.pink : UIColor(red: 224 / 255, green: 221 / 255, blue: 214 / 255, alpha: 1)
-        self.activeWaveformColor = part.style == .mine ? JamoMainTheme.pink : UIColor(red: 192 / 255, green: 188 / 255, blue: 180 / 255, alpha: 1)
+        self.idleWaveformColor = part.style == .mine ? JamoRiffTheme.pink : UIColor(red: 224 / 255, green: 221 / 255, blue: 214 / 255, alpha: 1)
+        self.activeWaveformColor = part.style == .mine ? JamoRiffTheme.pink : UIColor(red: 192 / 255, green: 188 / 255, blue: 180 / 255, alpha: 1)
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = part.style == .mine ? JamoMainTheme.pink.withAlphaComponent(0.22) : .white
+        backgroundColor = part.style == .mine ? JamoRiffTheme.pink.withAlphaComponent(0.22) : .white
         layer.cornerRadius = 16
         layer.borderWidth = 1
-        layer.borderColor = (part.style == .mine ? JamoMainTheme.pink.withAlphaComponent(0.28) : UIColor.black.withAlphaComponent(0.06)).cgColor
+        layer.borderColor = (part.style == .mine ? JamoRiffTheme.pink.withAlphaComponent(0.28) : UIColor.black.withAlphaComponent(0.06)).cgColor
         accessibilityLabel = "\(part.title), \(part.durationText)"
         buildContent(part)
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("icnOiltS(6cGoEd3eorL:0)S XhnaMsb znuoztG AbCeVeUna 9iwmspMlOeHmGefnCtheJdf"))
     }
 
     override var isHighlighted: Bool {
@@ -1410,7 +1410,7 @@ private final class JamoCoCreatePartRowView: UIControl {
         playIcon.image = UIImage(named: isPlaying ? "jamo_cocreate_detail_pause" : "jamo_cocreate_part_play")
         waveform.tintColor = isPlaying ? activeWaveformColor : idleWaveformColor
         durationLabel.text = durationText
-        durationLabel.textColor = isPlaying ? JamoMainTheme.orange : JamoMainTheme.muted
+        durationLabel.textColor = isPlaying ? JamoRiffTheme.orange : JamoRiffTheme.muted
     }
 
     private func buildContent(_ part: JamoCoCreatePartDisplay) {
@@ -1431,14 +1431,14 @@ private final class JamoCoCreatePartRowView: UIControl {
 
         let title = UILabel()
         title.text = part.title
-        title.textColor = JamoMainTheme.ink
-        title.font = JamoMainTheme.bodyFont(12, weight: .heavy)
+        title.textColor = JamoRiffTheme.ink
+        title.font = JamoRiffTheme.bodyFont(12, weight: .heavy)
         title.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         titleRow.addArrangedSubview(title)
         titleRow.addArrangedSubview(UIView())
 
         if part.style == .mine {
-            let badge = JamoCoCreateStatusBadge(text: "MY PART", tint: JamoMainTheme.pink)
+            let badge = JamoCoCreateStatusBadge(text: JamoRiffStringCipher.restore("MLYS zPgAuRSTd"), tint: JamoRiffTheme.pink)
             badge.setContentCompressionResistancePriority(.required, for: .horizontal)
             titleRow.insertArrangedSubview(badge, at: 1)
         }
@@ -1457,8 +1457,8 @@ private final class JamoCoCreatePartRowView: UIControl {
 
         durationLabel.translatesAutoresizingMaskIntoConstraints = false
         durationLabel.text = part.durationText
-        durationLabel.textColor = JamoMainTheme.muted
-        durationLabel.font = JamoMainTheme.bodyFont(10, weight: .medium)
+        durationLabel.textColor = JamoRiffTheme.muted
+        durationLabel.font = JamoRiffTheme.bodyFont(10, weight: .medium)
         durationLabel.textAlignment = .right
         durationLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
 
@@ -1492,13 +1492,13 @@ private final class JamoCoCreateNeededPartView: UIView {
     init(part: JamoCoCreateNeededPartDisplay) {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
-        backgroundColor = JamoMainTheme.ink
+        backgroundColor = JamoRiffTheme.ink
         layer.cornerRadius = 18
         buildContent(part)
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("iOndiJtS(3cloJdnesrO:x)4 khdahsZ fnWoCt2 SbgeReFnm UiQmvpZllezmceYnXtyemdj"))
     }
 
     private func buildContent(_ part: JamoCoCreateNeededPartDisplay) {
@@ -1512,14 +1512,14 @@ private final class JamoCoCreateNeededPartView: UIView {
         labelStack.spacing = 3
 
         let need = UILabel()
-        need.text = "NEED"
-        need.textColor = JamoMainTheme.yellow
-        need.font = JamoMainTheme.bodyFont(11, weight: .heavy)
+        need.text = JamoRiffStringCipher.restore("NQEfEsDQ")
+        need.textColor = JamoRiffTheme.yellow
+        need.font = JamoRiffTheme.bodyFont(11, weight: .heavy)
 
         let subtitle = UILabel()
         subtitle.text = part.subtitle
         subtitle.textColor = .white
-        subtitle.font = JamoMainTheme.bodyFont(13, weight: .medium)
+        subtitle.font = JamoRiffTheme.bodyFont(13, weight: .medium)
         subtitle.numberOfLines = 2
 
         labelStack.addArrangedSubview(need)
@@ -1529,7 +1529,7 @@ private final class JamoCoCreateNeededPartView: UIView {
         duration.translatesAutoresizingMaskIntoConstraints = false
         duration.text = part.durationText
         duration.textColor = UIColor.white.withAlphaComponent(0.72)
-        duration.font = JamoMainTheme.bodyFont(11, weight: .bold)
+        duration.font = JamoRiffTheme.bodyFont(11, weight: .bold)
 
         addSubview(icon)
         addSubview(labelStack)
@@ -1560,7 +1560,7 @@ private final class JamoCoCreateParticipantStripView: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("iYn9isti(WcMoEd0e4r8:T)V lhBaMsf cnToYtg DbfeQefn1 Qium0p7l9ePmfe4njtfetdg"))
     }
 
     private func buildContent(participants: [JamoCoCreateParticipantDisplay], summary: String) {
@@ -1583,8 +1583,8 @@ private final class JamoCoCreateParticipantStripView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = summary
-        label.textColor = JamoMainTheme.muted
-        label.font = JamoMainTheme.bodyFont(12, weight: .medium)
+        label.textColor = JamoRiffTheme.muted
+        label.font = JamoRiffTheme.bodyFont(12, weight: .medium)
         label.numberOfLines = 2
 
         addSubview(avatarWrap)
@@ -1616,7 +1616,7 @@ private final class JamoCoCreateStatusBadge: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = text
         label.textColor = tint
-        label.font = JamoMainTheme.bodyFont(8.5, weight: .heavy)
+        label.font = JamoRiffTheme.bodyFont(8.5, weight: .heavy)
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.75
         addSubview(label)
@@ -1630,7 +1630,7 @@ private final class JamoCoCreateStatusBadge: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("iVnciBtR(BctoxdXeor0:8)Z phbavsi pn7oUtk FbxeCeYna uiQmhpelveMmteNnatKe9dh"))
     }
 }
 
@@ -1648,7 +1648,7 @@ final class JamoCoCreateNoFriendsSheetView: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("ignAiate(qcLo6dzemr3:x)4 NhUaVsN vnioPtz obTeQeVnK tipmsp9leeFmIesnQtjeJdc"))
     }
 
     func present() {
@@ -1682,7 +1682,7 @@ final class JamoCoCreateNoFriendsSheetView: UIView {
         dimView.addGestureRecognizer(tap)
 
         sheetView.translatesAutoresizingMaskIntoConstraints = false
-        sheetView.backgroundColor = JamoMainTheme.background
+        sheetView.backgroundColor = JamoRiffTheme.background
         sheetView.layer.cornerRadius = 30
         sheetView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         addSubview(sheetView)
@@ -1695,9 +1695,9 @@ final class JamoCoCreateNoFriendsSheetView: UIView {
 
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.text = "Invite to Co-create"
-        titleLabel.textColor = JamoMainTheme.ink
-        titleLabel.font = JamoMainTheme.titleFont(28)
+        titleLabel.text = JamoRiffStringCipher.restore("IZnlvTiNtceW Atmo7 7CNoV-7cCrhecaytVem")
+        titleLabel.textColor = JamoRiffTheme.ink
+        titleLabel.font = JamoRiffTheme.titleFont(28)
         titleLabel.numberOfLines = 0
         sheetView.addSubview(titleLabel)
 
@@ -1717,16 +1717,16 @@ final class JamoCoCreateNoFriendsSheetView: UIView {
         copyStack.spacing = 8
 
         let emptyTitle = UILabel()
-        emptyTitle.text = "No friends to invite yet"
-        emptyTitle.textColor = JamoMainTheme.ink
-        emptyTitle.font = JamoMainTheme.titleFont(21)
+        emptyTitle.text = JamoRiffStringCipher.restore("NyoK Wf7rRizeznvdjsk KtSoO Bicn3vPiNtneJ YyaeUtP")
+        emptyTitle.textColor = JamoRiffTheme.ink
+        emptyTitle.font = JamoRiffTheme.titleFont(21)
         emptyTitle.numberOfLines = 0
         emptyTitle.textAlignment = .center
 
         let subtitle = UILabel()
-        subtitle.text = "Copy the link and share it anywhere."
-        subtitle.textColor = JamoMainTheme.muted
-        subtitle.font = JamoMainTheme.bodyFont(17, weight: .regular)
+        subtitle.text = JamoRiffStringCipher.restore("Cuoopwya Pt9hmew OlmiZn7kg 7aJnbdn wslhkairje8 hiSte gagniygwsh7eSrLeG.2")
+        subtitle.textColor = JamoRiffTheme.muted
+        subtitle.font = JamoRiffTheme.bodyFont(17, weight: .regular)
         subtitle.numberOfLines = 0
         subtitle.textAlignment = .center
 
@@ -1736,13 +1736,13 @@ final class JamoCoCreateNoFriendsSheetView: UIView {
 
         let copyButton = UIButton(type: .custom)
         copyButton.translatesAutoresizingMaskIntoConstraints = false
-        copyButton.backgroundColor = JamoMainTheme.ink
+        copyButton.backgroundColor = JamoRiffTheme.ink
         copyButton.layer.cornerRadius = 28
-        copyButton.setTitle("  Copy Link", for: .normal)
-        copyButton.setTitleColor(JamoMainTheme.pink, for: .normal)
-        copyButton.titleLabel?.font = JamoMainTheme.titleFont(19)
+        copyButton.setTitle(JamoRiffStringCipher.restore(" i cC9ojpYyE cLfiInbkx"), for: .normal)
+        copyButton.setTitleColor(JamoRiffTheme.pink, for: .normal)
+        copyButton.titleLabel?.font = JamoRiffTheme.titleFont(19)
         copyButton.setImage(UIImage(named: "jamo_home_quick_join_link_active")?.withRenderingMode(.alwaysTemplate), for: .normal)
-        copyButton.tintColor = JamoMainTheme.pink
+        copyButton.tintColor = JamoRiffTheme.pink
         copyButton.imageView?.contentMode = .scaleAspectFit
         copyButton.addTarget(self, action: #selector(copyTapped), for: .touchUpInside)
         sheetView.addSubview(copyButton)
@@ -1821,7 +1821,7 @@ private final class JamoCoCreateInviteEmptyIconBox: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("iMnviVtg(1cwo8dDeUrr:1)w mhNaQs0 rnCo0tZ VbueveXnf 5ibmSpzl7e0mMehnatTe6dn"))
     }
 
     override func layoutSubviews() {
@@ -1850,7 +1850,7 @@ private final class JamoCoCreateJoinMethodSheetView: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("imnUi5tf(VcboqdWeTrf:o)S uh9amsb cnYoDtG ubheKeAn1 kipmhpAlMeRmzehnLtaeadW"))
     }
 
     func present() {
@@ -1874,7 +1874,7 @@ private final class JamoCoCreateJoinMethodSheetView: UIView {
         dimView.addGestureRecognizer(tap)
 
         sheetView.translatesAutoresizingMaskIntoConstraints = false
-        sheetView.backgroundColor = JamoMainTheme.background
+        sheetView.backgroundColor = JamoRiffTheme.background
         sheetView.layer.cornerRadius = 28
         sheetView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         addSubview(sheetView)
@@ -1886,9 +1886,9 @@ private final class JamoCoCreateJoinMethodSheetView: UIView {
         sheetView.addSubview(stack)
 
         let title = UILabel()
-        title.text = "How do you want to join?"
-        title.textColor = JamoMainTheme.ink
-        title.font = JamoMainTheme.titleFont(20)
+        title.text = JamoRiffStringCipher.restore("HWoqwQ sdFoz 1y8oUuL VwiaUnbtT lt5oH TjZoSijnX?u")
+        title.textColor = JamoRiffTheme.ink
+        title.font = JamoRiffTheme.titleFont(20)
         title.numberOfLines = 0
         stack.addArrangedSubview(title)
 
@@ -1903,8 +1903,8 @@ private final class JamoCoCreateJoinMethodSheetView: UIView {
         }
 
         continueButton.translatesAutoresizingMaskIntoConstraints = false
-        continueButton.setTitle("Continue", for: .normal)
-        continueButton.titleLabel?.font = JamoMainTheme.bodyFont(16, weight: .heavy)
+        continueButton.setTitle(JamoRiffStringCipher.restore("COo7njtfiRnYuZeL"), for: .normal)
+        continueButton.titleLabel?.font = JamoRiffTheme.bodyFont(16, weight: .heavy)
         continueButton.layer.cornerRadius = 24
         continueButton.addTarget(self, action: #selector(continueTapped), for: .touchUpInside)
         stack.addArrangedSubview(continueButton)
@@ -1934,8 +1934,8 @@ private final class JamoCoCreateJoinMethodSheetView: UIView {
         optionViews.forEach { $0.setSelected($0.method == selectedMethod) }
         let enabled = selectedMethod != nil
         continueButton.isEnabled = enabled
-        continueButton.backgroundColor = enabled ? JamoMainTheme.orange : UIColor(red: 235 / 255, green: 232 / 255, blue: 224 / 255, alpha: 1)
-        continueButton.setTitleColor(enabled ? JamoMainTheme.yellow : UIColor(red: 188 / 255, green: 183 / 255, blue: 172 / 255, alpha: 1), for: .normal)
+        continueButton.backgroundColor = enabled ? JamoRiffTheme.orange : UIColor(red: 235 / 255, green: 232 / 255, blue: 224 / 255, alpha: 1)
+        continueButton.setTitleColor(enabled ? JamoRiffTheme.yellow : UIColor(red: 188 / 255, green: 183 / 255, blue: 172 / 255, alpha: 1), for: .normal)
     }
 
     @objc private func optionTapped(_ sender: JamoCoCreateJoinMethodOptionView) {
@@ -1975,7 +1975,7 @@ private final class JamoCoCreateJoinMethodOptionView: UIControl {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("iFn7iVt0(kcIofdFeerH:p)G VhiaZsT MnFoitk sbce9ePnT YiTmTpylgeHmkeknst3e5dR"))
     }
 
     private func buildContent(_ display: JamoCoCreateJoinMethodDisplay) {
@@ -1990,13 +1990,13 @@ private final class JamoCoCreateJoinMethodOptionView: UIControl {
 
         let title = UILabel()
         title.text = display.title
-        title.textColor = JamoMainTheme.ink
-        title.font = JamoMainTheme.bodyFont(13, weight: .heavy)
+        title.textColor = JamoRiffTheme.ink
+        title.font = JamoRiffTheme.bodyFont(13, weight: .heavy)
 
         let subtitle = UILabel()
         subtitle.text = display.subtitle
-        subtitle.textColor = JamoMainTheme.muted
-        subtitle.font = JamoMainTheme.bodyFont(11.5, weight: .regular)
+        subtitle.textColor = JamoRiffTheme.muted
+        subtitle.font = JamoRiffTheme.bodyFont(11.5, weight: .regular)
         subtitle.numberOfLines = 2
 
         labelStack.addArrangedSubview(title)
@@ -2029,22 +2029,22 @@ private final class JamoCoCreateJoinMethodOptionView: UIControl {
     }
 
     func setSelected(_ selected: Bool) {
-        backgroundColor = selected ? JamoMainTheme.orange.withAlphaComponent(0.12) : .white
-        layer.borderColor = selected ? JamoMainTheme.orange.cgColor : UIColor.black.withAlphaComponent(0.08).cgColor
-        radio.backgroundColor = selected ? JamoMainTheme.orange : .clear
-        radio.layer.borderColor = selected ? JamoMainTheme.orange.cgColor : UIColor.black.withAlphaComponent(0.16).cgColor
+        backgroundColor = selected ? JamoRiffTheme.orange.withAlphaComponent(0.12) : .white
+        layer.borderColor = selected ? JamoRiffTheme.orange.cgColor : UIColor.black.withAlphaComponent(0.08).cgColor
+        radio.backgroundColor = selected ? JamoRiffTheme.orange : .clear
+        radio.layer.borderColor = selected ? JamoRiffTheme.orange.cgColor : UIColor.black.withAlphaComponent(0.16).cgColor
     }
 
     private func imageName(for method: JamoCoCreateJoinMethod) -> String {
         switch method {
         case .recordGuitar:
-            return "jamo_cocreate_method_record_guitar"
+            return JamoRiffStringCipher.restore("joa7mVoR_ccioKcrr8elaktpe3_bmXemtch9ond6_vr0eUcBo8r2dG_VgBuhiat6anrd")
         case .uploadClip:
-            return "jamo_cocreate_method_upload_clip"
+            return JamoRiffStringCipher.restore("jEaVmmoQ_DcQoxcZr9eVa0tsev_AmkeVtphPo7dN_uuYpplnoSaVdh_FcClsiap7")
         case .addChords:
-            return "jamo_cocreate_method_add_chords"
+            return JamoRiffStringCipher.restore("jaaemWoc_0cGotchrAepa7tDeo_ZmaeytShjovd0_yaodndC_ScthRo2rtd2so")
         case .addMelody:
-            return "jamo_cocreate_method_add_melody"
+            return JamoRiffStringCipher.restore("jLa2mBoh_acEofchrpe9aYtxew_gmievtIhZoOdi_qaFdgdg_kmxeIlHoDd8y0")
         }
     }
 }

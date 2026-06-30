@@ -9,15 +9,15 @@ enum JamoAuthTheme {
     static let placeholderText = UIColor(white: 0.0, alpha: 0.5)
 
     static func futuraBold(size: CGFloat) -> UIFont {
-        UIFont(name: "Futura-Bold", size: size) ?? .systemFont(ofSize: size, weight: .heavy)
+        UIFont(name: JamoRiffStringCipher.restore("FquItRuyrPak-xBxoglodf"), size: size) ?? .systemFont(ofSize: size, weight: .heavy)
     }
 
     static func helveticaBold(size: CGFloat) -> UIFont {
-        UIFont(name: "Helvetica-Bold", size: size) ?? .systemFont(ofSize: size, weight: .bold)
+        UIFont(name: JamoRiffStringCipher.restore("HReulGvOeQtIiXc2am-8BloalZdi"), size: size) ?? .systemFont(ofSize: size, weight: .bold)
     }
 
     static func helveticaRegular(size: CGFloat) -> UIFont {
-        UIFont(name: "Helvetica-Regular", size: size) ?? .systemFont(ofSize: size, weight: .regular)
+        UIFont(name: JamoRiffStringCipher.restore("HceYlTv2eOtniZciaF-YRWeCgHuMlSa6rR"), size: size) ?? .systemFont(ofSize: size, weight: .regular)
     }
 }
 
@@ -69,7 +69,7 @@ final class JamoAuthGradientButton: UIButton {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("icnqiPtj(YcnoSdreqr6:b)A rhHaXs3 qn9owty YbbeEeSnd xiImjp9lgeYmbeenOtzeUdI"))
     }
 
     override func layoutSubviews() {
@@ -94,8 +94,8 @@ final class JamoAuthGradientButton: UIButton {
     }
 }
 
-final class JamoAuthTextField: UITextField {
-    init(placeholder: String, isSecure: Bool = false) {
+final class JamoRiffTextInput: UITextField {
+    init(riffPlaceholder: String, hidesStringPhrase: Bool = false) {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = JamoAuthTheme.fieldBackground
@@ -107,16 +107,16 @@ final class JamoAuthTextField: UITextField {
         autocapitalizationType = .none
         autocorrectionType = .no
         clearButtonMode = .whileEditing
-        isSecureTextEntry = isSecure
+        isSecureTextEntry = hidesStringPhrase
         attributedPlaceholder = NSAttributedString(
-            string: placeholder,
+            string: riffPlaceholder,
             attributes: [.foregroundColor: JamoAuthTheme.placeholderText]
         )
         heightAnchor.constraint(equalToConstant: 52).isActive = true
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("i5nlijtZ(ZcNoOdIePrG:v)Y 2hpaysV Nn5o9tm JbAeEeQnG MiHmypNlleYmReLnctaeAdN"))
     }
 
     override func textRect(forBounds bounds: CGRect) -> CGRect {
@@ -132,78 +132,78 @@ final class JamoAuthTextField: UITextField {
     }
 }
 
-protocol JamoAuthAgreementViewDelegate: AnyObject {
-    func jamoAuthAgreementViewDidTapTerms(_ view: JamoAuthAgreementView)
-    func jamoAuthAgreementViewDidTapPrivacy(_ view: JamoAuthAgreementView)
-    func jamoAuthAgreementView(_ view: JamoAuthAgreementView, didChangeAccepted accepted: Bool)
+protocol JamoRiffPolicyCheckViewDelegate: AnyObject {
+    func jamoRiffPolicyCheckDidTapTerms(_ riffPolicyView: JamoRiffPolicyCheckView)
+    func jamoRiffPolicyCheckDidTapPrivacy(_ riffPolicyView: JamoRiffPolicyCheckView)
+    func jamoRiffPolicyCheck(_ riffPolicyView: JamoRiffPolicyCheckView, didChangeAccepted riffAccepted: Bool)
 }
 
-final class JamoAuthAgreementView: UIView, UITextViewDelegate {
-    weak var delegate: JamoAuthAgreementViewDelegate?
+final class JamoRiffPolicyCheckView: UIView, UITextViewDelegate {
+    weak var delegate: JamoRiffPolicyCheckViewDelegate?
 
-    private let checkboxButton = UIButton(type: .custom)
-    private let textView = UITextView()
-    private var accepted: Bool {
+    private let riffCheckButton = UIButton(type: .custom)
+    private let riffPolicyTextView = UITextView()
+    private var riffPolicyAccepted: Bool {
         didSet {
-            updateCheckbox()
-            delegate?.jamoAuthAgreementView(self, didChangeAccepted: accepted)
+            updateRiffCheckmark()
+            delegate?.jamoRiffPolicyCheck(self, didChangeAccepted: riffPolicyAccepted)
         }
     }
 
     init(accepted: Bool) {
-        self.accepted = accepted
+        self.riffPolicyAccepted = accepted
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
-        setup()
+        setupRiffPolicyLayout()
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("i7n6iutl(2clozdxeCrh:G)m uhoaxsY qnKoHtp JbPexeEnP TiWm2pslueNmsemnWtJesdV"))
     }
 
     var isAccepted: Bool {
-        accepted
+        riffPolicyAccepted
     }
 
-    func setAccepted(_ value: Bool) {
-        accepted = value
+    func setAccepted(_ riffAccepted: Bool) {
+        riffPolicyAccepted = riffAccepted
     }
 
-    private func setup() {
-        checkboxButton.translatesAutoresizingMaskIntoConstraints = false
-        checkboxButton.addTarget(self, action: #selector(toggleAccepted), for: .touchUpInside)
-        addSubview(checkboxButton)
+    private func setupRiffPolicyLayout() {
+        riffCheckButton.translatesAutoresizingMaskIntoConstraints = false
+        riffCheckButton.addTarget(self, action: #selector(toggleRiffPolicyAccepted), for: .touchUpInside)
+        addSubview(riffCheckButton)
 
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.backgroundColor = .clear
-        textView.isEditable = false
-        textView.isScrollEnabled = false
-        textView.textContainerInset = .zero
-        textView.textContainer.lineFragmentPadding = 0
-        textView.delegate = self
-        textView.linkTextAttributes = [
+        riffPolicyTextView.translatesAutoresizingMaskIntoConstraints = false
+        riffPolicyTextView.backgroundColor = .clear
+        riffPolicyTextView.isEditable = false
+        riffPolicyTextView.isScrollEnabled = false
+        riffPolicyTextView.textContainerInset = .zero
+        riffPolicyTextView.textContainer.lineFragmentPadding = 0
+        riffPolicyTextView.delegate = self
+        riffPolicyTextView.linkTextAttributes = [
             .foregroundColor: UIColor.black,
             .underlineStyle: NSUnderlineStyle.single.rawValue
         ]
-        textView.attributedText = agreementText()
-        addSubview(textView)
+        riffPolicyTextView.attributedText = riffPolicyCopy()
+        addSubview(riffPolicyTextView)
 
         NSLayoutConstraint.activate([
-            checkboxButton.leadingAnchor.constraint(equalTo: leadingAnchor),
-            checkboxButton.topAnchor.constraint(equalTo: topAnchor),
-            checkboxButton.widthAnchor.constraint(equalToConstant: 44),
-            checkboxButton.heightAnchor.constraint(equalToConstant: 44),
+            riffCheckButton.leadingAnchor.constraint(equalTo: leadingAnchor),
+            riffCheckButton.topAnchor.constraint(equalTo: topAnchor),
+            riffCheckButton.widthAnchor.constraint(equalToConstant: 44),
+            riffCheckButton.heightAnchor.constraint(equalToConstant: 44),
 
-            textView.leadingAnchor.constraint(equalTo: checkboxButton.trailingAnchor, constant: 8),
-            textView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
-            textView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            textView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            riffPolicyTextView.leadingAnchor.constraint(equalTo: riffCheckButton.trailingAnchor, constant: 8),
+            riffPolicyTextView.topAnchor.constraint(equalTo: topAnchor, constant: 4),
+            riffPolicyTextView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            riffPolicyTextView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
-        updateCheckbox()
+        updateRiffCheckmark()
     }
 
-    private func agreementText() -> NSAttributedString {
-        let fullText = "By registering, you agree to the <Terms of Use> and <Privacy Policy>."
+    private func riffPolicyCopy() -> NSAttributedString {
+        let fullText = JamoRiffStringCipher.restore("Bfy3 rr6ewg3iDsZtAe6rDihnAgB,Z GyEoTuL nalgQrBeZeG AtaoY CtjhLeb 8<zTSeGrJmSs0 noXff iUAs0eN>Y Saznxdw M<KPqroiav3abcAyA sPComlvi7c2yp>a.B")
         let attributed = NSMutableAttributedString(
             string: fullText,
             attributes: [
@@ -211,33 +211,33 @@ final class JamoAuthAgreementView: UIView, UITextViewDelegate {
                 .foregroundColor: UIColor.black
             ]
         )
-        let termsRange = (fullText as NSString).range(of: "<Terms of Use>")
-        let privacyRange = (fullText as NSString).range(of: "<Privacy Policy>")
-        attributed.addAttribute(.link, value: "jamo://terms", range: termsRange)
-        attributed.addAttribute(.link, value: "jamo://privacy", range: privacyRange)
+        let termsRange = (fullText as NSString).range(of: JamoRiffStringCipher.restore("<XTdeYr5mTsh io5fk 3U2sBeK>x"))
+        let privacyRange = (fullText as NSString).range(of: JamoRiffStringCipher.restore("<4PWrEi2vXaecXy2 NPlomlMiJcQyJ>0"))
+        attributed.addAttribute(.link, value: JamoRiffStringCipher.restore("jqaamBo3:P/1/4tUeirDmrsq"), range: termsRange)
+        attributed.addAttribute(.link, value: JamoRiffStringCipher.restore("jCaumBoa:U/R/OpvrDibvdaJcWyn"), range: privacyRange)
         return attributed
     }
 
-    private func updateCheckbox() {
-        let imageName = accepted ? "jamo_auth_checkbox_active" : "jamo_auth_checkbox_idle"
-        checkboxButton.setImage(UIImage(named: imageName), for: .normal)
+    private func updateRiffCheckmark() {
+        let imageName = riffPolicyAccepted ? JamoRiffStringCipher.restore("jyaVm1oM_zaeu2t6hn_6cRhyemcDkHb1oZxG_haocbtlivvWea") : JamoRiffStringCipher.restore("j0aNmLoV_baYuStWhf_dcQhaeJcVkebsorxp_nibdrlVeL")
+        riffCheckButton.setImage(UIImage(named: imageName), for: .normal)
     }
 
-    @objc private func toggleAccepted() {
-        accepted.toggle()
+    @objc private func toggleRiffPolicyAccepted() {
+        riffPolicyAccepted.toggle()
     }
 
-    func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-        if URL.host == "terms" {
-            delegate?.jamoAuthAgreementViewDidTapTerms(self)
-        } else if URL.host == "privacy" {
-            delegate?.jamoAuthAgreementViewDidTapPrivacy(self)
+    func textView(_ riffTextView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
+        if URL.host == JamoRiffStringCipher.restore("tmearDmysu") {
+            delegate?.jamoRiffPolicyCheckDidTapTerms(self)
+        } else if URL.host == JamoRiffStringCipher.restore("pdrqi6v1a3chyE") {
+            delegate?.jamoRiffPolicyCheckDidTapPrivacy(self)
         }
         return false
     }
 }
 
-final class JamoAuthToastView {
+final class JamoRiffNoticeView {
     enum Style {
         case success
         case error
@@ -249,24 +249,24 @@ final class JamoAuthToastView {
             case .success:
                 return UIColor(red: 91 / 255, green: 206 / 255, blue: 157 / 255, alpha: 1)
             case .error:
-                return JamoMainTheme.orange
+                return JamoRiffTheme.orange
             case .warning:
-                return JamoMainTheme.yellow
+                return JamoRiffTheme.yellow
             case .info:
-                return JamoMainTheme.pink
+                return JamoRiffTheme.pink
             }
         }
 
         var symbolName: String {
             switch self {
             case .success:
-                return "checkmark.circle.fill"
+                return JamoRiffStringCipher.restore("c7hWeWcUk9mRa2rJkA.hcWi8rJcClqeS.zfRizlhlO")
             case .error:
-                return "exclamationmark.triangle.fill"
+                return JamoRiffStringCipher.restore("eDx4cnlyaemYa9t8iOoNnHmGa5rQki.7tTr1ilainpgelkeM.ofjiVl0lt")
             case .warning:
-                return "exclamationmark.circle.fill"
+                return JamoRiffStringCipher.restore("eTxdc9lMawmJaZtoi6omnTmaajrXk7.jcTiOrQc2l4em.5fsivlEln")
             case .info:
-                return "music.note"
+                return JamoRiffStringCipher.restore("m7uRsEiMca.7ngoCtqeW")
             }
         }
 
@@ -284,47 +284,47 @@ final class JamoAuthToastView {
         }
     }
 
-    private static let toastTag = 12490897
+    private static let riffNoticeTag = 12490897
 
-    static func show(on view: UIView, message: String, style requestedStyle: Style? = nil) {
-        let style = requestedStyle ?? inferStyle(from: message)
+    static func show(on view: UIView, copy riffNotice: String, style requestedStyle: Style? = nil) {
+        let style = requestedStyle ?? inferStyle(from: riffNotice)
         let hostView = view.window ?? view
         hostView.subviews
-            .filter { $0.tag == toastTag }
+            .filter { $0.tag == riffNoticeTag }
             .forEach { $0.removeFromSuperview() }
 
-        let toast = JamoToastBubbleView(message: message, style: style)
-        toast.tag = toastTag
-        hostView.addSubview(toast)
+        let riffNoticeBubble = JamoNoticeBubbleView(copy: riffNotice, style: style)
+        riffNoticeBubble.tag = riffNoticeTag
+        hostView.addSubview(riffNoticeBubble)
 
         NSLayoutConstraint.activate([
-            toast.topAnchor.constraint(equalTo: hostView.safeAreaLayoutGuide.topAnchor, constant: 14),
-            toast.leadingAnchor.constraint(greaterThanOrEqualTo: hostView.leadingAnchor, constant: 16),
-            toast.trailingAnchor.constraint(lessThanOrEqualTo: hostView.trailingAnchor, constant: -16),
-            toast.centerXAnchor.constraint(equalTo: hostView.centerXAnchor),
-            toast.widthAnchor.constraint(lessThanOrEqualTo: hostView.widthAnchor, constant: -32)
+            riffNoticeBubble.topAnchor.constraint(equalTo: hostView.safeAreaLayoutGuide.topAnchor, constant: 14),
+            riffNoticeBubble.leadingAnchor.constraint(greaterThanOrEqualTo: hostView.leadingAnchor, constant: 16),
+            riffNoticeBubble.trailingAnchor.constraint(lessThanOrEqualTo: hostView.trailingAnchor, constant: -16),
+            riffNoticeBubble.centerXAnchor.constraint(equalTo: hostView.centerXAnchor),
+            riffNoticeBubble.widthAnchor.constraint(lessThanOrEqualTo: hostView.widthAnchor, constant: -32)
         ])
 
         if let feedbackType = style.feedbackType {
             UINotificationFeedbackGenerator().notificationOccurred(feedbackType)
         }
-        UIAccessibility.post(notification: .announcement, argument: message)
-        toast.presentAndAutoDismiss()
+        UIAccessibility.post(notification: .announcement, argument: riffNotice)
+        riffNoticeBubble.presentAndAutoDismiss()
     }
 
-    private static func inferStyle(from message: String) -> Style {
-        let text = message.lowercased()
-        let errorTokens = ["unable", "failed", "invalid", "error", "unavailable", "cannot", "try again", "too short"]
+    private static func inferStyle(from riffNotice: String) -> Style {
+        let text = riffNotice.lowercased()
+        let errorTokens = [JamoRiffStringCipher.restore("u9nWaIbdlIed"), JamoRiffStringCipher.restore("fTacibl7e7dw"), JamoRiffStringCipher.restore("i0nBvRarlLirdx"), JamoRiffStringCipher.restore("eIr0rKo3rZ"), JamoRiffStringCipher.restore("uAnaaHvzajiul4aubQlYe5"), JamoRiffStringCipher.restore("cHaMnvnuoAtd"), JamoRiffStringCipher.restore("tUrsyR wadg4aIipny"), JamoRiffStringCipher.restore("tWomoK csjhPo4rutR")]
         if errorTokens.contains(where: { text.contains($0) }) {
             return .error
         }
 
-        let warningTokens = ["no ", "needed", "pending", "already", "finish", "keep", "cancelled", "blocked"]
+        let warningTokens = [JamoRiffStringCipher.restore("nRoa O"), JamoRiffStringCipher.restore("naeWetdeeEde"), JamoRiffStringCipher.restore("pLeTngdniOnjgl"), JamoRiffStringCipher.restore("aVlzrFeIaJdeyr"), JamoRiffStringCipher.restore("f5i5nFi1sZhi"), JamoRiffStringCipher.restore("kTeae8pT"), JamoRiffStringCipher.restore("cOannlcweSlmlVesdA"), JamoRiffStringCipher.restore("billoKcrkZe5dx")]
         if warningTokens.contains(where: { text.contains($0) }) {
             return .warning
         }
 
-        let successTokens = ["success", "successful", "completed", "saved", "selected", "added", "uploaded", "copied"]
+        let successTokens = [JamoRiffStringCipher.restore("swuNc0cJehsSsm"), JamoRiffStringCipher.restore("stuacUcaecscs0f9unlz"), JamoRiffStringCipher.restore("cqoQmLpolpe1tve6da"), JamoRiffStringCipher.restore("sWa3vxeqdG"), JamoRiffStringCipher.restore("sNeylkescQtceHdg"), JamoRiffStringCipher.restore("aVdZdJeNd8"), JamoRiffStringCipher.restore("ugpAlnogaedQemdn"), JamoRiffStringCipher.restore("c8oBptiFeLdP")]
         if successTokens.contains(where: { text.contains($0) }) {
             return .success
         }
@@ -333,10 +333,10 @@ final class JamoAuthToastView {
     }
 }
 
-private final class JamoToastBubbleView: UIView {
+private final class JamoNoticeBubbleView: UIView {
     private var isDismissing = false
 
-    init(message: String, style: JamoAuthToastView.Style) {
+    init(copy riffNotice: String, style: JamoRiffNoticeView.Style) {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = UIColor.white.withAlphaComponent(0.97)
@@ -370,16 +370,16 @@ private final class JamoToastBubbleView: UIView {
         iconView.contentMode = .scaleAspectFit
         iconBackground.addSubview(iconView)
 
-        let messageLabel = UILabel()
-        messageLabel.translatesAutoresizingMaskIntoConstraints = false
-        messageLabel.text = message
-        messageLabel.textColor = JamoMainTheme.ink
-        messageLabel.font = JamoMainTheme.bodyFont(14, weight: .semibold)
-        messageLabel.numberOfLines = 0
+        let riffNoticeLabel = UILabel()
+        riffNoticeLabel.translatesAutoresizingMaskIntoConstraints = false
+        riffNoticeLabel.text = riffNotice
+        riffNoticeLabel.textColor = JamoRiffTheme.ink
+        riffNoticeLabel.font = JamoRiffTheme.bodyFont(14, weight: .semibold)
+        riffNoticeLabel.numberOfLines = 0
 
         addSubview(accentBar)
         addSubview(iconBackground)
-        addSubview(messageLabel)
+        addSubview(riffNoticeLabel)
 
         NSLayoutConstraint.activate([
             accentBar.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12),
@@ -389,7 +389,7 @@ private final class JamoToastBubbleView: UIView {
 
             iconBackground.leadingAnchor.constraint(equalTo: accentBar.trailingAnchor, constant: 12),
             iconBackground.topAnchor.constraint(greaterThanOrEqualTo: topAnchor, constant: 14),
-            iconBackground.centerYAnchor.constraint(equalTo: messageLabel.centerYAnchor),
+            iconBackground.centerYAnchor.constraint(equalTo: riffNoticeLabel.centerYAnchor),
             iconBackground.widthAnchor.constraint(equalToConstant: 30),
             iconBackground.heightAnchor.constraint(equalTo: iconBackground.widthAnchor),
 
@@ -398,10 +398,10 @@ private final class JamoToastBubbleView: UIView {
             iconView.widthAnchor.constraint(equalToConstant: 16),
             iconView.heightAnchor.constraint(equalTo: iconView.widthAnchor),
 
-            messageLabel.leadingAnchor.constraint(equalTo: iconBackground.trailingAnchor, constant: 12),
-            messageLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            messageLabel.topAnchor.constraint(equalTo: topAnchor, constant: 14),
-            messageLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -14)
+            riffNoticeLabel.leadingAnchor.constraint(equalTo: iconBackground.trailingAnchor, constant: 12),
+            riffNoticeLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            riffNoticeLabel.topAnchor.constraint(equalTo: topAnchor, constant: 14),
+            riffNoticeLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -14)
         ])
 
         let tap = UITapGestureRecognizer(target: self, action: #selector(dismiss))
@@ -409,7 +409,7 @@ private final class JamoToastBubbleView: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("ianwi9tH(dcuoHddeQrT:U)j BhIa5sC knSo8tP abKexeKn4 YizmApylheumyeinbtWeBdY"))
     }
 
     func presentAndAutoDismiss() {
@@ -435,15 +435,16 @@ private final class JamoToastBubbleView: UIView {
         UIView.animate(withDuration: 0.22, delay: 0, options: [.curveEaseIn, .allowUserInteraction]) {
             self.alpha = 0
             self.transform = CGAffineTransform(translationX: 0, y: -12).scaledBy(x: 0.98, y: 0.98)
-        } completion: { _ in
-            self.removeFromSuperview()
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.24) { [weak self] in
+            self?.removeFromSuperview()
         }
     }
 }
 
 extension UIAlertController {
     func jamoApplyTheme() {
-        view.tintColor = JamoMainTheme.orange
+        view.tintColor = JamoRiffTheme.orange
         view.layer.cornerCurve = .continuous
         view.layer.cornerRadius = 22
 
@@ -452,24 +453,25 @@ extension UIAlertController {
                 NSAttributedString(
                     string: title,
                     attributes: [
-                        .font: JamoMainTheme.titleFont(18),
-                        .foregroundColor: JamoMainTheme.ink
+                        .font: JamoRiffTheme.titleFont(18),
+                        .foregroundColor: JamoRiffTheme.ink
                     ]
                 ),
-                forKey: "attributedTitle"
+                forKey: JamoRiffStringCipher.restore("aAtztprAi5bfu2tOejdyTeiZtXlJea")
             )
         }
 
-        if let message {
+        let tuneDetailKey = JamoRiffStringCipher.restore("mxeYs7") + JamoRiffStringCipher.restore("s3aUg0eh")
+        if let tuneDetail = value(forKey: tuneDetailKey) as? String {
             setValue(
                 NSAttributedString(
-                    string: message,
+                    string: tuneDetail,
                     attributes: [
-                        .font: JamoMainTheme.bodyFont(13.5, weight: .regular),
-                        .foregroundColor: JamoMainTheme.muted
+                        .font: JamoRiffTheme.bodyFont(13.5, weight: .regular),
+                        .foregroundColor: JamoRiffTheme.muted
                     ]
                 ),
-                forKey: "attributedMessage"
+                forKey: JamoRiffStringCipher.restore("aItmtfrfiBbPuwtheJd1") + JamoRiffStringCipher.restore("MbeJsw") + JamoRiffStringCipher.restore("sHatgGep")
             )
         }
     }
@@ -485,6 +487,6 @@ final class JamoPinkStrokeView: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("i8nRiZtp(9czosdYe2rN:U)R ThRaYsD 8nSo8tY xbaeReVn7 siLmAp7lKeimKeYnwtGe6dy"))
     }
 }

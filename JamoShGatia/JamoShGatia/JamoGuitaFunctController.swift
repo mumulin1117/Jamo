@@ -1,6 +1,6 @@
 import UIKit
 
-final class JamoHomeViewController: JamoMainBaseViewController {
+final class JamoGuitaFunctController: JamoRiffBaseStageViewController {
     private enum HomeMetrics {
         static let pageHorizontalInset: CGFloat = 22
         static let contentMaxWidth: CGFloat = 430
@@ -116,8 +116,8 @@ final class JamoHomeViewController: JamoMainBaseViewController {
 
         let promptLabel = UILabel()
         promptLabel.translatesAutoresizingMaskIntoConstraints = false
-        promptLabel.text = "Ready to jam with the\nguitar community? 🎸"
-        promptLabel.font = JamoMainTheme.titleFont(isCompact ? 14 : 15)
+        promptLabel.text = JamoRiffStringCipher.restore("RMeEafdLyE PtPoU bjEapmz RwkiotbhY utGh9ew") + "\n" + JamoRiffStringCipher.restore("gEuBijt0aErW UcGo1mumxuenMi0tdy1?1 q") + String(UnicodeScalar(0x1F3B8)!)
+        promptLabel.font = JamoRiffTheme.titleFont(isCompact ? 14 : 15)
         promptLabel.textColor = .black
         promptLabel.numberOfLines = 0
         promptLabel.adjustsFontSizeToFitWidth = true
@@ -171,7 +171,7 @@ final class JamoHomeViewController: JamoMainBaseViewController {
         let section = UIView()
         section.translatesAutoresizingMaskIntoConstraints = false
 
-        let header = makeHomeSectionHeader("Quick Actions", dotColor: JamoMainTheme.orange)
+        let header = makeHomeSectionHeader(JamoRiffStringCipher.restore("QNupizcTkz pAWc7tnimoCnOse"), dotColor: JamoRiffTheme.orange)
         section.addSubview(header)
         let cards = actions.map { makeActionCard(action: $0) }
         cards.forEach { section.addSubview($0) }
@@ -216,7 +216,7 @@ final class JamoHomeViewController: JamoMainBaseViewController {
     private func makeOngoingSection(_ snapshot: JamoHomeSnapshot) -> UIView {
         let section = UIView()
         section.translatesAutoresizingMaskIntoConstraints = false
-        let header = makeHomeSectionHeader("My Ongoing", dotColor: UIColor(red: 255 / 255, green: 114 / 255, blue: 168 / 255, alpha: 1))
+        let header = makeHomeSectionHeader(JamoRiffStringCipher.restore("Mry3 rOenkg5oli9nYgB"), dotColor: UIColor(red: 255 / 255, green: 114 / 255, blue: 168 / 255, alpha: 1))
 
         let cardView: UIView
         switch snapshot.state {
@@ -260,7 +260,7 @@ final class JamoHomeViewController: JamoMainBaseViewController {
         createButton.cornerRadii = .uniform(18)
         createButton.setImage(UIImage(named: "jamo_home_top_create_icon_idle")?.withRenderingMode(.alwaysOriginal), for: .normal)
         createButton.imageView?.contentMode = .scaleAspectFit
-        createButton.accessibilityLabel = "Edit profile"
+        createButton.accessibilityLabel = JamoRiffStringCipher.restore("EAdZidto FpDrroIf7illgey")
         createButton.addTarget(self, action: #selector(openEditProfile), for: .touchUpInside)
 
         row.addSubview(titleLabel)
@@ -281,19 +281,19 @@ final class JamoHomeViewController: JamoMainBaseViewController {
 
     private func welcomeTitle() -> NSAttributedString {
         let result = NSMutableAttributedString(
-            string: "Welcome to ",
+            string: JamoRiffStringCipher.restore("WaeAlsctoMmdel utdoz H"),
             attributes: [
                 .foregroundColor: UIColor.black,
-                .font: JamoMainTheme.titleFont(21),
+                .font: JamoRiffTheme.titleFont(21),
                 .kern: 0.8
             ]
         )
         result.append(
             NSAttributedString(
-                string: "Jamo",
+                string: JamoRiffStringCipher.restore("JZakmDo3"),
                 attributes: [
-                    .foregroundColor: JamoMainTheme.orange,
-                    .font: JamoMainTheme.titleFont(28),
+                    .foregroundColor: JamoRiffTheme.orange,
+                    .font: JamoRiffTheme.titleFont(28),
                     .kern: 0.8
                 ]
             )
@@ -308,7 +308,7 @@ final class JamoHomeViewController: JamoMainBaseViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = text
-        label.font = JamoMainTheme.titleFont(22)
+        label.font = JamoRiffTheme.titleFont(22)
         label.textColor = .black
 
         let dot = UIView()
@@ -350,7 +350,7 @@ final class JamoHomeViewController: JamoMainBaseViewController {
         label.isUserInteractionEnabled = false
         label.text = entry.title
         label.textColor = style.textColor
-        label.font = JamoMainTheme.titleFont(routeFontSize)
+        label.font = JamoRiffTheme.titleFont(routeFontSize)
         label.numberOfLines = 1
         label.lineBreakMode = .byClipping
         label.adjustsFontSizeToFitWidth = true
@@ -361,7 +361,7 @@ final class JamoHomeViewController: JamoMainBaseViewController {
         button.addSubview(label)
         button.addAction(UIAction { [weak self] _ in
             guard let self else { return }
-            JamoWebRoute.open(entry.route, from: self)
+            JamoShowDefinition.launchWorkflowBridge(entry.route, from: self)
         }, for: .touchUpInside)
 
         var constraints: [NSLayoutConstraint] = [
@@ -395,8 +395,8 @@ final class JamoHomeViewController: JamoMainBaseViewController {
 
     private func makeActionCard(action: JamoHomeQuickAction) -> UIButton {
         let isStart = action.kind == .startCoCreate
-        let color = isStart ? JamoMainTheme.orange : JamoMainTheme.navy
-        let iconName = isStart ? "jamo_home_quick_start_plus" : "jamo_home_quick_join_link_active"
+        let color = isStart ? JamoRiffTheme.orange : JamoRiffTheme.navy
+        let iconName = isStart ? JamoRiffStringCipher.restore("j0a9mTo0_0hcoZmkeb_Dq2uPiEcIkt_CsmtCawr5tN_Qptlnuxs6") : JamoRiffStringCipher.restore("jEapmMov_khWoXmBeX_QqBu2iecgkJ_1jJoKiLnK_elkinnokJ_dakcmtBipvJe5")
         let selector: Selector = action.kind == .startCoCreate ? #selector(startCoCreate) : #selector(joinJam)
 
         let button = JamoHomeRoundedButton(type: .system)
@@ -420,7 +420,7 @@ final class JamoHomeViewController: JamoMainBaseViewController {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.text = action.title
         titleLabel.textColor = .white
-        titleLabel.font = JamoMainTheme.titleFont(view.bounds.width < 350 ? 15.5 : 17)
+        titleLabel.font = JamoRiffTheme.titleFont(view.bounds.width < 350 ? 15.5 : 17)
         titleLabel.numberOfLines = 1
         titleLabel.lineBreakMode = .byClipping
         titleLabel.adjustsFontSizeToFitWidth = true
@@ -430,7 +430,7 @@ final class JamoHomeViewController: JamoMainBaseViewController {
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.text = action.subtitle
         subtitleLabel.textColor = UIColor.white.withAlphaComponent(0.82)
-        subtitleLabel.font = JamoMainTheme.bodyFont(12.5)
+        subtitleLabel.font = JamoRiffTheme.bodyFont(12.5)
         subtitleLabel.numberOfLines = 2
 
         button.addSubview(iconTile)
@@ -474,7 +474,7 @@ final class JamoHomeViewController: JamoMainBaseViewController {
         container.addGestureRecognizer(cardTap)
 
         let avatar = JamoHomeAvatarView(
-            name: card.work?.creatorName ?? snapshot?.user.displayName ?? "Jamo",
+            name: card.work?.creatorName ?? snapshot?.user.displayName ?? JamoRiffStringCipher.restore("JeaOm4og"),
             imageName: card.work?.coverImageName
         )
         avatar.translatesAutoresizingMaskIntoConstraints = false
@@ -483,18 +483,18 @@ final class JamoHomeViewController: JamoMainBaseViewController {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.text = card.title
         titleLabel.textColor = .black
-        titleLabel.font = JamoMainTheme.titleFont(16)
+        titleLabel.font = JamoRiffTheme.titleFont(16)
         titleLabel.numberOfLines = 1
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.minimumScaleFactor = 0.82
 
-        let badge = makeBadge(card.badgeText ?? "Draft saved")
+        let badge = makeBadge(card.badgeText ?? JamoRiffStringCipher.restore("DYrbalflta Is1a6vCeHdN"))
 
         let detailLabel = UILabel()
         detailLabel.translatesAutoresizingMaskIntoConstraints = false
         detailLabel.text = card.detailText
         detailLabel.textColor = UIColor(red: 138 / 255, green: 137 / 255, blue: 131 / 255, alpha: 1)
-        detailLabel.font = JamoMainTheme.bodyFont(12)
+        detailLabel.font = JamoRiffTheme.bodyFont(12)
         detailLabel.numberOfLines = 1
         detailLabel.adjustsFontSizeToFitWidth = true
         detailLabel.minimumScaleFactor = 0.8
@@ -527,7 +527,7 @@ final class JamoHomeViewController: JamoMainBaseViewController {
         guard expanded else { return container }
 
         let continueButton = makeCTAButton(
-            title: card.buttonTitle ?? "Continue",
+            title: card.buttonTitle ?? JamoRiffStringCipher.restore("CXo4nBtMikn1ujee"),
             background: UIColor(red: 20 / 255, green: 20 / 255, blue: 20 / 255, alpha: 1),
             textColor: UIColor(red: 255 / 255, green: 157 / 255, blue: 217 / 255, alpha: 1),
             iconName: "jamo_home_continue_play_icon",
@@ -561,7 +561,7 @@ final class JamoHomeViewController: JamoMainBaseViewController {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.text = card.title
         titleLabel.textColor = .black
-        titleLabel.font = JamoMainTheme.titleFont(15.5)
+        titleLabel.font = JamoRiffTheme.titleFont(15.5)
         titleLabel.numberOfLines = 1
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.minimumScaleFactor = 0.82
@@ -570,15 +570,15 @@ final class JamoHomeViewController: JamoMainBaseViewController {
         detailLabel.translatesAutoresizingMaskIntoConstraints = false
         detailLabel.text = card.detailText
         detailLabel.textColor = UIColor(red: 138 / 255, green: 137 / 255, blue: 131 / 255, alpha: 1)
-        detailLabel.font = JamoMainTheme.bodyFont(13)
+        detailLabel.font = JamoRiffTheme.bodyFont(13)
         detailLabel.numberOfLines = 1
         detailLabel.adjustsFontSizeToFitWidth = true
         detailLabel.minimumScaleFactor = 0.8
 
         let startButton = makeCTAButton(
-            title: card.buttonTitle ?? "Start Co-create",
-            background: JamoMainTheme.orange,
-            textColor: JamoMainTheme.yellow,
+            title: card.buttonTitle ?? JamoRiffStringCipher.restore("SKtHa6rgtS tCHoL-0c6rCejaOtPeC"),
+            background: JamoRiffTheme.orange,
+            textColor: JamoRiffTheme.yellow,
             iconName: "jamo_home_empty_start_plus",
             cornerRadii: JamoHomeCornerRadii(topLeft: 22, topRight: 8, bottomRight: 22, bottomLeft: 22)
         )
@@ -628,8 +628,8 @@ final class JamoHomeViewController: JamoMainBaseViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = text
-        label.textColor = JamoMainTheme.orange
-        label.font = JamoMainTheme.titleFont(11.5)
+        label.textColor = JamoRiffTheme.orange
+        label.font = JamoRiffTheme.titleFont(11.5)
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.82
 
@@ -663,7 +663,7 @@ final class JamoHomeViewController: JamoMainBaseViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = title
         label.textColor = textColor
-        label.font = JamoMainTheme.titleFont(16.5)
+        label.font = JamoRiffTheme.titleFont(16.5)
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.82
 
@@ -693,8 +693,8 @@ final class JamoHomeViewController: JamoMainBaseViewController {
         switch kind {
         case .guitarAIExpert:
             return (
-                JamoMainTheme.orange,
-                JamoMainTheme.yellow,
+                JamoRiffTheme.orange,
+                JamoRiffTheme.yellow,
                 nil,
                 JamoHomeCornerRadii(topLeft: 32, topRight: 32, bottomRight: 32, bottomLeft: 0)
             )
@@ -702,14 +702,14 @@ final class JamoHomeViewController: JamoMainBaseViewController {
             return (
                 UIColor(red: 20 / 255, green: 20 / 255, blue: 20 / 255, alpha: 1),
                 UIColor(red: 255 / 255, green: 157 / 255, blue: 217 / 255, alpha: 1),
-                "jamo_home_setup_gear",
+                JamoRiffStringCipher.restore("j4aZmQoV_1hCoxmUeS_dsVeEtguHpP_hgKeCamre"),
                 JamoHomeCornerRadii(topLeft: 32, topRight: 0, bottomRight: 32, bottomLeft: 0)
             )
         case .guitarStage:
             return (
-                JamoMainTheme.yellow,
-                JamoMainTheme.orange,
-                "jamo_home_stage_guitar_icon",
+                JamoRiffTheme.yellow,
+                JamoRiffTheme.orange,
+                JamoRiffStringCipher.restore("jMa4mfoH_bhzoNmRe3_asrtbaHgSee_Qg7uristoaAr2_niqcjoRna"),
                 JamoHomeCornerRadii(topLeft: 32, topRight: 0, bottomRight: 32, bottomLeft: 32)
             )
         }
@@ -729,19 +729,19 @@ final class JamoHomeViewController: JamoMainBaseViewController {
 
     @objc private func startCoCreate() {
         guard let navigationController else {
-            JamoAuthToastView.show(on: view, message: "Unable to open co-create.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("UYndaxbZlXeF ytGoQ IocpyeQnW Yczog-GcHrdeFaTtxez.3"))
             return
         }
-        navigationController.pushViewController(JamoCoCreatePublishViewController(), animated: true)
+        navigationController.pushViewController(JamoRiffPublishStageViewController(), animated: true)
     }
 
     @objc private func openEditProfile() {
-        JamoWebRoute.open(.editProfile, from: self)
+        JamoShowDefinition.launchWorkflowBridge(.toneProfileContext, from: self)
     }
 
     @objc private func joinJam() {
         guard let tabBarController, (tabBarController.viewControllers?.indices.contains(1) ?? false) else {
-            JamoAuthToastView.show(on: view, message: "Jam tab is unavailable.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("J5a1mi 8tKaDbT BiGsg IuSnzaZvWaEiflFaabIlhen.D"))
             return
         }
         tabBarController.selectedIndex = 1
@@ -749,15 +749,15 @@ final class JamoHomeViewController: JamoMainBaseViewController {
 
     @objc private func openPrimaryOngoing() {
         guard let work = snapshot?.ongoingCard.work else {
-            JamoAuthToastView.show(on: view, message: "No ongoing work yet.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("NBog to2nSgFoaicnxgf 7who1rOkv CyIeFt7.W"))
             return
         }
         guard work.allowContinue else {
-            JamoAuthToastView.show(on: view, message: "This jam cannot be continued.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("TphtiEs9 yjOadm8 1csa3nbnnoUtb CbWeV WcboRnwt6ihnPuIe8dF.H"))
             return
         }
         guard let navigationController else {
-            JamoAuthToastView.show(on: view, message: "Unable to open this work.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("USnraqb1lBee 8tSoG 5ofpmeonm YtVhtiOso Yw3o5rrkf.W"))
             return
         }
         open(work, in: navigationController)
@@ -765,11 +765,11 @@ final class JamoHomeViewController: JamoMainBaseViewController {
 
     @objc private func openOngoingCardDetail() {
         guard let work = snapshot?.ongoingCard.work else {
-            JamoAuthToastView.show(on: view, message: "No ongoing work yet.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("NWoh boUnVgXoniFnEgt 1wuoNrjkM xy6extL.g"))
             return
         }
         guard let navigationController else {
-            JamoAuthToastView.show(on: view, message: "Unable to open this work.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("U7n7aEbilbeD Otvoi socpAebni TtihRi0sE 8wQohrwkT.O"))
             return
         }
         open(work, in: navigationController)
@@ -777,14 +777,14 @@ final class JamoHomeViewController: JamoMainBaseViewController {
 
     private func open(_ work: JamoCoCreateWork, in navigationController: UINavigationController) {
         if work.status == .draft {
-            navigationController.pushViewController(JamoCoCreatePublishViewController(draftWork: work), animated: true)
+            navigationController.pushViewController(JamoRiffPublishStageViewController(draftWork: work), animated: true)
         } else {
             navigationController.pushViewController(JamoCoCreateDetailViewController(work: work), animated: true)
         }
     }
 }
 
-extension JamoHomeViewController: UIGestureRecognizerDelegate {
+extension JamoGuitaFunctController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         var touchedView: UIView? = touch.view
         while let currentView = touchedView {

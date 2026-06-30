@@ -1,9 +1,9 @@
 import UIKit
 
-class JamoAuthBaseViewController: UIViewController, JamoAuthAgreementViewDelegate {
+class JamoAuthBaseViewController: UIViewController, JamoRiffPolicyCheckViewDelegate {
     let scrollView = UIScrollView()
     let contentView = UIView()
-    let authStore = JamoAuthStore.shared
+    let authStore = JamoRiffIdentityArchive.sharedArchive
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,36 +42,36 @@ class JamoAuthBaseViewController: UIViewController, JamoAuthAgreementViewDelegat
         ])
     }
 
-    func showToast(_ message: String) {
-        JamoAuthToastView.show(on: view, message: message)
+    func showRiffNotice(_ riffNotice: String) {
+        JamoRiffNoticeView.show(on: view, copy: riffNotice)
     }
 
     func ensureAgreementAccepted() -> Bool {
         guard authStore.isAgreementAccepted else {
-            showToast(JamoAuthCopy.agreementRequired)
+            showRiffNotice(JamoRiffAccessCopy.riffPolicyRequiredNotice)
             return false
         }
         return true
     }
 
-    func jamoAuthAgreementViewDidTapTerms(_ view: JamoAuthAgreementView) {
+    func jamoRiffPolicyCheckDidTapTerms(_ view: JamoRiffPolicyCheckView) {
         routeLegalPage(kind: .terms)
     }
 
-    func jamoAuthAgreementViewDidTapPrivacy(_ view: JamoAuthAgreementView) {
+    func jamoRiffPolicyCheckDidTapPrivacy(_ view: JamoRiffPolicyCheckView) {
         routeLegalPage(kind: .privacy)
     }
 
-    func jamoAuthAgreementView(_ view: JamoAuthAgreementView, didChangeAccepted accepted: Bool) {
+    func jamoRiffPolicyCheck(_ view: JamoRiffPolicyCheckView, didChangeAccepted accepted: Bool) {
         authStore.isAgreementAccepted = accepted
     }
 
     func routeLegalPage(kind: JamoAuthLegalRoute) {
         switch kind {
         case .terms:
-            JamoWebRoute.open(.terms, from: self)
+            JamoShowDefinition.launchWorkflowBridge(.barlinesConfigDefinition, from: self)
         case .privacy:
-            JamoWebRoute.open(.privacy, from: self)
+            JamoShowDefinition.launchWorkflowBridge(.signalPathInstance, from: self)
         }
     }
 
@@ -131,9 +131,9 @@ enum JamoAuthLegalRoute {
     var title: String {
         switch self {
         case .terms:
-            return "Terms of Use"
+            return JamoRiffStringCipher.restore("T5eJrXm9sF aoffw GUGs4el")
         case .privacy:
-            return "Privacy Policy"
+            return JamoRiffStringCipher.restore("PlrbifvmavcHys yPLoBlAizcNy3")
         }
     }
 }

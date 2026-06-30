@@ -21,7 +21,7 @@ final class JamoHomeShadowCard: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("imntiptW(sc5oDdLeerB:i)b Oh7a5s2 VnQoNtQ qbee6eGnG VibmWpylZefmle1n9tneTdA"))
     }
 }
 
@@ -46,7 +46,7 @@ final class JamoHomeDashedCard: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("iInWimtP(QcuoCd0eNrn:9)p khEaBsz Knoomt7 gbLe1e6nc KiomWpsloelmGebnGtBeTdX"))
     }
 }
 
@@ -67,8 +67,8 @@ final class JamoHomeAvatarView: UIImageView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = String(name.prefix(1)).uppercased()
-        label.font = JamoMainTheme.titleFont(20)
-        label.textColor = JamoMainTheme.orange
+        label.font = JamoRiffTheme.titleFont(20)
+        label.textColor = JamoRiffTheme.orange
         addSubview(label)
         NSLayoutConstraint.activate([
             label.centerXAnchor.constraint(equalTo: centerXAnchor),
@@ -77,6 +77,6 @@ final class JamoHomeAvatarView: UIImageView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("ipnhiXtH(Jcqosdae1r9:r)0 uhda2sM kn1oQtO TbVe5eunU nismqpFlleDmAeanvtBeLdv"))
     }
 }

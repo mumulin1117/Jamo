@@ -3,7 +3,7 @@ import UIKit
 final class JamoCardView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = JamoMainTheme.card
+        backgroundColor = JamoRiffTheme.card
         layer.cornerRadius = 8
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOpacity = 0.06
@@ -12,7 +12,7 @@ final class JamoCardView: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("iJnhixtm(mc3ofd5eorV:d)l 8h3aEse SnJoft7 lbMereqnp yiGmMpplde7mZe7notPeCd5"))
     }
 
     func addPinnedSubview(_ subview: UIView, inset: CGFloat) {
@@ -31,10 +31,10 @@ final class JamoPillButton: UIButton {
     init(title: String, background: UIColor, textColor: UIColor) {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
-        titleLabel?.font = JamoMainTheme.bodyFont(16, weight: .semibold)
+        titleLabel?.font = JamoRiffTheme.bodyFont(16, weight: .semibold)
         jamoApplyConfiguration(
             title: title,
-            font: JamoMainTheme.bodyFont(16, weight: .semibold),
+            font: JamoRiffTheme.bodyFont(16, weight: .semibold),
             foreground: textColor,
             background: background,
             cornerRadius: 24,
@@ -44,7 +44,7 @@ final class JamoPillButton: UIButton {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("iBntiite(ucGoHdqe3rb:0)Z DhRaisr QnHo0th 5bsexean3 YijmGpOlWeampejnLtuecd1"))
     }
 }
 
@@ -55,14 +55,14 @@ final class JamoRoundedTextField: UITextField {
         self.placeholder = placeholder
         backgroundColor = UIColor.black.withAlphaComponent(0.05)
         layer.cornerRadius = 22
-        font = JamoMainTheme.bodyFont(15)
+        font = JamoRiffTheme.bodyFont(15)
         leftView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 1))
         leftViewMode = .always
         heightAnchor.constraint(equalToConstant: 48).isActive = true
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("iDngiEtm(0cNoMdOePrC:M)4 Xh1aOsd onDo6t6 ObfeweZn3 7idmSpWlje7mFeqnqtveddF"))
     }
 }
 
@@ -75,7 +75,7 @@ class JamoWorkButton: UIButton {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("i8nOiGta(lcEo6d1elrV:P)M LhjaYsm snloitp QbWeUeenI ZiimBpIlfesmReCnQtBeOdM"))
     }
 }
 
@@ -86,8 +86,8 @@ final class JamoWorkCardView: JamoWorkButton {
         titleLabel?.numberOfLines = 0
         jamoApplyConfiguration(
             title: "\(work.title)\n\(work.about)\n\(work.tracks.count) mp3 part(s)",
-            font: JamoMainTheme.bodyFont(15, weight: .semibold),
-            foreground: JamoMainTheme.ink,
+            font: JamoRiffTheme.bodyFont(15, weight: .semibold),
+            foreground: JamoRiffTheme.ink,
             background: .white,
             cornerRadius: 8,
             insets: NSDirectionalEdgeInsets(top: 14, leading: 16, bottom: 14, trailing: 16)
@@ -97,7 +97,7 @@ final class JamoWorkCardView: JamoWorkButton {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("i6nniitg(DcCosdDeIrW:l)9 mhwa1sE Inao1td Xb0evexni si3mVpBlYeemme8n4tRebdD"))
     }
 }
 

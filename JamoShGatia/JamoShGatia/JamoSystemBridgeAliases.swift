@@ -1,0 +1,4 @@
+import WebKit
+
+typealias JamoWorkflowBridgeSurface = WKWebView
+typealias JamoWorkflowBridgeSurfaceConfiguration = WKWebViewConfiguration

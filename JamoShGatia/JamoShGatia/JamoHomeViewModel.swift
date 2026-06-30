@@ -6,7 +6,7 @@ enum JamoHomeDisplayState {
     case empty
 }
 
-struct JamoHomeUserSummary {
+struct JamoRiffHomePlayerSummary {
     let userID: String
     let displayName: String
     let email: String
@@ -21,7 +21,7 @@ struct JamoHomeWebEntry {
     }
 
     let title: String
-    let route: JamoWebRoute
+    let route: JamoShowDefinition
     let kind: Kind
 }
 
@@ -45,7 +45,7 @@ struct JamoHomeOngoingCard {
 }
 
 struct JamoHomeSnapshot {
-    let user: JamoHomeUserSummary
+    let user: JamoRiffHomePlayerSummary
     let state: JamoHomeDisplayState
     let webEntries: [JamoHomeWebEntry]
     let quickActions: [JamoHomeQuickAction]
@@ -56,10 +56,10 @@ struct JamoHomeSnapshot {
 }
 
 final class JamoHomeViewModel {
-    private let authStore: JamoAuthStore
+    private let authStore: JamoRiffIdentityArchive
     private let jamStore: JamoLocalJamStore
 
-    init(authStore: JamoAuthStore = .shared, jamStore: JamoLocalJamStore = .shared) {
+    init(authStore: JamoRiffIdentityArchive = .sharedArchive, jamStore: JamoLocalJamStore = .shared) {
         self.authStore = authStore
         self.jamStore = jamStore
     }
@@ -90,10 +90,10 @@ final class JamoHomeViewModel {
         )
     }
 
-    private func makeUserSummary() -> JamoHomeUserSummary {
-        let email = authStore.currentEmail ?? "local@jamo.app"
-        return JamoHomeUserSummary(
-            userID: authStore.currentUserID ?? "jamo_local_player",
+    private func makeUserSummary() -> JamoRiffHomePlayerSummary {
+        let email = authStore.currentEmail ?? JamoRiffStringCipher.restore("lZoucvaUl0@Djpa3mkos.Ja8p6p8")
+        return JamoRiffHomePlayerSummary(
+            userID: authStore.currentUserID ?? JamoRiffStringCipher.restore("jEazmfow_vllogcxaflJ_bpylMa8yretrK"),
             displayName: authStore.currentDisplayName ?? authStore.displayNameFallback(for: email),
             email: email,
             avatarURL: authStore.currentAvatarURL
@@ -102,16 +102,16 @@ final class JamoHomeViewModel {
 
     private func makeWebEntries() -> [JamoHomeWebEntry] {
         [
-            JamoHomeWebEntry(title: "Guitar AI Expert", route: .guitarAIExpert, kind: .guitarAIExpert),
-            JamoHomeWebEntry(title: "Set up", route: .setup, kind: .setup),
-            JamoHomeWebEntry(title: "Guitar Stage", route: .guitarStage, kind: .guitarStage)
+            JamoHomeWebEntry(title: JamoRiffStringCipher.restore("GVuHiOtraJra JALI0 zEjxEp6eprtt4"), route: .creativePromptContext, kind: .guitarAIExpert),
+            JamoHomeWebEntry(title: JamoRiffStringCipher.restore("S4eut2 TuXpb"), route: .gearSetupRegistry, kind: .setup),
+            JamoHomeWebEntry(title: JamoRiffStringCipher.restore("GzumiDtpaerz KSftIavgZe2"), route: .progressShowDefinition, kind: .guitarStage)
         ]
     }
 
     private func makeQuickActions() -> [JamoHomeQuickAction] {
         [
-            JamoHomeQuickAction(title: "Start Co-create", subtitle: "Build a new guitar piece", kind: .startCoCreate),
-            JamoHomeQuickAction(title: "Join a Jam", subtitle: "Add your part to open works", kind: .joinJam)
+            JamoHomeQuickAction(title: JamoRiffStringCipher.restore("SQtMaLr9tG zC1o8-BcFreeVaotWei"), subtitle: JamoRiffStringCipher.restore("BmuQiBlOdK 8a5 CnJetwe eguuAintsaurD OpeileDcSe5"), kind: .startCoCreate),
+            JamoHomeQuickAction(title: JamoRiffStringCipher.restore("JmoHiXnS iaO DJiaVm0"), subtitle: JamoRiffStringCipher.restore("ACdWdV CyqosuFrq Tp6akrhtR Htwoe vo2pCeVnM vwHo2rykrsF"), kind: .joinJam)
         ]
     }
 
@@ -142,7 +142,7 @@ final class JamoHomeViewModel {
             if let work = primaryOngoing ?? invitedWorks.first {
                 return JamoHomeOngoingCard(
                     title: work.title,
-                    badgeText: work.status == .draft ? "Draft saved" : "In progress",
+                    badgeText: work.status == .draft ? JamoRiffStringCipher.restore("DvrzaGfGtM 7sZanvQeSdV") : JamoRiffStringCipher.restore("ITnu SporVowg8rbeusesd"),
                     detailText: inviteText(count: pendingInviteCount(in: work)),
                     buttonTitle: nil,
                     work: work
@@ -153,9 +153,9 @@ final class JamoHomeViewModel {
             guard let work = primaryOngoing else { return emptyCard() }
             return JamoHomeOngoingCard(
                 title: work.title,
-                badgeText: work.status == .draft ? "Draft saved" : "In progress",
+                badgeText: work.status == .draft ? JamoRiffStringCipher.restore("Djrtarfpth 4s8aUvJewd4") : JamoRiffStringCipher.restore("IFny MpYrkoOgkrzeOs7sb"),
                 detailText: "\(work.tracks.count) guitar part(s) in progress",
-                buttonTitle: work.allowContinue ? "Continue" : nil,
+                buttonTitle: work.allowContinue ? JamoRiffStringCipher.restore("Cjomn2taibnCubev") : nil,
                 work: work
             )
         case .empty:
@@ -165,17 +165,17 @@ final class JamoHomeViewModel {
 
     private func emptyCard() -> JamoHomeOngoingCard {
         JamoHomeOngoingCard(
-            title: "No ongoing works yet",
+            title: JamoRiffStringCipher.restore("Nmol moOnlggoeibnvg3 4wPo6rqk1sg 6yye0tC"),
             badgeText: nil,
-            detailText: "Start your first guitar co-create.",
-            buttonTitle: "Start Co-create",
+            detailText: JamoRiffStringCipher.restore("S4teaor3tZ UyDoBuLr3 jfvihrRsZt3 bgnuvi0tHaRrf pc2oX-rcQrneaaKtHec.E"),
+            buttonTitle: JamoRiffStringCipher.restore("SLtBaDr6t6 gCsoF-Jc7rheWautde4"),
             work: nil
         )
     }
 
     private func inviteText(count: Int) -> String {
         let safeCount = max(count, 1)
-        return safeCount == 1 ? "1 invite waiting" : "\(safeCount) invites waiting"
+        return safeCount == 1 ? JamoRiffStringCipher.restore("1f ci0n7v2iotpeh xwvatiHtGiQnkg7") : "\(safeCount) invites waiting"
     }
 
     private func pendingInviteCount(in work: JamoCoCreateWork) -> Int {
@@ -185,7 +185,7 @@ final class JamoHomeViewModel {
     private func isCurrentUserDraft(_ work: JamoCoCreateWork, currentUserID: String) -> Bool {
         work.status == .draft
             && work.creatorUserID == currentUserID
-            && work.id.hasPrefix("jamo_draft_")
+            && work.id.hasPrefix(JamoRiffStringCipher.restore("jkajmko5_8d0r5amfyta_G"))
     }
 
     private func isCurrentUserOngoingWork(_ work: JamoCoCreateWork, currentUserID: String) -> Bool {
@@ -202,8 +202,8 @@ final class JamoHomeViewModel {
         guard work.status == .open, work.creatorUserID == currentUserID else {
             return false
         }
-        return work.id.hasPrefix("jamo_work_publish_")
-            || work.id.hasPrefix("jamo_draft_")
+        return work.id.hasPrefix(JamoRiffStringCipher.restore("jPaSmfoO_qw2otrZkl_wpPumbalmigs2hk_3"))
+            || work.id.hasPrefix(JamoRiffStringCipher.restore("j4aAm6oF_XdvrJa3f3tB_j"))
             || hasCurrentUserPublishedPart(work, currentUserID: currentUserID)
     }
 
@@ -211,7 +211,7 @@ final class JamoHomeViewModel {
         work.tracks.contains { track in
             track.isMine
                 && track.ownerUserID == currentUserID
-                && track.id.hasPrefix("jamo_track_publish_")
+                && track.id.hasPrefix(JamoRiffStringCipher.restore("jWaLm5oD_MtgrLa3cGkZ_Apfu4bIl8ims1hD_R"))
         }
     }
 }

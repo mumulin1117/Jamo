@@ -47,7 +47,7 @@ struct JamoCoCreateEditorClip: Equatable {
 struct JamoCoCreateEditorSnapshot: Equatable {
     let state: JamoCoCreateEditorState
     let workID: String
-    let currentUser: JamoCoCreateUserProfile
+    let currentUser: JamoRiffPlayerProfile
     let selectedMethod: JamoCoCreateEditorMethodDisplay
     let source: JamoCoCreateEditorSourceDisplay?
     let clip: JamoCoCreateEditorClip?
@@ -60,13 +60,13 @@ struct JamoCoCreateEditorSnapshot: Equatable {
 
 final class JamoCoCreateEditorViewModel {
     static let minimumClipDuration: TimeInterval = 3
-    static let clipTooShortMessage = "Clip is too short. Please add at least 3 seconds."
-    static let missingClipMessage = "Add or record your guitar part first."
-    static let microphoneMessage = "Microphone access is needed to record your guitar part."
+    static let clipTooShortMessage = JamoRiffStringCipher.restore("CNlPiBp3 YiMsn itMoioj PsFhvo4rfte.x PPElXehaUszeB 9agdcdm pa6tg ElJekatsRtX R3Z wsxe3ccoUn8diso.u")
+    static let missingClipMessage = JamoRiffStringCipher.restore("Atdzdv SoTrU XrFe9cXoerCdB Dyxokudrq VghuQiEt4asrR ep5aer6tE Gf8iFrasZt9.7")
+    static let microphoneMessage = JamoRiffStringCipher.restore("MqiScertoEpPhAoPnZeL KaIcXcXeisssN ZiLs9 4nQeXeBdWe7du 5t2oQ 7rSeFcSogrYdT syXo7uArA 3gPuwi6tHasr7 PpHaBrKt2.d")
 
     private let workID: String
     private let selectedJoinMethod: JamoCoCreateJoinMethod
-    private let authStore: JamoAuthStore
+    private let authStore: JamoRiffIdentityArchive
     private let jamStore: JamoLocalJamStore
 
     private var state: JamoCoCreateEditorState = .selectedMethod
@@ -79,7 +79,7 @@ final class JamoCoCreateEditorViewModel {
         workID: String,
         selectedJoinMethod: JamoCoCreateJoinMethod,
         microphonePermissionGranted: Bool = false,
-        authStore: JamoAuthStore = .shared,
+        authStore: JamoRiffIdentityArchive = .sharedArchive,
         jamStore: JamoLocalJamStore = .shared
     ) {
         self.workID = workID
@@ -93,7 +93,7 @@ final class JamoCoCreateEditorViewModel {
         work: JamoCoCreateWork,
         selectedJoinMethod: JamoCoCreateJoinMethod,
         microphonePermissionGranted: Bool = false,
-        authStore: JamoAuthStore = .shared,
+        authStore: JamoRiffIdentityArchive = .sharedArchive,
         jamStore: JamoLocalJamStore = .shared
     ) {
         self.init(
@@ -215,12 +215,12 @@ final class JamoCoCreateEditorViewModel {
         waveformSeed: Int? = nil,
         source: JamoCoCreateEditorClipSource
     ) -> JamoCoCreateEditorSnapshot {
-        let fileName = JamoLocalJamMediaCatalog.normalizedRiff(
+        let fileName = JamoRiffLocalMediaShelf.normalizedRiff(
             mp3FileName ?? selectedJoinMethod.localMP3FileName,
             seed: mediaSeed
         )
         let fallbackDuration = suggestedDuration(for: selectedJoinMethod)
-        let resolvedDuration = max(duration ?? JamoLocalJamMediaCatalog.audioDuration(for: fileName, fallback: fallbackDuration), 0)
+        let resolvedDuration = max(duration ?? JamoRiffLocalMediaShelf.audioDuration(for: fileName, fallback: fallbackDuration), 0)
         guard resolvedDuration >= Self.minimumClipDuration else {
             clip = nil
             savedWork = nil
@@ -338,7 +338,7 @@ final class JamoCoCreateEditorViewModel {
             return makeSnapshot()
         }
         guard let work = jamStore.work(withID: workID) else {
-            validationMessage = "This co-create is no longer available."
+            validationMessage = JamoRiffStringCipher.restore("TyhQiLsd IcXoa-pcorcenaWt2e3 kirsq 3n7od jlxoDnzgRedr4 daav6a0iRlta8bqlMef.I")
             state = .empty
             return makeSnapshot()
         }
@@ -398,19 +398,19 @@ final class JamoCoCreateEditorViewModel {
     private func primaryAction(with clip: JamoCoCreateEditorClip?) -> JamoCoCreateActionDisplay {
         switch state {
         case .saving:
-            return JamoCoCreateActionDisplay(title: "Saving...", isEnabled: false, style: .disabled)
+            return JamoCoCreateActionDisplay(title: JamoRiffStringCipher.restore("SyatvjiGndgY.N.C.Z"), isEnabled: false, style: .disabled)
         case .clipTooShort, .selectedMethod, .microphonePermission, .empty, .recording:
-            return JamoCoCreateActionDisplay(title: "Save & Next", isEnabled: false, style: .disabled)
+            return JamoCoCreateActionDisplay(title: JamoRiffStringCipher.restore("SzalvWe9 e&f CNUegxwtQ"), isEnabled: false, style: .disabled)
         case .clipReady:
             let enabled = canSaveNext(with: clip)
-            return JamoCoCreateActionDisplay(title: "Save & Next", isEnabled: enabled, style: enabled ? .orange : .disabled)
+            return JamoCoCreateActionDisplay(title: JamoRiffStringCipher.restore("SEagvzeQ W&w mNqeOxOtU"), isEnabled: enabled, style: enabled ? .orange : .disabled)
         }
     }
 
-    private func makeCurrentUser() -> JamoCoCreateUserProfile {
-        let email = authStore.currentEmail ?? "local@jamo.app"
-        return JamoCoCreateUserProfile(
-            userID: authStore.currentUserID ?? "jamo_local_player",
+    private func makeCurrentUser() -> JamoRiffPlayerProfile {
+        let email = authStore.currentEmail ?? JamoRiffStringCipher.restore("lyoCcbaclj@ujganm6oJ.5aWpopP")
+        return JamoRiffPlayerProfile(
+            userID: authStore.currentUserID ?? JamoRiffStringCipher.restore("jraUmLoF_IlZoDcraLlY_epllPaPyQeErc"),
             displayName: authStore.currentDisplayName ?? authStore.displayNameFallback(for: email),
             email: email,
             avatarURL: authStore.currentAvatarURL
@@ -424,7 +424,7 @@ final class JamoCoCreateEditorViewModel {
             subtitle: work.about,
             coverImageName: work.coverImageName,
             coverURL: work.coverURL,
-            tagTitle: work.tags.first ?? "Acoustic",
+            tagTitle: work.tags.first ?? JamoRiffStringCipher.restore("AXcfoOuoshtLiwcK"),
             parts: work.tracks.map(makePartDisplay)
         )
     }
@@ -453,26 +453,26 @@ final class JamoCoCreateEditorViewModel {
     private func methodTitle(_ method: JamoCoCreateJoinMethod) -> String {
         switch method {
         case .recordGuitar:
-            return "Record Guitar"
+            return JamoRiffStringCipher.restore("RWekc7oRr9dv OGhuUiJt8aUri")
         case .uploadClip:
-            return "Upload Clip"
+            return JamoRiffStringCipher.restore("UHp6l7o6amd7 SCdlsimpa")
         case .addChords:
-            return "Add Chords"
+            return JamoRiffStringCipher.restore("AMdadz kCNh5oNr8dzsH")
         case .addMelody:
-            return "Add Melody"
+            return JamoRiffStringCipher.restore("ADdLdD vMkeSljozd4yy")
         }
     }
 
     private func methodSubtitle(_ method: JamoCoCreateJoinMethod) -> String {
         switch method {
         case .recordGuitar:
-            return "Record your guitar part now"
+            return JamoRiffStringCipher.restore("R7evcNo4r8d4 7y3obuKrH WgLu2imtlawrG Tp0aOrFtS 2nao4w8")
         case .uploadClip:
-            return "Use an existing guitar clip"
+            return JamoRiffStringCipher.restore("UWsteG carng 8eHxSiOsZtciVnxgG eg4uFivtaaGrr Acsl1icpB")
         case .addChords:
-            return "Add a chord backing part"
+            return JamoRiffStringCipher.restore("Aqdmdk SaA ActhaoNrZdK 0b1aKczkiiMn8g3 YpqaXrGtV")
         case .addMelody:
-            return "Create a melody line"
+            return JamoRiffStringCipher.restore("CDrFexawtJeC paM 8mueNlZoSd0yV clWiDnCee")
         }
     }
 
@@ -513,6 +513,6 @@ final class JamoCoCreateEditorViewModel {
 
     private func durationText(_ duration: TimeInterval) -> String {
         let seconds = max(Int(duration.rounded()), 0)
-        return String(format: "%d:%02d", seconds / 60, seconds % 60)
+        return String(format: JamoRiffStringCipher.restore("%bdI:D%o0m2BdB"), seconds / 60, seconds % 60)
     }
 }

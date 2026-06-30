@@ -1,6 +1,6 @@
 import UIKit
 
-class JamoMainBaseViewController: UIViewController {
+class JamoRiffBaseStageViewController: UIViewController {
     let scrollView = UIScrollView()
     let contentView = UIView()
     let contentStack = UIStackView()
@@ -9,7 +9,7 @@ class JamoMainBaseViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = JamoMainTheme.background
+        view.backgroundColor = JamoRiffTheme.background
         configureScrollLayout()
         registerKeyboardHandling()
     }
@@ -64,8 +64,8 @@ class JamoMainBaseViewController: UIViewController {
     func makeSectionTitle(_ text: String) -> UILabel {
         let label = UILabel()
         label.text = text
-        label.font = JamoMainTheme.titleFont(24)
-        label.textColor = JamoMainTheme.ink
+        label.font = JamoRiffTheme.titleFont(24)
+        label.textColor = JamoRiffTheme.ink
         label.numberOfLines = 0
         return label
     }
@@ -73,10 +73,14 @@ class JamoMainBaseViewController: UIViewController {
     func makeBodyLabel(_ text: String) -> UILabel {
         let label = UILabel()
         label.text = text
-        label.font = JamoMainTheme.bodyFont(15)
-        label.textColor = JamoMainTheme.muted
+        label.font = JamoRiffTheme.bodyFont(15)
+        label.textColor = JamoRiffTheme.muted
         label.numberOfLines = 0
         return label
+    }
+
+    func showRiffNotice(_ copy: String) {
+        JamoRiffNoticeView.show(on: view, copy: copy)
     }
 
     private func registerKeyboardHandling() {

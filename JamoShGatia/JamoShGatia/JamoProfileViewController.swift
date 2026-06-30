@@ -1,17 +1,17 @@
 import UIKit
 
-final class JamoProfileViewController: JamoMainBaseViewController {
+final class JamoProfileViewController: JamoRiffBaseStageViewController {
     private enum Layout {
         static let contentMaxWidth: CGFloat = 327
         static let sectionSpacing: CGFloat = 22
         static let cardRadius: CGFloat = 24
-        static let coinCardHeight: CGFloat = 92
+        static let pickupShelfCardHeight: CGFloat = 92
     }
 
-    private let viewModel = JamoProfileViewModel()
-    private var requestID = UUID()
-    private var sourceWorksByID: [String: JamoCoCreateWork] = [:]
-    private var currentUserID: String = "jamo_local_player"
+    private let toneProfileManager = JamoProfileViewModel()
+    private var refreshAnchor = UUID()
+    private var sourceRiffWorksByHandle: [String: JamoCoCreateWork] = [:]
+    private var currentPlayerAnchor: String = JamoRiffStringCipher.restore("jgaLm0o7_UluoJchailW_9pAlQaQykeNrt")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,13 +19,13 @@ final class JamoProfileViewController: JamoMainBaseViewController {
         contentStack.spacing = Layout.sectionSpacing
         scrollView.alwaysBounceVertical = true
         scrollView.showsVerticalScrollIndicator = false
-        loadContent()
+        refreshToneProfile()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        loadContent()
+        refreshToneProfile()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -33,44 +33,44 @@ final class JamoProfileViewController: JamoMainBaseViewController {
         
     }
 
-    private func loadContent() {
+    private func refreshToneProfile() {
         let currentRequest = UUID()
-        requestID = currentRequest
-        viewModel.loadSnapshot { [weak self] snapshot in
+        refreshAnchor = currentRequest
+        toneProfileManager.loadToneProfileSnapshot { [weak self] snapshot in
             DispatchQueue.main.async {
-                guard let self, self.requestID == currentRequest else { return }
-                self.render(snapshot)
+                guard let self, self.refreshAnchor == currentRequest else { return }
+                self.renderToneProfile(snapshot)
             }
         }
     }
 
-    private func render(_ snapshot: JamoProfileSnapshot) {
-        currentUserID = snapshot.user.userID
-        sourceWorksByID = Dictionary(uniqueKeysWithValues: snapshot.sourceWorks.map { ($0.id, $0) })
+    private func renderToneProfile(_ snapshot: JamoProfileSnapshot) {
+        currentPlayerAnchor = snapshot.playerSummary.playerHandle
+        sourceRiffWorksByHandle = Dictionary(uniqueKeysWithValues: snapshot.sourceRiffWorks.map { ($0.jamoRiffHandle, $0) })
         contentStack.arrangedSubviews.forEach { $0.removeFromSuperview() }
-        contentStack.addArrangedSubview(centered(JamoProfileHeaderView(user: snapshot.user, target: self)))
-        contentStack.addArrangedSubview(centered(JamoProfileCoinsCardView(user: snapshot.user, target: self)))
-        contentStack.addArrangedSubview(centered(makePostSection(snapshot)))
+        contentStack.addArrangedSubview(centeredTrackContainer(JamoProfileHeaderView(playerSummary: snapshot.playerSummary, target: self)))
+        contentStack.addArrangedSubview(centeredTrackContainer(JamoProfilePickShelfCardView(playerSummary: snapshot.playerSummary, target: self)))
+        contentStack.addArrangedSubview(centeredTrackContainer(makeRiffMomentSection(snapshot)))
     }
 
-    private func makePostSection(_ snapshot: JamoProfileSnapshot) -> UIView {
+    private func makeRiffMomentSection(_ snapshot: JamoProfileSnapshot) -> UIView {
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .vertical
         stack.spacing = 16
 
-        stack.addArrangedSubview(JamoProfileSectionHeaderView(title: "Post"))
+        stack.addArrangedSubview(JamoProfileSectionHeaderView(title: JamoRiffStringCipher.restore("Pto6shtl")))
 
-        if snapshot.posts.isEmpty {
-            let empty = JamoProfileEmptyPostsView(display: snapshot.emptyPosts)
-            empty.startButton.addTarget(self, action: #selector(startCoCreateTapped), for: .touchUpInside)
+        if snapshot.riffMoments.isEmpty {
+            let empty = JamoProfileEmptyRiffView(display: snapshot.emptyRiffMoments)
+            empty.startButton.addTarget(self, action: #selector(startRiffDraftTapped), for: .touchUpInside)
             stack.addArrangedSubview(empty)
         } else {
-            snapshot.posts.forEach { post in
-                let card = JamoProfilePostCardView(post: post)
-                card.addTarget(self, action: #selector(postCardTapped(_:)), for: .touchUpInside)
-                card.actionButton.addTarget(self, action: #selector(postActionTapped(_:)), for: .touchUpInside)
-                card.moreButton.addTarget(self, action: #selector(postMoreTapped(_:)), for: .touchUpInside)
+            snapshot.riffMoments.forEach { riffMoment in
+                let card = JamoProfileRiffMomentCardView(riffMoment: riffMoment)
+                card.addTarget(self, action: #selector(riffMomentCardTapped(_:)), for: .touchUpInside)
+                card.riffActionButton.addTarget(self, action: #selector(riffMomentActionTapped(_:)), for: .touchUpInside)
+                card.branchOptionsButton.addTarget(self, action: #selector(riffMomentOptionsTapped(_:)), for: .touchUpInside)
                 stack.addArrangedSubview(card)
             }
         }
@@ -78,7 +78,7 @@ final class JamoProfileViewController: JamoMainBaseViewController {
         return stack
     }
 
-    private func centered(_ view: UIView) -> UIView {
+    private func centeredTrackContainer(_ view: UIView) -> UIView {
         let container = UIView()
         container.translatesAutoresizingMaskIntoConstraints = false
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -98,45 +98,45 @@ final class JamoProfileViewController: JamoMainBaseViewController {
         return container
     }
 
-    @objc fileprivate func editProfileTapped() {
-        JamoWebRoute.open(.editProfile, from: self)
+    @objc fileprivate func toneProfileEditTapped() {
+        JamoShowDefinition.launchWorkflowBridge(.toneProfileContext, from: self)
     }
 
-    @objc fileprivate func userHomeTapped() {
-        JamoWebRoute.open(.userHome(userID: currentUserID), from: self)
+    @objc fileprivate func playerToneHomeTapped() {
+        JamoShowDefinition.launchWorkflowBridge(.musicianQuestionManager(playerHandle: currentPlayerAnchor), from: self)
     }
 
-    @objc fileprivate func followingTapped() {
-        JamoWebRoute.open(.following, from: self)
+    @objc fileprivate func styleExchangeTapped() {
+        JamoShowDefinition.launchWorkflowBridge(.styleExchangeRegistry, from: self)
     }
 
-    @objc fileprivate func followersTapped() {
-        JamoWebRoute.open(.followers, from: self)
+    @objc fileprivate func sessionParticipantTapped() {
+        JamoShowDefinition.launchWorkflowBridge(.sessionParticipantContext, from: self)
     }
 
-    @objc fileprivate func coinsTapped() {
-        JamoWebRoute.open(.coins, from: self)
+    @objc fileprivate func pickupShelfTapped() {
+        JamoShowDefinition.launchWorkflowBridge(.pickupSelectorDefinition, from: self)
     }
 
-    @objc private func postCardTapped(_ sender: JamoProfilePostCardView) {
-        openPost(workID: sender.workID)
+    @objc private func riffMomentCardTapped(_ sender: JamoProfileRiffMomentCardView) {
+        openRiffMoment(riffHandle: sender.riffHandle)
     }
 
-    @objc private func postActionTapped(_ sender: JamoProfilePostActionButton) {
-        openPost(workID: sender.workID)
+    @objc private func riffMomentActionTapped(_ sender: JamoProfileRiffActionButton) {
+        openRiffMoment(riffHandle: sender.riffHandle)
     }
 
-    @objc private func postMoreTapped(_ sender: JamoProfilePostActionButton) {
-        JamoAuthToastView.show(on: view, message: "More post actions are coming soon.")
+    @objc private func riffMomentOptionsTapped(_ sender: JamoProfileRiffActionButton) {
+        showRiffNotice(JamoRiffStringCipher.restore("MboSryeM MwgoFrWki VaecJtGikoQnDsy cadrveY ZckoLmGiznWgp 7sHo6ornh.4"))
     }
 
-    @objc private func startCoCreateTapped() {
-        navigationController?.pushViewController(JamoCoCreatePublishViewController(), animated: true)
+    @objc private func startRiffDraftTapped() {
+        navigationController?.pushViewController(JamoRiffPublishStageViewController(), animated: true)
     }
 
-    private func openPost(workID: String) {
-        guard let work = sourceWorksByID[workID] else {
-            JamoAuthToastView.show(on: view, message: "This post is no longer available.")
+    private func openRiffMoment(riffHandle: String) {
+        guard let work = sourceRiffWorksByHandle[riffHandle] else {
+            showRiffNotice(JamoRiffStringCipher.restore("TyhNiSsS ywNoKr7k3 EixsN onKod hlZo3n0g1esrI Ta8vqaJiTliaVbAlWeq.U"))
             return
         }
         navigationController?.pushViewController(JamoCoCreateDetailViewController(work: work), animated: true)
@@ -151,32 +151,32 @@ private final class JamoProfileHeaderView: UIView {
         static let metricWidth: CGFloat = 82
     }
 
-    init(user: JamoProfileUserSummary, target: JamoProfileViewController) {
+    init(playerSummary: JamoProfileUserSummary, target: JamoProfileViewController) {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
 
         let avatarView = JamoProfileAvatarView(
             imageName: "jamo_profile_app_icon_placeholder",
-            avatarURL: user.avatarURL,
-            initials: user.displayName.jamoProfileInitials,
+            avatarURL: playerSummary.playerArtworkAddress,
+            initials: playerSummary.playerDisplayName.jamoProfileInitials,
             fontSize: 24
         )
-        avatarView.accessibilityLabel = "Open user profile"
-        avatarView.addTarget(target, action: #selector(JamoProfileViewController.userHomeTapped), for: .touchUpInside)
+        avatarView.accessibilityLabel = JamoRiffStringCipher.restore("OMpmeqnw au5s6evrY 7pvrAo5ffiblleK")
+        avatarView.addTarget(target, action: #selector(JamoProfileViewController.playerToneHomeTapped), for: .touchUpInside)
 
-        let followingButton = JamoProfileMetricButton(metric: user.following)
-        followingButton.addTarget(target, action: #selector(JamoProfileViewController.followingTapped), for: .touchUpInside)
+        let styleExchangeButton = JamoProfileMetricButton(metric: playerSummary.styleExchange)
+        styleExchangeButton.addTarget(target, action: #selector(JamoProfileViewController.styleExchangeTapped), for: .touchUpInside)
 
-        let followersButton = JamoProfileMetricButton(metric: user.followers)
-        followersButton.addTarget(target, action: #selector(JamoProfileViewController.followersTapped), for: .touchUpInside)
+        let sessionParticipantButton = JamoProfileMetricButton(metric: playerSummary.sessionParticipant)
+        sessionParticipantButton.addTarget(target, action: #selector(JamoProfileViewController.sessionParticipantTapped), for: .touchUpInside)
 
-        let nameButton = JamoProfileNameButton(displayName: user.displayName)
-        nameButton.addTarget(target, action: #selector(JamoProfileViewController.userHomeTapped), for: .touchUpInside)
-        nameButton.editButton.addTarget(target, action: #selector(JamoProfileViewController.editProfileTapped), for: .touchUpInside)
+        let nameButton = JamoProfileNameButton(displayName: playerSummary.playerDisplayName)
+        nameButton.addTarget(target, action: #selector(JamoProfileViewController.playerToneHomeTapped), for: .touchUpInside)
+        nameButton.editButton.addTarget(target, action: #selector(JamoProfileViewController.toneProfileEditTapped), for: .touchUpInside)
 
         addSubview(avatarView)
-        addSubview(followingButton)
-        addSubview(followersButton)
+        addSubview(styleExchangeButton)
+        addSubview(sessionParticipantButton)
         addSubview(nameButton)
 
         NSLayoutConstraint.activate([
@@ -187,13 +187,13 @@ private final class JamoProfileHeaderView: UIView {
             avatarView.widthAnchor.constraint(equalToConstant: Metric.avatarSize),
             avatarView.heightAnchor.constraint(equalTo: avatarView.widthAnchor),
 
-            followingButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            followingButton.centerYAnchor.constraint(equalTo: avatarView.centerYAnchor, constant: 10),
-            followingButton.widthAnchor.constraint(equalToConstant: Metric.metricWidth),
+            styleExchangeButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            styleExchangeButton.centerYAnchor.constraint(equalTo: avatarView.centerYAnchor, constant: 10),
+            styleExchangeButton.widthAnchor.constraint(equalToConstant: Metric.metricWidth),
 
-            followersButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-            followersButton.centerYAnchor.constraint(equalTo: avatarView.centerYAnchor, constant: 10),
-            followersButton.widthAnchor.constraint(equalToConstant: Metric.metricWidth),
+            sessionParticipantButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+            sessionParticipantButton.centerYAnchor.constraint(equalTo: avatarView.centerYAnchor, constant: 10),
+            sessionParticipantButton.widthAnchor.constraint(equalToConstant: Metric.metricWidth),
 
             nameButton.topAnchor.constraint(equalTo: avatarView.bottomAnchor, constant: -14),
             nameButton.centerXAnchor.constraint(equalTo: avatarView.centerXAnchor),
@@ -205,12 +205,12 @@ private final class JamoProfileHeaderView: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("i9nWigtj(zcfo7dOeKre:2)B OhYaZsG 6nHoft4 fbce1eSnp 0icm6pBl9eAmae7n8tpeMdA"))
     }
 }
 
 private final class JamoProfileMetricButton: UIControl {
-    init(metric: JamoProfileMetricDisplay) {
+    init(metric: JamoToneProfileMetricDisplay) {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
         accessibilityLabel = metric.title
@@ -218,13 +218,13 @@ private final class JamoProfileMetricButton: UIControl {
         let titleLabel = UILabel()
         titleLabel.text = metric.title
         titleLabel.textColor = UIColor.black.withAlphaComponent(0.68)
-        titleLabel.font = JamoMainTheme.bodyFont(16, weight: .regular)
+        titleLabel.font = JamoRiffTheme.bodyFont(16, weight: .regular)
         titleLabel.textAlignment = .center
 
         let valueLabel = UILabel()
         valueLabel.text = metric.valueText
         valueLabel.textColor = .black
-        valueLabel.font = JamoMainTheme.bodyFont(22, weight: .heavy)
+        valueLabel.font = JamoRiffTheme.bodyFont(22, weight: .heavy)
         valueLabel.textAlignment = .center
 
         let stack = UIStackView(arrangedSubviews: [titleLabel, valueLabel])
@@ -244,7 +244,7 @@ private final class JamoProfileMetricButton: UIControl {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("iVnNiAtS(wcIotdAejrT:z)3 zhzahsn un3odtE IbYe7eknM ViJm8prlIeYm1e4n2tre9dQ"))
     }
 }
 
@@ -258,19 +258,19 @@ private final class JamoProfileNameButton: UIControl {
         layer.cornerCurve = .continuous
         layer.cornerRadius = 20
         clipsToBounds = true
-        accessibilityLabel = "Open user profile"
+        accessibilityLabel = JamoRiffStringCipher.restore("OnpLemna IuLsDevrC bpMr3o7f9irlfem")
 
         let label = UILabel()
         label.text = displayName
         label.textColor = .black
-        label.font = JamoMainTheme.bodyFont(24, weight: .regular)
+        label.font = JamoRiffTheme.bodyFont(24, weight: .regular)
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.74
 
         editButton.translatesAutoresizingMaskIntoConstraints = false
         editButton.setImage(UIImage(named: "jamo_profile_edit_pencil")?.withRenderingMode(.alwaysOriginal), for: .normal)
         editButton.imageView?.contentMode = .scaleAspectFit
-        editButton.accessibilityLabel = "Edit profile"
+        editButton.accessibilityLabel = JamoRiffStringCipher.restore("EfdXidtI apfruonfeiBlAeo")
 
         let stack = UIStackView(arrangedSubviews: [label, editButton])
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -290,21 +290,21 @@ private final class JamoProfileNameButton: UIControl {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("iwnCiZtB(6cIondhewrl:T)g BhWaSs8 Knfo9tI 8b9efeOnJ Fixm2pLlvevmgeunBt6eBdV"))
     }
 }
 
-private final class JamoProfileCoinsCardView: UIControl {
-    init(user: JamoProfileUserSummary, target: JamoProfileViewController) {
+private final class JamoProfilePickShelfCardView: UIControl {
+    init(playerSummary: JamoProfileUserSummary, target: JamoProfileViewController) {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
         clipsToBounds = true
         layer.cornerCurve = .continuous
         layer.cornerRadius = 32
-        accessibilityLabel = user.coins.title
-        addTarget(target, action: #selector(JamoProfileViewController.coinsTapped), for: .touchUpInside)
+        accessibilityLabel = playerSummary.pickupShelf.title
+        addTarget(target, action: #selector(JamoProfileViewController.pickupShelfTapped), for: .touchUpInside)
 
-        let backgroundImageView = UIImageView(image: UIImage(named: "jamo_profile_coin_button_background"))
+        let backgroundImageView = UIImageView(image: UIImage(named: "jamo_profile_pick_shelf_background"))
         backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
         backgroundImageView.contentMode = .scaleAspectFill
         backgroundImageView.isUserInteractionEnabled = false
@@ -312,9 +312,9 @@ private final class JamoProfileCoinsCardView: UIControl {
 
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.text = "My Coins"
+        titleLabel.text = JamoRiffStringCipher.restore("MyyJ iPGiXcyk2sb")
         titleLabel.textColor = .black
-        titleLabel.font = JamoMainTheme.bodyFont(25, weight: .heavy)
+        titleLabel.font = JamoRiffTheme.bodyFont(25, weight: .heavy)
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.minimumScaleFactor = 0.78
         titleLabel.textAlignment = .center
@@ -336,7 +336,7 @@ private final class JamoProfileCoinsCardView: UIControl {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("iDnuiBtJ(mc1oxdGe0rr:V)e gh1ansj hnYottb HbCegeWnC KiPmbpzlxetmBeBnitweZd4"))
     }
 }
 
@@ -349,7 +349,7 @@ private final class JamoProfileSectionHeaderView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = title
         label.textColor = .black
-        label.font = JamoMainTheme.titleFont(30)
+        label.font = JamoRiffTheme.titleFont(30)
 
         let underline = JamoProfileUnderlineView()
         underline.translatesAutoresizingMaskIntoConstraints = false
@@ -371,7 +371,7 @@ private final class JamoProfileSectionHeaderView: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("isnei1tG(wcao6dTeBr0:a)k lhKaksn 9nLo1tS 4bIeQevn8 Cicm6pplbeJmEewnhtne6dL"))
     }
 }
 
@@ -382,7 +382,7 @@ private final class JamoProfileUnderlineView: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("iEn0iYtY(BcuoHd7e1rH:h)A kh8aRs7 HnvoJt9 WbLebeznA 3i2mlpglUeQmIe4n0tXeYdM"))
     }
 
     override func draw(_ rect: CGRect) {
@@ -400,28 +400,28 @@ private final class JamoProfileUnderlineView: UIView {
     }
 }
 
-final class JamoProfilePostActionButton: UIButton {
-    let workID: String
+final class JamoProfileRiffActionButton: UIButton {
+    let riffHandle: String
 
-    init(workID: String) {
-        self.workID = workID
+    init(riffHandle: String) {
+        self.riffHandle = riffHandle
         super.init(frame: .zero)
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("iAn9i7t4(YcqoedJeKrR:E)d wh0aSsP xnyoytJ gbxeAeznW kijm7p3lneMmOeNnKtwe8dm"))
     }
 }
 
-final class JamoProfilePostCardView: UIControl {
-    let workID: String
-    let actionButton: JamoProfilePostActionButton
-    let moreButton: JamoProfilePostActionButton
+final class JamoProfileRiffMomentCardView: UIControl {
+    let riffHandle: String
+    let riffActionButton: JamoProfileRiffActionButton
+    let branchOptionsButton: JamoProfileRiffActionButton
 
-    init(post: JamoProfilePostDisplay) {
-        self.workID = post.id
-        self.actionButton = JamoProfilePostActionButton(workID: post.id)
-        self.moreButton = JamoProfilePostActionButton(workID: post.id)
+    init(riffMoment: JamoProfileRiffMomentDisplay) {
+        self.riffHandle = riffMoment.riffHandle
+        self.riffActionButton = JamoProfileRiffActionButton(riffHandle: riffMoment.riffHandle)
+        self.branchOptionsButton = JamoProfileRiffActionButton(riffHandle: riffMoment.riffHandle)
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .white
@@ -430,10 +430,10 @@ final class JamoProfilePostCardView: UIControl {
         layer.borderWidth = 1
         layer.borderColor = UIColor.black.withAlphaComponent(0.08).cgColor
         clipsToBounds = true
-        accessibilityLabel = post.title
+        accessibilityLabel = riffMoment.title
 
-        let coverImage = UIImage.jamoCoCreateMedia(named: post.coverImageName)
-            ?? UIImage(named: post.id.hasSuffix("2") ? "jamo_profile_post_cover_soft_chord" : "jamo_profile_post_cover_warm_sunset")
+        let coverImage = UIImage.jamoCoCreateMedia(named: riffMoment.coverImageName)
+            ?? UIImage(named: riffMoment.riffHandle.hasSuffix("2") ? "jamo_profile_post_cover_soft_chord" : JamoRiffStringCipher.restore("jia4mgoq_2per1obfXiIlMeV_9p9o9sMt6_CcKojvpeOrX_DwLa3rlmY_MsYu2nosjeQtp"))
         let coverImageView = UIImageView(image: coverImage)
         coverImageView.translatesAutoresizingMaskIntoConstraints = false
         coverImageView.contentMode = .scaleAspectFill
@@ -445,22 +445,22 @@ final class JamoProfilePostCardView: UIControl {
         waveform.contentMode = .scaleAspectFit
         waveform.alpha = 0.92
 
-        let badge = JamoProfileParticipantBadgeView(text: post.participantBadgeText)
+        let badge = JamoProfileParticipantBadgeView(text: riffMoment.participantBadgeText)
 
         let titleLabel = UILabel()
-        titleLabel.text = post.title
+        titleLabel.text = riffMoment.title
         titleLabel.textColor = .black
-        titleLabel.font = JamoMainTheme.titleFont(26)
+        titleLabel.font = JamoRiffTheme.titleFont(26)
         titleLabel.numberOfLines = 2
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.minimumScaleFactor = 0.78
 
-        moreButton.translatesAutoresizingMaskIntoConstraints = false
-        moreButton.setImage(UIImage(named: "jamo_profile_post_more")?.withRenderingMode(.alwaysOriginal), for: .normal)
-        moreButton.imageView?.contentMode = .scaleAspectFit
-        moreButton.accessibilityLabel = "More post actions"
+        branchOptionsButton.translatesAutoresizingMaskIntoConstraints = false
+        branchOptionsButton.setImage(UIImage(named: "jamo_profile_post_more")?.withRenderingMode(.alwaysOriginal), for: .normal)
+        branchOptionsButton.imageView?.contentMode = .scaleAspectFit
+        branchOptionsButton.accessibilityLabel = JamoRiffStringCipher.restore("MMokraeO Tpeoesvt6 HalcKtMiHoPnGsa")
 
-        let titleRow = UIStackView(arrangedSubviews: [titleLabel, moreButton])
+        let titleRow = UIStackView(arrangedSubviews: [titleLabel, branchOptionsButton])
         titleRow.translatesAutoresizingMaskIntoConstraints = false
         titleRow.axis = .horizontal
         titleRow.alignment = .center
@@ -468,19 +468,19 @@ final class JamoProfilePostCardView: UIControl {
 
         let avatar = JamoProfileAvatarView(
             imageName: nil,
-            avatarURL: post.creatorAvatarURL,
-            initials: post.creatorInitials,
+            avatarURL: riffMoment.creatorAvatarURL,
+            initials: riffMoment.creatorInitials,
             fontSize: 13
         )
 
         let creatorLabel = UILabel()
-        creatorLabel.text = post.creatorName
+        creatorLabel.text = riffMoment.creatorName
         creatorLabel.textColor = UIColor.black.withAlphaComponent(0.78)
-        creatorLabel.font = JamoMainTheme.bodyFont(17, weight: .bold)
+        creatorLabel.font = JamoRiffTheme.bodyFont(17, weight: .bold)
         creatorLabel.adjustsFontSizeToFitWidth = true
         creatorLabel.minimumScaleFactor = 0.72
 
-        let tagView = JamoProfileTagView(title: post.tagTitle)
+        let tagView = JamoProfileTagView(title: riffMoment.tagTitle)
 
         let creatorRow = UIStackView(arrangedSubviews: [avatar, creatorLabel, UIView(), tagView])
         creatorRow.translatesAutoresizingMaskIntoConstraints = false
@@ -489,28 +489,28 @@ final class JamoProfilePostCardView: UIControl {
         creatorRow.spacing = 10
 
         let summaryLabel = UILabel()
-        summaryLabel.text = post.participantSummary
+        summaryLabel.text = riffMoment.participantSummary
         summaryLabel.textColor = UIColor.black.withAlphaComponent(0.48)
-        summaryLabel.font = JamoMainTheme.bodyFont(15, weight: .regular)
+        summaryLabel.font = JamoRiffTheme.bodyFont(15, weight: .regular)
         summaryLabel.numberOfLines = 2
         summaryLabel.adjustsFontSizeToFitWidth = true
         summaryLabel.minimumScaleFactor = 0.78
 
-        actionButton.translatesAutoresizingMaskIntoConstraints = false
-        actionButton.setTitle(post.actionTitle, for: .normal)
-        actionButton.titleLabel?.font = JamoMainTheme.titleFont(18)
-        actionButton.layer.cornerCurve = .continuous
-        actionButton.layer.cornerRadius = 21
-        actionButton.isEnabled = post.isActionEnabled
-        if post.isActionEnabled {
-            actionButton.backgroundColor = JamoMainTheme.orange
-            actionButton.setTitleColor(JamoMainTheme.yellow, for: .normal)
+        riffActionButton.translatesAutoresizingMaskIntoConstraints = false
+        riffActionButton.setTitle(riffMoment.actionTitle, for: .normal)
+        riffActionButton.titleLabel?.font = JamoRiffTheme.titleFont(18)
+        riffActionButton.layer.cornerCurve = .continuous
+        riffActionButton.layer.cornerRadius = 21
+        riffActionButton.isEnabled = riffMoment.isActionEnabled
+        if riffMoment.isActionEnabled {
+            riffActionButton.backgroundColor = JamoRiffTheme.orange
+            riffActionButton.setTitleColor(JamoRiffTheme.yellow, for: .normal)
         } else {
-            actionButton.backgroundColor = UIColor.black.withAlphaComponent(post.statusTitle == "Joined" ? 0.9 : 0.08)
-            actionButton.setTitleColor(post.statusTitle == "Joined" ? JamoMainTheme.pink : JamoMainTheme.muted, for: .normal)
+            riffActionButton.backgroundColor = UIColor.black.withAlphaComponent(riffMoment.statusTitle == JamoRiffStringCipher.restore("JhoAiKnjeHd0") ? 0.9 : 0.08)
+            riffActionButton.setTitleColor(riffMoment.statusTitle == JamoRiffStringCipher.restore("J4oJiwnaeYdr") ? JamoRiffTheme.pink : JamoRiffTheme.muted, for: .normal)
         }
 
-        let bottomRow = UIStackView(arrangedSubviews: [summaryLabel, actionButton])
+        let bottomRow = UIStackView(arrangedSubviews: [summaryLabel, riffActionButton])
         bottomRow.translatesAutoresizingMaskIntoConstraints = false
         bottomRow.axis = .horizontal
         bottomRow.alignment = .center
@@ -543,8 +543,8 @@ final class JamoProfilePostCardView: UIControl {
             titleRow.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             titleRow.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
 
-            moreButton.widthAnchor.constraint(equalToConstant: 44),
-            moreButton.heightAnchor.constraint(equalToConstant: 44),
+            branchOptionsButton.widthAnchor.constraint(equalToConstant: 44),
+            branchOptionsButton.heightAnchor.constraint(equalToConstant: 44),
 
             creatorRow.topAnchor.constraint(equalTo: titleRow.bottomAnchor, constant: 14),
             creatorRow.leadingAnchor.constraint(equalTo: titleRow.leadingAnchor),
@@ -561,13 +561,13 @@ final class JamoProfilePostCardView: UIControl {
             bottomRow.trailingAnchor.constraint(equalTo: titleRow.trailingAnchor),
             bottomRow.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -18),
 
-            actionButton.widthAnchor.constraint(equalToConstant: 86),
-            actionButton.heightAnchor.constraint(equalToConstant: 48)
+            riffActionButton.widthAnchor.constraint(equalToConstant: 86),
+            riffActionButton.heightAnchor.constraint(equalToConstant: 48)
         ])
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("iTnvimtf(ncWoedSeFrj:j)t ChxahsU LnJoHtE 0bhe2eZnD yidmtpxlsermaeFnutZe9dq"))
     }
 }
 
@@ -587,7 +587,7 @@ private final class JamoProfileParticipantBadgeView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = text
         label.textColor = .white
-        label.font = JamoMainTheme.bodyFont(18, weight: .bold)
+        label.font = JamoRiffTheme.bodyFont(18, weight: .bold)
 
         let stack = UIStackView(arrangedSubviews: [icon, label])
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -607,7 +607,7 @@ private final class JamoProfileParticipantBadgeView: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("ion9izt1(PcCoAdmewrv:C)4 uh9afst 3n3oztP pbpe8eSni Si7mCpZl7eJmLeTndt0ewdv"))
     }
 }
 
@@ -625,8 +625,8 @@ private final class JamoProfileTagView: UIView {
 
         let label = UILabel()
         label.text = title
-        label.textColor = JamoMainTheme.pink
-        label.font = JamoMainTheme.titleFont(16)
+        label.textColor = JamoRiffTheme.pink
+        label.font = JamoRiffTheme.titleFont(16)
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.75
 
@@ -648,14 +648,14 @@ private final class JamoProfileTagView: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("iTnuiftl(pc8ond5eorz:3)N 7hHaSsr rnkoXt8 Bb4e5e7n2 iizmOpTl6eJmReln6tweJd5"))
     }
 }
 
-private final class JamoProfileEmptyPostsView: UIView {
+private final class JamoProfileEmptyRiffView: UIView {
     let startButton = UIButton(type: .custom)
 
-    init(display: JamoProfileEmptyPostsDisplay?) {
+    init(display: JamoProfileEmptyRiffDisplay?) {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .white
@@ -665,23 +665,23 @@ private final class JamoProfileEmptyPostsView: UIView {
         layer.borderColor = UIColor.black.withAlphaComponent(0.08).cgColor
 
         let titleLabel = UILabel()
-        titleLabel.text = display?.title ?? "No posts yet"
+        titleLabel.text = display?.title ?? JamoRiffStringCipher.restore("NJoA aw8o7rtkhsN nyteytd")
         titleLabel.textColor = .black
-        titleLabel.font = JamoMainTheme.titleFont(20)
+        titleLabel.font = JamoRiffTheme.titleFont(20)
         titleLabel.textAlignment = .center
 
         let subtitleLabel = UILabel()
-        subtitleLabel.text = display?.subtitle ?? "Your guitar co-create posts will appear here."
-        subtitleLabel.textColor = JamoMainTheme.muted
-        subtitleLabel.font = JamoMainTheme.bodyFont(14, weight: .regular)
+        subtitleLabel.text = display?.subtitle ?? JamoRiffStringCipher.restore("YPoZuOrR 4gluuiNtraprU jcboa-BcCrReCaHtleQ 2wLo7rlkps0 TwGijlFln AaTp5pwe0acrI thheur7eV.K")
+        subtitleLabel.textColor = JamoRiffTheme.muted
+        subtitleLabel.font = JamoRiffTheme.bodyFont(14, weight: .regular)
         subtitleLabel.textAlignment = .center
         subtitleLabel.numberOfLines = 0
 
         startButton.translatesAutoresizingMaskIntoConstraints = false
-        startButton.setTitle(display?.actionTitle ?? "Start Co-create", for: .normal)
-        startButton.setTitleColor(JamoMainTheme.yellow, for: .normal)
-        startButton.titleLabel?.font = JamoMainTheme.titleFont(16)
-        startButton.backgroundColor = JamoMainTheme.orange
+        startButton.setTitle(display?.actionTitle ?? JamoRiffStringCipher.restore("SBtxaRrAtS PCbob-ScjrIedaCtze3"), for: .normal)
+        startButton.setTitleColor(JamoRiffTheme.yellow, for: .normal)
+        startButton.titleLabel?.font = JamoRiffTheme.titleFont(16)
+        startButton.backgroundColor = JamoRiffTheme.orange
         startButton.layer.cornerCurve = .continuous
         startButton.layer.cornerRadius = 22
 
@@ -704,7 +704,7 @@ private final class JamoProfileEmptyPostsView: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("iLnWist7(Ncjo0dzebrH:3)c ahBaCss 5nsoyt5 qbpeHeenD hiJmvpzlEeGmKeunKtVeYdf"))
     }
 }
 
@@ -717,7 +717,7 @@ private final class JamoProfileAvatarView: UIControl {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
         clipsToBounds = true
-        backgroundColor = JamoMainTheme.orange
+        backgroundColor = JamoRiffTheme.orange
 
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
@@ -727,7 +727,7 @@ private final class JamoProfileAvatarView: UIControl {
         initialsLabel.translatesAutoresizingMaskIntoConstraints = false
         initialsLabel.text = initials
         initialsLabel.textColor = .white
-        initialsLabel.font = JamoMainTheme.bodyFont(fontSize, weight: .heavy)
+        initialsLabel.font = JamoRiffTheme.bodyFont(fontSize, weight: .heavy)
         initialsLabel.textAlignment = .center
         initialsLabel.isHidden = imageView.image != nil
 
@@ -748,7 +748,7 @@ private final class JamoProfileAvatarView: UIControl {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("iCnei2tT(ncLowdAebrf:y)V whNaosd mnzoutw Tbhere2nI 9iVmMpQlLecmReZnFt2eedF"))
     }
 
     override func layoutSubviews() {
@@ -769,7 +769,7 @@ private final class JamoProfileAvatarView: UIControl {
             return
         }
 
-        guard ["http", "https"].contains(url.scheme?.lowercased() ?? "") else {
+        guard [JamoRiffStringCipher.restore("hqtttDpR"), JamoRiffStringCipher.restore("hEtttSpysB")].contains(url.scheme?.lowercased() ?? "") else {
             return
         }
 
@@ -787,8 +787,8 @@ private final class JamoProfileAvatarView: UIControl {
 
 private extension String {
     var jamoProfileInitials: String {
-        let parts = split(separator: " ").map(String.init).filter { !$0.isEmpty }
-        let joined = parts.prefix(2).compactMap { $0.first }.map(String.init).joined()
-        return joined.isEmpty ? "JP" : joined.uppercased()
+        let nameFragments = components(separatedBy: JamoRiffStringCipher.restore(" D")).filter { !$0.isEmpty }
+        let initialsPhrase = nameFragments.prefix(2).compactMap { $0.first }.map(String.init).joined()
+        return initialsPhrase.isEmpty ? JamoRiffStringCipher.restore("JjP7") : initialsPhrase.uppercased()
     }
 }

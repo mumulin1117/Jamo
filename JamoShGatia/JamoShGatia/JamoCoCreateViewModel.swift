@@ -16,11 +16,11 @@ enum JamoCoCreateFilter: String, CaseIterable {
     var title: String {
         switch self {
         case .openJams:
-            return "Open Jams"
+            return JamoRiffStringCipher.restore("OBpxepny YJvacm4sc")
         case .popular:
-            return "Popular"
+            return JamoRiffStringCipher.restore("P0oOpAuWlqa3rX")
         case .melodyDrafts:
-            return "Melody Drafts"
+            return JamoRiffStringCipher.restore("MseXlMoLdByR YDXrzalf4tzsz")
         }
     }
 }
@@ -109,7 +109,7 @@ struct JamoCoCreateEmptyDisplay: Equatable {
 
 struct JamoCoCreateListSnapshot: Equatable {
     let state: JamoCoCreateOutputState
-    let currentUser: JamoCoCreateUserProfile
+    let currentUser: JamoRiffPlayerProfile
     let filters: [JamoCoCreateFilterDisplay]
     let cards: [JamoCoCreateCardDisplay]
     let empty: JamoCoCreateEmptyDisplay?
@@ -176,7 +176,7 @@ struct JamoCoCreatePublishForm: Equatable {
 
 struct JamoCoCreatePublishSnapshot: Equatable {
     let state: JamoCoCreatePublishState
-    let currentUser: JamoCoCreateUserProfile
+    let currentUser: JamoRiffPlayerProfile
     let source: JamoCoCreatePublishSourceDisplay?
     let form: JamoCoCreatePublishForm
     let validationMessage: String?
@@ -185,11 +185,11 @@ struct JamoCoCreatePublishSnapshot: Equatable {
 }
 
 final class JamoCoCreatePublishViewModel {
-    static let missingTitleMessage = "Add a title to publish."
-    static let publishFailedMessage = "Please check your connection and try again."
+    static let missingTitleMessage = JamoRiffStringCipher.restore("AudadR 3am 9tdiwtJlted dtKoj HpUuObYlFihsJhh.C")
+    static let publishFailedMessage = JamoRiffStringCipher.restore("PJlGeraCsoe1 xcChCeocCkZ Qysowufr7 AcxounsnJe8cathiwoMnr taxngdW St0rKys MargAaBiFnP.N")
 
     private let sourceWorkID: String?
-    private let authStore: JamoAuthStore
+    private let authStore: JamoRiffIdentityArchive
     private let jamStore: JamoLocalJamStore
     private var state: JamoCoCreatePublishState = .editing
     private var form: JamoCoCreatePublishForm
@@ -199,7 +199,7 @@ final class JamoCoCreatePublishViewModel {
     init(
         sourceWorkID: String? = nil,
         selectedJoinMethod: JamoCoCreateJoinMethod? = nil,
-        authStore: JamoAuthStore = .shared,
+        authStore: JamoRiffIdentityArchive = .sharedArchive,
         jamStore: JamoLocalJamStore = .shared
     ) {
         self.sourceWorkID = sourceWorkID
@@ -259,7 +259,7 @@ final class JamoCoCreatePublishViewModel {
 
     @discardableResult
     func updateCover(imageName: String, coverURL: String? = nil) -> JamoCoCreatePublishSnapshot {
-        form.coverImageName = JamoLocalJamMediaCatalog.normalizedCover(imageName, seed: 8)
+        form.coverImageName = JamoRiffLocalMediaShelf.normalizedCover(imageName, seed: 8)
         form.coverURL = coverURL
         return makeSnapshot()
     }
@@ -273,10 +273,10 @@ final class JamoCoCreatePublishViewModel {
         role: JamoCoCreateTrackRole,
         joinMethod: JamoCoCreateJoinMethod?
     ) -> JamoCoCreatePublishSnapshot {
-        form.mp3FileName = JamoLocalJamMediaCatalog.normalizedRiff(mp3FileName, seed: 8)
+        form.mp3FileName = JamoRiffLocalMediaShelf.normalizedRiff(mp3FileName, seed: 8)
         form.duration = max(duration, 1)
         form.waveformSeed = max(waveformSeed, 1)
-        form.roleName = trimmed(roleName).isEmpty ? "Lead Guitar" : roleName
+        form.roleName = trimmed(roleName).isEmpty ? JamoRiffStringCipher.restore("L6epaKdr 3GEufi0taaUrj") : roleName
         form.role = role
         form.selectedJoinMethod = joinMethod
         return makeSnapshot()
@@ -367,15 +367,15 @@ final class JamoCoCreatePublishViewModel {
     private var primaryAction: JamoCoCreateActionDisplay {
         switch state {
         case .editing:
-            return JamoCoCreateActionDisplay(title: "Publish", isEnabled: true, style: !trimmed(form.title).isEmpty ? .orange : .disabled)
+            return JamoCoCreateActionDisplay(title: JamoRiffStringCipher.restore("PTutbglgi9sWhv"), isEnabled: true, style: !trimmed(form.title).isEmpty ? .orange : .disabled)
         case .missingTitle:
-            return JamoCoCreateActionDisplay(title: "Publish", isEnabled: false, style: .disabled)
+            return JamoCoCreateActionDisplay(title: JamoRiffStringCipher.restore("PBuvbtl1iOsyhD"), isEnabled: false, style: .disabled)
         case .publishing:
-            return JamoCoCreateActionDisplay(title: "Publishing...", isEnabled: false, style: .disabled)
+            return JamoCoCreateActionDisplay(title: JamoRiffStringCipher.restore("P8u3bGlliXsAhPibn4gj.J.n.G"), isEnabled: false, style: .disabled)
         case .publishFailed:
-            return JamoCoCreateActionDisplay(title: "Try Again", isEnabled: true, style: .orange)
+            return JamoCoCreateActionDisplay(title: JamoRiffStringCipher.restore("TKrbyE uAOgBaeifnc"), isEnabled: true, style: .orange)
         case .publishedSuccess:
-            return JamoCoCreateActionDisplay(title: "View Work", isEnabled: true, style: .orange)
+            return JamoCoCreateActionDisplay(title: JamoRiffStringCipher.restore("VjiyeGwe tWXoSrpkI"), isEnabled: true, style: .orange)
         }
     }
 
@@ -385,13 +385,13 @@ final class JamoCoCreatePublishViewModel {
         return JamoCoCreatePublishForm(
             title: sourceWork?.status == .draft ? (sourceWork?.title ?? "") : "",
             about: sourceWork?.about ?? "",
-            tags: normalizedStaticTags(sourceWork?.tags ?? ["Acoustic", "Lead"]),
-            coverImageName: JamoLocalJamMediaCatalog.normalizedCover(sourceWork?.coverImageName ?? "", seed: 8),
+            tags: normalizedStaticTags(sourceWork?.tags ?? [JamoRiffStringCipher.restore("A2cqoXu0sztQiJcR"), JamoRiffStringCipher.restore("LzeJaAdu")]),
+            coverImageName: JamoRiffLocalMediaShelf.normalizedCover(sourceWork?.coverImageName ?? "", seed: 8),
             coverURL: nil,
-            mp3FileName: JamoLocalJamMediaCatalog.normalizedRiff(sourceWork?.status == .draft ? lastTrack?.mp3FileName ?? "" : "", seed: 8),
+            mp3FileName: JamoRiffLocalMediaShelf.normalizedRiff(sourceWork?.status == .draft ? lastTrack?.mp3FileName ?? "" : "", seed: 8),
             duration: sourcePart?.duration ?? lastTrack?.duration ?? 15,
             waveformSeed: sourcePart?.waveformSeed ?? lastTrack?.waveformSeed ?? 7,
-            roleName: sourcePart?.title ?? "Lead Guitar",
+            roleName: sourcePart?.title ?? JamoRiffStringCipher.restore("LjeqaWd3 HGruqiCtua3rQ"),
             role: sourcePart?.role ?? .leadGuitar,
             allowContinue: sourceWork?.allowContinue ?? true,
             selectedJoinMethod: sourceWork?.selectedJoinMethod ?? .recordGuitar
@@ -399,8 +399,8 @@ final class JamoCoCreatePublishViewModel {
     }
 
     private func applyInitialJoinMethod(_ method: JamoCoCreateJoinMethod) {
-        form.mp3FileName = JamoLocalJamMediaCatalog.normalizedRiff(method.localMP3FileName, seed: 8)
-        form.duration = JamoLocalJamMediaCatalog.audioDuration(
+        form.mp3FileName = JamoRiffLocalMediaShelf.normalizedRiff(method.localMP3FileName, seed: 8)
+        form.duration = JamoRiffLocalMediaShelf.audioDuration(
             for: method.localMP3FileName,
             fallback: method == .uploadClip ? 18 : 15
         )
@@ -420,17 +420,17 @@ final class JamoCoCreatePublishViewModel {
             guard seen.insert(key).inserted else { continue }
             normalized.append(clean)
         }
-        return normalized.isEmpty ? ["Acoustic", "Lead"] : normalized
+        return normalized.isEmpty ? [JamoRiffStringCipher.restore("ALc7o6uTsLtjiJcS"), JamoRiffStringCipher.restore("LaeEajdC")] : normalized
     }
 
     private func normalizedTags(_ tags: [String]) -> [String] {
         Self.normalizedStaticTags(tags)
     }
 
-    private func makeCurrentUser() -> JamoCoCreateUserProfile {
-        let email = authStore.currentEmail ?? "local@jamo.app"
-        return JamoCoCreateUserProfile(
-            userID: authStore.currentUserID ?? "jamo_local_player",
+    private func makeCurrentUser() -> JamoRiffPlayerProfile {
+        let email = authStore.currentEmail ?? JamoRiffStringCipher.restore("lSo2cwa9lv@DjxaPmLos.6aBpppd")
+        return JamoRiffPlayerProfile(
+            userID: authStore.currentUserID ?? JamoRiffStringCipher.restore("jYa4mHo6_HlMoMc5a3lA_npQllaLyDehrs"),
             displayName: authStore.currentDisplayName ?? authStore.displayNameFallback(for: email),
             email: email,
             avatarURL: authStore.currentAvatarURL
@@ -446,7 +446,7 @@ final class JamoCoCreatePublishViewModel {
             subtitle: work.about,
             coverImageName: work.coverImageName,
             coverURL: work.coverURL,
-            partTitle: sourcePart?.title ?? track?.roleName ?? "Lead Guitar",
+            partTitle: sourcePart?.title ?? track?.roleName ?? JamoRiffStringCipher.restore("LQeIaEdJ MGbuciIt1aGr4"),
             durationText: durationText(sourcePart?.duration ?? track?.duration ?? 15),
             waveformSeed: sourcePart?.waveformSeed ?? track?.waveformSeed ?? 7
         )
@@ -454,7 +454,7 @@ final class JamoCoCreatePublishViewModel {
 
     private func durationText(_ duration: TimeInterval) -> String {
         let seconds = max(Int(duration.rounded()), 0)
-        return String(format: "%d:%02d", seconds / 60, seconds % 60)
+        return String(format: JamoRiffStringCipher.restore("%vd4:X%d0O2WdH"), seconds / 60, seconds % 60)
     }
 
     private func trimmed(_ value: String) -> String {
@@ -464,16 +464,16 @@ final class JamoCoCreatePublishViewModel {
 
 final class JamoCoCreateViewModel {
     private enum LocalActionKey {
-        static let blockedWorkIDs = "jamo_cocreate_blocked_work_ids"
+        static let blockedWorkIDs = JamoRiffStringCipher.restore("jEapmyok_rcGokcJrUexaotoeT_eb4lqoecukie8db_tw1osrekd_BiqdTs4")
     }
 
-    private let authStore: JamoAuthStore
+    private let authStore: JamoRiffIdentityArchive
     private let jamStore: JamoLocalJamStore
     private let userProvider: JamoCoCreateUserProviding
     private let defaults: UserDefaults
 
     init(
-        authStore: JamoAuthStore = .shared,
+        authStore: JamoRiffIdentityArchive = .sharedArchive,
         jamStore: JamoLocalJamStore = .shared,
         userProvider: JamoCoCreateUserProviding = JamoCoCreateUserService.shared,
         defaults: UserDefaults = .standard
@@ -497,7 +497,7 @@ final class JamoCoCreateViewModel {
 
     func makeListSnapshot(
         selectedFilter: JamoCoCreateFilter = .openJams,
-        remoteUsers: [JamoCoCreateUserProfile] = []
+        remoteUsers: [JamoRiffPlayerProfile] = []
     ) -> JamoCoCreateListSnapshot {
         let currentUser = makeCurrentUser()
         let works = filteredWorks(for: selectedFilter)
@@ -518,7 +518,7 @@ final class JamoCoCreateViewModel {
 
     func makeSearchSnapshot(
         query: String,
-        remoteUsers: [JamoCoCreateUserProfile] = []
+        remoteUsers: [JamoRiffPlayerProfile] = []
     ) -> JamoCoCreateListSnapshot {
         let currentUser = makeCurrentUser()
         let works = searchWorks(matching: query)
@@ -537,7 +537,7 @@ final class JamoCoCreateViewModel {
     func makeDetailSnapshot(
         workID: String,
         selectedJoinMethod: JamoCoCreateJoinMethod? = nil,
-        remoteUsers: [JamoCoCreateUserProfile] = []
+        remoteUsers: [JamoRiffPlayerProfile] = []
     ) -> JamoCoCreateDetailSnapshot? {
         guard let work = jamStore.work(withID: workID) else {
             return nil
@@ -575,7 +575,7 @@ final class JamoCoCreateViewModel {
                 .sorted { ($0.participantCount ?? 0) > ($1.participantCount ?? 0) }
         case .melodyDrafts:
             works = jamStore.allWorks()
-                .filter { $0.tags.contains(where: { $0.localizedCaseInsensitiveContains("melody") }) || $0.status == .draft }
+                .filter { $0.tags.contains(where: { $0.localizedCaseInsensitiveContains(JamoRiffStringCipher.restore("mveellobdyym")) }) || $0.status == .draft }
         }
         return visibleWorks(from: works)
     }
@@ -591,10 +591,10 @@ final class JamoCoCreateViewModel {
                 work.title,
                 work.about,
                 work.creatorName,
-                work.tags.joined(separator: " "),
-                work.tracks.map(\.roleName).joined(separator: " ")
+                work.tags.joined(separator: JamoRiffStringCipher.restore(" x")),
+                work.tracks.map(\.roleName).joined(separator: JamoRiffStringCipher.restore(" P"))
             ]
-                .joined(separator: " ")
+                .joined(separator: JamoRiffStringCipher.restore(" Y"))
                 .lowercased()
             return searchableText.contains(cleanQuery)
         }
@@ -612,7 +612,7 @@ final class JamoCoCreateViewModel {
 
     private func makeCard(
         from work: JamoCoCreateWork,
-        directory: [String: JamoCoCreateUserProfile]
+        directory: [String: JamoRiffPlayerProfile]
     ) -> JamoCoCreateCardDisplay {
         let primaryTrack = work.tracks.first
         let creator = participantDisplay(for: work.creatorUserID, name: work.creatorName, avatarURL: work.creatorAvatarURL, directory: directory)
@@ -624,7 +624,7 @@ final class JamoCoCreateViewModel {
             subtitle: work.about,
             coverImageName: work.coverImageName,
             coverURL: work.coverURL,
-            tagTitle: work.tags.first ?? "Acoustic",
+            tagTitle: work.tags.first ?? JamoRiffStringCipher.restore("AdcIoSuAsLtkiOcQ"),
             creatorName: creator.displayName,
             creatorInitials: creator.initials,
             creatorAvatarURL: creator.avatarURL,
@@ -641,7 +641,7 @@ final class JamoCoCreateViewModel {
     private func makeDetail(
         from work: JamoCoCreateWork,
         selectedJoinMethod: JamoCoCreateJoinMethod?,
-        directory: [String: JamoCoCreateUserProfile]
+        directory: [String: JamoRiffPlayerProfile]
     ) -> JamoCoCreateDetailSnapshot {
         let state = detailState(for: work)
         let creator = participantDisplay(for: work.creatorUserID, name: work.creatorName, avatarURL: work.creatorAvatarURL, directory: directory)
@@ -683,52 +683,52 @@ final class JamoCoCreateViewModel {
     private func primaryAction(for state: JamoCoCreateOutputState, work: JamoCoCreateWork) -> JamoCoCreateActionDisplay {
         switch state {
         case .joinableDetail:
-            return JamoCoCreateActionDisplay(title: "Join Co-create", isEnabled: true, style: .orange)
+            return JamoCoCreateActionDisplay(title: JamoRiffStringCipher.restore("JvobiRnL OCxoz-fcXrieqaZtoeo"), isEnabled: true, style: .orange)
         case .joinedDetail:
-            return JamoCoCreateActionDisplay(title: "View My Part", isEnabled: true, style: .black)
+            return JamoCoCreateActionDisplay(title: JamoRiffStringCipher.restore("VriWeowL 5M8yh EPmaarbt1"), isEnabled: true, style: .black)
         case .completedDetail:
-            return JamoCoCreateActionDisplay(title: "Completed", isEnabled: false, style: .disabled)
+            return JamoCoCreateActionDisplay(title: JamoRiffStringCipher.restore("CtoKmfp9lIeot5eNdU"), isEnabled: false, style: .disabled)
         case .openJams, .empty:
-            return JamoCoCreateActionDisplay(title: "Join", isEnabled: false, style: .disabled)
+            return JamoCoCreateActionDisplay(title: JamoRiffStringCipher.restore("JBoyiLns"), isEnabled: false, style: .disabled)
         }
     }
 
     private func cardAction(for work: JamoCoCreateWork) -> JamoCoCreateActionDisplay {
         switch work.status {
         case .open:
-            return JamoCoCreateActionDisplay(title: "Join", isEnabled: true, style: .orange)
+            return JamoCoCreateActionDisplay(title: JamoRiffStringCipher.restore("JIoxi9nM"), isEnabled: true, style: .orange)
         case .joined:
-            return JamoCoCreateActionDisplay(title: "Joined", isEnabled: false, style: .black)
+            return JamoCoCreateActionDisplay(title: JamoRiffStringCipher.restore("Jvohi3n2eFdb"), isEnabled: false, style: .black)
         case .draft:
-            return JamoCoCreateActionDisplay(title: "Draft", isEnabled: false, style: .disabled)
+            return JamoCoCreateActionDisplay(title: JamoRiffStringCipher.restore("DZrTaTf5tf"), isEnabled: false, style: .disabled)
         case .completed:
-            return JamoCoCreateActionDisplay(title: "Completed", isEnabled: false, style: .disabled)
+            return JamoCoCreateActionDisplay(title: JamoRiffStringCipher.restore("CXolm3pblZeWtKeBdT"), isEnabled: false, style: .disabled)
         }
     }
 
     private func statusTitle(for work: JamoCoCreateWork) -> String {
         switch work.status {
         case .open:
-            return "Open"
+            return JamoRiffStringCipher.restore("OppXeUnu")
         case .joined:
-            return "Joined"
+            return JamoRiffStringCipher.restore("JEoBisnLe1dr")
         case .completed:
-            return "Completed"
+            return JamoRiffStringCipher.restore("CBoTm7p9lPe5tHeRdX")
         case .draft:
-            return "Draft"
+            return JamoRiffStringCipher.restore("D0r4aZfTtO")
         }
     }
 
     private func statusTintHex(for work: JamoCoCreateWork) -> String {
         switch work.status {
         case .open:
-            return "#E75B33"
+            return JamoRiffStringCipher.restore("#sEr7w5OBC3P3L")
         case .joined:
-            return "#FF72A8"
+            return JamoRiffStringCipher.restore("#JFkFu7D2xAH8I")
         case .completed:
-            return "#5BCE9D"
+            return JamoRiffStringCipher.restore("#r5SBwChEO9GDe")
         case .draft:
-            return "#26315E"
+            return JamoRiffStringCipher.restore("#c2P6F3w1I5XEr")
         }
     }
 
@@ -736,36 +736,36 @@ final class JamoCoCreateViewModel {
         switch state {
         case .joinableDetail:
             return JamoCoCreateDetailStateDisplay(
-                title: "Open to join",
-                subtitle: "Pick a way to add your guitar layer. Your part will be saved into this co-create.",
+                title: JamoRiffStringCipher.restore("Otpdeqn4 CtWoQ sjXociknJ"),
+                subtitle: JamoRiffStringCipher.restore("Phi5c8kJ 7ac qwhaqyU LtQof iaOdBdg yy3oEuOr9 qg9uribt7aPrd El6asymeArL.R AYQoouXrU NpNaxr6ta Uwvidl1l5 Ebwep gs3avvgeKda tiSnmtKos ZtHhqiOs1 Yc4oC-acgrTefactKeH.1"),
                 tintHex: statusTintHex(for: work)
             )
         case .joinedDetail:
             return JamoCoCreateDetailStateDisplay(
-                title: "You're in this co-create",
-                subtitle: "Your guitar part is linked here. Continue when you want to refine or publish another layer.",
+                title: JamoRiffStringCipher.restore("YYoBuT'krceK LiNnD MtNhaiDsJ Dcloh-rcOrleMa2t8eU"),
+                subtitle: JamoRiffStringCipher.restore("YloduZrK vgIuwibtPaprE HpYaer5tN IiQsP xliiHnOkzecdQ BhNeXrueS.F kCPo3ngtYiinluIee xwih6e3na MyloguI 5wZannctw ZtkoX Tr4eBfPiXn0ey logrO ApmuvbSlqiSsshB Kapnbo0tshfePr3 wlJa0yle8rl.1"),
                 tintHex: statusTintHex(for: work)
             )
         case .completedDetail:
             return JamoCoCreateDetailStateDisplay(
-                title: "Co-create completed",
-                subtitle: "This jam is locked. You can listen and view every part, but it cannot be joined again.",
+                title: JamoRiffStringCipher.restore("CGo0-4cKrAeBaut4eC 5cfoTm1prlpe6trefds"),
+                subtitle: JamoRiffStringCipher.restore("T3hhiNsV gjNaYmh wiDs5 SlzoscUkVefdj.4 5Y3oDut IcraFnT Olhi1sGtaeDnN TamnHd9 7vxibewwC 8eWvLerryyw 4pMahrjtG,i QbNuRtg FiTt0 tcta6ntnGoOtr pbjeK 7j9oYiSn7eYdG 6azgXaxi2nU.b"),
                 tintHex: statusTintHex(for: work)
             )
         case .openJams, .empty:
-            return JamoCoCreateDetailStateDisplay(title: "", subtitle: "", tintHex: "#E75B33")
+            return JamoCoCreateDetailStateDisplay(title: "", subtitle: "", tintHex: JamoRiffStringCipher.restore("#NEs7S58BF3o3L"))
         }
     }
 
     private func makePartDisplay(
         from track: JamoCoCreateTrack,
-        directory: [String: JamoCoCreateUserProfile]
+        directory: [String: JamoRiffPlayerProfile]
     ) -> JamoCoCreatePartDisplay {
         let ownerName = directory[track.ownerUserID]?.displayName ?? track.ownerName
         return JamoCoCreatePartDisplay(
             id: track.id,
             title: track.roleName,
-            subtitle: track.isMine ? "MY PART" : ownerName,
+            subtitle: track.isMine ? JamoRiffStringCipher.restore("MMYg fPNAFRUTN") : ownerName,
             mp3FileName: track.mp3FileName,
             durationText: durationText(audioDuration(for: track)),
             waveformSeed: track.waveformSeed,
@@ -777,7 +777,7 @@ final class JamoCoCreateViewModel {
         guard let track else {
             return 0
         }
-        return JamoLocalJamMediaCatalog.audioDuration(for: track.mp3FileName, fallback: track.duration)
+        return JamoRiffLocalMediaShelf.audioDuration(for: track.mp3FileName, fallback: track.duration)
     }
 
     private func makeNeededPartDisplay(from part: JamoCoCreateNeededPart) -> JamoCoCreateNeededPartDisplay {
@@ -803,26 +803,26 @@ final class JamoCoCreateViewModel {
 
     private func makeEmptyDisplay() -> JamoCoCreateEmptyDisplay {
         JamoCoCreateEmptyDisplay(
-            title: "No open jams yet",
-            subtitle: "Start a guitar piece and invite others to join.",
-            action: JamoCoCreateActionDisplay(title: "Start Co-create", isEnabled: true, style: .orange)
+            title: JamoRiffStringCipher.restore("NZoI 0oYpkewn2 MjIaAmxse 5ypeptu"),
+            subtitle: JamoRiffStringCipher.restore("SWt4anrPth day PgUu0iqtTa0r4 Ip6iseBcLe6 vaZnkdg OicnevSiXtbeH Ho9tihQeErssw DtAoT djooAiVnl.b"),
+            action: JamoCoCreateActionDisplay(title: JamoRiffStringCipher.restore("SstiaIrvtM eCooh-6cFrEenaqtLeA"), isEnabled: true, style: .orange)
         )
     }
 
     private func makeSearchEmptyDisplay(query: String) -> JamoCoCreateEmptyDisplay {
         let cleanQuery = query.trimmingCharacters(in: .whitespacesAndNewlines)
         return JamoCoCreateEmptyDisplay(
-            title: cleanQuery.isEmpty ? "Search co-create jams" : "No matching jams",
-            subtitle: cleanQuery.isEmpty ? "Try a title, player, tag, or part name." : "Try another guitar phrase or tag.",
-            action: JamoCoCreateActionDisplay(title: "Start Co-create", isEnabled: true, style: .orange)
+            title: cleanQuery.isEmpty ? JamoRiffStringCipher.restore("SzebayrmcdhB zccoJ-ocWrke8aSthe9 Tj4aCmvss") : JamoRiffStringCipher.restore("NcoL 1mmaVtYcchtipnYgh VjPasmHsk"),
+            subtitle: cleanQuery.isEmpty ? JamoRiffStringCipher.restore("TOrwyd BaN MtOictLlUeU,y upblPa0yreqrL,r PtjawgB,B eoZrU spOanrJtB nnnaAmYeP.o") : JamoRiffStringCipher.restore("Ttreyy ra5nXoftKhkeGrD tgMuziJtjaTrH SpEhurBa4sse8 Tour3 0tgamgm.1"),
+            action: JamoCoCreateActionDisplay(title: JamoRiffStringCipher.restore("S7tIaorZtT WCUof-vcGrNeOa4tIe0"), isEnabled: true, style: .orange)
         )
     }
 
     private func makeUserDirectory(
-        remoteUsers: [JamoCoCreateUserProfile],
-        currentUser: JamoCoCreateUserProfile
-    ) -> [String: JamoCoCreateUserProfile] {
-        var directory: [String: JamoCoCreateUserProfile] = [:]
+        remoteUsers: [JamoRiffPlayerProfile],
+        currentUser: JamoRiffPlayerProfile
+    ) -> [String: JamoRiffPlayerProfile] {
+        var directory: [String: JamoRiffPlayerProfile] = [:]
         let activeRemoteUsers = remoteUsers.filter { !$0.userID.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
         activeRemoteUsers.forEach { profile in
             directory[profile.userID] = profile
@@ -833,31 +833,31 @@ final class JamoCoCreateViewModel {
         }
 
         directory[currentUser.userID] = currentUser
-        directory["current_user"] = currentUser
+        directory[JamoRiffStringCipher.restore("c6uKrorxeFn2tL_5uNsseorY")] = currentUser
 
         return directory
     }
 
     private func seedUserAliases() -> [String] {
         [
-            "jamo_seed_mia",
-            "jamo_seed_ava",
-            "jamo_seed_leo",
-            "jamo_seed_eli",
-            "jamo_seed_tom",
-            "jamo_seed_noah",
-            "jamo_seed_ivy"
+            JamoRiffStringCipher.restore("jyalmfo8_YskeOeZdO_Lmyi3aH"),
+            JamoRiffStringCipher.restore("j2ahmJo8_hsceyegdB_1a9vHaY"),
+            JamoRiffStringCipher.restore("jha9m6op_csceYehdC_ClHeUoQ"),
+            JamoRiffStringCipher.restore("jLafm1op_xsJeheodE_feLlSi4"),
+            JamoRiffStringCipher.restore("jUa1maoq_rs0eNeAdF_Vt6oOmN"),
+            JamoRiffStringCipher.restore("jPaBm4ow_ksZeXe5dX_vnQoJaThu"),
+            JamoRiffStringCipher.restore("jaadm3o6_qsVeEeOdN_Yi7v9yn")
         ]
     }
 
-    private func effectiveRemoteUsers(_ remoteUsers: [JamoCoCreateUserProfile]) -> [JamoCoCreateUserProfile] {
+    private func effectiveRemoteUsers(_ remoteUsers: [JamoRiffPlayerProfile]) -> [JamoRiffPlayerProfile] {
         remoteUsers.isEmpty ? userProvider.cachedJamUsers : remoteUsers
     }
 
-    private func makeCurrentUser() -> JamoCoCreateUserProfile {
-        let email = authStore.currentEmail ?? "local@jamo.app"
-        return JamoCoCreateUserProfile(
-            userID: authStore.currentUserID ?? "jamo_local_player",
+    private func makeCurrentUser() -> JamoRiffPlayerProfile {
+        let email = authStore.currentEmail ?? JamoRiffStringCipher.restore("lUoycuaVlf@ljdaXmJoA.WaNpFpd")
+        return JamoRiffPlayerProfile(
+            userID: authStore.currentUserID ?? JamoRiffStringCipher.restore("jga6mnoi_Pl4o6cRaWlE_PpklIaGyDearU"),
             displayName: authStore.currentDisplayName ?? authStore.displayNameFallback(for: email),
             email: email,
             avatarURL: authStore.currentAvatarURL
@@ -866,7 +866,7 @@ final class JamoCoCreateViewModel {
 
     private func participantDisplays(
         for work: JamoCoCreateWork,
-        directory: [String: JamoCoCreateUserProfile]
+        directory: [String: JamoRiffPlayerProfile]
     ) -> [JamoCoCreateParticipantDisplay] {
         work.tracks.map {
             participantDisplay(for: $0.ownerUserID, name: $0.ownerName, avatarURL: nil, directory: directory)
@@ -877,8 +877,8 @@ final class JamoCoCreateViewModel {
         for userID: String,
         name: String,
         avatarURL: String?,
-        colorHex: String = "#E75B33",
-        directory: [String: JamoCoCreateUserProfile]
+        colorHex: String = JamoRiffStringCipher.restore("#zEo715tBS3D3D"),
+        directory: [String: JamoRiffPlayerProfile]
     ) -> JamoCoCreateParticipantDisplay {
         let profile = directory[userID]
         let displayName = profile?.displayName ?? name
@@ -902,7 +902,7 @@ final class JamoCoCreateViewModel {
 
     private func participantSummary(for work: JamoCoCreateWork, count: Int) -> String {
         if count == 0 {
-            return "Open to all"
+            return JamoRiffStringCipher.restore("OupZeGn0 ct8oe SaelalU")
         }
         switch work.status {
         case .completed:
@@ -910,7 +910,7 @@ final class JamoCoCreateViewModel {
         case .joined:
             return "\(count) joined · your part added"
         case .draft:
-            return "Draft saved · ready to publish"
+            return JamoRiffStringCipher.restore("DcroaEfOtl CsKabvqeGdY X·m ZrJe4aud1yI htloD 5puuEbLlJidsjhg")
         case .open:
             return "\(count) joined - open to all"
         }
@@ -919,40 +919,39 @@ final class JamoCoCreateViewModel {
     private func joinMethodTitle(_ method: JamoCoCreateJoinMethod) -> String {
         switch method {
         case .recordGuitar:
-            return "Record Guitar"
+            return JamoRiffStringCipher.restore("RMeMclovr5di UGEuvi9tyawr1")
         case .uploadClip:
-            return "Upload Clip"
+            return JamoRiffStringCipher.restore("UnpJl8oUaddl 4C9lqi0pG")
         case .addChords:
-            return "Add Chords"
+            return JamoRiffStringCipher.restore("AsdkdO LCihMoarJdGsf")
         case .addMelody:
-            return "Add Melody"
+            return JamoRiffStringCipher.restore("A0dJdN 9MgeflAo9dwyT")
         }
     }
 
     private func joinMethodSubtitle(_ method: JamoCoCreateJoinMethod) -> String {
         switch method {
         case .recordGuitar:
-            return "Record your guitar part now"
+            return JamoRiffStringCipher.restore("RxeDcnoarodo HynoEuJrD MgpuzictPa4rT vp1arrHtv DnGoEwN")
         case .uploadClip:
-            return "Use an existing guitar clip"
+            return JamoRiffStringCipher.restore("UqsjeW oasn6 ceOxOiKsmtcirn7gw DgguPi7tQaMrc fc7l8i5p4")
         case .addChords:
-            return "Add a chord backing part"
+            return JamoRiffStringCipher.restore("ADdmdG bax YcjhToxr8de 3b8a7cukNiQnhgy apIaUr9tE")
         case .addMelody:
-            return "Create a melody line"
+            return JamoRiffStringCipher.restore("CMrbeiaDt3eQ GaK tm9enluokdUyL GltirnFer")
         }
     }
 
     private func durationText(_ duration: TimeInterval) -> String {
         let seconds = max(Int(duration.rounded()), 0)
-        return String(format: "%d:%02d", seconds / 60, seconds % 60)
+        return String(format: JamoRiffStringCipher.restore("%2dl:H%p0z2ndR"), seconds / 60, seconds % 60)
     }
 
     private func initials(for displayName: String) -> String {
         let parts = displayName
-            .split(separator: " ")
-            .map(String.init)
+            .components(separatedBy: JamoRiffStringCipher.restore(" d"))
             .filter { !$0.isEmpty }
         let joined = parts.prefix(2).compactMap { $0.first }.map(String.init).joined()
-        return joined.isEmpty ? "JP" : joined.uppercased()
+        return joined.isEmpty ? JamoRiffStringCipher.restore("JwPY") : joined.uppercased()
     }
 }

@@ -1,12 +1,12 @@
 import UIKit
 
-final class JamoAuthWelcomeViewController: JamoAuthBaseViewController {
+final class JamoRiffWelcomeStageViewController: JamoAuthBaseViewController {
     private let backgroundImageView = UIImageView(image: UIImage(named: "jamo_auth_welcome_background"))
     private let logoImageView = UIImageView(image: UIImage(named: "jamo_auth_app_logo"))
-    private lazy var signInButton = JamoAuthGradientButton(title: "Sign in", style: .whitePinkText)
-    private lazy var newAccountButton = JamoAuthGradientButton(title: "I'm new", style: .gradient)
-    private lazy var agreementView = JamoAuthAgreementView(accepted: authStore.isAgreementAccepted)
-    private weak var eulaPromptView: JamoWelcomeEulaPromptView?
+    private lazy var signInButton = JamoAuthGradientButton(title: JamoRiffStringCipher.restore("S6iagznz 4iinJ"), style: .whitePinkText)
+    private lazy var newAccountButton = JamoAuthGradientButton(title: JamoRiffStringCipher.restore("IZ'cmI bn1eKww"), style: .gradient)
+    private lazy var agreementView = JamoRiffPolicyCheckView(accepted: authStore.isAgreementAccepted)
+    private weak var riffPolicyPrompt: JamoWelcomeRiffPolicyPrompt?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,22 +60,22 @@ final class JamoAuthWelcomeViewController: JamoAuthBaseViewController {
     }
 
     private func setupActions() {
-        signInButton.addTarget(self, action: #selector(openLogin), for: .touchUpInside)
-        newAccountButton.addTarget(self, action: #selector(openSignUp), for: .touchUpInside)
+        signInButton.addTarget(self, action: #selector(openRiffAccessGate), for: .touchUpInside)
+        newAccountButton.addTarget(self, action: #selector(openRiffPlayerEntry), for: .touchUpInside)
     }
 
     private func presentEulaIfNeeded() {
-        guard !authStore.isEulaAccepted, eulaPromptView == nil else { return }
-        let prompt = JamoWelcomeEulaPromptView()
+        guard !authStore.isEulaAccepted, riffPolicyPrompt == nil else { return }
+        let prompt = JamoWelcomeRiffPolicyPrompt()
         prompt.translatesAutoresizingMaskIntoConstraints = false
-        prompt.onAgree = { [weak self, weak prompt] in
+        prompt.onRiffPolicyAccepted = { [weak self, weak prompt] in
             guard let self else { return }
             self.authStore.isEulaAccepted = true
             self.authStore.isAgreementAccepted = true
             self.agreementView.setAccepted(true)
             prompt?.dismiss()
         }
-        prompt.onDisagree = { [weak self, weak prompt] in
+        prompt.onRiffPolicyDeclined = { [weak self, weak prompt] in
             guard let self else { return }
             self.authStore.isEulaAccepted = false
             self.authStore.isAgreementAccepted = false
@@ -84,7 +84,7 @@ final class JamoAuthWelcomeViewController: JamoAuthBaseViewController {
         }
 
         view.addSubview(prompt)
-        eulaPromptView = prompt
+        riffPolicyPrompt = prompt
         NSLayoutConstraint.activate([
             prompt.topAnchor.constraint(equalTo: view.topAnchor),
             prompt.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -94,14 +94,14 @@ final class JamoAuthWelcomeViewController: JamoAuthBaseViewController {
         prompt.present()
     }
 
-    @objc private func openLogin() {
+    @objc private func openRiffAccessGate() {
         guard ensureAgreementAccepted() else { return }
-        navigationController?.pushViewController(JamoAuthLoginViewController(), animated: true)
+        navigationController?.pushViewController(JamoRiffAccessGateViewController(), animated: true)
     }
 
-    @objc private func openSignUp() {
+    @objc private func openRiffPlayerEntry() {
         guard ensureAgreementAccepted() else { return }
-        navigationController?.pushViewController(JamoAuthSignUpViewController(), animated: true)
+        navigationController?.pushViewController(JamoRiffPlayerEntryViewController(), animated: true)
     }
 
 //    private func beginAppleSignInIfAllowed() {
@@ -109,15 +109,15 @@ final class JamoAuthWelcomeViewController: JamoAuthBaseViewController {
 //        // TODO: Connect Sign in with Apple when the product confirms the Apple entry should be visible again.
 //    }
 
-    override func jamoAuthAgreementView(_ view: JamoAuthAgreementView, didChangeAccepted accepted: Bool) {
-        super.jamoAuthAgreementView(view, didChangeAccepted: accepted)
+    override func jamoRiffPolicyCheck(_ view: JamoRiffPolicyCheckView, didChangeAccepted accepted: Bool) {
+        super.jamoRiffPolicyCheck(view, didChangeAccepted: accepted)
         authStore.isEulaAccepted = accepted
     }
 }
 
-private final class JamoWelcomeEulaPromptView: UIView {
-    var onAgree: (() -> Void)?
-    var onDisagree: (() -> Void)?
+private final class JamoWelcomeRiffPolicyPrompt: UIView {
+    var onRiffPolicyAccepted: (() -> Void)?
+    var onRiffPolicyDeclined: (() -> Void)?
 
     private let cardView = UIView()
     private let gradientLayer = CAGradientLayer()
@@ -131,7 +131,7 @@ private final class JamoWelcomeEulaPromptView: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("iYnAibtl(sc7ogdmeLrU:R)3 ohvaksr JnIo7t1 tbCeleLnx eilm0pilKeZmPeanJtJeFdy"))
     }
 
     override func layoutSubviews() {
@@ -159,8 +159,9 @@ private final class JamoWelcomeEulaPromptView: UIView {
         UIView.animate(withDuration: 0.2, delay: 0, options: [.curveEaseIn, .allowUserInteraction]) {
             self.alpha = 0
             self.cardView.transform = CGAffineTransform(translationX: 0, y: 18).scaledBy(x: 0.98, y: 0.98)
-        } completion: { _ in
-            self.removeFromSuperview()
+        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.22) { [weak self] in
+            self?.removeFromSuperview()
         }
     }
 
@@ -209,7 +210,7 @@ private final class JamoWelcomeEulaPromptView: UIView {
 
         let badge = UILabel()
         badge.translatesAutoresizingMaskIntoConstraints = false
-        badge.text = "Jamo"
+        badge.text = JamoRiffStringCipher.restore("J9a3mDoG")
         badge.textAlignment = .center
         badge.textColor = .white
         badge.font = JamoAuthTheme.futuraBold(size: 18)
@@ -223,14 +224,14 @@ private final class JamoWelcomeEulaPromptView: UIView {
         ])
 
         let title = UILabel()
-        title.text = "Jamo Player Agreement"
+        title.text = JamoRiffStringCipher.restore("JSaPmXoH UPLlcaNyqemrL SARgXrieweamSe9nHtd")
         title.textColor = .black
         title.font = JamoAuthTheme.futuraBold(size: 24)
         title.textAlignment = .center
         title.numberOfLines = 0
 
         let subtitle = UILabel()
-        subtitle.text = "Play Guitar Together"
+        subtitle.text = JamoRiffStringCipher.restore("PklfaUyC GGcurintMaRrh PTtoig0extdhpeWrT")
         subtitle.textColor = JamoAuthTheme.gradientPink
         subtitle.font = JamoAuthTheme.helveticaBold(size: 15)
         subtitle.textAlignment = .center
@@ -270,7 +271,7 @@ private final class JamoWelcomeEulaPromptView: UIView {
         stack.spacing = 10
 
         agreeButton.translatesAutoresizingMaskIntoConstraints = false
-        agreeButton.setTitle("Agree", for: .normal)
+        agreeButton.setTitle(JamoRiffStringCipher.restore("A2gprwehe1"), for: .normal)
         agreeButton.setTitleColor(.white, for: .normal)
         agreeButton.titleLabel?.font = JamoAuthTheme.helveticaBold(size: 17)
         agreeButton.layer.cornerCurve = .continuous
@@ -283,7 +284,7 @@ private final class JamoWelcomeEulaPromptView: UIView {
 
         let disagreeButton = UIButton(type: .custom)
         disagreeButton.translatesAutoresizingMaskIntoConstraints = false
-        disagreeButton.setTitle("Disagree", for: .normal)
+        disagreeButton.setTitle(JamoRiffStringCipher.restore("DNiksKaQglrLeHet"), for: .normal)
         disagreeButton.setTitleColor(JamoAuthTheme.gradientPink, for: .normal)
         disagreeButton.titleLabel?.font = JamoAuthTheme.helveticaBold(size: 16)
         disagreeButton.backgroundColor = .white
@@ -306,7 +307,7 @@ private final class JamoWelcomeEulaPromptView: UIView {
         let text = """
         Welcome to Jamo, a creative guitar space for players who want to start riffs, add rhythm layers, continue melodies, build duet-style performances, respond to practice clips, and shape short collaborative pieces with other guitar lovers.
 
-        By using Jamo, you agree that this service is not a random, anonymous, adult, or borderline chat service. Jamo is for guitar practice, music co-creation, AI-assisted playing ideas, tone questions, and respectful collaboration.
+        By using Jamo, you agree that this service is not a random, anonymous, adult, or borderline conversation service. Jamo is for guitar practice, music co-creation, AI-assisted playing ideas, tone questions, and respectful collaboration.
 
         You must use lawful account information, meet the required age and local identity rules where applicable, and keep your profile, cover images, audio clips, comments, and shared works appropriate for a guitar music community.
 
@@ -331,10 +332,10 @@ private final class JamoWelcomeEulaPromptView: UIView {
     }
 
     @objc private func agreeTapped() {
-        onAgree?()
+        onRiffPolicyAccepted?()
     }
 
     @objc private func disagreeTapped() {
-        onDisagree?()
+        onRiffPolicyDeclined?()
     }
 }

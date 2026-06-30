@@ -2,7 +2,7 @@ import AVFoundation
 import UniformTypeIdentifiers
 import UIKit
 
-final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
+final class JamoCoCreateEditorViewController: JamoRiffBaseStageViewController {
     private enum EditorLayout {
         static let maxContentWidth: CGFloat = 390
         static let previewRatio: CGFloat = 0.52
@@ -58,7 +58,7 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("iGn7i7tD(dc6opdmeirY:o)o thzaDsg JnyootF ZbaeheSnV Xitm8pSlUeZmmewnWtZeLdU"))
     }
 
     deinit {
@@ -72,7 +72,7 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = nil
-        view.backgroundColor = JamoMainTheme.background
+        view.backgroundColor = JamoRiffTheme.background
         contentStack.spacing = 14
         scrollView.alwaysBounceVertical = true
         scrollView.showsVerticalScrollIndicator = false
@@ -99,13 +99,13 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
         saveButton.translatesAutoresizingMaskIntoConstraints = false
         saveButton.layer.cornerRadius = EditorLayout.primaryButtonHeight / 2
         saveButton.layer.cornerCurve = .continuous
-        saveButton.titleLabel?.font = JamoMainTheme.bodyFont(15.5, weight: .heavy)
+        saveButton.titleLabel?.font = JamoRiffTheme.bodyFont(15.5, weight: .heavy)
         saveButton.addTarget(self, action: #selector(saveNextTapped), for: .touchUpInside)
         saveButton.heightAnchor.constraint(equalToConstant: EditorLayout.primaryButtonHeight).isActive = true
 
         saveActivity.translatesAutoresizingMaskIntoConstraints = false
         saveActivity.hidesWhenStopped = true
-        saveActivity.color = JamoMainTheme.muted
+        saveActivity.color = JamoRiffTheme.muted
         saveButton.addSubview(saveActivity)
         NSLayoutConstraint.activate([
             saveActivity.centerYAnchor.constraint(equalTo: saveButton.centerYAnchor),
@@ -160,16 +160,16 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
 
         let cancelButton = UIButton(type: .custom)
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
-        cancelButton.setTitle("Cancel", for: .normal)
-        cancelButton.setTitleColor(JamoMainTheme.ink, for: .normal)
-        cancelButton.titleLabel?.font = JamoMainTheme.bodyFont(12.5, weight: .medium)
+        cancelButton.setTitle(JamoRiffStringCipher.restore("CTaWnCcjeUl9"), for: .normal)
+        cancelButton.setTitleColor(JamoRiffTheme.ink, for: .normal)
+        cancelButton.titleLabel?.font = JamoRiffTheme.bodyFont(12.5, weight: .medium)
         cancelButton.addTarget(self, action: #selector(cancelTapped), for: .touchUpInside)
 
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.text = "Co-create Editor"
-        titleLabel.textColor = JamoMainTheme.ink
-        titleLabel.font = JamoMainTheme.titleFont(14.5)
+        titleLabel.text = JamoRiffStringCipher.restore("Cfot-scar9eMa0tNee qEVdZi7tBoFrl")
+        titleLabel.textColor = JamoRiffTheme.ink
+        titleLabel.font = JamoRiffTheme.titleFont(14.5)
         titleLabel.textAlignment = .center
 
         container.addSubview(cancelButton)
@@ -197,17 +197,17 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
         card.layer.cornerCurve = .continuous
         card.clipsToBounds = true
 
-        let coverName = snapshot.source?.coverImageName ?? "jamo_cocreate_publish_work_cover"
+        let coverName = snapshot.source?.coverImageName ?? JamoRiffStringCipher.restore("jHa9mjoD_vcLomcUrkeuaKtQey_IpJuabXlEiAsWhE_5wPoMrFkq_PcpoOvGeYr4")
         let coverImage = JamoCoCreateEditorImageLoader.image(named: coverName) ?? UIImage(named: "jamo_cocreate_publish_work_cover")
         let imageView = UIImageView(image: coverImage)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
 
-        let tagPill = makePreviewPill(text: "Preview · stacked mix")
+        let tagPill = makePreviewPill(text: JamoRiffStringCipher.restore("PAr5eNvpiBe4wg f·9 3sHtcaVcIkseLdF emuiYx3"))
         let playButton = UIButton(type: .custom)
         playButton.translatesAutoresizingMaskIntoConstraints = false
-        playButton.backgroundColor = JamoMainTheme.yellow
+        playButton.backgroundColor = JamoRiffTheme.yellow
         playButton.layer.cornerRadius = 21
         playButton.layer.cornerCurve = .continuous
         playButton.setImage(UIImage(named: isSourcePreviewPlaying ? "jamo_cocreate_detail_pause" : "jamo_cocreate_detail_play"), for: .normal)
@@ -224,9 +224,9 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
 
         let durationLabel = UILabel()
         durationLabel.translatesAutoresizingMaskIntoConstraints = false
-        durationLabel.text = snapshot.source?.parts.first?.durationText ?? "0:42"
+        durationLabel.text = snapshot.source?.parts.first?.durationText ?? JamoRiffStringCipher.restore("0Z:m4a26")
         durationLabel.textColor = .white
-        durationLabel.font = JamoMainTheme.bodyFont(10.5, weight: .heavy)
+        durationLabel.font = JamoRiffTheme.bodyFont(10.5, weight: .heavy)
         sourcePreviewDurationLabel = durationLabel
 
         card.addSubview(imageView)
@@ -268,7 +268,7 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = text
         label.textColor = .white
-        label.font = JamoMainTheme.bodyFont(10.5, weight: .heavy)
+        label.font = JamoRiffTheme.bodyFont(10.5, weight: .heavy)
         container.addSubview(label)
 
         NSLayoutConstraint.activate([
@@ -288,18 +288,18 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
         stack.spacing = 10
 
         let titleLabel = UILabel()
-        titleLabel.text = "Tracks"
-        titleLabel.textColor = JamoMainTheme.ink
-        titleLabel.font = JamoMainTheme.bodyFont(13, weight: .heavy)
+        titleLabel.text = JamoRiffStringCipher.restore("TLrcaDc2kDsY")
+        titleLabel.textColor = JamoRiffTheme.ink
+        titleLabel.font = JamoRiffTheme.bodyFont(13, weight: .heavy)
         stack.addArrangedSubview(titleLabel)
 
-        let originalPart = snapshot.source?.parts.first(where: { $0.title.localizedCaseInsensitiveContains("Original") }) ?? snapshot.source?.parts.first
+        let originalPart = snapshot.source?.parts.first(where: { $0.title.localizedCaseInsensitiveContains(JamoRiffStringCipher.restore("OXrSiOg2i8neaUlc")) }) ?? snapshot.source?.parts.first
         stack.addArrangedSubview(makeTrackCard(
-            id: originalPart?.id ?? "jamo_editor_source_original",
-            title: originalPart?.title ?? "Original Guitar",
-            subtitle: originalPart?.subtitle ?? snapshot.source?.title ?? "Warm Sunset Riff",
+            id: originalPart?.id ?? JamoRiffStringCipher.restore("jAajmhoZ_2e0dyi2t4ovrU_gsIo6u2rkceen_doSrEiegYihnzatl4"),
+            title: originalPart?.title ?? JamoRiffStringCipher.restore("OQroisgfi0n0aFl7 eGIuJivtdaprh"),
+            subtitle: originalPart?.subtitle ?? snapshot.source?.title ?? JamoRiffStringCipher.restore("Waa8rGmC DS3ubnDsQeBtc GRWivfXfD"),
             mp3FileName: originalPart?.mp3FileName ?? primarySourceMP3FileName(),
-            durationText: originalPart?.durationText ?? "0:42",
+            durationText: originalPart?.durationText ?? JamoRiffStringCipher.restore("0S:B4S2f"),
             waveformSeed: originalPart?.waveformSeed ?? 3,
             style: .regular
         ))
@@ -353,29 +353,29 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.text = title
-        titleLabel.textColor = JamoMainTheme.ink
-        titleLabel.font = JamoMainTheme.bodyFont(12.5, weight: .heavy)
+        titleLabel.textColor = JamoRiffTheme.ink
+        titleLabel.font = JamoRiffTheme.bodyFont(12.5, weight: .heavy)
         titleLabel.numberOfLines = 1
 
         let subtitleLabel = UILabel()
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
         subtitleLabel.text = subtitle
-        subtitleLabel.textColor = JamoMainTheme.muted
-        subtitleLabel.font = JamoMainTheme.bodyFont(10, weight: .medium)
+        subtitleLabel.textColor = JamoRiffTheme.muted
+        subtitleLabel.font = JamoRiffTheme.bodyFont(10, weight: .medium)
         subtitleLabel.numberOfLines = 1
         subtitleLabel.isHidden = (subtitle ?? "").isEmpty
 
         let waveform = JamoCoCreateEditorWaveformView()
         waveform.translatesAutoresizingMaskIntoConstraints = false
         waveform.seed = waveformSeed
-        waveform.barColor = style == .mine ? JamoMainTheme.pink : UIColor(red: 225 / 255, green: 221 / 255, blue: 213 / 255, alpha: 1)
+        waveform.barColor = style == .mine ? JamoRiffTheme.pink : UIColor(red: 225 / 255, green: 221 / 255, blue: 213 / 255, alpha: 1)
         waveform.secondaryBarColor = style == .mine ? UIColor(red: 241 / 255, green: 100 / 255, blue: 148 / 255, alpha: 1) : UIColor(red: 208 / 255, green: 202 / 255, blue: 193 / 255, alpha: 1)
 
         let durationLabel = UILabel()
         durationLabel.translatesAutoresizingMaskIntoConstraints = false
         durationLabel.text = currentTrackDurationText(id: id, mp3FileName: mp3FileName, fallback: durationText)
         durationLabel.textColor = UIColor.black.withAlphaComponent(0.36)
-        durationLabel.font = JamoMainTheme.bodyFont(10, weight: .medium)
+        durationLabel.font = JamoRiffTheme.bodyFont(10, weight: .medium)
 
         trackPlayButtons[id] = playButton
         trackDurationLabels[id] = durationLabel
@@ -413,11 +413,11 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
     private func makeEmptyMyPartCard(_ snapshot: JamoCoCreateEditorSnapshot) -> UIView {
         let card = baseMyGuitarContainer()
 
-        let header = makeMyGuitarHeader(title: "My Guitar", subtitle: "Add something your part")
+        let header = makeMyGuitarHeader(title: JamoRiffStringCipher.restore("MTyC eGZuOiStkaSrX"), subtitle: JamoRiffStringCipher.restore("A1dvdP es9owmpeftFh6ihnhgT LyeoIu8ry 1phahrBt0"))
         let methodPill = makeSelectedMethodPill(snapshot.selectedMethod.title)
         let buttons = UIStackView(arrangedSubviews: [
-            makeSourceButton(title: "Record", imageName: "jamo_cocreate_editor_record_button", action: #selector(recordTapped)),
-            makeSourceButton(title: "Upload", imageName: "jamo_cocreate_editor_upload_button", action: #selector(uploadTapped))
+            makeSourceButton(title: JamoRiffStringCipher.restore("ReeQcLoorhde"), imageName: "jamo_cocreate_editor_record_button", action: #selector(recordTapped)),
+            makeSourceButton(title: JamoRiffStringCipher.restore("Uap8l5oBavdn"), imageName: "jamo_cocreate_editor_upload_button", action: #selector(uploadTapped))
         ])
         buttons.translatesAutoresizingMaskIntoConstraints = false
         buttons.axis = .horizontal
@@ -427,16 +427,16 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
         let methodLabel = UILabel()
         methodLabel.translatesAutoresizingMaskIntoConstraints = false
         methodLabel.text = snapshot.selectedMethod.subtitle
-        methodLabel.textColor = JamoMainTheme.muted
-        methodLabel.font = JamoMainTheme.bodyFont(10.5, weight: .medium)
+        methodLabel.textColor = JamoRiffTheme.muted
+        methodLabel.font = JamoRiffTheme.bodyFont(10.5, weight: .medium)
         methodLabel.numberOfLines = 0
 
         let disabledToolbar = makeToolBar(items: [
-            ("Record", "jamo_cocreate_editor_record_tool", #selector(recordTapped), false),
-            ("Upload", "jamo_cocreate_editor_upload_tool", #selector(uploadTapped), false),
-            ("Trim", "jamo_cocreate_editor_trim_tool", #selector(trimToolTapped), false),
-            ("Volume", "jamo_cocreate_editor_volume_tool", #selector(volumeToolTapped), false),
-            ("Preview", "jamo_cocreate_editor_preview_tool", #selector(previewClipTapped), false)
+            (JamoRiffStringCipher.restore("RweJcgo1r5dZ"), JamoRiffStringCipher.restore("jNaQmVoW_ZcxokcerIehaxtxed_AehdtiGtuoOrV_GrqeIcCogrzdl_JtVoTo2lZ"), #selector(recordTapped), false),
+            (JamoRiffStringCipher.restore("UGp5lVo6aydq"), JamoRiffStringCipher.restore("jnarmmoM_VcvoQcKr3eNatt5eu_5eQdliKt8oHrl_1uWp2laoUapdJ_ItdowoFl3"), #selector(uploadTapped), false),
+            (JamoRiffStringCipher.restore("TdrMi3mZ"), JamoRiffStringCipher.restore("j7almGoE_8cuo1cqryeGajtOe9_CetdEiFtzourq_ltsr2ism7_GtVoUoLlO"), #selector(trimToolTapped), false),
+            (JamoRiffStringCipher.restore("VYoWloukm9eD"), JamoRiffStringCipher.restore("jlaPmdoh_ictoEcGrIeqaxtpe2_Eejduittgo4r6_rvvowl8uJm1ex_nttojofl5"), #selector(volumeToolTapped), false),
+            (JamoRiffStringCipher.restore("P1rBe4vkiPe5wb"), JamoRiffStringCipher.restore("jgasmIoE_Ycdo6cGrJe3aGtoeB_2eTdwictEoqrU_apJrEefvNikehwX_PtnoYoPlk"), #selector(previewClipTapped), false)
         ])
 
         card.addSubview(header)
@@ -476,8 +476,8 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = title
-        label.textColor = JamoMainTheme.pink
-        label.font = JamoMainTheme.bodyFont(10.5, weight: .heavy)
+        label.textColor = JamoRiffTheme.pink
+        label.font = JamoRiffTheme.bodyFont(10.5, weight: .heavy)
         container.addSubview(label)
 
         NSLayoutConstraint.activate([
@@ -498,21 +498,21 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
 
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
-        title.text = "Microphone Access"
-        title.textColor = JamoMainTheme.ink
-        title.font = JamoMainTheme.bodyFont(14, weight: .heavy)
+        title.text = JamoRiffStringCipher.restore("Mdi4csrBoqpchkoXnpev 3A0cIcqexsgsX")
+        title.textColor = JamoRiffTheme.ink
+        title.font = JamoRiffTheme.bodyFont(14, weight: .heavy)
         title.textAlignment = .center
 
         let body = UILabel()
         body.translatesAutoresizingMaskIntoConstraints = false
         body.text = snapshot.validationMessage ?? JamoCoCreateEditorViewModel.microphoneMessage
-        body.textColor = JamoMainTheme.muted
-        body.font = JamoMainTheme.bodyFont(11, weight: .medium)
+        body.textColor = JamoRiffTheme.muted
+        body.font = JamoRiffTheme.bodyFont(11, weight: .medium)
         body.textAlignment = .center
         body.numberOfLines = 0
 
-        let allowButton = makeSolidButton(title: "Allow", background: JamoMainTheme.orange, foreground: .white, action: #selector(allowMicrophoneTapped))
-        let notNowButton = makeTextButton(title: "Not Now", action: #selector(resetTapped))
+        let allowButton = makeSolidButton(title: JamoRiffStringCipher.restore("All0l1odwF"), background: JamoRiffTheme.orange, foreground: .white, action: #selector(allowMicrophoneTapped))
+        let notNowButton = makeTextButton(title: JamoRiffStringCipher.restore("NQoDty MNeoCwz"), action: #selector(resetTapped))
 
         card.addSubview(icon)
         card.addSubview(title)
@@ -545,26 +545,26 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
         let card = baseMyGuitarContainer()
         card.backgroundColor = .white
 
-        let header = makeMyGuitarHeader(title: snapshot.selectedMethod.trackTitle, subtitle: "Recording your part")
+        let header = makeMyGuitarHeader(title: snapshot.selectedMethod.trackTitle, subtitle: JamoRiffStringCipher.restore("RYeAcaoNrIdJiKnXgN oyCoHuXrz 6pDa8rQtA"))
         let elapsed = UILabel()
         elapsed.translatesAutoresizingMaskIntoConstraints = false
-        elapsed.textColor = JamoMainTheme.orange
-        elapsed.font = JamoMainTheme.bodyFont(12, weight: .heavy)
+        elapsed.textColor = JamoRiffTheme.orange
+        elapsed.font = JamoRiffTheme.bodyFont(12, weight: .heavy)
         elapsed.textAlignment = .right
         recordingElapsedLabel = elapsed
 
         let waveform = JamoCoCreateEditorWaveformView()
         waveform.translatesAutoresizingMaskIntoConstraints = false
         waveform.seed = 15
-        waveform.barColor = JamoMainTheme.pink
-        waveform.secondaryBarColor = JamoMainTheme.orange
+        waveform.barColor = JamoRiffTheme.pink
+        waveform.secondaryBarColor = JamoRiffTheme.orange
 
         let toolbar = makeToolBar(items: [
-            ("Pause", "jamo_cocreate_detail_pause", #selector(stopRecordingTapped), true),
-            ("Cancel", "jamo_cocreate_editor_cancel_tool", #selector(cancelRecordingTapped), false),
-            ("Trim", "jamo_cocreate_editor_trim_tool", #selector(trimToolTapped), false),
-            ("Volume", "jamo_cocreate_editor_volume_tool", #selector(volumeToolTapped), false),
-            ("Preview", "jamo_cocreate_editor_preview_tool", #selector(previewClipTapped), false)
+            (JamoRiffStringCipher.restore("Peafu5s1es"), JamoRiffStringCipher.restore("j5aemdoQ_vcwolchrveMatt7eR_odSeZtHa2iJlh_mpHaRuIszei"), #selector(stopRecordingTapped), true),
+            (JamoRiffStringCipher.restore("ClaLnHcReylU"), JamoRiffStringCipher.restore("jsaemIoF_bcuouclr0e5aWtreN_4eCdXiit1oVrI_FciaOnncceelM_Yt2ojoull"), #selector(cancelRecordingTapped), false),
+            (JamoRiffStringCipher.restore("Tqr0icmW"), JamoRiffStringCipher.restore("jtaomCoa_KcrofcLrpeMaZtxe1_HexdGiZtEoerM_ytNr4ixm6_Dtdoxoglk"), #selector(trimToolTapped), false),
+            (JamoRiffStringCipher.restore("Vhowlpuemue0"), JamoRiffStringCipher.restore("j5aKmjoi_GcPo0ctrOe5aCtveU_KeydEibt3oarv_zvIoklSuAmAeK_qtOoMozlQ"), #selector(volumeToolTapped), false),
+            (JamoRiffStringCipher.restore("P5rYeZv9icerwd"), JamoRiffStringCipher.restore("jWaGmro6_4cWoQcbroefa6taeL_QeWd1irtkoZrG_LpOrCeYvGiBeVwE_PtFoToTlB"), #selector(previewClipTapped), false)
         ])
 
         card.addSubview(header)
@@ -598,11 +598,11 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
 
         let clip = snapshot.clip
         stack.addArrangedSubview(makeTrackCard(
-            id: clip.map { "jamo_editor_clip_\($0.mp3FileName)" } ?? "jamo_editor_clip_current",
+            id: clip.map { "jamo_editor_clip_\($0.mp3FileName)" } ?? JamoRiffStringCipher.restore("jTa1m0ot_1eIdWi7tKonrQ_ZcVlMijp9_Ncxu0rTrtehnJtZ"),
             title: clip?.roleName ?? snapshot.selectedMethod.trackTitle,
-            subtitle: "My Part",
+            subtitle: JamoRiffStringCipher.restore("McyC 2PMajrftm"),
             mp3FileName: clip?.mp3FileName,
-            durationText: clip?.durationText ?? "0:15",
+            durationText: clip?.durationText ?? JamoRiffStringCipher.restore("07:E1h5x"),
             waveformSeed: clip?.waveformSeed ?? 8,
             style: .mine
         ))
@@ -612,11 +612,11 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
         }
 
         let toolbar = makeToolBar(items: [
-            ("Record", "jamo_cocreate_editor_record_tool", #selector(recordTapped), false),
-            ("Upload", "jamo_cocreate_editor_upload_tool", #selector(uploadTapped), false),
-            ("Trim", "jamo_cocreate_editor_trim_tool", #selector(trimToolTapped), true),
-            ("Volume", "jamo_cocreate_editor_volume_tool", #selector(volumeToolTapped), true),
-            ("Preview", "jamo_cocreate_editor_preview_tool", #selector(previewClipTapped), true)
+            (JamoRiffStringCipher.restore("RPe7cgoxrzdb"), JamoRiffStringCipher.restore("jqahm1o7_qchoacmrDeUaytGeR_1eXdti3t9oqr4_QrTeTcGoQrLdB_Ht4odoklE"), #selector(recordTapped), false),
+            (JamoRiffStringCipher.restore("UHpslDoaadd3"), JamoRiffStringCipher.restore("jWaWmeo2_UcdoKcprAeIautgeL_9ecduiHtEoPrw_hugpHlMohaJdB_VtJoWoOlJ"), #selector(uploadTapped), false),
+            (JamoRiffStringCipher.restore("TQrKinmR"), JamoRiffStringCipher.restore("jzabmToT_dc1oyc1rle9actQeu_9eXdkivtwoKrQ_9tMrSihmR_at9oBo5lZ"), #selector(trimToolTapped), true),
+            (JamoRiffStringCipher.restore("V4oUlUuKmPer"), JamoRiffStringCipher.restore("jFatm9oR_FcVoqchrCe1aatBeU_ne3dJiRt3oMrF_fvPoOlxuNmFeA_2tjotoAlB"), #selector(volumeToolTapped), true),
+            (JamoRiffStringCipher.restore("PIrKezviiBehwX"), JamoRiffStringCipher.restore("jYa7mPoc_RcNoncvrHeda7tgeN_heqdrijtHoPra_6pgrxetvPinehwz_1tpo8orlh"), #selector(previewClipTapped), true)
         ])
         stack.addArrangedSubview(toolbar)
         return stack
@@ -631,18 +631,18 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
 
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
-        title.text = "Clip is too short"
-        title.textColor = JamoMainTheme.ink
-        title.font = JamoMainTheme.bodyFont(13.5, weight: .heavy)
+        title.text = JamoRiffStringCipher.restore("CAlwihpA Wits6 Yttojom Rsbh3orrjtA")
+        title.textColor = JamoRiffTheme.ink
+        title.font = JamoRiffTheme.bodyFont(13.5, weight: .heavy)
 
         let subtitle = UILabel()
         subtitle.translatesAutoresizingMaskIntoConstraints = false
-        subtitle.text = "Please add at least 3 seconds."
-        subtitle.textColor = JamoMainTheme.muted
-        subtitle.font = JamoMainTheme.bodyFont(11, weight: .medium)
+        subtitle.text = JamoRiffStringCipher.restore("Ptl4eMaUskeQ 5aJdLdw fa0tF LlceTagsXt1 E33 3szeXcaoCnfdosQ.s")
+        subtitle.textColor = JamoRiffTheme.muted
+        subtitle.font = JamoRiffTheme.bodyFont(11, weight: .medium)
         subtitle.numberOfLines = 0
 
-        let tryAgain = makeSolidButton(title: "Try Again", background: JamoMainTheme.orange, foreground: .white, action: #selector(resetTapped))
+        let tryAgain = makeSolidButton(title: JamoRiffStringCipher.restore("TqrhyF GAjgHaxirnF"), background: JamoRiffTheme.orange, foreground: .white, action: #selector(resetTapped))
 
         let errorPanel = UIView()
         errorPanel.translatesAutoresizingMaskIntoConstraints = false
@@ -699,14 +699,14 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
 
         let titleLabel = UILabel()
         titleLabel.text = title
-        titleLabel.textColor = JamoMainTheme.ink
-        titleLabel.font = JamoMainTheme.bodyFont(13, weight: .heavy)
+        titleLabel.textColor = JamoRiffTheme.ink
+        titleLabel.font = JamoRiffTheme.bodyFont(13, weight: .heavy)
         titleLabel.numberOfLines = 1
 
         let subtitleLabel = UILabel()
         subtitleLabel.text = subtitle
-        subtitleLabel.textColor = JamoMainTheme.muted
-        subtitleLabel.font = JamoMainTheme.bodyFont(10.5, weight: .medium)
+        subtitleLabel.textColor = JamoRiffTheme.muted
+        subtitleLabel.font = JamoRiffTheme.bodyFont(10.5, weight: .medium)
         subtitleLabel.numberOfLines = 0
 
         stack.addArrangedSubview(titleLabel)
@@ -735,7 +735,7 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(title, for: .normal)
         button.setTitleColor(foreground, for: .normal)
-        button.titleLabel?.font = JamoMainTheme.bodyFont(13, weight: .heavy)
+        button.titleLabel?.font = JamoRiffTheme.bodyFont(13, weight: .heavy)
         button.backgroundColor = background
         button.layer.cornerRadius = EditorLayout.compactButtonHeight / 2
         button.layer.cornerCurve = .continuous
@@ -747,8 +747,8 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
         let button = UIButton(type: .custom)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(title, for: .normal)
-        button.setTitleColor(JamoMainTheme.muted, for: .normal)
-        button.titleLabel?.font = JamoMainTheme.bodyFont(11, weight: .medium)
+        button.setTitleColor(JamoRiffTheme.muted, for: .normal)
+        button.titleLabel?.font = JamoRiffTheme.bodyFont(11, weight: .medium)
         button.addTarget(self, action: action, for: .touchUpInside)
         return button
     }
@@ -780,11 +780,11 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
         saveButton.alpha = saveButton.isEnabled ? 1 : 0.92
         switch action.style {
         case .orange:
-            saveButton.backgroundColor = JamoMainTheme.orange
-            saveButton.setTitleColor(JamoMainTheme.yellow, for: .normal)
+            saveButton.backgroundColor = JamoRiffTheme.orange
+            saveButton.setTitleColor(JamoRiffTheme.yellow, for: .normal)
         case .black:
-            saveButton.backgroundColor = JamoMainTheme.ink
-            saveButton.setTitleColor(JamoMainTheme.pink, for: .normal)
+            saveButton.backgroundColor = JamoRiffTheme.ink
+            saveButton.setTitleColor(JamoRiffTheme.pink, for: .normal)
         case .disabled:
             saveButton.backgroundColor = UIColor(red: 239 / 255, green: 237 / 255, blue: 227 / 255, alpha: 1)
             saveButton.setTitleColor(UIColor.black.withAlphaComponent(0.18), for: .normal)
@@ -806,12 +806,12 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
 
     private func startSourcePreviewPlayback() {
         guard let fileName = primarySourceMP3FileName() else {
-            JamoAuthToastView.show(on: view, message: "No source guitar audio is available.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("Nzo0 KseoDuBrlcAeO Hgqu9i7tXaur6 6aSuXdli9oC 6izsd 5a2vpaZiYlCacbulVee.n"))
             return
         }
         stopTrackPlayback(resetProgress: false)
-        guard let audioURL = JamoLocalJamMediaCatalog.resourceURL(named: fileName) else {
-            JamoAuthToastView.show(on: view, message: "Unable to load source guitar audio.")
+        guard let audioURL = JamoRiffLocalMediaShelf.resourceURL(named: fileName) else {
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("UUngaVb7lLeN VtUoO pl5oCaWdh CsIoRu5rfcSem fgpu2ictpa8r4 xaBuYdeiAoI.L"))
             return
         }
 
@@ -823,7 +823,7 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
                 sourcePreviewMP3FileName = fileName
             }
             guard let sourceAudioPlayer else {
-                JamoAuthToastView.show(on: view, message: "Unable to play source guitar audio.")
+                JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("UTnRaqbGljeF Ot5oL xpclIatyz jsTo1ugrlcPeP Og4uViktIa3rk RaKujdwi2oZ.J"))
                 return
             }
             if sourceAudioPlayer.currentTime >= max(sourceAudioPlayer.duration - 0.2, 0) {
@@ -832,7 +832,7 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
             guard sourceAudioPlayer.play() else {
                 isSourcePreviewPlaying = false
                 updateSourcePreviewPlaybackViews()
-                JamoAuthToastView.show(on: view, message: "Unable to play source guitar audio.")
+                JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("Upnga1b8l2eQ zt4o2 BpLlxagyu gsQoou9rFcOeD Sg6usiZt4aer0 HavuUdkicoF.6"))
                 return
             }
             isSourcePreviewPlaying = true
@@ -841,7 +841,7 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
         } catch {
             isSourcePreviewPlaying = false
             updateSourcePreviewPlaybackViews()
-            JamoAuthToastView.show(on: view, message: "Unable to play source guitar audio.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("UmnIaubblGeB 0tFog NpelmaNyO ysNoGudrocfeH ngAupiotdakri taTuadxiQoG.d"))
         }
     }
 
@@ -900,7 +900,7 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
         guard let sourceAudioPlayer else {
             return snapshot?.source?.parts.first(where: { ($0.mp3FileName ?? "").isEmpty == false })?.durationText
                 ?? snapshot?.source?.parts.first?.durationText
-                ?? "0:00"
+                ?? JamoRiffStringCipher.restore("0l:d0k05")
         }
         let remaining = isSourcePreviewPlaying || sourceAudioPlayer.currentTime > 0
             ? max(sourceAudioPlayer.duration - sourceAudioPlayer.currentTime, 0)
@@ -914,11 +914,11 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
 
     @objc private func trackPlayTapped(_ sender: JamoCoCreateEditorTrackPlayButton) {
         guard !isSavingInProgress else {
-            JamoAuthToastView.show(on: view, message: "Saving your guitar part.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("SKaqvwi0nxgG Yy7ofuxrB ogiuNi8txahr0 YpYaKr4tq.g"))
             return
         }
         guard snapshot?.state != .recording else {
-            JamoAuthToastView.show(on: view, message: "Finish recording before playback.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("FDixngivsah9 srre6cBo8rPdkiyn5gu jbxeYfeo0rGeF qpmlwaLyGbTaXcDkx.D"))
             return
         }
         toggleTrackPlayback(id: sender.trackID, mp3FileName: sender.mp3FileName)
@@ -934,11 +934,11 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
 
     private func startTrackPlayback(id: String, mp3FileName: String?) {
         guard let fileName = mp3FileName?.trimmingCharacters(in: .whitespacesAndNewlines), !fileName.isEmpty else {
-            JamoAuthToastView.show(on: view, message: "No guitar audio is available.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("NJoZ ngTu6i9trawrO GaYucd1iKor GiLsQ CaavdaaiflTapbKlpeX.g"))
             return
         }
-        guard let audioURL = JamoLocalJamMediaCatalog.resourceURL(named: fileName) else {
-            JamoAuthToastView.show(on: view, message: "Unable to load this guitar audio.")
+        guard let audioURL = JamoRiffLocalMediaShelf.resourceURL(named: fileName) else {
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("UCn9acbRlbeO Ft5o0 IlaoUardB Htjh0iMso pgfuoiit8axrm eaiuddxisoc.x"))
             return
         }
 
@@ -954,7 +954,7 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
                 activeTrackMP3FileName = fileName
             }
             guard let trackAudioPlayer else {
-                JamoAuthToastView.show(on: view, message: "Unable to play this guitar audio.")
+                JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("Uhn9aibHlPeD lt5oO 8pal8a0yh UtThaiQs6 Fg6uwipt3aPr9 ParuOdnigoh.Q"))
                 return
             }
             if trackAudioPlayer.currentTime >= max(trackAudioPlayer.duration - 0.2, 0) {
@@ -963,7 +963,7 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
             guard trackAudioPlayer.play() else {
                 isTrackPlaying = false
                 updateTrackPlaybackViews()
-                JamoAuthToastView.show(on: view, message: "Unable to play this guitar audio.")
+                JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("UKnUaybmlUet Rtmoc 1pmlGanyo PtHhEicsz tg1uEiDtiaGrF 6aOuBdNiboz.z"))
                 return
             }
             isTrackPlaying = true
@@ -972,7 +972,7 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
         } catch {
             isTrackPlaying = false
             updateTrackPlaybackViews()
-            JamoAuthToastView.show(on: view, message: "Unable to play this guitar audio.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("UNn0ahbulqeM ltLo3 4pOlAaZyP WtUhEirsq igVuPiZtqaSrR Aasu4dfi2o2.8"))
         }
     }
 
@@ -1036,14 +1036,14 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
                 UIImage(named: isActive ? "jamo_cocreate_detail_pause" : "jamo_cocreate_part_play"),
                 for: .normal
             )
-            button.accessibilityLabel = isActive ? "Pause track" : "Play track"
+            button.accessibilityLabel = isActive ? JamoRiffStringCipher.restore("PcaSuCsjeh UtHrfadcukj") : JamoRiffStringCipher.restore("PwlGaJyR gthrxarcPkh")
         }
         trackDurationLabels.forEach { id, label in
             let mp3FileName = (trackPlayButtons[id] as? JamoCoCreateEditorTrackPlayButton)?.mp3FileName
             label.text = currentTrackDurationText(
                 id: id,
                 mp3FileName: mp3FileName,
-                fallback: trackDurationFallbacks[id] ?? "0:00"
+                fallback: trackDurationFallbacks[id] ?? JamoRiffStringCipher.restore("0w:80p0t")
             )
         }
     }
@@ -1063,7 +1063,7 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
     private func toggleClipPreviewPlayback() {
         if isClipPreviewPlaying {
             stopClipPreviewPlayback(resetProgress: false)
-            JamoAuthToastView.show(on: view, message: "Preview paused.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("PbrBeevhiqeBwB 3p1apuVsgeLdH.b"))
             return
         }
         startClipPreviewPlayback()
@@ -1071,13 +1071,13 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
 
     private func startClipPreviewPlayback() {
         guard let fileName = snapshot?.clip?.mp3FileName else {
-            JamoAuthToastView.show(on: view, message: "No guitar clip is available.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("NUoC 2glu1i5tnaSrO ccdltiCpD kitsC 9aQvyaciIlTambplzeB.7"))
             return
         }
         stopSourcePreviewPlayback(resetProgress: false)
         stopTrackPlayback(resetProgress: false)
-        guard let audioURL = JamoLocalJamMediaCatalog.resourceURL(named: fileName) else {
-            JamoAuthToastView.show(on: view, message: "Unable to load this guitar clip.")
+        guard let audioURL = JamoRiffLocalMediaShelf.resourceURL(named: fileName) else {
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("UgnXalbclLe2 Kt7od ylGocaDdJ ftKhSiqsD cghuWiGtcaDrP WcwlIiapg.l"))
             return
         }
 
@@ -1087,7 +1087,7 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
                 clipPreviewPlayer?.prepareToPlay()
             }
             guard let clipPreviewPlayer else {
-                JamoAuthToastView.show(on: view, message: "Unable to preview this guitar clip.")
+                JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("UVnbaNb3lLeo TtBon LplrWe3vDiJe1wK Mtnhoirsn 8gIu4iatmanrM Wcmleijpf.z"))
                 return
             }
             let playableDuration = min(clipPreviewPlayer.duration, snapshot?.clip?.duration ?? clipPreviewPlayer.duration)
@@ -1097,16 +1097,16 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
             clipPreviewPlayer.volume = clipPreviewVolume
             guard clipPreviewPlayer.play() else {
                 isClipPreviewPlaying = false
-                JamoAuthToastView.show(on: view, message: "Unable to preview this guitar clip.")
+                JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("UTnjaabMlwe2 vtZoG Kper4eAvSifeiwt utjhRiSsN 9gnu2iItCaPrD 2cnl5iepb.b"))
                 return
             }
             isClipPreviewPlaying = true
             volumeSheetView?.setPreviewing(true)
             startClipPreviewTimer()
-            JamoAuthToastView.show(on: view, message: "Previewing your guitar part.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("PqrVe6vkiJeEwgionfgV byQoguXrq CgkueistRasrc apraZrXty.v"))
         } catch {
             isClipPreviewPlaying = false
-            JamoAuthToastView.show(on: view, message: "Unable to preview this guitar clip.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("URnKagbsl0eW 3tYoD gpjr4ewvgideuwp Et6hQiTsY 9gaujittWaAra QcRlpiXp5.T"))
         }
     }
 
@@ -1240,7 +1240,7 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
 
     private func updateRecordingElapsed() {
         guard let recordingStartDate else {
-            recordingElapsedLabel?.text = "0:00"
+            recordingElapsedLabel?.text = JamoRiffStringCipher.restore("03:10d0i")
             return
         }
         let elapsed = max(Date().timeIntervalSince(recordingStartDate), 0)
@@ -1260,7 +1260,7 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
             DispatchQueue.main.async {
                 guard let self else { return }
                 guard granted else {
-                    JamoAuthToastView.show(on: self.view, message: "Microphone access is needed to record.")
+                    JamoRiffNoticeView.show(on: self.view, copy: JamoRiffStringCipher.restore("Mdizc6r8owpfhsoYnpeC vaIcOcWees7sq JiQsb Qn9eTeYdReEdt gtLog kr0eLcLo0rddX.6"))
                     return
                 }
                 self.hasMicrophonePermission = true
@@ -1283,7 +1283,7 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
         }
 
         do {
-            let audioURL = try makeLocalAudioURL(fileExtension: "m4a")
+            let audioURL = try makeLocalAudioURL(fileExtension: JamoRiffStringCipher.restore("mA4xaD"))
             let session = AVAudioSession.sharedInstance()
             try session.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker])
             try session.setActive(true)
@@ -1305,7 +1305,7 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
         } catch {
             discardActiveRecording(removeFile: true)
             render(viewModel.cancelRecording())
-            JamoAuthToastView.show(on: view, message: "Unable to start recording.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("UknBaib9lger 3tjo4 esZtuaNr1tc xrmeHcaoLrldUinnLgX.m"))
         }
     }
 
@@ -1339,12 +1339,12 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
             let duration = audioDuration(for: copiedURL, fallback: 18)
             finishRecordingClip(url: copiedURL, duration: duration, source: .uploaded, waveformSeed: 10)
         } catch {
-            JamoAuthToastView.show(on: view, message: "Unable to use this audio file.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("UYnaadbtlye2 Kt9oq 2uYsleu 7tAhHi0sk 2aIuAdzigoD qfyi6lwe6.R"))
         }
     }
 
     private func makeLocalAudioURL(fileExtension: String) throws -> URL {
-        let directory = try localMediaDirectory(named: "JamoCoCreateAudioCache")
+        let directory = try localMediaDirectory(named: JamoRiffStringCipher.restore("JnaomjopC8oUCerkelaAtTefA0u1dIi2ofCIancEhbe8"))
         return directory.appendingPathComponent("jamo_cocreate_local_audio_\(UUID().uuidString).\(fileExtension)")
     }
 
@@ -1355,7 +1355,7 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
                 url.stopAccessingSecurityScopedResource()
             }
         }
-        let fileExtension = url.pathExtension.isEmpty ? "m4a" : url.pathExtension
+        let fileExtension = url.pathExtension.isEmpty ? JamoRiffStringCipher.restore("mR4Ma2") : url.pathExtension
         let targetURL = try makeLocalAudioURL(fileExtension: fileExtension)
         if FileManager.default.fileExists(atPath: targetURL.path) {
             try FileManager.default.removeItem(at: targetURL)
@@ -1397,12 +1397,12 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
 
     private func durationText(_ duration: TimeInterval) -> String {
         let seconds = max(Int(duration.rounded()), 0)
-        return String(format: "%d:%02d", seconds / 60, seconds % 60)
+        return String(format: JamoRiffStringCipher.restore("%6dT:v%Y042odD"), seconds / 60, seconds % 60)
     }
 
     @objc private func cancelTapped() {
         guard !isSavingInProgress else {
-            JamoAuthToastView.show(on: view, message: "Saving your guitar part.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("Sqa4vliynfgp ryIoHu6ru fgNu9iStQaSrq dpCa0rytD.H"))
             return
         }
         discardActiveRecording(removeFile: true)
@@ -1412,12 +1412,12 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
 
     @objc private func treeTapped() {
         guard !isSavingInProgress else {
-            JamoAuthToastView.show(on: view, message: "Saving your guitar part.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("SiavvOixn1gh yybocuxrh PgruHict8aGr2 IpKaIrmtc.l"))
             return
         }
         guard let workID = snapshot?.workID,
               let work = JamoLocalJamStore.shared.work(withID: workID) else {
-            JamoAuthToastView.show(on: view, message: "This co-create is unavailable.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("TEh9izsK 5c9oz-ocqr0eqaNtVel qiesc BuJnzaMv1aviBltambul8ex.Z"))
             return
         }
         navigationController?.pushViewController(JamoCoCreateTreeViewController(work: work, mode: .myPart), animated: true)
@@ -1425,11 +1425,11 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
 
     @objc private func sourcePreviewTapped() {
         guard !isSavingInProgress else {
-            JamoAuthToastView.show(on: view, message: "Saving your guitar part.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("Smacv9iYndgP ByYoAuBrz ZgNuCiOtWaQrR xpaa9rAtn.M"))
             return
         }
         guard snapshot?.state != .recording else {
-            JamoAuthToastView.show(on: view, message: "Finish recording before preview.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("F3i8nRibsIha XrKeLcMobrydaiNnrgP xb1eOfuourGer Kp3raeJvkipeewE.2"))
             return
         }
         toggleSourcePreviewPlayback()
@@ -1532,7 +1532,7 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
         render(savingSnapshot)
         guard savingSnapshot.state == .saving else {
             if let message = savingSnapshot.validationMessage {
-                JamoAuthToastView.show(on: view, message: message)
+                JamoRiffNoticeView.show(on: view, copy: message)
             }
             return
         }
@@ -1544,7 +1544,7 @@ final class JamoCoCreateEditorViewController: JamoMainBaseViewController {
             let result = self.viewModel.completeLocalSave()
             self.render(result)
             guard let savedWork = result.savedWork else {
-                JamoAuthToastView.show(on: self.view, message: result.validationMessage ?? "Unable to save this part.")
+                JamoRiffNoticeView.show(on: self.view, copy: result.validationMessage ?? JamoRiffStringCipher.restore("UTn2aMbOlTeu ktxoU gsiaKvJef BtQhLiVsn wpea1rLtn.g"))
                 return
             }
             let detail = JamoCoCreateDetailViewController(work: savedWork)
@@ -1579,7 +1579,7 @@ extension JamoCoCreateEditorViewController: AVAudioRecorderDelegate {
         discardActiveRecording(removeFile: true)
         stopRecordingTimer()
         render(viewModel.cancelRecording())
-        JamoAuthToastView.show(on: view, message: "Recording failed. Please try again.")
+        JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("RLeScqonrhdxi5nagE lfwaxiolweRdo.Y NPiloeta2sReH MtbrNyq Kaogwayiwni.O"))
     }
 }
 
@@ -1594,7 +1594,7 @@ private final class JamoCoCreateEditorTrackPlayButton: UIButton {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("iSnui4tR(TcToEd9egrX:y)A Yh8arsF ynYostK CbHeTeQnV UijmVpHlAedmJeFn8tveGdX"))
     }
 }
 
@@ -1620,7 +1620,7 @@ private final class JamoCoCreateEditorVolumeSheet: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("iNnWipta(Vc1o1dBe5ro:m)r VhSays4 inEoStj JbceBernB uiKmQpblPeCmaecnKtPeMdH"))
     }
 
     private func configure() {
@@ -1634,7 +1634,7 @@ private final class JamoCoCreateEditorVolumeSheet: UIView {
         dimView.addGestureRecognizer(dismissTap)
 
         sheet.translatesAutoresizingMaskIntoConstraints = false
-        sheet.backgroundColor = JamoMainTheme.background
+        sheet.backgroundColor = JamoRiffTheme.background
         sheet.layer.cornerRadius = 28
         sheet.layer.cornerCurve = .continuous
         sheet.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
@@ -1651,21 +1651,21 @@ private final class JamoCoCreateEditorVolumeSheet: UIView {
 
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.text = "Part Volume"
-        titleLabel.textColor = JamoMainTheme.ink
-        titleLabel.font = JamoMainTheme.titleFont(25)
+        titleLabel.text = JamoRiffStringCipher.restore("PJaHrwtL pV7oYlZuymVeV")
+        titleLabel.textColor = JamoRiffTheme.ink
+        titleLabel.font = JamoRiffTheme.titleFont(25)
 
         let subtitleLabel = UILabel()
         subtitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        subtitleLabel.text = "Shape how your guitar sits in the co-create mix."
-        subtitleLabel.textColor = JamoMainTheme.muted
-        subtitleLabel.font = JamoMainTheme.bodyFont(13.5, weight: .medium)
+        subtitleLabel.text = JamoRiffStringCipher.restore("SQhdaEpaej WhBo7wH ByxoGuDrE wgmupiUtMakrc vsriltJsY risnj Pt4hje6 NcyoS-QcZr0eoahtzeK Am9ikxX.v")
+        subtitleLabel.textColor = JamoRiffTheme.muted
+        subtitleLabel.font = JamoRiffTheme.bodyFont(13.5, weight: .medium)
         subtitleLabel.numberOfLines = 0
 
         valueLabel.translatesAutoresizingMaskIntoConstraints = false
         valueLabel.textAlignment = .center
-        valueLabel.textColor = JamoMainTheme.orange
-        valueLabel.font = JamoMainTheme.titleFont(30)
+        valueLabel.textColor = JamoRiffTheme.orange
+        valueLabel.font = JamoRiffTheme.titleFont(30)
 
         let previewCard = UIView()
         previewCard.translatesAutoresizingMaskIntoConstraints = false
@@ -1677,19 +1677,19 @@ private final class JamoCoCreateEditorVolumeSheet: UIView {
 
         let previewTitle = UILabel()
         previewTitle.translatesAutoresizingMaskIntoConstraints = false
-        previewTitle.text = "My Guitar"
-        previewTitle.textColor = JamoMainTheme.ink
-        previewTitle.font = JamoMainTheme.bodyFont(13.5, weight: .heavy)
+        previewTitle.text = JamoRiffStringCipher.restore("MZyK 6GUuxiwtFa6rF")
+        previewTitle.textColor = JamoRiffTheme.ink
+        previewTitle.font = JamoRiffTheme.bodyFont(13.5, weight: .heavy)
 
         waveform.translatesAutoresizingMaskIntoConstraints = false
         waveform.seed = 9
-        waveform.barColor = JamoMainTheme.pink
-        waveform.secondaryBarColor = JamoMainTheme.orange
+        waveform.barColor = JamoRiffTheme.pink
+        waveform.secondaryBarColor = JamoRiffTheme.orange
 
         previewButton.translatesAutoresizingMaskIntoConstraints = false
-        previewButton.backgroundColor = JamoMainTheme.ink
-        previewButton.setTitleColor(JamoMainTheme.pink, for: .normal)
-        previewButton.titleLabel?.font = JamoMainTheme.bodyFont(12.5, weight: .heavy)
+        previewButton.backgroundColor = JamoRiffTheme.ink
+        previewButton.setTitleColor(JamoRiffTheme.pink, for: .normal)
+        previewButton.titleLabel?.font = JamoRiffTheme.bodyFont(12.5, weight: .heavy)
         previewButton.layer.cornerRadius = 18
         previewButton.layer.cornerCurve = .continuous
         previewButton.addTarget(self, action: #selector(previewTapped), for: .touchUpInside)
@@ -1698,18 +1698,18 @@ private final class JamoCoCreateEditorVolumeSheet: UIView {
         slider.minimumValue = 0.2
         slider.maximumValue = 1
         slider.value = volume
-        slider.minimumTrackTintColor = JamoMainTheme.orange
+        slider.minimumTrackTintColor = JamoRiffTheme.orange
         slider.maximumTrackTintColor = UIColor(red: 232 / 255, green: 226 / 255, blue: 216 / 255, alpha: 1)
-        slider.thumbTintColor = JamoMainTheme.yellow
+        slider.thumbTintColor = JamoRiffTheme.yellow
         slider.addTarget(self, action: #selector(sliderChanged), for: .valueChanged)
 
         let chips = makePresetStack()
 
         let cancelButton = UIButton(type: .custom)
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
-        cancelButton.setTitle("Cancel", for: .normal)
-        cancelButton.setTitleColor(JamoMainTheme.ink, for: .normal)
-        cancelButton.titleLabel?.font = JamoMainTheme.bodyFont(14.5, weight: .heavy)
+        cancelButton.setTitle(JamoRiffStringCipher.restore("C9aInVc8eMld"), for: .normal)
+        cancelButton.setTitleColor(JamoRiffTheme.ink, for: .normal)
+        cancelButton.titleLabel?.font = JamoRiffTheme.bodyFont(14.5, weight: .heavy)
         cancelButton.backgroundColor = .white
         cancelButton.layer.cornerRadius = 22
         cancelButton.layer.cornerCurve = .continuous
@@ -1719,10 +1719,10 @@ private final class JamoCoCreateEditorVolumeSheet: UIView {
 
         let applyButton = UIButton(type: .custom)
         applyButton.translatesAutoresizingMaskIntoConstraints = false
-        applyButton.setTitle("Apply Volume", for: .normal)
-        applyButton.setTitleColor(JamoMainTheme.yellow, for: .normal)
-        applyButton.titleLabel?.font = JamoMainTheme.titleFont(15.5)
-        applyButton.backgroundColor = JamoMainTheme.orange
+        applyButton.setTitle(JamoRiffStringCipher.restore("ABpypAley0 eVDo1lCu2mLed"), for: .normal)
+        applyButton.setTitleColor(JamoRiffTheme.yellow, for: .normal)
+        applyButton.titleLabel?.font = JamoRiffTheme.titleFont(15.5)
+        applyButton.backgroundColor = JamoRiffTheme.orange
         applyButton.layer.cornerRadius = 22
         applyButton.layer.cornerCurve = .continuous
         applyButton.addTarget(self, action: #selector(applyTapped), for: .touchUpInside)
@@ -1810,9 +1810,9 @@ private final class JamoCoCreateEditorVolumeSheet: UIView {
 
     private func makePresetStack() -> UIStackView {
         let presets: [(String, Float)] = [
-            ("Soft", 0.45),
-            ("Balanced", 0.72),
-            ("Lead", 1)
+            (JamoRiffStringCipher.restore("SxojfTtM"), 0.45),
+            (JamoRiffStringCipher.restore("BgaElua4nUcgefdN"), 0.72),
+            (JamoRiffStringCipher.restore("LDefapdd"), 1)
         ]
         let stack = UIStackView()
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -1822,9 +1822,9 @@ private final class JamoCoCreateEditorVolumeSheet: UIView {
         presets.forEach { title, value in
             let button = UIButton(type: .custom)
             button.setTitle(title, for: .normal)
-            button.setTitleColor(value == 1 ? JamoMainTheme.yellow : JamoMainTheme.ink, for: .normal)
-            button.titleLabel?.font = JamoMainTheme.bodyFont(12.5, weight: .heavy)
-            button.backgroundColor = value == 1 ? JamoMainTheme.ink : .white
+            button.setTitleColor(value == 1 ? JamoRiffTheme.yellow : JamoRiffTheme.ink, for: .normal)
+            button.titleLabel?.font = JamoRiffTheme.bodyFont(12.5, weight: .heavy)
+            button.backgroundColor = value == 1 ? JamoRiffTheme.ink : .white
             button.layer.cornerRadius = 19
             button.layer.cornerCurve = .continuous
             button.layer.borderWidth = 1
@@ -1856,7 +1856,7 @@ private final class JamoCoCreateEditorVolumeSheet: UIView {
     }
 
     func setPreviewing(_ isPreviewing: Bool) {
-        previewButton.setTitle(isPreviewing ? "Pause" : "Preview", for: .normal)
+        previewButton.setTitle(isPreviewing ? JamoRiffStringCipher.restore("PgaUu3s6ex") : JamoRiffStringCipher.restore("P6rGePvEiUeXw2"), for: .normal)
     }
 
     private func setVolume(_ value: Float, notify: Bool) {
@@ -1913,8 +1913,8 @@ private final class JamoCoCreateEditorToolButton: UIControl {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.text = title
         titleLabel.textAlignment = .center
-        titleLabel.textColor = JamoMainTheme.ink
-        titleLabel.font = JamoMainTheme.bodyFont(8.5, weight: .heavy)
+        titleLabel.textColor = JamoRiffTheme.ink
+        titleLabel.font = JamoRiffTheme.bodyFont(8.5, weight: .heavy)
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.minimumScaleFactor = 0.75
         titleLabel.isUserInteractionEnabled = false
@@ -1937,7 +1937,7 @@ private final class JamoCoCreateEditorToolButton: UIControl {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("iLnHiAtw(YchoPd1eDr3:W)u 3hsaSsd 2noout6 mbiemeznz riqmLpylOe0moe6n7tge6d8"))
     }
 
     override var isHighlighted: Bool {
@@ -1957,7 +1957,7 @@ private final class JamoCoCreateEditorToolButton: UIControl {
         alpha = isEnabled ? 1 : 0.36
         backgroundColor = isEnabled ? .white : UIColor.white.withAlphaComponent(0.78)
         iconView.alpha = isEnabled ? 1 : 0.55
-        titleLabel.textColor = isEnabled ? JamoMainTheme.ink : JamoMainTheme.muted
+        titleLabel.textColor = isEnabled ? JamoRiffTheme.ink : JamoRiffTheme.muted
     }
 }
 
@@ -1966,11 +1966,11 @@ private final class JamoCoCreateEditorWaveformView: UIView {
         didSet { setNeedsDisplay() }
     }
 
-    var barColor: UIColor = JamoMainTheme.pink {
+    var barColor: UIColor = JamoRiffTheme.pink {
         didSet { setNeedsDisplay() }
     }
 
-    var secondaryBarColor: UIColor = JamoMainTheme.orange {
+    var secondaryBarColor: UIColor = JamoRiffTheme.orange {
         didSet { setNeedsDisplay() }
     }
 
@@ -1981,7 +1981,7 @@ private final class JamoCoCreateEditorWaveformView: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("ivn0iIt5(McOo0dQeRri:x)V thXaJsK on8oPtl VbteMe1n3 BiMmMpjlIermFeunutgeHdK"))
     }
 
     override func draw(_ rect: CGRect) {
@@ -2017,7 +2017,7 @@ private final class JamoCoCreateEditorMicrophonePromptView: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("iunfi3tm(9cbojdreAru:O)W Uhza5sA snSoAtm bbReJeQna riGmfpPlzeNmBeMnbtQemdT"))
     }
 
     private func configure() {
@@ -2028,7 +2028,7 @@ private final class JamoCoCreateEditorMicrophonePromptView: UIView {
         addSubview(dimView)
 
         card.translatesAutoresizingMaskIntoConstraints = false
-        card.backgroundColor = JamoMainTheme.background
+        card.backgroundColor = JamoRiffTheme.background
         card.layer.cornerRadius = 22
         card.layer.cornerCurve = .continuous
         card.layer.shadowColor = UIColor.black.cgColor
@@ -2049,34 +2049,34 @@ private final class JamoCoCreateEditorMicrophonePromptView: UIView {
 
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
-        title.text = "Microphone Access"
+        title.text = JamoRiffStringCipher.restore("MciDc8rXoZprhfoynJev 8A6clcjeXsHsE")
         title.textAlignment = .center
-        title.textColor = JamoMainTheme.ink
-        title.font = JamoMainTheme.bodyFont(14.5, weight: .heavy)
+        title.textColor = JamoRiffTheme.ink
+        title.font = JamoRiffTheme.bodyFont(14.5, weight: .heavy)
 
         let message = UILabel()
         message.translatesAutoresizingMaskIntoConstraints = false
-        message.text = "Allow access to record your guitar part."
+        message.text = JamoRiffStringCipher.restore("AXl0lqojw9 8aScScRetszsr ytroA Fr9excpoVrNdh JyBoWuUrU OgJuPiAtAamrA mpCa9rWt5.J")
         message.textAlignment = .center
-        message.textColor = JamoMainTheme.muted
-        message.font = JamoMainTheme.bodyFont(11.5, weight: .medium)
+        message.textColor = JamoRiffTheme.muted
+        message.font = JamoRiffTheme.bodyFont(11.5, weight: .medium)
         message.numberOfLines = 0
 
         let allowButton = UIButton(type: .custom)
         allowButton.translatesAutoresizingMaskIntoConstraints = false
-        allowButton.setTitle("Allow", for: .normal)
+        allowButton.setTitle(JamoRiffStringCipher.restore("AElxl9okwi"), for: .normal)
         allowButton.setTitleColor(.white, for: .normal)
-        allowButton.titleLabel?.font = JamoMainTheme.bodyFont(13, weight: .heavy)
-        allowButton.backgroundColor = JamoMainTheme.orange
+        allowButton.titleLabel?.font = JamoRiffTheme.bodyFont(13, weight: .heavy)
+        allowButton.backgroundColor = JamoRiffTheme.orange
         allowButton.layer.cornerRadius = 20
         allowButton.layer.cornerCurve = .continuous
         allowButton.addTarget(self, action: #selector(allowTapped), for: .touchUpInside)
 
         let notNowButton = UIButton(type: .custom)
         notNowButton.translatesAutoresizingMaskIntoConstraints = false
-        notNowButton.setTitle("Not Now", for: .normal)
-        notNowButton.setTitleColor(JamoMainTheme.muted, for: .normal)
-        notNowButton.titleLabel?.font = JamoMainTheme.bodyFont(11.5, weight: .medium)
+        notNowButton.setTitle(JamoRiffStringCipher.restore("N6ottv DNNo4wE"), for: .normal)
+        notNowButton.setTitleColor(JamoRiffTheme.muted, for: .normal)
+        notNowButton.titleLabel?.font = JamoRiffTheme.bodyFont(11.5, weight: .medium)
         notNowButton.addTarget(self, action: #selector(notNowTapped), for: .touchUpInside)
 
         card.addSubview(iconShell)

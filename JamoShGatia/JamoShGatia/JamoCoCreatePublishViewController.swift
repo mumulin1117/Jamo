@@ -2,7 +2,7 @@ import AVFoundation
 import UIKit
 import UniformTypeIdentifiers
 
-final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITextFieldDelegate, UITextViewDelegate {
+final class JamoRiffPublishStageViewController: JamoRiffBaseStageViewController, UITextFieldDelegate, UITextViewDelegate {
     private enum PublishAudioState: Equatable {
         case choosing
         case recording
@@ -43,8 +43,8 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
     private let coverPlaceholderIcon = UIImageView(image: UIImage(named: "jamo_cocreate_publish_cover_placeholder"))
     private let coverPlaceholderLabel = UILabel()
     private let uploadCoverButton = UIButton() 
-    private let titleField = JamoCoCreatePublishTextField(placeholder: "Name your co-create")
-    private let aboutTextView = JamoCoCreatePublishTextView(placeholder: "Added a warm 15s lead \nline over the original riff.")
+    private let titleField = JamoCoCreatePublishTextField(placeholder: JamoRiffStringCipher.restore("NUaVm2eP byJopuOrt LcooH-4curke4avteei"))
+    private let aboutTextView = JamoCoCreatePublishTextView(placeholder: JamoRiffStringCipher.restore("A9drdJeadl 8a9 dwAarrYmx c1u5ksz 9lte0aAdb IlEiNnBeb oonvgezru ntjhyem Xo3rPiwgIisnWazlk grDi5fTfG.M"))
     private let validationLabel = UILabel()
     private let allowSwitch = UISwitch()
     private let publishButton = UIButton(type: .custom)
@@ -52,8 +52,8 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
     private let bottomActionBar = UIView()
     private let bottomSeparator = UIView()
     private var bottomActionBottomConstraint: NSLayoutConstraint?
-    private var tagButtons: [String: JamoCoCreatePublishTagButton] = [:]
-    private var audioButtons: [JamoCoCreateJoinMethod: JamoCoCreatePublishAudioOptionButton] = [:]
+    private var tagButtons: [String: JamoRiffPublishTagChip] = [:]
+    private var audioButtons: [JamoCoCreateJoinMethod: JamoRiffPublishAudioSourceButton] = [:]
 
     init(draftWork: JamoCoCreateWork? = nil, selectedJoinMethod: JamoCoCreateJoinMethod? = nil) {
         self.sourceWork = draftWork
@@ -72,15 +72,15 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("iVn1ijtp(YcBo7dCebr2:l)Z bhcabs5 eneoftD FbDeOeynl ei7mEpvlve1mxeXn0t5eBdz"))
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         title = nil
         uploadCoverButton.translatesAutoresizingMaskIntoConstraints = false
-        uploadCoverButton.setBackgroundImage( UIImage.init(named: "uploadcover"), for: .normal)
-        view.backgroundColor = JamoMainTheme.background
+        uploadCoverButton.setBackgroundImage( UIImage.init(named: JamoRiffStringCipher.restore("uCp2lKobaQdvcxorv2erro")), for: .normal)
+        view.backgroundColor = JamoRiffTheme.background
         applyPublishLayoutOverrides()
         scrollView.alwaysBounceVertical = true
         scrollView.showsVerticalScrollIndicator = false
@@ -110,21 +110,21 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
         aboutTextView.delegate = self
 
         validationLabel.textColor = UIColor(red: 229 / 255, green: 68 / 255, blue: 78 / 255, alpha: 1)
-        validationLabel.font = JamoMainTheme.bodyFont(11.5, weight: .medium)
+        validationLabel.font = JamoRiffTheme.bodyFont(11.5, weight: .medium)
         validationLabel.numberOfLines = 0
         validationLabel.isHidden = true
 
-        allowSwitch.onTintColor = JamoMainTheme.orange
+        allowSwitch.onTintColor = JamoRiffTheme.orange
 
         publishButton.translatesAutoresizingMaskIntoConstraints = false
         publishButton.layer.cornerRadius = PublishLayout.primaryButtonHeight / 2
-        publishButton.titleLabel?.font = JamoMainTheme.bodyFont(18, weight: .heavy)
+        publishButton.titleLabel?.font = JamoRiffTheme.bodyFont(18, weight: .heavy)
         publishButton.addTarget(self, action: #selector(publishTapped), for: .touchUpInside)
         publishButton.heightAnchor.constraint(equalToConstant: PublishLayout.primaryButtonHeight).isActive = true
 
         publishActivity.translatesAutoresizingMaskIntoConstraints = false
         publishActivity.hidesWhenStopped = true
-        publishActivity.color = JamoMainTheme.muted
+        publishActivity.color = JamoRiffTheme.muted
         publishButton.addSubview(publishActivity)
         NSLayoutConstraint.activate([
             publishActivity.centerYAnchor.constraint(equalTo: publishButton.centerYAnchor),
@@ -210,7 +210,7 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
     private func configureBottomActionBar() {
         guard bottomActionBar.superview == nil else { return }
         bottomActionBar.translatesAutoresizingMaskIntoConstraints = false
-        bottomActionBar.backgroundColor = JamoMainTheme.background
+        bottomActionBar.backgroundColor = JamoRiffTheme.background
 
         bottomSeparator.translatesAutoresizingMaskIntoConstraints = false
         bottomSeparator.backgroundColor = UIColor(red: 229 / 255, green: 224 / 255, blue: 214 / 255, alpha: 1)
@@ -307,14 +307,14 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
         backButton.layer.borderColor = UIColor(red: 226 / 255, green: 220 / 255, blue: 208 / 255, alpha: 1).cgColor
         backButton.setImage(UIImage(named: "jamo_cocreate_publish_back"), for: .normal)
         backButton.imageView?.contentMode = .scaleAspectFit
-        backButton.accessibilityLabel = "Back"
+        backButton.accessibilityLabel = JamoRiffStringCipher.restore("BkaZcRkG")
         backButton.addTarget(self, action: #selector(backTapped), for: .touchUpInside)
 
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.text = "Publish"
-        titleLabel.textColor = JamoMainTheme.ink
-        titleLabel.font = JamoMainTheme.bodyFont(19, weight: .heavy)
+        titleLabel.text = JamoRiffStringCipher.restore("PXuzbTlUiYslhn")
+        titleLabel.textColor = JamoRiffTheme.ink
+        titleLabel.font = JamoRiffTheme.bodyFont(19, weight: .heavy)
         titleLabel.textAlignment = .center
 
         container.addSubview(backButton)
@@ -340,10 +340,10 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
         stack.axis = .vertical
         stack.spacing = 8
 
-        stack.addArrangedSubview(makeFieldLabel("Cover"))
+        stack.addArrangedSubview(makeFieldLabel(JamoRiffStringCipher.restore("CdoKv0eyrs")))
 
         coverCard.translatesAutoresizingMaskIntoConstraints = false
-        coverCard.backgroundColor = JamoMainTheme.orange
+        coverCard.backgroundColor = JamoRiffTheme.orange
         coverCard.layer.cornerRadius = PublishLayout.cardRadius
         coverCard.clipsToBounds = true
 
@@ -358,9 +358,9 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
         coverCard.addSubview(coverPlaceholderIcon)
 
         coverPlaceholderLabel.translatesAutoresizingMaskIntoConstraints = false
-        coverPlaceholderLabel.text = "Tap or drop a photo to set the cover"
+        coverPlaceholderLabel.text = JamoRiffStringCipher.restore("TOatpn 3o8r2 TdGrGoypV PaZ OpLhgoFtWon 2tnoR fszePti Mt4hveC McFobvueerq")
         coverPlaceholderLabel.textColor = UIColor.black.withAlphaComponent(0.26)
-        coverPlaceholderLabel.font = JamoMainTheme.bodyFont(13.5, weight: .medium)
+        coverPlaceholderLabel.font = JamoRiffTheme.bodyFont(13.5, weight: .medium)
         coverPlaceholderLabel.textAlignment = .center
         coverCard.addSubview(coverPlaceholderLabel)
 
@@ -405,24 +405,24 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
         card.addSubview(stack)
 
         let caption = UILabel()
-        caption.text = "Record or upload your guitar part."
+        caption.text = JamoRiffStringCipher.restore("RbeYcQo7rNdX ooYrx auapklporajdT ayEonuqrR 7gXudiltHajrH mpWaSrit8.l")
         caption.textAlignment = .center
-        caption.textColor = JamoMainTheme.muted
-        caption.font = JamoMainTheme.bodyFont(14, weight: .regular)
+        caption.textColor = JamoRiffTheme.muted
+        caption.font = JamoRiffTheme.bodyFont(14, weight: .regular)
         stack.addArrangedSubview(caption)
 
         let buttons = UIStackView()
         buttons.axis = .horizontal
         buttons.spacing = 12
         buttons.distribution = .fillEqually
-        let record = JamoCoCreatePublishAudioOptionButton(
+        let record = JamoRiffPublishAudioSourceButton(
             method: .recordGuitar,
-            title: "Record",
+            title: JamoRiffStringCipher.restore("RveZcFoOrxdb"),
             imageName: "jamo_cocreate_publish_record"
         )
-        let upload = JamoCoCreatePublishAudioOptionButton(
+        let upload = JamoRiffPublishAudioSourceButton(
             method: .uploadClip,
-            title: "Upload",
+            title: JamoRiffStringCipher.restore("UvpWlGo6axdp"),
             imageName: "jamo_cocreate_publish_upload_clip"
         )
         record.addTarget(self, action: #selector(audioMethodTapped(_:)), for: .touchUpInside)
@@ -463,25 +463,25 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
 
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
-        title.text = "Recording your guitar part"
-        title.textColor = JamoMainTheme.ink
-        title.font = JamoMainTheme.bodyFont(15, weight: .heavy)
+        title.text = JamoRiffStringCipher.restore("RfeGc5o1r1d1iznPgP ayoouuqrR IgNuoivtfaVr8 VpKanrItb")
+        title.textColor = JamoRiffTheme.ink
+        title.font = JamoRiffTheme.bodyFont(15, weight: .heavy)
 
         let elapsed = UILabel()
         elapsed.translatesAutoresizingMaskIntoConstraints = false
-        elapsed.text = "0:00"
-        elapsed.textColor = JamoMainTheme.orange
-        elapsed.font = JamoMainTheme.bodyFont(15, weight: .heavy)
+        elapsed.text = JamoRiffStringCipher.restore("0l:F0C0j")
+        elapsed.textColor = JamoRiffTheme.orange
+        elapsed.font = JamoRiffTheme.bodyFont(15, weight: .heavy)
         recordingElapsedLabel = elapsed
         updateRecordingElapsed()
 
-        let waveform = JamoCoCreatePublishWaveformView(seed: 8, tint: JamoMainTheme.orange)
+        let waveform = JamoCoCreatePublishWaveformView(seed: 8, tint: JamoRiffTheme.orange)
         waveform.translatesAutoresizingMaskIntoConstraints = false
 
-        let stopButton = JamoCoCreatePublishPlainButton(title: "Stop", background: JamoMainTheme.orange, foreground: JamoMainTheme.yellow)
+        let stopButton = JamoCoCreatePublishPlainButton(title: JamoRiffStringCipher.restore("SEtYoNpE"), background: JamoRiffTheme.orange, foreground: JamoRiffTheme.yellow)
         stopButton.addTarget(self, action: #selector(stopRecordingTapped), for: .touchUpInside)
 
-        let cancelButton = JamoCoCreatePublishPlainButton(title: "Cancel", background: .white, foreground: JamoMainTheme.ink)
+        let cancelButton = JamoCoCreatePublishPlainButton(title: JamoRiffStringCipher.restore("CuaOnwckeGl9"), background: .white, foreground: JamoRiffTheme.ink)
         cancelButton.layer.borderWidth = 1
         cancelButton.layer.borderColor = UIColor(red: 226 / 255, green: 220 / 255, blue: 208 / 255, alpha: 1).cgColor
         cancelButton.addTarget(self, action: #selector(cancelRecordingTapped), for: .touchUpInside)
@@ -535,28 +535,28 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
         thumb.contentMode = .scaleAspectFill
         thumb.clipsToBounds = true
         thumb.layer.cornerRadius = 12
-        thumb.backgroundColor = JamoMainTheme.orange
+        thumb.backgroundColor = JamoRiffTheme.orange
 
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
-        title.text = form.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? "Warm Sunset Riff" : form.title
-        title.textColor = JamoMainTheme.ink
-        title.font = JamoMainTheme.bodyFont(13.5, weight: .heavy)
+        title.text = form.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? JamoRiffStringCipher.restore("WaaprSmB SS4uHnMsCeAtz eRgiPfOfe") : form.title
+        title.textColor = JamoRiffTheme.ink
+        title.font = JamoRiffTheme.bodyFont(13.5, weight: .heavy)
 
         let subtitle = UILabel()
         subtitle.translatesAutoresizingMaskIntoConstraints = false
         subtitle.text = "My Guitar Part · \(form.roleName)"
-        subtitle.textColor = JamoMainTheme.pink
-        subtitle.font = JamoMainTheme.bodyFont(10.5, weight: .heavy)
+        subtitle.textColor = JamoRiffTheme.pink
+        subtitle.font = JamoRiffTheme.bodyFont(10.5, weight: .heavy)
 
-        let waveform = JamoCoCreatePublishWaveformView(seed: form.waveformSeed, tint: JamoMainTheme.orange)
+        let waveform = JamoCoCreatePublishWaveformView(seed: form.waveformSeed, tint: JamoRiffTheme.orange)
         waveform.translatesAutoresizingMaskIntoConstraints = false
 
         let resetButton = UIButton(type: .system)
         resetButton.translatesAutoresizingMaskIntoConstraints = false
-        resetButton.setTitle("Change", for: .normal)
-        resetButton.setTitleColor(JamoMainTheme.muted, for: .normal)
-        resetButton.titleLabel?.font = JamoMainTheme.bodyFont(11, weight: .semibold)
+        resetButton.setTitle(JamoRiffStringCipher.restore("C8hTaSnug6eR"), for: .normal)
+        resetButton.setTitleColor(JamoRiffTheme.muted, for: .normal)
+        resetButton.titleLabel?.font = JamoRiffTheme.bodyFont(11, weight: .semibold)
         resetButton.addTarget(self, action: #selector(resetAudioTapped), for: .touchUpInside)
 
         card.addSubview(thumb)
@@ -601,17 +601,17 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
 
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
-        title.text = "Clip is too short"
-        title.textColor = JamoMainTheme.ink
-        title.font = JamoMainTheme.bodyFont(13.5, weight: .heavy)
+        title.text = JamoRiffStringCipher.restore("CulCiJpN Mifsi Ttromoe 1sQhkolr0tF")
+        title.textColor = JamoRiffTheme.ink
+        title.font = JamoRiffTheme.bodyFont(13.5, weight: .heavy)
 
         let subtitle = UILabel()
         subtitle.translatesAutoresizingMaskIntoConstraints = false
-        subtitle.text = "Please add at least 3 seconds."
-        subtitle.textColor = JamoMainTheme.muted
-        subtitle.font = JamoMainTheme.bodyFont(11.5)
+        subtitle.text = JamoRiffStringCipher.restore("PGlIePaJsSeh VabdrdG UaJt1 ClKeUa0s5tg W3h hsJeAc3oanjdrsN.t")
+        subtitle.textColor = JamoRiffTheme.muted
+        subtitle.font = JamoRiffTheme.bodyFont(11.5)
 
-        let retry = JamoCoCreatePublishPlainButton(title: "Try Again", background: JamoMainTheme.orange, foreground: JamoMainTheme.yellow)
+        let retry = JamoCoCreatePublishPlainButton(title: JamoRiffStringCipher.restore("TtrVyo 7A0gCa1icnO"), background: JamoRiffTheme.orange, foreground: JamoRiffTheme.yellow)
         retry.addTarget(self, action: #selector(resetAudioTapped), for: .touchUpInside)
 
         card.addSubview(title)
@@ -640,7 +640,7 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
         stack.axis = .vertical
         stack.alignment = .fill
         stack.spacing = 10
-        stack.addArrangedSubview(makeFieldLabel("Title"))
+        stack.addArrangedSubview(makeFieldLabel(JamoRiffStringCipher.restore("TviutIlies")))
         stack.addArrangedSubview(titleField)
         stack.addArrangedSubview(validationLabel)
         return stack
@@ -652,7 +652,7 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
         stack.axis = .vertical
         stack.alignment = .fill
         stack.spacing = 10
-        stack.addArrangedSubview(makeFieldLabel("About"))
+        stack.addArrangedSubview(makeFieldLabel(JamoRiffStringCipher.restore("ABbLosu4ty")))
         stack.addArrangedSubview(aboutTextView)
         NSLayoutConstraint.activate([
             aboutTextView.heightAnchor.constraint(equalToConstant: 92)
@@ -665,10 +665,10 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.axis = .vertical
         stack.spacing = 10
-        stack.addArrangedSubview(makeFieldLabel("Tags"))
+        stack.addArrangedSubview(makeFieldLabel(JamoRiffStringCipher.restore("TVaRgbs2")))
 
-        let firstRow = makeTagRow(["Acoustic", "Fingerstyle", "Lead"])
-        let secondRow = makeTagRow(["Chords", "Jam"])
+        let firstRow = makeTagRow([JamoRiffStringCipher.restore("AZc4oxuCsRt9iAcb"), JamoRiffStringCipher.restore("FGijnyg7eNrgsutiy6lMeC"), JamoRiffStringCipher.restore("LmegaHdt")])
+        let secondRow = makeTagRow([JamoRiffStringCipher.restore("CWhGoLrqdxsa"), JamoRiffStringCipher.restore("J2avm2")])
         stack.addArrangedSubview(firstRow)
         stack.addArrangedSubview(secondRow)
         return stack
@@ -680,7 +680,7 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
         row.spacing = 8
         row.alignment = .leading
         tags.forEach { tag in
-            let button = JamoCoCreatePublishTagButton(title: tag)
+            let button = JamoRiffPublishTagChip(title: tag)
             button.addTarget(self, action: #selector(tagTapped(_:)), for: .touchUpInside)
             tagButtons[tag] = button
             row.addArrangedSubview(button)
@@ -707,15 +707,15 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
         textStack.spacing = 2
 
         let title = UILabel()
-        title.text = "Allow others to continue"
-        title.textColor = JamoMainTheme.ink
-        title.font = JamoMainTheme.bodyFont(14.5, weight: .heavy)
+        title.text = JamoRiffStringCipher.restore("AHlDl3oVwD Ooot2hNecrDsX 9thoO CcaoOnPtaiWnpuGey")
+        title.textColor = JamoRiffTheme.ink
+        title.font = JamoRiffTheme.bodyFont(14.5, weight: .heavy)
         title.numberOfLines = 1
 
         let subtitle = UILabel()
-        subtitle.text = "Let friends add the next part."
-        subtitle.textColor = JamoMainTheme.muted
-        subtitle.font = JamoMainTheme.bodyFont(12, weight: .regular)
+        subtitle.text = JamoRiffStringCipher.restore("Loe7tb KfurEiFeUnFd0sr aand2dW ztthCeV sneedx1tZ xpNaqrYt3.8")
+        subtitle.textColor = JamoRiffTheme.muted
+        subtitle.font = JamoRiffTheme.bodyFont(12, weight: .regular)
         subtitle.numberOfLines = 1
 
         textStack.addArrangedSubview(title)
@@ -746,8 +746,8 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
     private func makeFieldLabel(_ text: String) -> UILabel {
         let label = UILabel()
         label.text = text
-        label.textColor = JamoMainTheme.ink
-        label.font = JamoMainTheme.titleFont(13.5)
+        label.textColor = JamoRiffTheme.ink
+        label.font = JamoRiffTheme.titleFont(13.5)
         return label
     }
 
@@ -794,7 +794,7 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
         coverImageView.isHidden = !shouldShowImage
         coverPlaceholderIcon.isHidden = shouldShowImage
         coverPlaceholderLabel.isHidden = shouldShowImage
-        coverCard.backgroundColor = shouldShowImage ? UIColor.black.withAlphaComponent(0.06) : JamoMainTheme.orange
+        coverCard.backgroundColor = shouldShowImage ? UIColor.black.withAlphaComponent(0.06) : JamoRiffTheme.orange
     }
 
     private func publishCoverImage(_ snapshot: JamoCoCreatePublishSnapshot) -> UIImage? {
@@ -833,16 +833,16 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
     private func applyPrimaryAction(_ snapshot: JamoCoCreatePublishSnapshot) {
         let action = snapshot.primaryAction
         publishButton.isEnabled = action.isEnabled && snapshot.state != .publishing && !isCompletingPublish
-        let sparkleName = action.isEnabled ? "jamo_cocreate_publish_sparkle" : "jamo_cocreate_publish_sparkle_disabled"
+        let sparkleName = action.isEnabled ? JamoRiffStringCipher.restore("jEa6mLon_dcJo6c1rfeZaWt7eU_CpOuybLlGifsMhw_Xs6pfaurhkjlred") : JamoRiffStringCipher.restore("j4aDmCo1_zcfo8cBryeWaEtbez_gpOudbMlRiTsphf_qsvpuaurukolxeN_PdviJsXaVbKl8eZd9")
         var foreground: UIColor
         var background: UIColor
         switch action.style {
         case .orange:
-            background = JamoMainTheme.orange
-            foreground = JamoMainTheme.yellow
+            background = JamoRiffTheme.orange
+            foreground = JamoRiffTheme.yellow
         case .black:
-            background = JamoMainTheme.ink
-            foreground = JamoMainTheme.pink
+            background = JamoRiffTheme.ink
+            foreground = JamoRiffTheme.pink
         case .disabled:
             background = UIColor(red: 235 / 255, green: 232 / 255, blue: 224 / 255, alpha: 1)
             foreground = UIColor(red: 188 / 255, green: 183 / 255, blue: 172 / 255, alpha: 1)
@@ -850,7 +850,7 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
 
         var configuration = UIButton.Configuration.plain()
         var attributedTitle = AttributedString(action.title)
-        attributedTitle.font = JamoMainTheme.bodyFont(18, weight: .heavy)
+        attributedTitle.font = JamoRiffTheme.bodyFont(18, weight: .heavy)
         attributedTitle.foregroundColor = foreground
         configuration.attributedTitle = attributedTitle
         configuration.image = snapshot.state == .publishing ? nil : UIImage(named: sparkleName)
@@ -874,16 +874,16 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
     }
 
     @objc private func uploadCoverTapped() {
-        let sheet = UIAlertController(title: "Upload cover", message: nil, preferredStyle: .actionSheet)
+        let sheet = UIAlertController(title: JamoRiffStringCipher.restore("UZpqlQoUakd2 UcRo8vee6r7"), message: nil, preferredStyle: .actionSheet)
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
-            sheet.addAction(UIAlertAction(title: "Camera", style: .default) { [weak self] _ in
+            sheet.addAction(UIAlertAction(title: JamoRiffStringCipher.restore("C9asmneirFaW"), style: .default) { [weak self] _ in
                 self?.presentCoverPicker(sourceType: .camera)
             })
         }
-        sheet.addAction(UIAlertAction(title: "Photo Library", style: .default) { [weak self] _ in
+        sheet.addAction(UIAlertAction(title: JamoRiffStringCipher.restore("P4hpoTtpo5 VLyiEbHr8a2rvyt"), style: .default) { [weak self] _ in
             self?.presentCoverPicker(sourceType: .photoLibrary)
         })
-        sheet.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        sheet.addAction(UIAlertAction(title: JamoRiffStringCipher.restore("CXaFngcgeVlV"), style: .cancel))
         if let popover = sheet.popoverPresentationController {
             popover.sourceView = uploadCoverButton
             popover.sourceRect = uploadCoverButton.bounds
@@ -892,7 +892,7 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
         present(sheet, animated: true)
     }
 
-    @objc private func audioMethodTapped(_ sender: JamoCoCreatePublishAudioOptionButton) {
+    @objc private func audioMethodTapped(_ sender: JamoRiffPublishAudioSourceButton) {
         let method = sender.method
         switch method {
         case .recordGuitar:
@@ -906,7 +906,7 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
 
     private func presentCoverPicker(sourceType: UIImagePickerController.SourceType) {
         guard UIImagePickerController.isSourceTypeAvailable(sourceType) else {
-            JamoAuthToastView.show(on: view, message: "This cover source is unavailable.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("TXh0iSsI vcuoyvReDrB 7svouuGrDc7es Xirs7 SuqnEa9vkaLiZlIaybHlweI.w"))
             return
         }
         let picker = UIImagePickerController()
@@ -926,9 +926,9 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
             )
             buildPage()
             applySnapshot(viewModel.makeSnapshot(), refreshText: false)
-            JamoAuthToastView.show(on: view, message: "Cover selected.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("CFocvHelrS ssrealsegcXtVe5dY.q"))
         } catch {
-            JamoAuthToastView.show(on: view, message: "Unable to save this cover.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("Upn8aVbXlRes 0tyo5 0skaNvKeB rtth0iZsg 6cdouvqeRrz.f"))
         }
     }
 
@@ -937,7 +937,7 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
             DispatchQueue.main.async {
                 guard let self else { return }
                 guard granted else {
-                    JamoAuthToastView.show(on: self.view, message: "Microphone access is needed to record.")
+                    JamoRiffNoticeView.show(on: self.view, copy: JamoRiffStringCipher.restore("MNi8c0rfo9pJhSoNnTeK RaCclcueOsBsM XiLsu OnpeIeKdNeddC Ttnoe FrKeacfolrodF.T"))
                     return
                 }
                 self.beginRealRecording()
@@ -947,7 +947,7 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
 
     private func beginRealRecording() {
         do {
-            let audioURL = try makeLocalAudioURL(fileExtension: "m4a")
+            let audioURL = try makeLocalAudioURL(fileExtension: JamoRiffStringCipher.restore("mr4Xa8"))
             let session = AVAudioSession.sharedInstance()
             try session.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker])
             try session.setActive(true)
@@ -967,7 +967,7 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
             applySnapshot(viewModel.makeSnapshot(), refreshText: false)
             startRecordingTimer()
         } catch {
-            JamoAuthToastView.show(on: view, message: "Unable to start recording.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("UanAarb3lbej 7tHoY KsOtiagr0tA trKeZcroprOdCi8nGgd.B"))
         }
     }
 
@@ -1017,7 +1017,7 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
             let duration = audioDuration(for: copiedURL, fallback: 18)
             finishAudioClip(url: copiedURL, method: .uploadClip, duration: duration, waveformSeed: 10)
         } catch {
-            JamoAuthToastView.show(on: view, message: "Unable to use this audio file.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("USn8agbtlEek it6oL yu4skeH Ftshvizs8 XaDuZdzifoS ffJiElhey.M"))
         }
     }
 
@@ -1045,11 +1045,11 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
         if snapshot.form.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             applySnapshot(viewModel.beginPublishing(), refreshText: false)
         }
-        JamoAuthToastView.show(on: view, message: method == .recordGuitar ? "Recording added." : "Audio clip added.")
+        JamoRiffNoticeView.show(on: view, copy: method == .recordGuitar ? JamoRiffStringCipher.restore("RHejc3oJr2dwiUnPgN 6aedFd2eWdB.N") : JamoRiffStringCipher.restore("AsupdaiGo8 uc9lciDps YaNdIdiepdU.S"))
     }
 
     private func saveCoverImage(_ image: UIImage) throws -> URL {
-        let directory = try localMediaDirectory(named: "JamoCoCreateCoverCache")
+        let directory = try localMediaDirectory(named: JamoRiffStringCipher.restore("JUafmpo9COo4C3rwenabtqekC9oBvMe3ryCpaRcUh5eA"))
         let fileURL = directory.appendingPathComponent("jamo_cocreate_local_cover_\(UUID().uuidString).jpg")
         let normalized = normalizedCoverImage(image)
         guard let data = normalized.jpegData(compressionQuality: 0.84) else {
@@ -1071,7 +1071,7 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
     }
 
     private func makeLocalAudioURL(fileExtension: String) throws -> URL {
-        let directory = try localMediaDirectory(named: "JamoCoCreateAudioCache")
+        let directory = try localMediaDirectory(named: JamoRiffStringCipher.restore("J5aum2o1CeoDCXrWe8aCtgeUAFu2d9iFoSCta5cohgeZ"))
         return directory.appendingPathComponent("jamo_cocreate_local_audio_\(UUID().uuidString).\(fileExtension)")
     }
 
@@ -1082,7 +1082,7 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
                 url.stopAccessingSecurityScopedResource()
             }
         }
-        let fileExtension = url.pathExtension.isEmpty ? "m4a" : url.pathExtension
+        let fileExtension = url.pathExtension.isEmpty ? JamoRiffStringCipher.restore("me4gaN") : url.pathExtension
         let targetURL = try makeLocalAudioURL(fileExtension: fileExtension)
         if FileManager.default.fileExists(atPath: targetURL.path) {
             try FileManager.default.removeItem(at: targetURL)
@@ -1144,13 +1144,13 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
 
     private func durationText(_ duration: TimeInterval) -> String {
         let seconds = max(Int(duration.rounded()), 0)
-        return String(format: "%d:%02d", seconds / 60, seconds % 60)
+        return String(format: JamoRiffStringCipher.restore("%KdO:n%g0H2Edt"), seconds / 60, seconds % 60)
     }
 
-    @objc private func tagTapped(_ sender: JamoCoCreatePublishTagButton) {
+    @objc private func tagTapped(_ sender: JamoRiffPublishTagChip) {
         let currentTags = snapshot?.form.tags ?? []
         if sender.isSelected && currentTags.count <= 1 {
-            JamoAuthToastView.show(on: view, message: "Keep at least one tag selected.")
+            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("KueXeppN faStI DlTedaVsftZ Nosnfel ltla9gn HsteylOeEcCtQeQdR.D"))
             return
         }
         applySnapshot(viewModel.setTag(sender.tagTitle, isSelected: !sender.isSelected), refreshText: false)
@@ -1179,8 +1179,8 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
         let publishingSnapshot = viewModel.beginPublishing()
         applySnapshot(publishingSnapshot, refreshText: false)
         guard publishingSnapshot.state == .publishing else {
-            if let message = publishingSnapshot.validationMessage {
-                JamoAuthToastView.show(on: view, message: message)
+            if let riffValidationNotice = publishingSnapshot.validationMessage {
+                JamoRiffNoticeView.show(on: view, copy: riffValidationNotice)
             }
             titleField.becomeFirstResponder()
             return
@@ -1203,7 +1203,7 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
                 self.applySnapshot(self.viewModel.markPublishFailed(), refreshText: false)
                 return
             }
-            self.navigationController?.pushViewController(JamoCoCreatePublishSuccessViewController(work: work), animated: true)
+            self.navigationController?.pushViewController(JamoRiffPublishSuccessStageViewController(work: work), animated: true)
         }
     }
 
@@ -1225,12 +1225,12 @@ final class JamoCoCreatePublishViewController: JamoMainBaseViewController, UITex
     }
 }
 
-extension JamoCoCreatePublishViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension JamoRiffPublishStageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         let image = (info[.editedImage] as? UIImage) ?? (info[.originalImage] as? UIImage)
         picker.dismiss(animated: true) { [weak self] in
             guard let self, let image else {
-                self?.view.map { JamoAuthToastView.show(on: $0, message: "Unable to use this cover.") }
+                self?.view.map { JamoRiffNoticeView.show(on: $0, copy: JamoRiffStringCipher.restore("UCn8aDbDlAeF JtnoJ NussUeh 1tLhOi8so McqoOvfe3rL.S")) }
                 return
             }
             self.applySelectedCover(image)
@@ -1242,7 +1242,7 @@ extension JamoCoCreatePublishViewController: UIImagePickerControllerDelegate, UI
     }
 }
 
-extension JamoCoCreatePublishViewController: UIDocumentPickerDelegate {
+extension JamoRiffPublishStageViewController: UIDocumentPickerDelegate {
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
         guard let url = urls.first else { return }
         finishPickedAudio(url: url)
@@ -1251,14 +1251,14 @@ extension JamoCoCreatePublishViewController: UIDocumentPickerDelegate {
     func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {}
 }
 
-extension JamoCoCreatePublishViewController: AVAudioRecorderDelegate {
+extension JamoRiffPublishStageViewController: AVAudioRecorderDelegate {
     func audioRecorderEncodeErrorDidOccur(_ recorder: AVAudioRecorder, error: Error?) {
         audioRecorder = nil
         stopRecordingTimer()
         audioState = .choosing
         buildPage()
         applySnapshot(viewModel.makeSnapshot(), refreshText: false)
-        JamoAuthToastView.show(on: view, message: "Recording failed. Please try again.")
+        JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("RDepc6oNrJdTiTnSgf QfEaUiKlFerdf.t 5PGlneAaAsNem jtNrTyI Ea5gcaCi5n9.Y"))
     }
 }
 
@@ -1268,14 +1268,14 @@ private final class JamoCoCreatePublishPlainButton: UIButton {
         translatesAutoresizingMaskIntoConstraints = false
         setTitle(title, for: .normal)
         setTitleColor(foreground, for: .normal)
-        titleLabel?.font = JamoMainTheme.bodyFont(14, weight: .heavy)
+        titleLabel?.font = JamoRiffTheme.bodyFont(14, weight: .heavy)
         backgroundColor = background
         layer.cornerRadius = 22
         layer.cornerCurve = .continuous
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("iSnriltb(icmo5dVeRr2:9)N HhsaOsJ hnTootJ GbeeJeQnK 2iVmnpilheLmYeFnRtIeTd8"))
     }
 }
 
@@ -1292,7 +1292,7 @@ private final class JamoCoCreatePublishWaveformView: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("iYnKi7tW(fc7oIdgearL:o)W GhgaMsc LnIo8tn TbHe4eInL JikmmpslweXmLesnftxeOdj"))
     }
 
     override func draw(_ rect: CGRect) {
@@ -1329,7 +1329,7 @@ private final class JamoCoCreatePublishDashedCardView: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("i4ndiBt8(kcAoQdAesrM:O)j YhZaTsn ynzofte cbZe6eTng 5iKmFpHlheVm8eunPtde2dx"))
     }
 
     override func layoutSubviews() {
@@ -1356,8 +1356,8 @@ private final class JamoCoCreatePublishTextField: UITextField {
         layer.borderWidth = 1
         layer.borderColor = UIColor(red: 226 / 255, green: 220 / 255, blue: 208 / 255, alpha: 1).cgColor
         clipsToBounds = true
-        font = JamoMainTheme.bodyFont(15.5, weight: .medium)
-        textColor = JamoMainTheme.ink
+        font = JamoRiffTheme.bodyFont(15.5, weight: .medium)
+        textColor = JamoRiffTheme.ink
         returnKeyType = .next
         clearButtonMode = .whileEditing
         autocapitalizationType = .sentences
@@ -1365,14 +1365,14 @@ private final class JamoCoCreatePublishTextField: UITextField {
             string: placeholder,
             attributes: [
                 .foregroundColor: UIColor.black.withAlphaComponent(0.32),
-                .font: JamoMainTheme.bodyFont(15.5, weight: .regular)
+                .font: JamoRiffTheme.bodyFont(15.5, weight: .regular)
             ]
         )
         heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("itnAidtx(jcVofdOeorv:B)A Oh2aIs0 CnWoYtQ cbaeAeMnG HinmOpZl4eVmTemnBt1e1dO"))
     }
 
     override func textRect(forBounds bounds: CGRect) -> CGRect {
@@ -1400,8 +1400,8 @@ private final class JamoCoCreatePublishTextView: UITextView {
         layer.borderWidth = 1
         layer.borderColor = UIColor(red: 226 / 255, green: 220 / 255, blue: 208 / 255, alpha: 1).cgColor
         clipsToBounds = true
-        font = JamoMainTheme.bodyFont(15.5, weight: .regular)
-        textColor = JamoMainTheme.ink
+        font = JamoRiffTheme.bodyFont(15.5, weight: .regular)
+        textColor = JamoRiffTheme.ink
         textContainerInset = UIEdgeInsets(top: 15, left: 17, bottom: 14, right: 17)
         textContainer.lineFragmentPadding = 0
         isScrollEnabled = false
@@ -1409,7 +1409,7 @@ private final class JamoCoCreatePublishTextView: UITextView {
         placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
         placeholderLabel.text = placeholder
         placeholderLabel.textColor = UIColor.black.withAlphaComponent(0.32)
-        placeholderLabel.font = JamoMainTheme.bodyFont(15.5, weight: .regular)
+        placeholderLabel.font = JamoRiffTheme.bodyFont(15.5, weight: .regular)
         placeholderLabel.numberOfLines = 0
         addSubview(placeholderLabel)
 
@@ -1422,7 +1422,7 @@ private final class JamoCoCreatePublishTextView: UITextView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("innNi1t7(6cnowdAeurZ:0)d OhCaEs5 WnqoctT gbRepeInf liTmUpalQehmgeHnXtheqdX"))
     }
 
     func updatePlaceholder() {
@@ -1437,13 +1437,13 @@ private final class JamoCoCreatePublishSmallActionButton: UIButton {
         setTitle(title, for: .normal)
         setTitleColor(foreground, for: .normal)
         setImage(UIImage(named: imageName), for: .normal)
-        titleLabel?.font = JamoMainTheme.bodyFont(12.5, weight: .heavy)
+        titleLabel?.font = JamoRiffTheme.bodyFont(12.5, weight: .heavy)
         layer.cornerRadius = 21
         semanticContentAttribute = .forceLeftToRight
 
         var configuration = UIButton.Configuration.plain()
         var attributedTitle = AttributedString(title)
-        attributedTitle.font = JamoMainTheme.bodyFont(12.5, weight: .heavy)
+        attributedTitle.font = JamoRiffTheme.bodyFont(12.5, weight: .heavy)
         attributedTitle.foregroundColor = foreground
         configuration.attributedTitle = attributedTitle
         configuration.image = UIImage(named: imageName)
@@ -1457,11 +1457,11 @@ private final class JamoCoCreatePublishSmallActionButton: UIButton {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("i0nIiLt9(ScloGdNeUre:x)i xhkacsf 5nEo2tB 1btereenO 1iom3p7l2enm1etnotFeGde"))
     }
 }
 
-private final class JamoCoCreatePublishAudioOptionButton: UIControl {
+private final class JamoRiffPublishAudioSourceButton: UIControl {
     let method: JamoCoCreateJoinMethod
 
     private let iconView = UIImageView()
@@ -1486,7 +1486,7 @@ private final class JamoCoCreatePublishAudioOptionButton: UIControl {
 
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.text = title
-        titleLabel.font = JamoMainTheme.bodyFont(16, weight: .heavy)
+        titleLabel.font = JamoRiffTheme.bodyFont(16, weight: .heavy)
         titleLabel.isUserInteractionEnabled = false
 
         addSubview(iconView)
@@ -1506,17 +1506,17 @@ private final class JamoCoCreatePublishAudioOptionButton: UIControl {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("i5nGiFts(dczoHdkehr0:s)d 4hxaDsa XnFoktn 4b5eOegn8 1inmfpslJegm9een9tmefdl"))
     }
 
     private func updateAppearance() {
-        backgroundColor = isSelected ? JamoMainTheme.orange : .white
-        layer.borderColor = (isSelected ? JamoMainTheme.orange : UIColor.black.withAlphaComponent(0.08)).cgColor
-        titleLabel.textColor = isSelected ? JamoMainTheme.yellow : JamoMainTheme.ink
+        backgroundColor = isSelected ? JamoRiffTheme.orange : .white
+        layer.borderColor = (isSelected ? JamoRiffTheme.orange : UIColor.black.withAlphaComponent(0.08)).cgColor
+        titleLabel.textColor = isSelected ? JamoRiffTheme.yellow : JamoRiffTheme.ink
     }
 }
 
-private final class JamoCoCreatePublishTagButton: UIControl {
+private final class JamoRiffPublishTagChip: UIControl {
     let tagTitle: String
 
     private let label = UILabel()
@@ -1535,7 +1535,7 @@ private final class JamoCoCreatePublishTagButton: UIControl {
 
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = title
-        label.font = JamoMainTheme.bodyFont(14, weight: .heavy)
+        label.font = JamoRiffTheme.bodyFont(14, weight: .heavy)
         label.isUserInteractionEnabled = false
         addSubview(label)
 
@@ -1550,18 +1550,18 @@ private final class JamoCoCreatePublishTagButton: UIControl {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("ihnZist2(8c3oRdPezrY:y)a qhwaPsx mnuoQtu DbJefeAnq FijmJpQlReYmjecnDt3eNd2"))
     }
 
     private func updateAppearance() {
-        backgroundColor = isSelected ? JamoMainTheme.ink : .white
-        layer.borderColor = (isSelected ? JamoMainTheme.ink : UIColor.black.withAlphaComponent(0.08)).cgColor
-        label.textColor = isSelected ? JamoMainTheme.yellow : JamoMainTheme.muted
+        backgroundColor = isSelected ? JamoRiffTheme.ink : .white
+        layer.borderColor = (isSelected ? JamoRiffTheme.ink : UIColor.black.withAlphaComponent(0.08)).cgColor
+        label.textColor = isSelected ? JamoRiffTheme.yellow : JamoRiffTheme.muted
     }
 }
 
 private final class JamoCoCreatePublishSourceCardView: UIView {
-    init(source: JamoCoCreatePublishSourceDisplay, currentUser: JamoCoCreateUserProfile) {
+    init(source: JamoCoCreatePublishSourceDisplay, currentUser: JamoRiffPlayerProfile) {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
         backgroundColor = .white
@@ -1579,8 +1579,8 @@ private final class JamoCoCreatePublishSourceCardView: UIView {
         avatar.text = initials(for: currentUser.displayName)
         avatar.textAlignment = .center
         avatar.textColor = .white
-        avatar.font = JamoMainTheme.bodyFont(12, weight: .heavy)
-        avatar.backgroundColor = JamoMainTheme.orange
+        avatar.font = JamoRiffTheme.bodyFont(12, weight: .heavy)
+        avatar.backgroundColor = JamoRiffTheme.orange
         avatar.layer.cornerRadius = 24
         avatar.clipsToBounds = true
 
@@ -1592,16 +1592,16 @@ private final class JamoCoCreatePublishSourceCardView: UIView {
 
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
-        title.text = source.title.isEmpty ? "Warm Sunset Riff" : source.title
-        title.textColor = JamoMainTheme.ink
-        title.font = JamoMainTheme.bodyFont(13, weight: .heavy)
+        title.text = source.title.isEmpty ? JamoRiffStringCipher.restore("Wdauromi WSSuGnNsbeatA DRwiKfvfo") : source.title
+        title.textColor = JamoRiffTheme.ink
+        title.font = JamoRiffTheme.bodyFont(13, weight: .heavy)
         title.numberOfLines = 1
 
         let subtitle = UILabel()
         subtitle.translatesAutoresizingMaskIntoConstraints = false
         subtitle.text = "My Guitar Part · \(source.partTitle)"
-        subtitle.textColor = JamoMainTheme.pink
-        subtitle.font = JamoMainTheme.bodyFont(10.5, weight: .heavy)
+        subtitle.textColor = JamoRiffTheme.pink
+        subtitle.font = JamoRiffTheme.bodyFont(10.5, weight: .heavy)
         subtitle.numberOfLines = 1
 
         let waveform = UIImageView(image: UIImage(named: "jamo_cocreate_publish_waveform"))
@@ -1636,20 +1636,20 @@ private final class JamoCoCreatePublishSourceCardView: UIView {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("iLnViytK(2cioidCeprw:9)F 9hzaosp jnSoRtx Sb6eUelnA ziOm9p3lLePmyeqnhtrendc"))
     }
 
     private func initials(for name: String) -> String {
         let parts = name
-            .split(separator: " ")
+            .split(separator: JamoRiffStringCipher.restore(" F"))
             .prefix(2)
             .compactMap { $0.first }
         let value = String(parts).uppercased()
-        return value.isEmpty ? "J" : value
+        return value.isEmpty ? JamoRiffStringCipher.restore("Jm") : value
     }
 }
 
-final class JamoCoCreatePublishSuccessViewController: UIViewController {
+final class JamoRiffPublishSuccessStageViewController: UIViewController {
     private enum SuccessLayout {
         static let maxContentWidth: CGFloat = 390
     }
@@ -1668,12 +1668,12 @@ final class JamoCoCreatePublishSuccessViewController: UIViewController {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("iInjigt5(VcjoUdXeqrx:P)1 5hAaSsp lnaoCtP GbjeYeqnW tiHmvpulNepmheXn9tUerdb"))
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = JamoMainTheme.orange
+        view.backgroundColor = JamoRiffTheme.orange
         buildLayout()
     }
 
@@ -1702,7 +1702,7 @@ final class JamoCoCreatePublishSuccessViewController: UIViewController {
         backButton.layer.borderWidth = 1
         backButton.layer.borderColor = UIColor(red: 226 / 255, green: 220 / 255, blue: 208 / 255, alpha: 1).cgColor
         backButton.imageView?.contentMode = .scaleAspectFit
-        backButton.accessibilityLabel = "Back to co-create detail"
+        backButton.accessibilityLabel = JamoRiffStringCipher.restore("BIascRkM itDo2 Qcho2-5chr4eKaotGev udwewt3aliblV")
         backButton.addTarget(self, action: #selector(backToDetailTapped), for: .touchUpInside)
 
         view.addSubview(scrollView)
@@ -1734,9 +1734,9 @@ final class JamoCoCreatePublishSuccessViewController: UIViewController {
 
         stack.addArrangedSubview(makeSuccessIcon())
         stack.setCustomSpacing(12, after: stack.arrangedSubviews.last!)
-        stack.addArrangedSubview(makeTitleLabel("Co-created!", size: 25, color: .white))
+        stack.addArrangedSubview(makeTitleLabel(JamoRiffStringCipher.restore("CZo1-fcbr4eNartTeUd2!x"), size: 25, color: .white))
         stack.setCustomSpacing(2, after: stack.arrangedSubviews.last!)
-        stack.addArrangedSubview(makeSubtitleLabel("Your guitar part has been added to\nthe chain."))
+        stack.addArrangedSubview(makeSubtitleLabel(JamoRiffStringCipher.restore("YQo7uTrh ygKuIiEt7aXrh Mp4aCrfti VhIaysY pb8eleDnU GacdZdPeCdO ztOoV wt4hLeX Dc7hfalienH.5")))
         stack.setCustomSpacing(34, after: stack.arrangedSubviews.last!)
         stack.addArrangedSubview(makeSuccessWorkCard())
         stack.setCustomSpacing(70, after: stack.arrangedSubviews.last!)
@@ -1747,7 +1747,7 @@ final class JamoCoCreatePublishSuccessViewController: UIViewController {
     private func makeSuccessIcon() -> UIView {
         let container = UIView()
         container.translatesAutoresizingMaskIntoConstraints = false
-        container.backgroundColor = JamoMainTheme.yellow
+        container.backgroundColor = JamoRiffTheme.yellow
         container.layer.cornerRadius = 34
 
         let check = UIImageView(image: UIImage(named: "jamo_cocreate_publish_success_check"))
@@ -1791,7 +1791,7 @@ final class JamoCoCreatePublishSuccessViewController: UIViewController {
         label.text = text
         label.textAlignment = .center
         label.textColor = color
-        label.font = JamoMainTheme.titleFont(size)
+        label.font = JamoRiffTheme.titleFont(size)
         label.numberOfLines = 0
         return label
     }
@@ -1802,7 +1802,7 @@ final class JamoCoCreatePublishSuccessViewController: UIViewController {
         label.text = text
         label.textAlignment = .center
         label.textColor = .white.withAlphaComponent(0.86)
-        label.font = JamoMainTheme.bodyFont(13, weight: .semibold)
+        label.font = JamoRiffTheme.bodyFont(13, weight: .semibold)
         label.numberOfLines = 0
         return label
     }
@@ -1824,16 +1824,16 @@ final class JamoCoCreatePublishSuccessViewController: UIViewController {
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
         title.text = latestWork.title
-        title.textColor = JamoMainTheme.ink
-        title.font = JamoMainTheme.bodyFont(13, weight: .heavy)
+        title.textColor = JamoRiffTheme.ink
+        title.font = JamoRiffTheme.bodyFont(13, weight: .heavy)
         title.numberOfLines = 1
 
         let subtitle = UILabel()
         subtitle.translatesAutoresizingMaskIntoConstraints = false
-        let partName = latestWork.tracks.last?.roleName ?? "Lead"
+        let partName = latestWork.tracks.last?.roleName ?? JamoRiffStringCipher.restore("LVe8aed6")
         subtitle.text = "My Guitar Part · \(partName)"
-        subtitle.textColor = JamoMainTheme.pink
-        subtitle.font = JamoMainTheme.bodyFont(10.5, weight: .heavy)
+        subtitle.textColor = JamoRiffTheme.pink
+        subtitle.font = JamoRiffTheme.bodyFont(10.5, weight: .heavy)
         subtitle.numberOfLines = 1
 
         let waveform = UIImageView(image: UIImage(named: "jamo_cocreate_publish_success_waveform"))
@@ -1870,10 +1870,10 @@ final class JamoCoCreatePublishSuccessViewController: UIViewController {
 
     private func makeViewWorkButton() -> UIButton {
         let button = JamoCoCreatePublishSuccessButton(
-            title: "View Work",
+            title: JamoRiffStringCipher.restore("VgiAe6wN dWeorrokL"),
             imageName: "jamo_cocreate_publish_view_work_play",
-            background: JamoMainTheme.yellow,
-            foreground: JamoMainTheme.orange
+            background: JamoRiffTheme.yellow,
+            foreground: JamoRiffTheme.orange
         )
         button.addTarget(self, action: #selector(viewWorkTapped), for: .touchUpInside)
         NSLayoutConstraint.activate([
@@ -1891,19 +1891,19 @@ final class JamoCoCreatePublishSuccessViewController: UIViewController {
         row.distribution = .fillEqually
 
         let invite = JamoCoCreatePublishSuccessButton(
-            title: "Invite\nFriends",
+            title: JamoRiffStringCipher.restore("IdnYv8idtpeI") + "\n" + JamoRiffStringCipher.restore("FHrgiSeNnEdYsE"),
             imageName: "jamo_cocreate_publish_invite_friends",
-            background: JamoMainTheme.ink,
-            foreground: JamoMainTheme.pink
+            background: JamoRiffTheme.ink,
+            foreground: JamoRiffTheme.pink
         )
         invite.titleLabel?.numberOfLines = 2
         invite.addTarget(self, action: #selector(inviteTapped), for: .touchUpInside)
 
         let tree = JamoCoCreatePublishSuccessButton(
-            title: "Tree",
+            title: JamoRiffStringCipher.restore("TKrBete6"),
             imageName: "jamo_cocreate_publish_creation_tree",
             background: .white,
-            foreground: JamoMainTheme.ink
+            foreground: JamoRiffTheme.ink
         )
         tree.addTarget(self, action: #selector(treeTapped), for: .touchUpInside)
 
@@ -1936,7 +1936,7 @@ final class JamoCoCreatePublishSuccessViewController: UIViewController {
         if let selfIndex = controllers.firstIndex(where: { $0 === self }) {
             controllers.removeSubrange(selfIndex...)
         }
-        if let publishIndex = controllers.lastIndex(where: { $0 is JamoCoCreatePublishViewController }) {
+        if let publishIndex = controllers.lastIndex(where: { $0 is JamoRiffPublishStageViewController }) {
             controllers.removeSubrange(publishIndex...)
         }
         controllers.append(detail)
@@ -1963,7 +1963,7 @@ final class JamoCoCreatePublishSuccessViewController: UIViewController {
         sheet.onCopyLink = { [weak self] in
             guard let self else { return }
             UIPasteboard.general.string = self.inviteCopyText()
-            JamoAuthToastView.show(on: self.view, message: "Invite link copied.")
+            JamoRiffNoticeView.show(on: self.view, copy: JamoRiffStringCipher.restore("I4nJvwidtue6 mlzimnIkA vc2o1pjiqeqdt.x"))
             self.noFriendsSheet?.dismiss()
         }
         view.addSubview(sheet)
@@ -1990,9 +1990,9 @@ final class JamoCoCreatePublishSuccessViewController: UIViewController {
         )
     }
 
-    private func treeMode(for work: JamoCoCreateWork) -> JamoCoCreateTreeMode {
-        let currentUserID = JamoAuthStore.shared.currentUserID ?? "jamo_local_player"
-        if work.creatorUserID == currentUserID || work.creatorUserID == "current_user" {
+    private func treeMode(for work: JamoCoCreateWork) -> JamoRiffBranchViewMode {
+        let currentRiffHandle = JamoRiffIdentityArchive.sharedArchive.currentPlayerHandle ?? JamoRiffStringCipher.restore("j2aemNoS_llkoAcOaclj_SpxlhaqyRekr6")
+        if work.creatorUserID == currentRiffHandle || work.creatorUserID == JamoRiffStringCipher.restore("cauUr7r0eznqtW_CuwsqeUrA") {
             return .publisherBranches
         }
         let participantCount = max(work.participants?.count ?? 0, Set(work.tracks.map(\.ownerUserID)).count)
@@ -2013,7 +2013,7 @@ private final class JamoCoCreatePublishSuccessButton: UIButton {
 
         var configuration = UIButton.Configuration.plain()
         var attributedTitle = AttributedString(title)
-        attributedTitle.font = JamoMainTheme.bodyFont(13, weight: .heavy)
+        attributedTitle.font = JamoRiffTheme.bodyFont(13, weight: .heavy)
         attributedTitle.foregroundColor = foreground
         configuration.attributedTitle = attributedTitle
         configuration.image = imageName.flatMap { UIImage(named: $0) }
@@ -2027,6 +2027,6 @@ private final class JamoCoCreatePublishSuccessButton: UIButton {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(JamoRiffStringCipher.restore("iPnXiktD(kcJoFdVehrs:J)n ehnaJsu 1nyovtc 7b8eqemnz BiJmfpClAe2m4e6nctxeJdE"))
     }
 }

@@ -1,45 +1,45 @@
 import Foundation
 
-enum JamoProfileOutputState: Hashable {
-    case hasPosts
-    case emptyPosts
-    case loadingUserInfo
-    case userInfoFallback
+enum JamoToneProfileFlowState: Hashable {
+    case hasRiffMoments
+    case emptyRiffMoments
+    case loadingPlayerTone
+    case playerToneFallback
 }
 
-enum JamoProfileWebEntryKind {
+enum JamoToneProfileBridgeKind {
     case editProfile
-    case following
-    case followers
-    case coins
+    case styleExchange
+    case sessionParticipant
+    case pickupShelf
 }
 
-struct JamoProfileWebEntry {
-    let kind: JamoProfileWebEntryKind
+struct JamoToneProfileBridgeEntry {
+    let kind: JamoToneProfileBridgeKind
     let title: String
-    let route: JamoWebRoute
+    let route: JamoShowDefinition
 }
 
-struct JamoProfileMetricDisplay {
+struct JamoToneProfileMetricDisplay {
     let title: String
     let valueText: String
-    let route: JamoWebRoute
+    let route: JamoShowDefinition
 }
 
 struct JamoProfileUserSummary {
-    let userID: String
-    let displayName: String
-    let email: String
-    let avatarURL: String?
-    let following: JamoProfileMetricDisplay
-    let followers: JamoProfileMetricDisplay
-    let coins: JamoProfileMetricDisplay
-    let editRoute: JamoWebRoute
+    let playerHandle: String
+    let playerDisplayName: String
+    let playerEmail: String
+    let playerArtworkAddress: String?
+    let styleExchange: JamoToneProfileMetricDisplay
+    let sessionParticipant: JamoToneProfileMetricDisplay
+    let pickupShelf: JamoToneProfileMetricDisplay
+    let editRoute: JamoShowDefinition
     let isUsingFallbackInfo: Bool
 }
 
-struct JamoProfilePostDisplay {
-    let id: String
+struct JamoProfileRiffMomentDisplay {
+    let riffHandle: String
     let title: String
     let about: String
     let coverImageName: String
@@ -61,364 +61,363 @@ struct JamoProfilePostDisplay {
     let hasCurrentUserPart: Bool
 }
 
-struct JamoProfileEmptyPostsDisplay {
+struct JamoProfileEmptyRiffDisplay {
     let title: String
     let subtitle: String
     let actionTitle: String
 }
 
 struct JamoProfileSnapshot {
-    let states: Set<JamoProfileOutputState>
-    let user: JamoProfileUserSummary
-    let webEntries: [JamoProfileWebEntry]
-    let posts: [JamoProfilePostDisplay]
-    let emptyPosts: JamoProfileEmptyPostsDisplay?
-    let sourceWorks: [JamoCoCreateWork]
+    let flowStates: Set<JamoToneProfileFlowState>
+    let playerSummary: JamoProfileUserSummary
+    let bridgeEntries: [JamoToneProfileBridgeEntry]
+    let riffMoments: [JamoProfileRiffMomentDisplay]
+    let emptyRiffMoments: JamoProfileEmptyRiffDisplay?
+    let sourceRiffWorks: [JamoCoCreateWork]
 }
 
 final class JamoProfileViewModel {
-    private enum LocalKey {
-        static let followingCount = "jamo_profile_following_count"
-        static let followersCount = "jamo_profile_followers_count"
-        static let coinBalance = "jamo_profile_coin_balance"
+    private enum LocalCacheSlot {
+        static let styleExchangeCount = JamoRiffStringCipher.restore("jvaZmoog_6t7oRnuew_7svtbyHloex_peDxCcXhSaznag8eE_FcloWuTn0tX")
+        static let sessionParticipantCount = JamoRiffStringCipher.restore("joaYmRo0_itioqnfen_UsveksIswiQoRnb_3puaUrWt6iecYixpzaengt9_jceoyuKnNtw")
+        static let pickupCount = JamoRiffStringCipher.restore("jMaxmtob_6tFopnze2_fp1iRcfkWuApx_5syhde1lVfP_dcCopucnItk")
     }
 
     private enum DefaultMetric {
-        static let followingCount = 0
-        static let followersCount = 0
-        static let coinBalance = 1800
+        static let styleExchangeCount = 0
+        static let sessionParticipantCount = 0
+        static let pickupCount = 1800
     }
 
-    private let authStore: JamoAuthStore
-    private let jamStore: JamoLocalJamStore
-    private let userProvider: JamoCoCreateUserProviding
-    private let defaults: UserDefaults
+    private let riffIdentityStore: JamoRiffIdentityArchive
+    private let creationFlowStore: JamoLocalJamStore
+    private let sessionParticipantProvider: JamoCoCreateUserProviding
+    private let riffDefaults: UserDefaults
 
     init(
-        authStore: JamoAuthStore = .shared,
-        jamStore: JamoLocalJamStore = .shared,
-        userProvider: JamoCoCreateUserProviding = JamoCoCreateUserService.shared,
-        defaults: UserDefaults = .standard
+        riffIdentityStore: JamoRiffIdentityArchive = .sharedArchive,
+        creationFlowStore: JamoLocalJamStore = .shared,
+        sessionParticipantProvider: JamoCoCreateUserProviding = JamoCoCreateUserService.shared,
+        riffDefaults: UserDefaults = .standard
     ) {
-        self.authStore = authStore
-        self.jamStore = jamStore
-        self.userProvider = userProvider
-        self.defaults = defaults
+        self.riffIdentityStore = riffIdentityStore
+        self.creationFlowStore = creationFlowStore
+        self.sessionParticipantProvider = sessionParticipantProvider
+        self.riffDefaults = riffDefaults
     }
 
-    func makeLoadingSnapshot() -> JamoProfileSnapshot {
-        makeSnapshot(remoteUsers: [], isLoadingUserInfo: true, forceUserInfoFallback: false)
+    func makeLoadingToneProfileSnapshot() -> JamoProfileSnapshot {
+        makeToneProfileSnapshot(sessionParticipants: [], isLoadingPlayerTone: true, forcePlayerToneFallback: false)
     }
 
-    func makeSnapshot(remoteUsers: [JamoCoCreateUserProfile] = []) -> JamoProfileSnapshot {
-        makeSnapshot(remoteUsers: remoteUsers, isLoadingUserInfo: false, forceUserInfoFallback: false)
+    func makeToneProfileSnapshot(sessionParticipants: [JamoRiffPlayerProfile] = []) -> JamoProfileSnapshot {
+        makeToneProfileSnapshot(sessionParticipants: sessionParticipants, isLoadingPlayerTone: false, forcePlayerToneFallback: false)
     }
 
-    func loadSnapshot(completion: @escaping (JamoProfileSnapshot) -> Void) {
-        completion(makeLoadingSnapshot())
-        userProvider.fetchJamUsers { [weak self] result in
+    func loadToneProfileSnapshot(completion: @escaping (JamoProfileSnapshot) -> Void) {
+        completion(makeLoadingToneProfileSnapshot())
+        sessionParticipantProvider.fetchJamUsers { [weak self] result in
             guard let self else { return }
             switch result {
             case .success(let users):
-                completion(self.makeSnapshot(remoteUsers: users))
+                completion(self.makeToneProfileSnapshot(sessionParticipants: users))
             case .failure:
-                completion(self.makeSnapshot(remoteUsers: [], isLoadingUserInfo: false, forceUserInfoFallback: true))
+                completion(self.makeToneProfileSnapshot(sessionParticipants: [], isLoadingPlayerTone: false, forcePlayerToneFallback: true))
             }
         }
     }
 
-    func saveLocalMetrics(followingCount: Int? = nil, followersCount: Int? = nil, coinBalance: Int? = nil) {
-        if let followingCount {
-            defaults.set(max(followingCount, 0), forKey: LocalKey.followingCount)
+    func saveLocalToneMetrics(styleExchangeCount: Int? = nil, sessionParticipantCount: Int? = nil, pickupCount: Int? = nil) {
+        if let styleExchangeCount {
+            riffDefaults.set(max(styleExchangeCount, 0), forKey: LocalCacheSlot.styleExchangeCount)
         }
-        if let followersCount {
-            defaults.set(max(followersCount, 0), forKey: LocalKey.followersCount)
+        if let sessionParticipantCount {
+            riffDefaults.set(max(sessionParticipantCount, 0), forKey: LocalCacheSlot.sessionParticipantCount)
         }
-        if let coinBalance {
-            defaults.set(max(coinBalance, 0), forKey: LocalKey.coinBalance)
+        if let pickupCount {
+            riffDefaults.set(max(pickupCount, 0), forKey: LocalCacheSlot.pickupCount)
         }
     }
 
-    private func makeSnapshot(
-        remoteUsers: [JamoCoCreateUserProfile],
-        isLoadingUserInfo: Bool,
-        forceUserInfoFallback: Bool
+    private func makeToneProfileSnapshot(
+        sessionParticipants: [JamoRiffPlayerProfile],
+        isLoadingPlayerTone: Bool,
+        forcePlayerToneFallback: Bool
     ) -> JamoProfileSnapshot {
-        let currentUser = makeCurrentUser()
-        let effectiveUsers = remoteUsers.isEmpty ? userProvider.cachedJamUsers : remoteUsers
-        let remoteUser = matchedRemoteUser(in: effectiveUsers, currentUser: currentUser)
-        let user = makeUserSummary(
-            currentUser: currentUser,
-            remoteUser: remoteUser,
-            forceUserInfoFallback: forceUserInfoFallback
+        let activePlayerContext = buildCurrentPlayerContext()
+        let resolvedParticipants = sessionParticipants.isEmpty ? sessionParticipantProvider.cachedJamUsers : sessionParticipants
+        let matchedParticipant = matchedSessionParticipant(in: resolvedParticipants, activePlayerContext: activePlayerContext)
+        let playerSummary = buildPlayerSummary(
+            activePlayerContext: activePlayerContext,
+            matchedParticipant: matchedParticipant,
+            forcePlayerToneFallback: forcePlayerToneFallback
         )
-        let works = profileWorks(currentUserID: currentUser.userID)
-        let posts = works.map { makePostDisplay(from: $0, currentUserID: currentUser.userID) }
-        var states: Set<JamoProfileOutputState> = posts.isEmpty ? [.emptyPosts] : [.hasPosts]
+        let riffWorks = toneProfileRiffs(currentPlayerAnchor: activePlayerContext.jamoPlayerHandle)
+        let riffMoments = riffWorks.map { buildRiffMomentDisplay(from: $0, currentPlayerAnchor: activePlayerContext.jamoPlayerHandle) }
+        var flowStates: Set<JamoToneProfileFlowState> = riffMoments.isEmpty ? [.emptyRiffMoments] : [.hasRiffMoments]
 
-        if isLoadingUserInfo {
-            states.insert(.loadingUserInfo)
+        if isLoadingPlayerTone {
+            flowStates.insert(.loadingPlayerTone)
         }
-        if user.isUsingFallbackInfo {
-            states.insert(.userInfoFallback)
+        if playerSummary.isUsingFallbackInfo {
+            flowStates.insert(.playerToneFallback)
         }
 
         return JamoProfileSnapshot(
-            states: states,
-            user: user,
-            webEntries: makeWebEntries(),
-            posts: posts,
-            emptyPosts: posts.isEmpty ? makeEmptyPostsDisplay() : nil,
-            sourceWorks: works
+            flowStates: flowStates,
+            playerSummary: playerSummary,
+            bridgeEntries: buildBridgeEntries(),
+            riffMoments: riffMoments,
+            emptyRiffMoments: riffMoments.isEmpty ? buildEmptyRiffMomentDisplay() : nil,
+            sourceRiffWorks: riffWorks
         )
     }
 
-    private func makeCurrentUser() -> JamoCoCreateUserProfile {
-        let email = authStore.currentEmail ?? "local@jamo.app"
-        return JamoCoCreateUserProfile(
-            userID: authStore.currentUserID ?? "jamo_local_player",
-            displayName: authStore.currentDisplayName ?? authStore.displayNameFallback(for: email),
-            email: email,
-            avatarURL: authStore.currentAvatarURL
+    private func buildCurrentPlayerContext() -> JamoRiffPlayerProfile {
+        let playerEmail = riffIdentityStore.currentEmail ?? JamoRiffStringCipher.restore("luoycDaply@4jAa3mvoe.capp9pw")
+        return JamoRiffPlayerProfile(
+            jamoPlayerHandle: riffIdentityStore.currentPlayerHandle ?? JamoRiffStringCipher.restore("jOaam8oz_glRoncQaglr_JpnlSaIyaeQrK"),
+            displayName: riffIdentityStore.currentDisplayName ?? riffIdentityStore.displayNameFallback(for: playerEmail),
+            email: playerEmail,
+            avatarURL: riffIdentityStore.currentAvatarURL
         )
     }
 
-    private func matchedRemoteUser(
-        in users: [JamoCoCreateUserProfile],
-        currentUser: JamoCoCreateUserProfile
-    ) -> JamoCoCreateUserProfile? {
-        let currentEmail = normalized(currentUser.email)
-        return users.first { user in
-            user.userID == currentUser.userID
-                || (!currentEmail.isEmpty && normalized(user.email) == currentEmail)
+    private func matchedSessionParticipant(
+        in users: [JamoRiffPlayerProfile],
+        activePlayerContext: JamoRiffPlayerProfile
+    ) -> JamoRiffPlayerProfile? {
+        let currentPlayerEmail = normalizedPhrase(activePlayerContext.email)
+        return users.first { playerSummary in
+            playerSummary.jamoPlayerHandle == activePlayerContext.jamoPlayerHandle
+                || (!currentPlayerEmail.isEmpty && normalizedPhrase(playerSummary.email) == currentPlayerEmail)
         }
     }
 
-    private func makeUserSummary(
-        currentUser: JamoCoCreateUserProfile,
-        remoteUser: JamoCoCreateUserProfile?,
-        forceUserInfoFallback: Bool
+    private func buildPlayerSummary(
+        activePlayerContext: JamoRiffPlayerProfile,
+        matchedParticipant: JamoRiffPlayerProfile?,
+        forcePlayerToneFallback: Bool
     ) -> JamoProfileUserSummary {
-        let followingMetric = remoteMetricValue(
-            remoteValue: remoteUser?.followingCount,
-            defaultValue: DefaultMetric.followingCount
+        let styleExchangeMetric = resolvedRemoteMetricValue(
+            remoteValue: matchedParticipant?.followingCount,
+            defaultValue: DefaultMetric.styleExchangeCount
         )
-        let followersMetric = remoteMetricValue(
-            remoteValue: remoteUser?.followersCount,
-            defaultValue: DefaultMetric.followersCount
+        let sessionParticipantMetric = resolvedRemoteMetricValue(
+            remoteValue: matchedParticipant?.followersCount,
+            defaultValue: DefaultMetric.sessionParticipantCount
         )
-        let coinsMetric = metricValue(
-            remoteValue: remoteUser?.coinBalance,
-            key: LocalKey.coinBalance,
-            defaultValue: DefaultMetric.coinBalance
+        let pickupMetric = resolvedMetricValue(
+            remoteValue: matchedParticipant?.pickCount,
+            cacheSlot: LocalCacheSlot.pickupCount,
+            defaultValue: DefaultMetric.pickupCount
         )
-        let displayName = clean(remoteUser?.displayName) ?? currentUser.displayName
-        let avatarURL = clean(currentUser.avatarURL) ?? clean(remoteUser?.avatarURL)
-        let usedFallback = forceUserInfoFallback
-            || remoteUser == nil
-            || followingMetric.isFallback
-            || followersMetric.isFallback
-            || coinsMetric.isFallback
+        let playerDisplayName = trimmedPhrase(matchedParticipant?.displayName) ?? activePlayerContext.displayName
+        let playerArtworkAddress = trimmedPhrase(activePlayerContext.avatarURL) ?? trimmedPhrase(matchedParticipant?.avatarURL)
+        let usesFallbackTone = forcePlayerToneFallback
+            || matchedParticipant == nil
+            || styleExchangeMetric.isFallback
+            || sessionParticipantMetric.isFallback
+            || pickupMetric.isFallback
 
         return JamoProfileUserSummary(
-            userID: currentUser.userID,
-            displayName: displayName,
-            email: currentUser.email ?? "local@jamo.app",
-            avatarURL: avatarURL,
-            following: JamoProfileMetricDisplay(
-                title: "Following",
-                valueText: countText(followingMetric.value),
-                route: .following
+            playerHandle: activePlayerContext.jamoPlayerHandle,
+            playerDisplayName: playerDisplayName,
+            playerEmail: activePlayerContext.email ?? JamoRiffStringCipher.restore("lRotcVaAl7@djGaamRoY.NacpvpR"),
+            playerArtworkAddress: playerArtworkAddress,
+            styleExchange: JamoToneProfileMetricDisplay(
+                title: JamoRiffStringCipher.restore("FnoblKlqo6w0i6nhgm"),
+                valueText: meterText(styleExchangeMetric.value),
+                route: .styleExchangeRegistry
             ),
-            followers: JamoProfileMetricDisplay(
-                title: "Followers",
-                valueText: countText(followersMetric.value),
-                route: .followers
+            sessionParticipant: JamoToneProfileMetricDisplay(
+                title: JamoRiffStringCipher.restore("FMoxlmlFoswXeKrOsu"),
+                valueText: meterText(sessionParticipantMetric.value),
+                route: .sessionParticipantContext
             ),
-            coins: JamoProfileMetricDisplay(
-                title: "My gold coins",
-                valueText: countText(coinsMetric.value),
-                route: .coins
+            pickupShelf: JamoToneProfileMetricDisplay(
+                title: JamoRiffStringCipher.restore("MYyJ vPziDcAk4sZ"),
+                valueText: meterText(pickupMetric.value),
+                route: .pickupSelectorDefinition
             ),
-            editRoute: .editProfile,
-            isUsingFallbackInfo: usedFallback
+            editRoute: .toneProfileContext,
+            isUsingFallbackInfo: usesFallbackTone
         )
     }
 
-    private func metricValue(remoteValue: Int?, key: String, defaultValue: Int) -> (value: Int, isFallback: Bool) {
+    private func resolvedMetricValue(remoteValue: Int?, cacheSlot: String, defaultValue: Int) -> (value: Int, isFallback: Bool) {
         if let remoteValue {
             return (max(remoteValue, 0), false)
         }
-        if defaults.object(forKey: key) != nil {
-            return (max(defaults.integer(forKey: key), 0), true)
+        if riffDefaults.object(forKey: cacheSlot) != nil {
+            return (max(riffDefaults.integer(forKey: cacheSlot), 0), true)
         }
         return (defaultValue, true)
     }
 
-    private func remoteMetricValue(remoteValue: Int?, defaultValue: Int) -> (value: Int, isFallback: Bool) {
+    private func resolvedRemoteMetricValue(remoteValue: Int?, defaultValue: Int) -> (value: Int, isFallback: Bool) {
         if let remoteValue {
             return (max(remoteValue, 0), false)
         }
         return (defaultValue, true)
     }
 
-    private func profileWorks(currentUserID: String) -> [JamoCoCreateWork] {
-        jamStore.allWorks()
+    private func toneProfileRiffs(currentPlayerAnchor: String) -> [JamoCoCreateWork] {
+        creationFlowStore.allWorks()
             .filter { work in
                 guard work.status != .draft else { return false }
-                return isPublishedByCurrentUser(work, currentUserID: currentUserID)
-                    || hasCurrentUserPart(work, currentUserID: currentUserID)
+                return isPublishedByCurrentPlayer(work, currentPlayerAnchor: currentPlayerAnchor)
+                    || hasCurrentPlayerPart(work, currentPlayerAnchor: currentPlayerAnchor)
             }
             .sorted { $0.createdAt > $1.createdAt }
     }
 
-    private func makePostDisplay(from work: JamoCoCreateWork, currentUserID: String) -> JamoProfilePostDisplay {
-        let primaryTrack = work.tracks.first
-        let duration = audioDuration(for: primaryTrack)
-        let participantCount = max(work.participantCount ?? work.participants?.count ?? work.tracks.count, 0)
+    private func buildRiffMomentDisplay(from work: JamoCoCreateWork, currentPlayerAnchor: String) -> JamoProfileRiffMomentDisplay {
+        let leadingTrack = work.tracks.first
+        let trackDuration = audioDuration(for: leadingTrack)
+        let sessionCount = max(work.participantCount ?? work.participants?.count ?? work.tracks.count, 0)
 
-        return JamoProfilePostDisplay(
-            id: work.id,
+        return JamoProfileRiffMomentDisplay(
+            riffHandle: work.jamoRiffHandle,
             title: work.title,
             about: work.about,
             coverImageName: work.coverImageName,
             coverURL: work.coverURL,
-            tagTitle: work.tags.first ?? "Acoustic",
+            tagTitle: work.tags.first ?? JamoRiffStringCipher.restore("A4coosujsStliEcx"),
             creatorName: work.creatorName,
             creatorInitials: initials(for: work.creatorName),
             creatorAvatarURL: work.creatorAvatarURL,
-            participantBadgeText: "\(participantCount)",
-            participantSummary: participantSummary(for: work, participantCount: participantCount),
+            participantBadgeText: "\(sessionCount)",
+            participantSummary: participantSummary(for: work, sessionCount: sessionCount),
             statusTitle: statusTitle(for: work),
             statusTintHex: statusTintHex(for: work),
             actionTitle: actionTitle(for: work),
             isActionEnabled: work.status == .open,
-            mp3FileName: primaryTrack?.mp3FileName,
-            durationText: durationText(duration),
-            waveformSeed: primaryTrack?.waveformSeed ?? 1,
-            isCreatedByCurrentUser: isCreatedByCurrentUser(work, currentUserID: currentUserID),
-            hasCurrentUserPart: hasCurrentUserPart(work, currentUserID: currentUserID)
+            mp3FileName: leadingTrack?.mp3FileName,
+            durationText: durationText(trackDuration),
+            waveformSeed: leadingTrack?.waveformSeed ?? 1,
+            isCreatedByCurrentUser: isCreatedByCurrentPlayer(work, currentPlayerAnchor: currentPlayerAnchor),
+            hasCurrentUserPart: hasCurrentPlayerPart(work, currentPlayerAnchor: currentPlayerAnchor)
         )
     }
 
-    private func makeWebEntries() -> [JamoProfileWebEntry] {
+    private func buildBridgeEntries() -> [JamoToneProfileBridgeEntry] {
         [
-            JamoProfileWebEntry(kind: .editProfile, title: "Edit Profile", route: .editProfile),
-            JamoProfileWebEntry(kind: .following, title: "Following", route: .following),
-            JamoProfileWebEntry(kind: .followers, title: "Followers", route: .followers),
-            JamoProfileWebEntry(kind: .coins, title: "My gold coins", route: .coins)
+            JamoToneProfileBridgeEntry(kind: .editProfile, title: JamoRiffStringCipher.restore("Eqd6ikt1 OPCrJoSf7iNlEe2"), route: .toneProfileContext),
+            JamoToneProfileBridgeEntry(kind: .styleExchange, title: JamoRiffStringCipher.restore("FbollTlXomwDienNgS"), route: .styleExchangeRegistry),
+            JamoToneProfileBridgeEntry(kind: .sessionParticipant, title: JamoRiffStringCipher.restore("F2oblxlZo3wPeorAsZ"), route: .sessionParticipantContext),
+            JamoToneProfileBridgeEntry(kind: .pickupShelf, title: JamoRiffStringCipher.restore("Mwyt UPNivc2kYsB"), route: .pickupSelectorDefinition)
         ]
     }
 
-    private func makeEmptyPostsDisplay() -> JamoProfileEmptyPostsDisplay {
-        JamoProfileEmptyPostsDisplay(
-            title: "No posts yet",
-            subtitle: "Your guitar co-create posts will appear here.",
-            actionTitle: "Start Co-create"
+    private func buildEmptyRiffMomentDisplay() -> JamoProfileEmptyRiffDisplay {
+        JamoProfileEmptyRiffDisplay(
+            title: JamoRiffStringCipher.restore("NZo7 Wwqojrzk8sT syWeztp"),
+            subtitle: JamoRiffStringCipher.restore("Y2oYuGrX Hgmuwi5taa4rc Zccop-ccbrceuaGtIeW TwfobrukPs2 xwRidlLl9 ya4p2pIe5avri fh9esrpeb.F"),
+            actionTitle: JamoRiffStringCipher.restore("SgtAayrftD hCFoM-mcxrLexaTt6ei")
         )
     }
 
-    private func isCreatedByCurrentUser(_ work: JamoCoCreateWork, currentUserID: String) -> Bool {
-        work.creatorUserID == currentUserID
+    private func isCreatedByCurrentPlayer(_ work: JamoCoCreateWork, currentPlayerAnchor: String) -> Bool {
+        work.creatorUserID == currentPlayerAnchor
     }
 
-    private func hasCurrentUserPart(_ work: JamoCoCreateWork, currentUserID: String) -> Bool {
+    private func hasCurrentPlayerPart(_ work: JamoCoCreateWork, currentPlayerAnchor: String) -> Bool {
         work.tracks.contains { track in
             track.isMine
-                && track.ownerUserID == currentUserID
-                && track.id.hasPrefix("jamo_track_publish_")
+                && track.ownerUserID == currentPlayerAnchor
+                && track.jamoTrackHandle.hasPrefix(JamoRiffStringCipher.restore("jiakm5o5_itprLaMcIkH_MpDuebll5i4suhX_Q"))
         }
     }
 
-    private func isPublishedByCurrentUser(_ work: JamoCoCreateWork, currentUserID: String) -> Bool {
-        guard isCreatedByCurrentUser(work, currentUserID: currentUserID) else {
+    private func isPublishedByCurrentPlayer(_ work: JamoCoCreateWork, currentPlayerAnchor: String) -> Bool {
+        guard isCreatedByCurrentPlayer(work, currentPlayerAnchor: currentPlayerAnchor) else {
             return false
         }
-        return work.id.hasPrefix("jamo_work_publish_")
-            || work.id.hasPrefix("jamo_draft_")
-            || hasCurrentUserPart(work, currentUserID: currentUserID)
+        return work.jamoRiffHandle.hasPrefix(JamoRiffStringCipher.restore("j8a0mnoJ_cw8oorWk0_fpmuRb8lXiSszhC_Y"))
+            || work.jamoRiffHandle.hasPrefix(JamoRiffStringCipher.restore("j9aKmQob_vdPrba5f1tz_h"))
+            || hasCurrentPlayerPart(work, currentPlayerAnchor: currentPlayerAnchor)
     }
 
-    private func participantSummary(for work: JamoCoCreateWork, participantCount: Int) -> String {
+    private func participantSummary(for work: JamoCoCreateWork, sessionCount: Int) -> String {
         switch work.status {
         case .open:
-            return "\(participantCount) joined · open to all"
+            return "\(sessionCount) joined · open to all"
         case .joined:
-            return "\(participantCount) joined · your part added"
+            return "\(sessionCount) joined · your part added"
         case .completed:
-            return "\(participantCount) joined · completed"
+            return "\(sessionCount) joined · completed"
         case .draft:
-            return "Draft saved"
+            return JamoRiffStringCipher.restore("DDrVaNfStv CsgawvseddH")
         }
     }
 
     private func statusTitle(for work: JamoCoCreateWork) -> String {
         switch work.status {
         case .open:
-            return "Open"
+            return JamoRiffStringCipher.restore("Obp5eXnO")
         case .joined:
-            return "Joined"
+            return JamoRiffStringCipher.restore("JToDi1naetdw")
         case .completed:
-            return "Completed"
+            return JamoRiffStringCipher.restore("CcogmypjlbePtuendg")
         case .draft:
-            return "Draft"
+            return JamoRiffStringCipher.restore("DWrhaof7tF")
         }
     }
 
     private func statusTintHex(for work: JamoCoCreateWork) -> String {
         switch work.status {
         case .open:
-            return "#E75B33"
+            return JamoRiffStringCipher.restore("#3EA7E5XBh3S3C")
         case .joined:
-            return "#FF72A8"
+            return JamoRiffStringCipher.restore("#7FnFG7n2PA48W")
         case .completed:
-            return "#5BCE9D"
+            return JamoRiffStringCipher.restore("#45FBuCoED9rDB")
         case .draft:
-            return "#26315E"
+            return JamoRiffStringCipher.restore("#Z2R6c3H1J5lEZ")
         }
     }
 
     private func actionTitle(for work: JamoCoCreateWork) -> String {
         switch work.status {
         case .open:
-            return "Join"
+            return JamoRiffStringCipher.restore("JkoSiAnp")
         case .joined:
-            return "Joined"
+            return JamoRiffStringCipher.restore("Jwo1iGnTeKdo")
         case .completed:
-            return "Completed"
+            return JamoRiffStringCipher.restore("CBoVmFpllQe8t9eRde")
         case .draft:
-            return "Draft"
+            return JamoRiffStringCipher.restore("DxrVakfOtS")
         }
     }
 
     private func audioDuration(for track: JamoCoCreateTrack?) -> TimeInterval {
         guard let track else { return 0 }
-        return JamoLocalJamMediaCatalog.audioDuration(for: track.mp3FileName, fallback: track.duration)
+        return JamoRiffLocalMediaShelf.audioDuration(for: track.mp3FileName, fallback: track.duration)
     }
 
-    private func durationText(_ duration: TimeInterval) -> String {
-        let seconds = max(Int(duration.rounded()), 0)
-        return String(format: "%d:%02d", seconds / 60, seconds % 60)
+    private func durationText(_ trackDuration: TimeInterval) -> String {
+        let seconds = max(Int(trackDuration.rounded()), 0)
+        return String(format: JamoRiffStringCipher.restore("%Qda:1%30q27dK"), seconds / 60, seconds % 60)
     }
 
-    private func countText(_ value: Int) -> String {
+    private func meterText(_ value: Int) -> String {
         "\(max(value, 0))"
     }
 
-    private func initials(for displayName: String) -> String {
-        let parts = displayName
-            .split(separator: " ")
-            .map(String.init)
+    private func initials(for playerDisplayName: String) -> String {
+        let nameFragments = playerDisplayName
+            .components(separatedBy: JamoRiffStringCipher.restore(" B"))
             .filter { !$0.isEmpty }
-        let joined = parts.prefix(2).compactMap { $0.first }.map(String.init).joined()
-        return joined.isEmpty ? "JP" : joined.uppercased()
+        let initialsPhrase = nameFragments.prefix(2).compactMap { $0.first }.map(String.init).joined()
+        return initialsPhrase.isEmpty ? JamoRiffStringCipher.restore("JFPt") : initialsPhrase.uppercased()
     }
 
-    private func normalized(_ value: String?) -> String {
+    private func normalizedPhrase(_ value: String?) -> String {
         value?.trimmingCharacters(in: .whitespacesAndNewlines).lowercased() ?? ""
     }
 
-    private func clean(_ value: String?) -> String? {
+    private func trimmedPhrase(_ value: String?) -> String? {
         let trimmed = value?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         return trimmed.isEmpty ? nil : trimmed
     }
