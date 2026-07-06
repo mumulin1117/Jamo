@@ -1,6 +1,6 @@
 import UIKit
 
-final class JamoProfileViewController: JamoRiffBaseStageViewController {
+final class JamoPersonnWalController: JamoRiffBaseStageViewController {
     private enum Layout {
         static let contentMaxWidth: CGFloat = 327
         static let sectionSpacing: CGFloat = 22
@@ -19,13 +19,13 @@ final class JamoProfileViewController: JamoRiffBaseStageViewController {
         contentStack.spacing = Layout.sectionSpacing
         scrollView.alwaysBounceVertical = true
         scrollView.showsVerticalScrollIndicator = false
-        refreshToneProfile()
+        jamoToneProfile()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        refreshToneProfile()
+        jamoToneProfile()
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -33,7 +33,7 @@ final class JamoProfileViewController: JamoRiffBaseStageViewController {
         
     }
 
-    private func refreshToneProfile() {
+    private func jamoToneProfile() {
         let currentRequest = UUID()
         refreshAnchor = currentRequest
         toneProfileManager.loadToneProfileSnapshot { [weak self] snapshot in
@@ -151,28 +151,28 @@ private final class JamoProfileHeaderView: UIView {
         static let metricWidth: CGFloat = 82
     }
 
-    init(playerSummary: JamoProfileUserSummary, target: JamoProfileViewController) {
+    init(playerSummary: JamoProfileUserSummary, target: JamoPersonnWalController) {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
 
         let avatarView = JamoProfileAvatarView(
-            imageName: "jamo_profile_app_icon_placeholder",
+            imageName: "jamo_auth_app_logo",
             avatarURL: playerSummary.playerArtworkAddress,
             initials: playerSummary.playerDisplayName.jamoProfileInitials,
             fontSize: 24
         )
         avatarView.accessibilityLabel = JamoRiffStringCipher.restore("OMpmeqnw au5s6evrY 7pvrAo5ffiblleK")
-        avatarView.addTarget(target, action: #selector(JamoProfileViewController.playerToneHomeTapped), for: .touchUpInside)
+        avatarView.addTarget(target, action: #selector(JamoPersonnWalController.playerToneHomeTapped), for: .touchUpInside)
 
         let styleExchangeButton = JamoProfileMetricButton(metric: playerSummary.styleExchange)
-        styleExchangeButton.addTarget(target, action: #selector(JamoProfileViewController.styleExchangeTapped), for: .touchUpInside)
+        styleExchangeButton.addTarget(target, action: #selector(JamoPersonnWalController.styleExchangeTapped), for: .touchUpInside)
 
         let sessionParticipantButton = JamoProfileMetricButton(metric: playerSummary.sessionParticipant)
-        sessionParticipantButton.addTarget(target, action: #selector(JamoProfileViewController.sessionParticipantTapped), for: .touchUpInside)
+        sessionParticipantButton.addTarget(target, action: #selector(JamoPersonnWalController.sessionParticipantTapped), for: .touchUpInside)
 
         let nameButton = JamoProfileNameButton(displayName: playerSummary.playerDisplayName)
-        nameButton.addTarget(target, action: #selector(JamoProfileViewController.playerToneHomeTapped), for: .touchUpInside)
-        nameButton.editButton.addTarget(target, action: #selector(JamoProfileViewController.toneProfileEditTapped), for: .touchUpInside)
+        nameButton.addTarget(target, action: #selector(JamoPersonnWalController.playerToneHomeTapped), for: .touchUpInside)
+        nameButton.editButton.addTarget(target, action: #selector(JamoPersonnWalController.toneProfileEditTapped), for: .touchUpInside)
 
         addSubview(avatarView)
         addSubview(styleExchangeButton)
@@ -295,14 +295,14 @@ private final class JamoProfileNameButton: UIControl {
 }
 
 private final class JamoProfilePickShelfCardView: UIControl {
-    init(playerSummary: JamoProfileUserSummary, target: JamoProfileViewController) {
+    init(playerSummary: JamoProfileUserSummary, target: JamoPersonnWalController) {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false
         clipsToBounds = true
         layer.cornerCurve = .continuous
         layer.cornerRadius = 32
         accessibilityLabel = playerSummary.pickupShelf.title
-        addTarget(target, action: #selector(JamoProfileViewController.pickupShelfTapped), for: .touchUpInside)
+        addTarget(target, action: #selector(JamoPersonnWalController.pickupShelfTapped), for: .touchUpInside)
 
         let backgroundImageView = UIImageView(image: UIImage(named: "jamo_profile_pick_shelf_background"))
         backgroundImageView.translatesAutoresizingMaskIntoConstraints = false

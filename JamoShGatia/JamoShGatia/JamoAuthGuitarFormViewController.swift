@@ -1,6 +1,6 @@
 import UIKit
 
-class JamoAuthGuitarFormViewController: JamoAuthBaseViewController {
+class JamoAuthGuitarFormViewController: JamoCareFulController {
     enum Layout {
         static let horizontalPadding: CGFloat = 24
         static let fieldSpacing: CGFloat = 28
@@ -32,9 +32,9 @@ class JamoAuthGuitarFormViewController: JamoAuthBaseViewController {
         guitarImageView.contentMode = .scaleAspectFill
         guitarImageView.clipsToBounds = true
         guitarImageView.isUserInteractionEnabled = false
-        scrollView.backgroundColor = .clear
-        contentView.backgroundColor = .clear
-        view.insertSubview(guitarImageView, belowSubview: scrollView)
+        jamoScroll.backgroundColor = .clear
+        jamoBAckgroundview.backgroundColor = .clear
+        view.insertSubview(guitarImageView, belowSubview: jamoScroll)
 
        
         NSLayoutConstraint.activate([
@@ -71,13 +71,13 @@ class JamoAuthGuitarFormViewController: JamoAuthBaseViewController {
         titleLabel.textColor = .black
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.minimumScaleFactor = 0.82
-        contentView.addSubview(titleLabel)
+        jamoBAckgroundview.addSubview(titleLabel)
 
-        contentView.addSubview(underlineView)
+        jamoBAckgroundview.addSubview(underlineView)
         NSLayoutConstraint.activate([
-            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 30),
-            titleLabel.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: Layout.titleTopSpacing),
-            titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: contentView.trailingAnchor, constant: -24),
+            titleLabel.leadingAnchor.constraint(equalTo: jamoBAckgroundview.leadingAnchor, constant: 30),
+            titleLabel.topAnchor.constraint(equalTo: jamoBAckgroundview.safeAreaLayoutGuide.topAnchor, constant: Layout.titleTopSpacing),
+            titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: jamoBAckgroundview.trailingAnchor, constant: -24),
 
             underlineView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor, constant: -6),
             underlineView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 4),
@@ -90,13 +90,13 @@ class JamoAuthGuitarFormViewController: JamoAuthBaseViewController {
         formStack.translatesAutoresizingMaskIntoConstraints = false
         formStack.axis = .vertical
         formStack.spacing = Layout.fieldSpacing
-        contentView.addSubview(formStack)
+        jamoBAckgroundview.addSubview(formStack)
 
         NSLayoutConstraint.activate([
-            formStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Layout.horizontalPadding),
-            formStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -Layout.horizontalPadding),
+            formStack.leadingAnchor.constraint(equalTo: jamoBAckgroundview.leadingAnchor, constant: Layout.horizontalPadding),
+            formStack.trailingAnchor.constraint(equalTo: jamoBAckgroundview.trailingAnchor, constant: -Layout.horizontalPadding),
             formStack.topAnchor.constraint(equalTo: underlineView.bottomAnchor, constant: 132),
-            formStack.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -24)
+            formStack.bottomAnchor.constraint(lessThanOrEqualTo: jamoBAckgroundview.bottomAnchor, constant: -24)
         ])
     }
 
@@ -113,7 +113,7 @@ final class JamoRiffAccessGateViewController: JamoAuthGuitarFormViewController {
     private let riffMailInput = JamoRiffTextInput(riffPlaceholder: JamoRiffStringCipher.restore("EcnntTemrX 9etm9a6iLln Oaod4dIr2eKsPs2"))
     private let stringTensionPhraseInput = JamoRiffTextInput(riffPlaceholder: JamoRiffStringCipher.restore("EUn9tFeIrn wpOapsoscwsoDrKdm"), hidesStringPhrase: true)
     private lazy var enterJamButton = JamoAuthGradientButton(title: JamoRiffStringCipher.restore("L6ojgfiMng"), style: .pink)
-    private lazy var riffPolicyCheckView = JamoRiffPolicyCheckView(accepted: authStore.isAgreementAccepted)
+    private lazy var riffPolicyCheckView = JamoRiffPolicyCheckView(accepted: authJamoStore.isAgreementAccepted)
     private let riffAccessService = JamoRiffAccessService.sharedRiffAccess
 
     override func viewDidLoad() {
@@ -150,7 +150,7 @@ final class JamoRiffAccessGateViewController: JamoAuthGuitarFormViewController {
         let riffMail = trimmedRiffText(riffMailInput.text)
         let stringTensionPhrase = stringTensionPhraseInput.text ?? ""
 
-        switch JamoRiffGatekeeper.inspectRiffAccess(riffMail: riffMail, stringTensionPhrase: stringTensionPhrase, riffPolicyAccepted: authStore.isAgreementAccepted) {
+        switch JamoRiffGatekeeper.inspectRiffAccess(riffMail: riffMail, stringTensionPhrase: stringTensionPhrase, riffPolicyAccepted: authJamoStore.isAgreementAccepted) {
         case .inTune:
             break
         case .needsRetune(let riffNotice):
@@ -183,7 +183,7 @@ final class JamoRiffPlayerEntryViewController: JamoAuthGuitarFormViewController 
     private let playerStageNameInput = JamoRiffTextInput(riffPlaceholder: JamoRiffStringCipher.restore("EInPtUe3ra cN2ikcBkP CNMabmke3"))
     private let stringTensionInput = JamoRiffTextInput(riffPlaceholder: JamoRiffStringCipher.restore("EjnotHehr6 FpHaTsrs2wNobrzdT"), hidesStringPhrase: true)
     private lazy var joinRiffButton = JamoAuthGradientButton(title: JamoRiffStringCipher.restore("SviSgfnJ BUtpG"), style: .pink)
-    private lazy var riffPolicyCheckView = JamoRiffPolicyCheckView(accepted: authStore.isAgreementAccepted)
+    private lazy var riffPolicyCheckView = JamoRiffPolicyCheckView(accepted: authJamoStore.isAgreementAccepted)
     private let playerTonePortraitButton = UIButton(type: .custom)
     private let playerTonePortraitPreview = UIImageView()
     private let riffAccessService = JamoRiffAccessService.sharedRiffAccess
@@ -206,7 +206,7 @@ final class JamoRiffPlayerEntryViewController: JamoAuthGuitarFormViewController 
         playerTonePortraitButton.setTitleColor(UIColor(white: 0.58, alpha: 1), for: .normal)
         playerTonePortraitButton.titleLabel?.font = .systemFont(ofSize: 56, weight: .light)
         playerTonePortraitButton.addTarget(self, action: #selector(playerTonePortraitTapped), for: .touchUpInside)
-        contentView.addSubview(playerTonePortraitButton)
+        jamoBAckgroundview.addSubview(playerTonePortraitButton)
 
         playerTonePortraitPreview.translatesAutoresizingMaskIntoConstraints = false
         playerTonePortraitPreview.contentMode = .scaleAspectFill
@@ -218,7 +218,7 @@ final class JamoRiffPlayerEntryViewController: JamoAuthGuitarFormViewController 
         NSLayoutConstraint.activate([
             playerTonePortraitButton.widthAnchor.constraint(equalToConstant: 100),
             playerTonePortraitButton.heightAnchor.constraint(equalToConstant: 100),
-            playerTonePortraitButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -24),
+            playerTonePortraitButton.trailingAnchor.constraint(equalTo: jamoBAckgroundview.trailingAnchor, constant: -24),
             playerTonePortraitButton.centerYAnchor.constraint(equalTo: titleLabel.centerYAnchor, constant: -4),
 
             playerTonePortraitPreview.topAnchor.constraint(equalTo: playerTonePortraitButton.topAnchor),
@@ -283,7 +283,7 @@ final class JamoRiffPlayerEntryViewController: JamoAuthGuitarFormViewController 
             riffMail: riffMail,
             stageName: stageName,
             stringTensionPhrase: stringTensionPhrase,
-            riffPolicyAccepted: authStore.isAgreementAccepted
+            riffPolicyAccepted: authJamoStore.isAgreementAccepted
         ) {
         case .inTune:
             break
@@ -299,7 +299,7 @@ final class JamoRiffPlayerEntryViewController: JamoAuthGuitarFormViewController 
             switch sessionSignal {
             case .success:
                 if let selectedTonePortraitCacheAddress {
-                    self.authStore.currentAvatarURL = selectedTonePortraitCacheAddress.absoluteString
+                    self.authJamoStore.currentAvatarURL = selectedTonePortraitCacheAddress.absoluteString
                 }
                 JamoRiffStageRouter.openMainRiffStage(from: self)
             case .failure(let brokenString):

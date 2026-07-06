@@ -883,22 +883,26 @@ final class JamoCoCreateTreeViewController: JamoRiffBaseStageViewController {
     private func makeHeaderCard() -> UIView {
         let card = UIView()
         card.translatesAutoresizingMaskIntoConstraints = false
-        card.backgroundColor = JamoRiffTheme.orange
+        card.backgroundColor = UIColor.black.withAlphaComponent(0.08)
         card.layer.cornerRadius = TreeMetrics.cardRadius
         card.layer.cornerCurve = .continuous
         card.layer.borderWidth = 1
         card.layer.borderColor = UIColor.black.withAlphaComponent(0.05).cgColor
         card.clipsToBounds = true
 
-        let glow = UIView()
-        glow.translatesAutoresizingMaskIntoConstraints = false
-        glow.backgroundColor = JamoRiffTheme.yellow.withAlphaComponent(0.92)
-        glow.layer.cornerRadius = 80
+        let cover = UIImageView(image: treeCoverImage() ?? UIImage(named: "jamo_cocreate_publish_work_cover"))
+        cover.translatesAutoresizingMaskIntoConstraints = false
+        cover.contentMode = .scaleAspectFill
+        cover.clipsToBounds = true
 
-        let icon = UIImageView(image: UIImage(named: "jamo_cocreate_publish_creation_tree"))
+        let shade = UIView()
+        shade.translatesAutoresizingMaskIntoConstraints = false
+        shade.backgroundColor = UIColor.black.withAlphaComponent(0.36)
+
+        let icon = UIImageView(image: UIImage(named: "jamo_cocreate_detail_tree_button"))
         icon.translatesAutoresizingMaskIntoConstraints = false
         icon.contentMode = .scaleAspectFit
-        icon.backgroundColor = UIColor.white.withAlphaComponent(0.2)
+       
         icon.layer.cornerRadius = 18
 
         let labels = UIView()
@@ -930,21 +934,27 @@ final class JamoCoCreateTreeViewController: JamoRiffBaseStageViewController {
 
         labels.addSubview(title)
         labels.addSubview(subtitle)
-        card.addSubview(glow)
+        card.addSubview(cover)
+        card.addSubview(shade)
         card.addSubview(icon)
         card.addSubview(labels)
         card.addSubview(countPill)
         NSLayoutConstraint.activate([
             card.heightAnchor.constraint(greaterThanOrEqualToConstant: 128),
-            glow.trailingAnchor.constraint(equalTo: card.trailingAnchor, constant: 38),
-            glow.topAnchor.constraint(equalTo: card.topAnchor, constant: -68),
-            glow.widthAnchor.constraint(equalToConstant: 160),
-            glow.heightAnchor.constraint(equalTo: glow.widthAnchor),
+            cover.topAnchor.constraint(equalTo: card.topAnchor),
+            cover.leadingAnchor.constraint(equalTo: card.leadingAnchor),
+            cover.trailingAnchor.constraint(equalTo: card.trailingAnchor),
+            cover.bottomAnchor.constraint(equalTo: card.bottomAnchor),
+            cover.heightAnchor.constraint(equalToConstant: 128),
+            shade.topAnchor.constraint(equalTo: card.topAnchor),
+            shade.leadingAnchor.constraint(equalTo: card.leadingAnchor),
+            shade.trailingAnchor.constraint(equalTo: card.trailingAnchor),
+            shade.bottomAnchor.constraint(equalTo: card.bottomAnchor),
 
             icon.leadingAnchor.constraint(equalTo: card.leadingAnchor, constant: 14),
             icon.topAnchor.constraint(equalTo: card.topAnchor, constant: 18),
-            icon.widthAnchor.constraint(equalToConstant: 56),
-            icon.heightAnchor.constraint(equalTo: icon.widthAnchor),
+            icon.widthAnchor.constraint(equalToConstant: 81),
+            icon.heightAnchor.constraint(equalToConstant: 40),
 
             labels.topAnchor.constraint(equalTo: card.topAnchor, constant: 18),
             labels.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 14),
@@ -965,6 +975,16 @@ final class JamoCoCreateTreeViewController: JamoRiffBaseStageViewController {
             countPill.heightAnchor.constraint(equalToConstant: 30)
         ])
         return card
+    }
+
+    private func treeCoverImage() -> UIImage? {
+        if let coverURL = work.coverURL,
+           let url = URL(string: coverURL),
+           url.isFileURL,
+           let image = UIImage(contentsOfFile: url.path) {
+            return image
+        }
+        return UIImage.jamoCoCreateMedia(named: work.coverImageName)
     }
 
     private func makeModeSummary() -> UIView {

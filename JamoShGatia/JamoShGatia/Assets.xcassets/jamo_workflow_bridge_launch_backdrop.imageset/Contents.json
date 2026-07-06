@@ -1,17 +1,16 @@
 {
   "images" : [
     {
-      "filename" : "jamo_profile_app_icon_placeholder.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "jamo_profile_app_icon_placeholder@2x.png",
+      "filename" : "jamo_workflow_bridge_launch_backdrop@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "jamo_profile_app_icon_placeholder@3x.png",
+      "filename" : "jamo_workflow_bridge_launch_backdrop@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

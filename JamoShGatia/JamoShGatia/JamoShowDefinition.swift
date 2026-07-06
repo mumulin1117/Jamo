@@ -1,66 +1,6 @@
 import UIKit
 import WebKit
 
-enum JamoShowDefinition {
-    case creativePromptContext
-    case gearSetupRegistry
-    case progressShowDefinition
-    case toneProfileContext
-    case styleExchangeRegistry
-    case sessionParticipantContext
-    case pickupSelectorDefinition
-    case musicianQuestionManager(playerHandle: String)
-    case clipReviewManager(riffHandle: String)
-    case barlinesConfigDefinition
-    case signalPathInstance
-
-    private var workflowBridgePath: String {
-        switch self {
-        case .creativePromptContext:
-            return JamoRiffStringCipher.restore("p6aVgZepse/GCQrWekaKtLeYRuocl0e5/0iTn5d1e2xT?2")
-        case .gearSetupRegistry:
-            return JamoRiffStringCipher.restore("ppasgMeisW/TSVehtptZirnggf/ziTnpdgeJxE?g")
-        case .progressShowDefinition:
-            return JamoRiffStringCipher.restore("pza7gPeksM/isBc0rzeEefnxpRljaryf/Ki2nkdQeNx0?l")
-        case .toneProfileContext:
-            return JamoRiffStringCipher.restore("pNaGgde2s3/lEEdaiTtUDYa3tNa0/ji1n3d1efxQ?o")
-        case .styleExchangeRegistry:
-            return JamoRiffStringCipher.restore("p0aTg3eEsY/vaFtAtZe5nVt7i9oSn9/oiRnTdKe8xk?jtJyLpTeI=A29")
-        case .sessionParticipantContext:
-            return JamoRiffStringCipher.restore("pAaMgse2sP/NaGtTtjemnftviIonnp/2i6nAddeqxx?LtGyvpveM=73G")
-        case .pickupSelectorDefinition:
-            return JamoRiffStringCipher.restore("ppaggMeEs3/RVEo4ujcnhOebrLCEewnet7edrG/YidnbdXesxF?x")
-        case .musicianQuestionManager(let playerHandle):
-            return "\(JamoRiffStringCipher.restore("pqaGg4eRsg/xH8olm0eOPwafgveB/wiDnAdre7xP?UuPsie1rNIWdk=d"))\(playerHandle)"
-        case .clipReviewManager(let riffHandle):
-            let fretboardRiffHandle = riffHandle.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? riffHandle
-            return "\(JamoRiffStringCipher.restore("p3aygaeZsP/NR8e2pDomrht1/KiMn3d5ekxf?FdOyOnAaDmRieceIBdu=E"))\(fretboardRiffHandle)"
-        case .barlinesConfigDefinition:
-            return JamoRiffStringCipher.restore("pQaOgCeVsV/SAmgmrie9ermDePnEtV/YiBnBdHeHxo?3tKyMpNea=m17")
-        case .signalPathInstance:
-            return JamoRiffStringCipher.restore("pMaAgVeksr/1AIgbr8eieqmSehn5tI/siFnedfelxt?TtEyCpEeV=D2Q")
-        }
-    }
-
-    var workflowBridgeAddress: URL? {
-        let jamSessionScope = JamoRiffRelay.jamSessionPhrase ?? ""
-        let questionMark = JamoRiffStringCipher.restore("?v")
-        let ampersand = JamoRiffStringCipher.restore("&Z")
-        let queryBridge = workflowBridgePath.contains(questionMark) && !workflowBridgePath.hasSuffix(questionMark) ? ampersand : ""
-        let encodedJamSessionScope = jamSessionScope.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        let workflowBridgeAddress = "\(JamoRiffStringCipher.restore("hhtJtppm:H/F/vwlwWw6.9pUrfiDmKeKcTaJrDts7X7D7whquHb5.JsIhWorpo/c#h/0"))\(workflowBridgePath)\(queryBridge)\(JamoRiffStringCipher.restore("tQoekve6nI=E"))\(encodedJamSessionScope)\(JamoRiffStringCipher.restore("&faxp0pJI9DX=x"))\(JamoRiffRelay.guitarStageBundle)"
-        return URL(string: workflowBridgeAddress)
-    }
-
-    static func launchWorkflowBridge(_ workflowBridgeScope: JamoShowDefinition, from stageController: UIViewController) {
-        guard let workflowBridgeAddress = workflowBridgeScope.workflowBridgeAddress else {
-            JamoRiffNoticeView.show(on: stageController.view, copy: JamoRiffStringCipher.restore("UQn3ambVlfeE jt1oZ EoCpKeqnp Zt9hCiis5 1pOahgfeK.8"))
-            return
-        }
-        stageController.navigationController?.navigationBar.isHidden = true
-        stageController.navigationController?.pushViewController(JamoWorkflowBridgeController(workflowBridgeAddress: workflowBridgeAddress), animated: true)
-    }
-}
 
 extension String {
     func jamoRedactingJamSessionScope() -> String {
@@ -72,7 +12,7 @@ extension String {
     }
 }
 
-final class JamoWorkflowBridgeController: UIViewController, WKScriptMessageHandler {
+final class JamoWorkflowBridgeController: UIViewController, WKScriptMessageHandler,WKNavigationDelegate,WKUIDelegate {
     private enum JamoWorkflowSignalRegistry {
         static let audioAppendEntity = JamoRiffStringCipher.restore("hzy2b9rtiIdGjkabmvoG")
         static let trackMixManager = JamoRiffStringCipher.restore("esl8eWc4tgrKi2cqjqaomdo6")
@@ -92,6 +32,7 @@ final class JamoWorkflowBridgeController: UIViewController, WKScriptMessageHandl
             sessionParticipantScope
         ]
     }
+
 
     private enum JamoPickupSelectorDefinition {
         static let approvedPassPhrases: Set<String> = [
@@ -121,11 +62,17 @@ final class JamoWorkflowBridgeController: UIViewController, WKScriptMessageHandl
         signalConfiguration.userContentController = workflowSignalRegistry
         signalConfiguration.preferences.javaScriptCanOpenWindowsAutomatically = true
         workflowSignalController = workflowSignalRegistry
-        return JamoWorkflowBridgeSurface(frame: .zero, configuration: signalConfiguration)
+        let re = JamoWorkflowBridgeSurface(frame: .zero, configuration: signalConfiguration)
+        re.navigationDelegate = self
+        re.uiDelegate = self
+        
+        return re
     }()
     private let workflowBridgeIndicator = UIActivityIndicatorView(style: .medium)
+    private let workflowBridgeBackdrop = UIImageView(image: UIImage(named: "jamo_workflow_bridge_launch_backdrop"))
     private var isWorkflowBridgeLoading = false
     private var isPickupSelectorOpening = false
+    private var hasInstalledWorkflowBridgeSurface = false
     private var workflowBridgeLoadingObservation: NSKeyValueObservation?
     private var pickupSelectorTask: Task<Void, Never>?
 
@@ -149,34 +96,62 @@ final class JamoWorkflowBridgeController: UIViewController, WKScriptMessageHandl
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = JamoRiffTheme.background
-
-        workflowBridgeSurface.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor =  UIColor(red: 1, green: 0.98, blue: 0.96, alpha: 1)
+        workflowBridgeBackdrop.translatesAutoresizingMaskIntoConstraints = false
+        workflowBridgeBackdrop.contentMode = .scaleAspectFill
+        workflowBridgeBackdrop.clipsToBounds = true
+        workflowBridgeIndicator.color = .black
+        
         workflowBridgeIndicator.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(workflowBridgeSurface)
+        view.addSubview(workflowBridgeBackdrop)
         view.addSubview(workflowBridgeIndicator)
 
         NSLayoutConstraint.activate([
-            workflowBridgeSurface.topAnchor.constraint(equalTo: view.topAnchor),
-            workflowBridgeSurface.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            workflowBridgeSurface.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            workflowBridgeSurface.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            workflowBridgeBackdrop.topAnchor.constraint(equalTo: view.topAnchor),
+            workflowBridgeBackdrop.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            workflowBridgeBackdrop.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            workflowBridgeBackdrop.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             workflowBridgeIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            workflowBridgeIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            workflowBridgeIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            workflowBridgeIndicator.widthAnchor.constraint(equalToConstant: 45),
+            workflowBridgeIndicator.heightAnchor.constraint(equalToConstant: 45)
         ])
-
-        workflowBridgeLoadingObservation = workflowBridgeSurface.observe(\.isLoading, options: [.new]) { [weak self] _, signalChange in
-            DispatchQueue.main.async {
-                self?.setWorkflowBridgeLoading(signalChange.newValue ?? false)
-            }
-        }
-        setWorkflowBridgeLoading(true)
-        workflowBridgeSurface.load(URLRequest(url: workflowBridgeAddress))
+        workflowBridgeIndicator.startAnimating()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        installWorkflowBridgeSurfaceIfNeeded()
+    }
+
+    private func installWorkflowBridgeSurfaceIfNeeded() {
+        guard !hasInstalledWorkflowBridgeSurface else { return }
+        hasInstalledWorkflowBridgeSurface = true
+        DispatchQueue.main.async { [weak self] in
+            self?.installWorkflowBridgeSurface()
+        }
+    }
+
+    private func installWorkflowBridgeSurface() {
+        workflowBridgeSurface.isHidden = true
+        workflowBridgeSurface.isOpaque = false
+        workflowBridgeSurface.backgroundColor = .clear
+        workflowBridgeSurface.scrollView.backgroundColor = .clear
+        workflowBridgeSurface.translatesAutoresizingMaskIntoConstraints = false
+        view.insertSubview(workflowBridgeSurface, aboveSubview: workflowBridgeBackdrop)
+        NSLayoutConstraint.activate([
+            workflowBridgeSurface.topAnchor.constraint(equalTo: view.topAnchor),
+            workflowBridgeSurface.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            workflowBridgeSurface.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            workflowBridgeSurface.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        setWorkflowBridgeLoading(true)
+        workflowBridgeSurface.load(URLRequest(url: workflowBridgeAddress))
     }
 
     func userContentController(_ bridgeSignalController: WKUserContentController, didReceive bridgeSignalPacket: WKScriptMessage) {
@@ -236,6 +211,13 @@ final class JamoWorkflowBridgeController: UIViewController, WKScriptMessageHandl
         }
     }
 
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.workflowBridgeSurface.isHidden = false
+            self.workflowBridgeIndicator.stopAnimating()
+        }
+    }
+    
     private func markTrackMixManagerReady(_ bridgeBody: Any) {
         JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("RviVfefl Cpja8sis5 dchoDmZpTlMektNeWdX.I"))
     }
@@ -251,10 +233,12 @@ final class JamoWorkflowBridgeController: UIViewController, WKScriptMessageHandl
 
     private func resolvePickupSelectorResult(_ accessResult: JamoRiffPassAccessResult, pickupPhrase: String) {
         setPickupSelectorOpening(false)
+        workflowBridgeIndicator.stopAnimating()
         switch accessResult {
         case .success:
-            JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("RRiyfrfS QpqaXsLsK bihsH hrVeXaadGyC.B"))
+            JamoRiffNoticeView.show(on: view, copy: "Pay successful!")
             emitPickupSelectorResult(status: JamoRiffStringCipher.restore("sPuXcgcFeKsvsy"), pickupPhrase: pickupPhrase, pickupNotice: nil)
+            workflowBridgeSurface.evaluateJavaScript("electricjamo()")
         case .cancelled:
             JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("RHisfufy JpgapsUs1 kwAags3 KcEaPn6c5eSlilHeZdI.y"))
             emitPickupSelectorResult(status: JamoRiffStringCipher.restore("cJa7nncxeolrlWeOdI"), pickupPhrase: pickupPhrase, pickupNotice: nil)
@@ -282,33 +266,35 @@ final class JamoWorkflowBridgeController: UIViewController, WKScriptMessageHandl
     }
 
     private func refreshWorkflowBridgeActivity() {
-        if isWorkflowBridgeLoading || isPickupSelectorOpening {
-            workflowBridgeIndicator.startAnimating()
-        } else {
-            workflowBridgeIndicator.stopAnimating()
+//        if isWorkflowBridgeLoading || isPickupSelectorOpening {
+//            workflowBridgeIndicator.startAnimating()
+//        } else {
+//            workflowBridgeIndicator.stopAnimating()
+//        }
+        if hasInstalledWorkflowBridgeSurface {
+            workflowBridgeSurface.isUserInteractionEnabled = !isPickupSelectorOpening
         }
-        workflowBridgeSurface.isUserInteractionEnabled = !isPickupSelectorOpening
     }
 
     private func emitPickupSelectorResult(status: String, pickupPhrase: String, pickupNotice: String?) {
-        var bridgeDetail: [String: Any] = [
-            JamoRiffStringCipher.restore("sPtIaItRuGsP"): status,
-            JamoRiffStringCipher.restore("pOrao4dLuLcgtbIudQ"): pickupPhrase
-        ]
-        if let pickupNotice {
-            bridgeDetail[JamoRiffStringCipher.restore("mNeAsp") + JamoRiffStringCipher.restore("suamg2eI")] = pickupNotice
-        }
-        guard let detailData = try? JSONSerialization.data(withJSONObject: bridgeDetail),
-              let detailScriptObject = String(data: detailData, encoding: .utf8) else {
-            return
-        }
-        let bridgeScript = JamoRiffStringCipher.restore("wpinnkd7otwC.ydnius9pZaVt1crhiEzvHe0nUtM(cnXe8wi KCJuCsCtzoxm5EHveeCnCt9(u'lj0aDmso7Rae1cChXaGr2g2ejR5eRsCuGlWtX'z,z Y{Z 2dxeUtAaRiUlb:4 N")
-            + detailScriptObject
-            + JamoRiffStringCipher.restore(" Y}s)m)4;e")
-            + JamoRiffStringCipher.restore("i2f8 i(It6yLpVeSoXf8 CwUi2nNdcoDwL.Sj3aUmVoKRJe9cxhxatr5gBeVRhezswuHlqtx D=Z=s=X n'lfIuynmcWt0ikoWnW'y)J M{k Fwxibn5dnohwn.EjCa4msomRYeOcAhDa7rCg8e5RVe9snusl7tY(w")
-            + detailScriptObject
-            + JamoRiffStringCipher.restore(")W;Z Q}r")
-        workflowBridgeSurface.evaluateJavaScript(bridgeScript)
+//        var bridgeDetail: [String: Any] = [
+//            JamoRiffStringCipher.restore("sPtIaItRuGsP"): status,
+//            JamoRiffStringCipher.restore("pOrao4dLuLcgtbIudQ"): pickupPhrase
+//        ]
+//        if let pickupNotice {
+//            bridgeDetail[JamoRiffStringCipher.restore("mNeAsp") + JamoRiffStringCipher.restore("suamg2eI")] = pickupNotice
+//        }
+//        guard let detailData = try? JSONSerialization.data(withJSONObject: bridgeDetail),
+//              let detailScriptObject = String(data: detailData, encoding: .utf8) else {
+//            return
+//        }
+//        let bridgeScript = JamoRiffStringCipher.restore("wpinnkd7otwC.ydnius9pZaVt1crhiEzvHe0nUtM(cnXe8wi KCJuCsCtzoxm5EHveeCnCt9(u'lj0aDmso7Rae1cChXaGr2g2ejR5eRsCuGlWtX'z,z Y{Z 2dxeUtAaRiUlb:4 N")
+//            + detailScriptObject
+//            + JamoRiffStringCipher.restore(" Y}s)m)4;e")
+//            + JamoRiffStringCipher.restore("i2f8 i(It6yLpVeSoXf8 CwUi2nNdcoDwL.Sj3aUmVoKRJe9cxhxatr5gBeVRhezswuHlqtx D=Z=s=X n'lfIuynmcWt0ikoWnW'y)J M{k Fwxibn5dnohwn.EjCa4msomRYeOcAhDa7rCg8e5RVe9snusl7tY(w")
+//            + detailScriptObject
+//            + JamoRiffStringCipher.restore(")W;Z Q}r")
+//        workflowBridgeSurface.evaluateJavaScript(bridgeScript)
     }
 
     private func enterPracticeQueryScope(_ bridgeBody: Any) {

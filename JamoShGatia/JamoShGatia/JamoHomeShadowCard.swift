@@ -1,10 +1,4 @@
 
-
-
-
-
-
-
 import UIKit
 
 final class JamoHomeShadowCard: UIView {

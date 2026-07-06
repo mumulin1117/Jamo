@@ -1,16 +1,16 @@
 import UIKit
 
-final class JamoRiffWelcomeStageViewController: JamoAuthBaseViewController {
+final class JamoRiffWelcomeStageViewController: JamoCareFulController {
     private let backgroundImageView = UIImageView(image: UIImage(named: "jamo_auth_welcome_background"))
     private let logoImageView = UIImageView(image: UIImage(named: "jamo_auth_app_logo"))
     private lazy var signInButton = JamoAuthGradientButton(title: JamoRiffStringCipher.restore("S6iagznz 4iinJ"), style: .whitePinkText)
     private lazy var newAccountButton = JamoAuthGradientButton(title: JamoRiffStringCipher.restore("IZ'cmI bn1eKww"), style: .gradient)
-    private lazy var agreementView = JamoRiffPolicyCheckView(accepted: authStore.isAgreementAccepted)
+    private lazy var agreementView = JamoRiffPolicyCheckView(accepted: authJamoStore.isAgreementAccepted)
     private weak var riffPolicyPrompt: JamoWelcomeRiffPolicyPrompt?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        scrollView.isScrollEnabled = false
+        jamoScroll.isScrollEnabled = false
         setupLayout()
         setupActions()
         presentEulaIfNeeded()
@@ -20,7 +20,7 @@ final class JamoRiffWelcomeStageViewController: JamoAuthBaseViewController {
         backgroundImageView.translatesAutoresizingMaskIntoConstraints = false
         backgroundImageView.contentMode = .scaleAspectFill
         backgroundImageView.clipsToBounds = true
-        view.insertSubview(backgroundImageView, belowSubview: scrollView)
+        view.insertSubview(backgroundImageView, belowSubview: jamoScroll)
 
         NSLayoutConstraint.activate([
             backgroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -34,7 +34,7 @@ final class JamoRiffWelcomeStageViewController: JamoAuthBaseViewController {
         bottomPanel.axis = .vertical
         bottomPanel.alignment = .center
         bottomPanel.spacing = 24
-        contentView.addSubview(bottomPanel)
+        jamoBAckgroundview.addSubview(bottomPanel)
 
         logoImageView.translatesAutoresizingMaskIntoConstraints = false
         logoImageView.contentMode = .scaleAspectFit
@@ -51,9 +51,9 @@ final class JamoRiffWelcomeStageViewController: JamoAuthBaseViewController {
             agreementView.leadingAnchor.constraint(equalTo: bottomPanel.leadingAnchor),
             agreementView.trailingAnchor.constraint(equalTo: bottomPanel.trailingAnchor),
 
-            bottomPanel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 22),
-            bottomPanel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -22),
-            bottomPanel.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor, constant: -32)
+            bottomPanel.leadingAnchor.constraint(equalTo: jamoBAckgroundview.leadingAnchor, constant: 22),
+            bottomPanel.trailingAnchor.constraint(equalTo: jamoBAckgroundview.trailingAnchor, constant: -22),
+            bottomPanel.bottomAnchor.constraint(equalTo: jamoBAckgroundview.safeAreaLayoutGuide.bottomAnchor, constant: -32)
         ])
         bottomPanel.setCustomSpacing(16, after: signInButton)
         bottomPanel.setCustomSpacing(42, after: newAccountButton)
@@ -65,20 +65,20 @@ final class JamoRiffWelcomeStageViewController: JamoAuthBaseViewController {
     }
 
     private func presentEulaIfNeeded() {
-        guard !authStore.isEulaAccepted, riffPolicyPrompt == nil else { return }
+        guard !authJamoStore.isEulaAccepted, riffPolicyPrompt == nil else { return }
         let prompt = JamoWelcomeRiffPolicyPrompt()
         prompt.translatesAutoresizingMaskIntoConstraints = false
         prompt.onRiffPolicyAccepted = { [weak self, weak prompt] in
             guard let self else { return }
-            self.authStore.isEulaAccepted = true
-            self.authStore.isAgreementAccepted = true
+            self.authJamoStore.isEulaAccepted = true
+            self.authJamoStore.isAgreementAccepted = true
             self.agreementView.setAccepted(true)
             prompt?.dismiss()
         }
         prompt.onRiffPolicyDeclined = { [weak self, weak prompt] in
             guard let self else { return }
-            self.authStore.isEulaAccepted = false
-            self.authStore.isAgreementAccepted = false
+            self.authJamoStore.isEulaAccepted = false
+            self.authJamoStore.isAgreementAccepted = false
             self.agreementView.setAccepted(false)
             prompt?.dismiss()
         }
@@ -111,7 +111,7 @@ final class JamoRiffWelcomeStageViewController: JamoAuthBaseViewController {
 
     override func jamoRiffPolicyCheck(_ view: JamoRiffPolicyCheckView, didChangeAccepted accepted: Bool) {
         super.jamoRiffPolicyCheck(view, didChangeAccepted: accepted)
-        authStore.isEulaAccepted = accepted
+        authJamoStore.isEulaAccepted = accepted
     }
 }
 

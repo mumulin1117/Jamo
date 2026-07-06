@@ -187,10 +187,10 @@ final class JamoProfileViewModel {
         in users: [JamoRiffPlayerProfile],
         activePlayerContext: JamoRiffPlayerProfile
     ) -> JamoRiffPlayerProfile? {
-        let currentPlayerEmail = normalizedPhrase(activePlayerContext.email)
+        let currentPlayerEmail = normalizedPhrase(activePlayerContext.emaRiggil)
         return users.first { playerSummary in
             playerSummary.jamoPlayerHandle == activePlayerContext.jamoPlayerHandle
-                || (!currentPlayerEmail.isEmpty && normalizedPhrase(playerSummary.email) == currentPlayerEmail)
+                || (!currentPlayerEmail.isEmpty && normalizedPhrase(playerSummary.emaRiggil) == currentPlayerEmail)
         }
     }
 
@@ -213,7 +213,7 @@ final class JamoProfileViewModel {
             defaultValue: DefaultMetric.pickupCount
         )
         let playerDisplayName = trimmedPhrase(matchedParticipant?.displayName) ?? activePlayerContext.displayName
-        let playerArtworkAddress = trimmedPhrase(activePlayerContext.avatarURL) ?? trimmedPhrase(matchedParticipant?.avatarURL)
+        let playerArtworkAddress = trimmedPhrase(activePlayerContext.userRiGGtarURL) ?? trimmedPhrase(matchedParticipant?.userRiGGtarURL)
         let usesFallbackTone = forcePlayerToneFallback
             || matchedParticipant == nil
             || styleExchangeMetric.isFallback
@@ -223,7 +223,7 @@ final class JamoProfileViewModel {
         return JamoProfileUserSummary(
             playerHandle: activePlayerContext.jamoPlayerHandle,
             playerDisplayName: playerDisplayName,
-            playerEmail: activePlayerContext.email ?? JamoRiffStringCipher.restore("lRotcVaAl7@djGaamRoY.NacpvpR"),
+            playerEmail: activePlayerContext.emaRiggil ?? JamoRiffStringCipher.restore("lRotcVaAl7@djGaamRoY.NacpvpR"),
             playerArtworkAddress: playerArtworkAddress,
             styleExchange: JamoToneProfileMetricDisplay(
                 title: JamoRiffStringCipher.restore("FnoblKlqo6w0i6nhgm"),

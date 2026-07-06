@@ -1,15 +1,15 @@
 import UIKit
 
-class JamoAuthBaseViewController: UIViewController, JamoRiffPolicyCheckViewDelegate {
-    let scrollView = UIScrollView()
-    let contentView = UIView()
-    let authStore = JamoRiffIdentityArchive.sharedArchive
+class JamoCareFulController: UIViewController, JamoRiffPolicyCheckViewDelegate {
+    let jamoScroll = UIScrollView()
+    let jamoBAckgroundview = UIView()
+    let authJamoStore = JamoRiffIdentityArchive.sharedArchive
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = JamoAuthTheme.appBackground
       
-        setupScrollContainer()
+        setupJamoWeellScrollContainer()
         setupDismissKeyboardGesture()
         registerKeyboardObservers()
     }
@@ -18,27 +18,27 @@ class JamoAuthBaseViewController: UIViewController, JamoRiffPolicyCheckViewDeleg
         NotificationCenter.default.removeObserver(self)
     }
 
-    func setupScrollContainer() {
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.alwaysBounceVertical = true
-        scrollView.keyboardDismissMode = .interactive
-        view.addSubview(scrollView)
+    func setupJamoWeellScrollContainer() {
+        jamoScroll.translatesAutoresizingMaskIntoConstraints = false
+        jamoScroll.alwaysBounceVertical = true
+        jamoScroll.keyboardDismissMode = .interactive
+        view.addSubview(jamoScroll)
 
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.addSubview(contentView)
+        jamoBAckgroundview.translatesAutoresizingMaskIntoConstraints = false
+        jamoScroll.addSubview(jamoBAckgroundview)
 
         NSLayoutConstraint.activate([
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            jamoScroll.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            jamoScroll.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            jamoScroll.topAnchor.constraint(equalTo: view.topAnchor),
+            jamoScroll.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
-            contentView.leadingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.leadingAnchor),
-            contentView.trailingAnchor.constraint(equalTo: scrollView.contentLayoutGuide.trailingAnchor),
-            contentView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
-            contentView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
-            contentView.widthAnchor.constraint(equalTo: scrollView.frameLayoutGuide.widthAnchor),
-            contentView.heightAnchor.constraint(greaterThanOrEqualTo: scrollView.frameLayoutGuide.heightAnchor)
+            jamoBAckgroundview.leadingAnchor.constraint(equalTo: jamoScroll.contentLayoutGuide.leadingAnchor),
+            jamoBAckgroundview.trailingAnchor.constraint(equalTo: jamoScroll.contentLayoutGuide.trailingAnchor),
+            jamoBAckgroundview.topAnchor.constraint(equalTo: jamoScroll.contentLayoutGuide.topAnchor),
+            jamoBAckgroundview.bottomAnchor.constraint(equalTo: jamoScroll.contentLayoutGuide.bottomAnchor),
+            jamoBAckgroundview.widthAnchor.constraint(equalTo: jamoScroll.frameLayoutGuide.widthAnchor),
+            jamoBAckgroundview.heightAnchor.constraint(greaterThanOrEqualTo: jamoScroll.frameLayoutGuide.heightAnchor)
         ])
     }
 
@@ -47,7 +47,7 @@ class JamoAuthBaseViewController: UIViewController, JamoRiffPolicyCheckViewDeleg
     }
 
     func ensureAgreementAccepted() -> Bool {
-        guard authStore.isAgreementAccepted else {
+        guard authJamoStore.isAgreementAccepted else {
             showRiffNotice(JamoRiffAccessCopy.riffPolicyRequiredNotice)
             return false
         }
@@ -63,7 +63,7 @@ class JamoAuthBaseViewController: UIViewController, JamoRiffPolicyCheckViewDeleg
     }
 
     func jamoRiffPolicyCheck(_ view: JamoRiffPolicyCheckView, didChangeAccepted accepted: Bool) {
-        authStore.isAgreementAccepted = accepted
+        authJamoStore.isAgreementAccepted = accepted
     }
 
     func routeLegalPage(kind: JamoAuthLegalRoute) {
@@ -107,20 +107,20 @@ class JamoAuthBaseViewController: UIViewController, JamoRiffPolicyCheckViewDeleg
         let keyboardFrame = view.convert(frame, from: nil)
         let overlap = max(0, view.bounds.maxY - keyboardFrame.minY)
         let bottomInset = overlap + 16
-        scrollView.contentInset.bottom = bottomInset
-        scrollView.verticalScrollIndicatorInsets.bottom = bottomInset
+        jamoScroll.contentInset.bottom = bottomInset
+        jamoScroll.verticalScrollIndicatorInsets.bottom = bottomInset
         scrollActiveInputIntoView()
     }
 
     @objc private func keyboardWillHide(_ notification: Notification) {
-        scrollView.contentInset.bottom = 0
-        scrollView.verticalScrollIndicatorInsets.bottom = 0
+        jamoScroll.contentInset.bottom = 0
+        jamoScroll.verticalScrollIndicatorInsets.bottom = 0
     }
 
     private func scrollActiveInputIntoView() {
         guard let activeView = view.jamoAuthFirstResponder() else { return }
-        let activeRect = activeView.convert(activeView.bounds, to: contentView).insetBy(dx: 0, dy: -20)
-        scrollView.scrollRectToVisible(activeRect, animated: true)
+        let activeRect = activeView.convert(activeView.bounds, to: jamoBAckgroundview).insetBy(dx: 0, dy: -20)
+        jamoScroll.scrollRectToVisible(activeRect, animated: true)
     }
 }
 

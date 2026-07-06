@@ -1,10 +1,10 @@
 import Foundation
 
 struct JamoRiffPlayerProfile: Hashable {
-    let userID: String
+    let userRiggID: String
     let displayName: String
-    let email: String?
-    let avatarURL: String?
+    let emaRiggil: String?
+    let userRiGGtarURL: String?
     var followingCount: Int? = nil
     var followersCount: Int? = nil
     var pickCount: Int? = nil
@@ -21,10 +21,10 @@ extension JamoRiffPlayerProfile {
         pickCount: Int? = nil
     ) {
         self.init(
-            userID: jamoPlayerHandle,
+            userRiggID: jamoPlayerHandle,
             displayName: displayName,
-            email: email,
-            avatarURL: avatarURL,
+            emaRiggil: email,
+            userRiGGtarURL: avatarURL,
             followingCount: followingCount,
             followersCount: followersCount,
             pickCount: pickCount
@@ -32,7 +32,7 @@ extension JamoRiffPlayerProfile {
     }
 
     var jamoPlayerHandle: String {
-        userID
+        userRiggID
     }
 }
 
@@ -70,7 +70,7 @@ final class JamoCoCreateUserService: JamoCoCreateUserProviding {
         let riffPlayers = extractRosterItems(from: rosterSignal)
         let playerProfiles = riffPlayers.compactMap { makePlayerProfile(from: $0) }
         var usedPlayerHandles = Set<String>()
-        return playerProfiles.filter { usedPlayerHandles.insert($0.userID).inserted }
+        return playerProfiles.filter { usedPlayerHandles.insert($0.userRiggID).inserted }
     }
 
     private func extractRosterItems(from riffValue: Any?) -> [[String: Any]] {
@@ -143,10 +143,10 @@ final class JamoCoCreateUserService: JamoCoCreateUserProviding {
 
         let fallbackName = email?.components(separatedBy: JamoRiffStringCipher.restore("@a")).first
         return JamoRiffPlayerProfile(
-            userID: stablePlayerHandle,
+            userRiggID: stablePlayerHandle,
             displayName: stageName ?? fallbackName ?? JamoRiffStringCipher.restore("J8aKmooc MPmlta4yletrt"),
-            email: email,
-            avatarURL: playerArtwork,
+            emaRiggil: email,
+            userRiGGtarURL: playerArtwork,
             followingCount: followingCount,
             followersCount: followersCount,
             pickCount: pickCount

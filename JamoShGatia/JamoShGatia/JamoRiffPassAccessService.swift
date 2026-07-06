@@ -27,9 +27,24 @@ enum JamoRiffPassAccessError: LocalizedError {
 final class JamoRiffPassAccessService {
     static let shared = JamoRiffPassAccessService()
 
+    private var riffPassObservationTask: Task<Void, Never>?
+
     private init() {}
 
+    func startRiffPassObservation() {
+        guard riffPassObservationTask == nil else { return }
+        riffPassObservationTask = Task.detached(priority: .background) {
+            for await update in Transaction.updates {
+                guard case .verified(let transaction) = update else {
+                    continue
+                }
+                await transaction.finish()
+            }
+        }
+    }
+
     func openRiffPass(passCode: String) async throws -> JamoRiffPassAccessResult {
+        startRiffPassObservation()
         let storeItems = try await Product.products(for: [passCode])
         guard let storeItem = storeItems.first else {
             throw JamoRiffPassAccessError.passCodeUnavailable

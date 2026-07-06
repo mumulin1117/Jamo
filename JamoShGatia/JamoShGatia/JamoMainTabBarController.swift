@@ -37,7 +37,7 @@ final class JamoMainTabBarController: UITabBarController {
         let home = navigationRoot(JamoGuitaFunctController(), accessibilityLabel: JamoRiffStringCipher.restore("HboqmPeH"))
         let jam = navigationRoot(JamoRiffChainListViewController(), accessibilityLabel: JamoRiffStringCipher.restore("Ctoj-xcTrke2ahtOem"))
         let messages = navigationRoot(JamoRiffQuietInboxViewController(), accessibilityLabel: JamoRiffStringCipher.restore("MSeAs1swaPgMeEs6"))
-        let me = navigationRoot(JamoProfileViewController(), accessibilityLabel: JamoRiffStringCipher.restore("PJrRobfHidlden"))
+        let me = navigationRoot(JamoPersonnWalController(), accessibilityLabel: JamoRiffStringCipher.restore("PJrRobfHidlden"))
         viewControllers = [home, jam, messages, me]
     }
 

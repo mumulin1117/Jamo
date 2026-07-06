@@ -9,7 +9,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>jamoj</string>
+				<string>jamo</string>
 			</array>
 		</dict>
 	</array>
@@ -18,14 +18,6 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
-	<key>NSCameraUsageDescription</key>
-	<string>Jamo uses the camera to set your guitar co-create profile avatar.</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Jamo uses your photo library to choose a profile avatar.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Jamo uses the microphone to record your guitar co-create part.</string>
-	<key>UIDesignRequiresCompatibility</key>
-	<true/>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -43,9 +35,7 @@
 			</array>
 		</dict>
 	</dict>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>remote-notification</string>
-	</array>
+	<key>UIDesignRequiresCompatibility</key>
+	<true/>
 </dict>
 </plist>

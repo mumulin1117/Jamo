@@ -1,5 +1,66 @@
 import Foundation
+import UIKit
 
+enum JamoShowDefinition {
+    case creativePromptContext
+    case gearSetupRegistry
+    case progressShowDefinition
+    case toneProfileContext
+    case styleExchangeRegistry
+    case sessionParticipantContext
+    case pickupSelectorDefinition
+    case musicianQuestionManager(playerHandle: String)
+    case clipReviewManager(riffHandle: String)
+    case barlinesConfigDefinition
+    case signalPathInstance
+
+    private var workflowBridgePath: String {
+        switch self {
+        case .creativePromptContext:
+            return JamoRiffStringCipher.restore("p6aVgZepse/GCQrWekaKtLeYRuocl0e5/0iTn5d1e2xT?2")
+        case .gearSetupRegistry:
+            return JamoRiffStringCipher.restore("ppasgMeisW/TSVehtptZirnggf/ziTnpdgeJxE?g")
+        case .progressShowDefinition:
+            return JamoRiffStringCipher.restore("pza7gPeksM/isBc0rzeEefnxpRljaryf/Ki2nkdQeNx0?l")
+        case .toneProfileContext:
+            return JamoRiffStringCipher.restore("pNaGgde2s3/lEEdaiTtUDYa3tNa0/ji1n3d1efxQ?o")
+        case .styleExchangeRegistry:
+            return JamoRiffStringCipher.restore("p0aTg3eEsY/vaFtAtZe5nVt7i9oSn9/oiRnTdKe8xk?jtJyLpTeI=A29")
+        case .sessionParticipantContext:
+            return JamoRiffStringCipher.restore("pAaMgse2sP/NaGtTtjemnftviIonnp/2i6nAddeqxx?LtGyvpveM=73G")
+        case .pickupSelectorDefinition:
+            return JamoRiffStringCipher.restore("ppaggMeEs3/RVEo4ujcnhOebrLCEewnet7edrG/YidnbdXesxF?x")
+        case .musicianQuestionManager(let playerHandle):
+            return "\(JamoRiffStringCipher.restore("pqaGg4eRsg/xH8olm0eOPwafgveB/wiDnAdre7xP?UuPsie1rNIWdk=d"))\(playerHandle)"
+        case .clipReviewManager(let riffHandle):
+            let fretboardRiffHandle = riffHandle.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? riffHandle
+            return "\(JamoRiffStringCipher.restore("p3aygaeZsP/NR8e2pDomrht1/KiMn3d5ekxf?FdOyOnAaDmRieceIBdu=E"))\(fretboardRiffHandle)"
+        case .barlinesConfigDefinition:
+            return JamoRiffStringCipher.restore("pQaOgCeVsV/SAmgmrie9ermDePnEtV/YiBnBdHeHxo?3tKyMpNea=m17")
+        case .signalPathInstance:
+            return JamoRiffStringCipher.restore("pMaAgVeksr/1AIgbr8eieqmSehn5tI/siFnedfelxt?TtEyCpEeV=D2Q")
+        }
+    }
+
+    var workflowBridgeAddress: URL? {
+        let jamSessionScope = JamoRiffRelay.jamSessionPhrase ?? ""
+        let questionMark = JamoRiffStringCipher.restore("?v")
+        let ampersand = JamoRiffStringCipher.restore("&Z")
+        let queryBridge = workflowBridgePath.contains(questionMark) && !workflowBridgePath.hasSuffix(questionMark) ? ampersand : ""
+        let encodedJamSessionScope = jamSessionScope.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        let workflowBridgeAddress = "\(JamoRiffStringCipher.restore("hhtJtppm:H/F/vwlwWw6.9pUrfiDmKeKcTaJrDts7X7D7whquHb5.JsIhWorpo/c#h/0"))\(workflowBridgePath)\(queryBridge)\(JamoRiffStringCipher.restore("tQoekve6nI=E"))\(encodedJamSessionScope)\(JamoRiffStringCipher.restore("&faxp0pJI9DX=x"))\(JamoRiffRelay.guitarStageBundle)"
+        return URL(string: workflowBridgeAddress)
+    }
+
+    static func launchWorkflowBridge(_ workflowBridgeScope: JamoShowDefinition, from stageController: UIViewController) {
+        guard let workflowBridgeAddress = workflowBridgeScope.workflowBridgeAddress else {
+            JamoRiffNoticeView.show(on: stageController.view, copy: JamoRiffStringCipher.restore("UQn3ambVlfeE jt1oZ EoCpKeqnp Zt9hCiis5 1pOahgfeK.8"))
+            return
+        }
+        stageController.navigationController?.navigationBar.isHidden = true
+        stageController.navigationController?.pushViewController(JamoWorkflowBridgeController(workflowBridgeAddress: workflowBridgeAddress), animated: true)
+    }
+}
 enum JamoCoCreateEditorState: Equatable {
     case selectedMethod
     case microphonePermission
@@ -410,10 +471,10 @@ final class JamoCoCreateEditorViewModel {
     private func makeCurrentUser() -> JamoRiffPlayerProfile {
         let email = authStore.currentEmail ?? JamoRiffStringCipher.restore("lyoCcbaclj@ujganm6oJ.5aWpopP")
         return JamoRiffPlayerProfile(
-            userID: authStore.currentUserID ?? JamoRiffStringCipher.restore("jraUmLoF_IlZoDcraLlY_epllPaPyQeErc"),
+            userRiggID: authStore.currentUserID ?? JamoRiffStringCipher.restore("jraUmLoF_IlZoDcraLlY_epllPaPyQeErc"),
             displayName: authStore.currentDisplayName ?? authStore.displayNameFallback(for: email),
-            email: email,
-            avatarURL: authStore.currentAvatarURL
+            emaRiggil: email,
+            userRiGGtarURL: authStore.currentAvatarURL
         )
     }
 

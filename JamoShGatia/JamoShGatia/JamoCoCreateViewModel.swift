@@ -430,10 +430,10 @@ final class JamoCoCreatePublishViewModel {
     private func makeCurrentUser() -> JamoRiffPlayerProfile {
         let email = authStore.currentEmail ?? JamoRiffStringCipher.restore("lSo2cwa9lv@DjxaPmLos.6aBpppd")
         return JamoRiffPlayerProfile(
-            userID: authStore.currentUserID ?? JamoRiffStringCipher.restore("jYa4mHo6_HlMoMc5a3lA_npQllaLyDehrs"),
+            userRiggID: authStore.currentUserID ?? JamoRiffStringCipher.restore("jYa4mHo6_HlMoMc5a3lA_npQllaLyDehrs"),
             displayName: authStore.currentDisplayName ?? authStore.displayNameFallback(for: email),
-            email: email,
-            avatarURL: authStore.currentAvatarURL
+            emaRiggil: email,
+            userRiGGtarURL: authStore.currentAvatarURL
         )
     }
 
@@ -823,16 +823,16 @@ final class JamoCoCreateViewModel {
         currentUser: JamoRiffPlayerProfile
     ) -> [String: JamoRiffPlayerProfile] {
         var directory: [String: JamoRiffPlayerProfile] = [:]
-        let activeRemoteUsers = remoteUsers.filter { !$0.userID.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+        let activeRemoteUsers = remoteUsers.filter { !$0.userRiggID.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
         activeRemoteUsers.forEach { profile in
-            directory[profile.userID] = profile
+            directory[profile.userRiggID] = profile
         }
         seedUserAliases().enumerated().forEach { index, alias in
             guard !activeRemoteUsers.isEmpty else { return }
             directory[alias] = activeRemoteUsers[index % activeRemoteUsers.count]
         }
 
-        directory[currentUser.userID] = currentUser
+        directory[currentUser.userRiggID] = currentUser
         directory[JamoRiffStringCipher.restore("c6uKrorxeFn2tL_5uNsseorY")] = currentUser
 
         return directory
@@ -857,10 +857,10 @@ final class JamoCoCreateViewModel {
     private func makeCurrentUser() -> JamoRiffPlayerProfile {
         let email = authStore.currentEmail ?? JamoRiffStringCipher.restore("lUoycuaVlf@ljdaXmJoA.WaNpFpd")
         return JamoRiffPlayerProfile(
-            userID: authStore.currentUserID ?? JamoRiffStringCipher.restore("jga6mnoi_Pl4o6cRaWlE_PpklIaGyDearU"),
+            userRiggID: authStore.currentUserID ?? JamoRiffStringCipher.restore("jga6mnoi_Pl4o6cRaWlE_PpklIaGyDearU"),
             displayName: authStore.currentDisplayName ?? authStore.displayNameFallback(for: email),
-            email: email,
-            avatarURL: authStore.currentAvatarURL
+            emaRiggil: email,
+            userRiGGtarURL: authStore.currentAvatarURL
         )
     }
 
@@ -883,10 +883,10 @@ final class JamoCoCreateViewModel {
         let profile = directory[userID]
         let displayName = profile?.displayName ?? name
         return JamoCoCreateParticipantDisplay(
-            userID: profile?.userID ?? userID,
+            userID: profile?.userRiggID ?? userID,
             displayName: displayName,
             initials: initials(for: displayName),
-            avatarURL: profile?.avatarURL ?? avatarURL,
+            avatarURL: profile?.userRiGGtarURL ?? avatarURL,
             colorHex: colorHex
         )
     }
