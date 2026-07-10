@@ -31,5 +31,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     }
 
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        JamoMelodyExtensionHandler.shared.APPPREFIX_didRegisterForRemoteNotifications(deviceToken: deviceToken)
+    }
+
 
 }
