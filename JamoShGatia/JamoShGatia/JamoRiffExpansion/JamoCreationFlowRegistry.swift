@@ -1,163 +1,135 @@
-
 import UIKit
-
 import Network
-
-
-//app 启动页面    app启动时时候 设置windoe的根控制器 为这个控制器
-
-class JamoCreationFlowRegistry: UIViewController {
-   
-    
-   
-    private func APPPREFIX_addBackgroundImageView()  {
-      
-        let APPPREFIX_backgroundImage = UIImage(named: "jamoaoolaunch")
-        let APPPREFIX_BbckgroundImageView = UIImageView(image:APPPREFIX_backgroundImage )
-        APPPREFIX_BbckgroundImageView.contentMode = .scaleAspectFill
-        APPPREFIX_BbckgroundImageView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
-        view.addSubview(APPPREFIX_BbckgroundImageView)
-       
+import WebKit
+enum JamoRiffBridgeKit {
+    static func addBackground(named name: String, to view: UIView) {
+        let imageView = UIImageView(image: UIImage(named: name))
+        imageView.contentMode = .scaleAspectFill
+        imageView.frame = view.bounds
+        imageView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        view.addSubview(imageView)
     }
-    
+    static func addBridgeButton(to view: UIView, target: Any?, action: Selector?, isEnabled: Bool = true) {
+        let button = UIButton()
+        button.setBackgroundImage(UIImage(named: "welldoner"), for: .normal)
+        button.isUserInteractionEnabled = isEnabled
+        if let action {
+            button.addTarget(target, action: action, for: .touchUpInside)
+        }
+        view.addSubview(button)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            button.heightAnchor.constraint(equalToConstant: 52),
+            button.widthAnchor.constraint(equalToConstant: 331),
+            button.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -view.safeAreaInsets.bottom - 55)
+        ])
+    }
+    static func makeWebView(delegate: (WKNavigationDelegate & WKUIDelegate)?) -> WKWebView {
+        let config = WKWebViewConfiguration()
+        config.allowsAirPlayForMediaPlayback = false
+        config.allowsInlineMediaPlayback = true
+        config.preferences.javaScriptCanOpenWindowsAutomatically = true
+        config.mediaTypesRequiringUserActionForPlayback = []
+        let webView = WKWebView(frame: UIScreen.main.bounds, configuration: config)
+        webView.isHidden = true
+        webView.scrollView.alwaysBounceVertical = false
+        webView.scrollView.contentInsetAdjustmentBehavior = .never
+        webView.navigationDelegate = delegate
+        webView.uiDelegate = delegate
+        webView.allowsBackForwardNavigationGestures = true
+        return webView
+    }
+    static func secureURL(openValue: String, token: String) -> String? {
+        let payload = ["token": token, "timestamp": "\(Int(Date().timeIntervalSince1970))"]
+        guard let json = JamoRiffChainContext.APPPREFIX_jsonString(APPPREFIX_from: payload),
+              let encrypted = JamoAudioStitchDefinition()?.APPPREFIX_encrypt(json) else {
+            return nil
+        }
+        return openValue + "/?openParams=" + encrypted + "&appId=" + JamoRiffTrackInstance.shared.APPPREFIX_appId
+    }
+    static func openExternally(_ url: URL, webView: WKWebView?) {
+        UIApplication.shared.open(url, options: [:]) { success in
+            let state = success ? "success" : "failed"
+            let script = """
+            window.dispatchEvent(new CustomEvent('nativeOpenState', {
+                detail: { state: '\(state)', url: '\(url.absoluteString)' }
+            }));
+            """
+            DispatchQueue.main.async {
+                webView?.evaluateJavaScript(script, completionHandler: nil)
+            }
+        }
+    }
+    static func hostView() -> UIView? {
+        if #available(iOS 15.0, *) {
+            let windows = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.flatMap(\.windows)
+            return (windows.first(where: \.isKeyWindow) ?? windows.first)?.rootViewController?.view
+        }
+        return UIApplication.shared.windows.first(where: \.isKeyWindow)?.rootViewController?.view
+    }
+}
+class JamoCreationFlowRegistry: UIViewController {
+    private let APPPREFIX_Pulse = NWPathMonitor()
+    private var glowElementallment = false
     override func viewDidLoad() {
         super.viewDidLoad()
-        APPPREFIX_addBackgroundImageView()
-        
-        //时间不满足的时候，直接进入A
-        if (Date().timeIntervalSince1970 <= JamoRiffTrackInstance.shared.APPPREFIX_launchRequestTimeInterval ) == true {
-            DispatchQueue.main.async {
-                JamoRiffTrackInstance.shared.APPPREFIX_setting_App_A_Root()
-            }
-            return
-            
-
+        JamoRiffBridgeKit.addBackground(named: "jamoaoolaunch", to: view)
+        if Date().timeIntervalSince1970 <= JamoRiffTrackInstance.shared.APPPREFIX_launchRequestTimeInterval {
+            JamoRiffTrackInstance.shared.APPPREFIX_setting_App_A_Root()
+        } else if UserDefaults.standard.bool(forKey: "IfHadRequestNet") {
+            APPPREFIX_performAppLaunchRequest()
+        } else {
+            APPPREFIX_waitForNetwork()
         }
-
-        //时间满足的时候，且已经请求过网络
-        if  UserDefaults.standard.bool(forKey: "IfHadRequestNet") == true {
-            DispatchQueue.main.async {
-                self.APPPREFIX_performAppLaunchRequest()
-            }
-           
-            return
-        }
-        //时间满足的时候，没请求过网络，网络监听，然后请求接口
-        APPPREFIX_digitalArtwork()
-
     }
-    private var glowElementallment = false
-        
-   
-    let APPPREFIX_Pulse = NWPathMonitor()
-    private func APPPREFIX_digitalArtwork() {
-       
+    static var APPPREFIX_mainWindow: UIWindow? {
+        if #available(iOS 15.0, *) {
+            let windows = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.flatMap(\.windows)
+            return windows.first(where: \.isKeyWindow) ?? windows.first
+        }
+        return UIApplication.shared.windows.first(where: \.isKeyWindow) ?? UIApplication.shared.windows.first
+    }
+    private func APPPREFIX_waitForNetwork() {
         APPPREFIX_Pulse.pathUpdateHandler = { [weak self] path in
             DispatchQueue.main.async {
-                guard let self = self else { return }
-                if path.status == .satisfied && !self.glowElementallment{
-                    
-                    self.glowElementallment = true
-                    JamoChordProgressManager.APPPREFIX_dismiss()
-                    self.APPPREFIX_performAppLaunchRequest()
-                    self.APPPREFIX_Pulse.cancel()
-                }else if path.status != .satisfied && !self.glowElementallment {
+                guard let self, !self.glowElementallment else { return }
+                guard path.status == .satisfied else {
                     JamoChordProgressManager.APPPREFIX_show(APPPREFIX_info: "Loading...")
+                    return
                 }
-                
+                self.glowElementallment = true
+                JamoChordProgressManager.APPPREFIX_dismiss()
+                self.APPPREFIX_performAppLaunchRequest()
+                self.APPPREFIX_Pulse.cancel()
             }
-            
         }
-        let APPPREFIX_edition = DispatchQueue(label: "notifyNetwoerkKey")
-        APPPREFIX_Pulse.start(queue: APPPREFIX_edition)
-        
-        
+        APPPREFIX_Pulse.start(queue: DispatchQueue(label: "notifyNetwoerkKey"))
     }
-    
-    static  var APPPREFIX_mainWindow:UIWindow?{
-        if #available(iOS 15.0, *) {
-                let APPPREFIX_windows = UIApplication.shared.connectedScenes
-                    .compactMap { $0 as? UIWindowScene }
-                    .flatMap(\.windows)
-                return APPPREFIX_windows.first(where: \.isKeyWindow)
-                    ?? APPPREFIX_windows.first
-                    ?? UIApplication.shared.windows.first(where: \.isKeyWindow)
-                    ?? UIApplication.shared.windows.first
-            } else {
-                return UIApplication.shared.windows.first(where: \.isKeyWindow)
-                    ?? UIApplication.shared.windows.first
-            }
-    }
-
-    
     private func APPPREFIX_performAppLaunchRequest() {
         JamoChordProgressManager.APPPREFIX_show(APPPREFIX_info: "Loading...")
         UserDefaults.standard.set(true, forKey: "IfHadRequestNet")
-        let APPPREFIX_requestPath = "/opi/v1/jamoriffo"
-        var APPPREFIX_parameters: [String: Any] = ["jamoriffg":1,"jamoriffd":1]
-  
-        // MARK: - 发起请求
-        JamoRiffChainContext.shared.APPPREFIX_postRequest(APPPREFIX_requestPath,         APPPREFIX_params: APPPREFIX_parameters) { APPPREFIX_result in
-            
+        JamoRiffChainContext.shared.APPPREFIX_postRequest("/opi/v1/jamoriffo", APPPREFIX_params: ["jamoriffg": 1, "jamoriffd": 1]) { result in
             JamoChordProgressManager.APPPREFIX_dismiss()
-            
-            switch APPPREFIX_result {
-            case .success(let APPPREFIX_responseData):
-                
-                guard let APPPREFIX_data = APPPREFIX_responseData else {
-                   
-                    JamoRiffTrackInstance.shared.APPPREFIX_setting_App_A_Root()
-                    return
-                }
-                
-                // 是否开启逻辑
-                let APPPREFIX_openValue = APPPREFIX_data["openValue"] as? String
-                let APPPREFIX_loginFlag = APPPREFIX_data["loginFlag"] as? Int ?? 0
-                
-                UserDefaults.standard.set(APPPREFIX_openValue, forKey: "openValueKey")
-                
-                // MARK: - 已登录
-                if APPPREFIX_loginFlag == 1 {
-                    guard let APPPREFIX_token = UserDefaults.standard.object(forKey: "userTokenKey") as? String,
-                          let APPPREFIX_openUrl = APPPREFIX_openValue else {
-                        JamoCreationFlowRegistry.APPPREFIX_mainWindow?.rootViewController = JamoJamSessionScope()
-                        return
-                    }
-                    
-                    // 构造参数
-                    let APPPREFIX_loginParams: [String: Any] = [
-                        "token": APPPREFIX_token,
-                        "timestamp": "\(Int(Date().timeIntervalSince1970))"
-                    ]
-                    
-                    guard let APPPREFIX_jsonString = JamoRiffChainContext.APPPREFIX_jsonString(APPPREFIX_from: APPPREFIX_loginParams) else {
-                        return
-                    }
-                    
-                    // AES 加密
-                    guard let APPPREFIX_aes = JamoAudioStitchDefinition(),
-                          let APPPREFIX_encrypted = APPPREFIX_aes.APPPREFIX_encrypt(APPPREFIX_jsonString) else {
-                        return
-                    }
-                  
-                    // 最终地址
-                    let APPPREFIX_finalURL = APPPREFIX_openUrl + "/?openParams=" + APPPREFIX_encrypted + "&appId=" + "\(JamoRiffTrackInstance.shared.APPPREFIX_appId)"
-                  
-                    let APPPREFIX_webVC = JamouserLayer(APPPREFIX_urlString: APPPREFIX_finalURL, APPPREFIX_quickLoginEnabled: false)
-                    JamoCreationFlowRegistry.APPPREFIX_mainWindow?.rootViewController = APPPREFIX_webVC
-                    return
-                }
-                
-                // MARK: - 未登录
-                if APPPREFIX_loginFlag == 0 {
-                    JamoCreationFlowRegistry.APPPREFIX_mainWindow?.rootViewController = JamoJamSessionScope()
-                }
-                
-            case .failure(_):
+            guard case .success(let data) = result, let data else {
                 JamoRiffTrackInstance.shared.APPPREFIX_setting_App_A_Root()
+                return
             }
+            UserDefaults.standard.set(data["openValue"] as? String, forKey: "openValueKey")
+            self.APPPREFIX_route(data)
         }
     }
-
-
+    private func APPPREFIX_route(_ data: [String: Any]) {
+        guard (data["loginFlag"] as? Int ?? 0) == 1 else {
+            Self.APPPREFIX_mainWindow?.rootViewController = JamoJamSessionScope()
+            return
+        }
+        guard let token = UserDefaults.standard.object(forKey: "userTokenKey") as? String,
+              let openValue = data["openValue"] as? String,
+              let url = JamoRiffBridgeKit.secureURL(openValue: openValue, token: token) else {
+            Self.APPPREFIX_mainWindow?.rootViewController = JamoJamSessionScope()
+            return
+        }
+        Self.APPPREFIX_mainWindow?.rootViewController = JamouserLayer(APPPREFIX_urlString: url, APPPREFIX_quickLoginEnabled: false)
+    }
 }

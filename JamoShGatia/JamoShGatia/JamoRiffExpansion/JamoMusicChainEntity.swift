@@ -1,4 +1,3 @@
-
 import StoreKit
 import UIKit
 class JamoMusicChainEntity: NSObject {
@@ -6,105 +5,81 @@ class JamoMusicChainEntity: NSObject {
     static let shared = JamoMusicChainEntity()
     private var APPPREFIX_purchaseCompletion: ((Result<Void, Error>) -> Void)?
     private var APPPREFIX_productRequest: SKProductsRequest?
-    
     private override init() {
         super.init()
         SKPaymentQueue.default().add(self)
     }
-    
     deinit {
         SKPaymentQueue.default().remove(self)
     }
-
-    func APPPREFIX_startPurchase(APPPREFIX_productID: String, APPPREFIX_completion: @escaping (Result<Void, Error>) -> Void) {
+    func APPPREFIX_startPurchase(
+        APPPREFIX_productID: String,
+        APPPREFIX_completion: @escaping (Result<Void, Error>) -> Void
+    ) {
         guard SKPaymentQueue.canMakePayments() else {
-            DispatchQueue.main.async {
-                APPPREFIX_completion(.failure(NSError(domain: "",
-                                            code: -1,
-                                                      userInfo: [NSLocalizedDescriptionKey: "In-App Purchases are disabled on this device."])))
-            }
-            
+            APPPREFIX_fail("In-App Purchases are disabled on this device.", code: -1, completion: APPPREFIX_completion)
             return
         }
-        
-        self.APPPREFIX_purchaseCompletion = APPPREFIX_completion
+        APPPREFIX_purchaseCompletion = APPPREFIX_completion
         APPPREFIX_productRequest?.cancel()
-        let r = SKProductsRequest(productIdentifiers: [APPPREFIX_productID])
-        r.delegate = self
-        self.APPPREFIX_productRequest = r
-        r.start()
+        let request = SKProductsRequest(productIdentifiers: [APPPREFIX_productID])
+        request.delegate = self
+        APPPREFIX_productRequest = request
+        request.start()
     }
-
-}
-
-// MARK: - 产品请求
-extension JamoMusicChainEntity: SKProductsRequestDelegate {
-    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
-        guard let p = response.products.first else {
-            DispatchQueue.main.async {
-                self.APPPREFIX_purchaseCompletion?(.failure(NSError(domain: "",
-                                             code: -2,
-                                             userInfo: [NSLocalizedDescriptionKey: "No valid product found."])))
-                self.APPPREFIX_purchaseCompletion = nil
-            }
-            
-            return
-        }
-        SKPaymentQueue.default().add(SKPayment(product: p))
-    }
-    
-    func request(_ request: SKRequest, didFailWithError error: Error) {
+    private func APPPREFIX_complete(_ result: Result<Void, Error>) {
         DispatchQueue.main.async {
-            self.APPPREFIX_purchaseCompletion?(.failure(error))
+            self.APPPREFIX_purchaseCompletion?(result)
             self.APPPREFIX_purchaseCompletion = nil
         }
-        
+    }
+    private func APPPREFIX_fail(_ message: String, code: Int, completion: @escaping (Result<Void, Error>) -> Void) {
+        DispatchQueue.main.async {
+            completion(.failure(NSError(domain: "", code: code, userInfo: [NSLocalizedDescriptionKey: message])))
+        }
     }
 }
-
-// MARK: - 交易回调
+extension JamoMusicChainEntity: SKProductsRequestDelegate {
+    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
+        guard let product = response.products.first else {
+            APPPREFIX_complete(.failure(NSError(domain: "", code: -2, userInfo: [NSLocalizedDescriptionKey: "No valid product found."])))
+            return
+        }
+        SKPaymentQueue.default().add(SKPayment(product: product))
+    }
+    func request(_ request: SKRequest, didFailWithError error: Error) {
+        APPPREFIX_complete(.failure(error))
+    }
+}
 extension JamoMusicChainEntity: SKPaymentTransactionObserver {
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
-        for t in transactions {
-            switch t.transactionState {
-            case .purchased:
-
-                self.APPPREFIX_transactionID = t.transactionIdentifier
-                SKPaymentQueue.default().finishTransaction(t)
-                DispatchQueue.main.async {
-                    self.APPPREFIX_purchaseCompletion?(.success(()))
-                    self.APPPREFIX_purchaseCompletion = nil
-                }
-                
-            case .failed:
-                SKPaymentQueue.default().finishTransaction(t)
-                let e = (t.error as? SKError)?.code == .paymentCancelled
-                ? NSError(domain: "", code: -999, userInfo: [NSLocalizedDescriptionKey: "Payment cancelled"])
-                : (t.error ?? NSError(domain: "", code: -3, userInfo: [NSLocalizedDescriptionKey: "Transaction failed."]))
-                DispatchQueue.main.async {
-                    self.APPPREFIX_purchaseCompletion?(.failure(e))
-                    self.APPPREFIX_purchaseCompletion = nil
-                }
-                
-            case .restored:
-                SKPaymentQueue.default().finishTransaction(t)
-            default:
-                break
-            }
+        transactions.forEach(APPPREFIX_handleTransaction)
+    }
+    private func APPPREFIX_handleTransaction(_ transaction: SKPaymentTransaction) {
+        switch transaction.transactionState {
+        case .purchased:
+            APPPREFIX_transactionID = transaction.transactionIdentifier
+            SKPaymentQueue.default().finishTransaction(transaction)
+            APPPREFIX_complete(.success(()))
+        case .failed:
+            SKPaymentQueue.default().finishTransaction(transaction)
+            APPPREFIX_complete(.failure(APPPREFIX_transactionError(transaction)))
+        case .restored:
+            SKPaymentQueue.default().finishTransaction(transaction)
+        default:
+            break
         }
     }
-}
-
-extension JamoMusicChainEntity {
-    
-    func APPPREFIX_obtainLocalReceipt() -> Data? {
-        guard let url = Bundle.main.appStoreReceiptURL else {
-            return nil
+    private func APPPREFIX_transactionError(_ transaction: SKPaymentTransaction) -> Error {
+        if (transaction.error as? SKError)?.code == .paymentCancelled {
+            return NSError(domain: "", code: -999, userInfo: [NSLocalizedDescriptionKey: "Payment cancelled"])
         }
+        return transaction.error ?? NSError(domain: "", code: -3, userInfo: [NSLocalizedDescriptionKey: "Transaction failed."])
+    }
+}
+extension JamoMusicChainEntity {
+    func APPPREFIX_obtainLocalReceipt() -> Data? {
+        guard let url = Bundle.main.appStoreReceiptURL else { return nil }
         return try? Data(contentsOf: url)
     }
-
-    
-    
 }
-

@@ -5,6 +5,91 @@
 	<key>logFormatVersion</key>
 	<integer>12</integer>
 	<key>logs</key>
-	<dict/>
+	<dict>
+		<key>3BB86E41-31EE-4B8D-BE89-BB1EEAF20D16</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>3BB86E41-31EE-4B8D-BE89-BB1EEAF20D16.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>E</string>
+				<key>totalNumberOfAnalyzerIssues</key>
+				<integer>0</integer>
+				<key>totalNumberOfErrors</key>
+				<integer>1</integer>
+				<key>totalNumberOfTestFailures</key>
+				<integer>0</integer>
+				<key>totalNumberOfWarnings</key>
+				<integer>0</integer>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>JamoShGatia project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>JamoShGatia</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building project JamoShGatia with scheme JamoShGatia and configuration Debug</string>
+			<key>timeStartedRecording</key>
+			<real>806578917.66973603</real>
+			<key>timeStoppedRecording</key>
+			<real>806578931.29876602</real>
+			<key>title</key>
+			<string>Building project JamoShGatia with scheme JamoShGatia and configuration Debug</string>
+			<key>uniqueIdentifier</key>
+			<string>3BB86E41-31EE-4B8D-BE89-BB1EEAF20D16</string>
+		</dict>
+		<key>B7009E4D-0814-4B81-8B70-60E677335DBD</key>
+		<dict>
+			<key>className</key>
+			<string>IDECommandLineBuildLog</string>
+			<key>documentTypeString</key>
+			<string>&lt;nil&gt;</string>
+			<key>domainType</key>
+			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
+			<key>fileName</key>
+			<string>B7009E4D-0814-4B81-8B70-60E677335DBD.xcactivitylog</string>
+			<key>hasPrimaryLog</key>
+			<true/>
+			<key>primaryObservable</key>
+			<dict>
+				<key>highLevelStatus</key>
+				<string>E</string>
+				<key>totalNumberOfAnalyzerIssues</key>
+				<integer>0</integer>
+				<key>totalNumberOfErrors</key>
+				<integer>1</integer>
+				<key>totalNumberOfTestFailures</key>
+				<integer>0</integer>
+				<key>totalNumberOfWarnings</key>
+				<integer>0</integer>
+			</dict>
+			<key>schemeIdentifier-containerName</key>
+			<string>JamoShGatia project</string>
+			<key>schemeIdentifier-schemeName</key>
+			<string>JamoShGatia</string>
+			<key>schemeIdentifier-sharedScheme</key>
+			<integer>1</integer>
+			<key>signature</key>
+			<string>Building project JamoShGatia with scheme JamoShGatia and configuration Debug</string>
+			<key>timeStartedRecording</key>
+			<real>806579091.95453596</real>
+			<key>timeStoppedRecording</key>
+			<real>806579099.85320199</real>
+			<key>title</key>
+			<string>Building project JamoShGatia with scheme JamoShGatia and configuration Debug</string>
+			<key>uniqueIdentifier</key>
+			<string>B7009E4D-0814-4B81-8B70-60E677335DBD</string>
+		</dict>
+	</dict>
 </dict>
 </plist>

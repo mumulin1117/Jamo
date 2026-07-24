@@ -274,8 +274,14 @@ extension ImageResource {
     /// The "jamoaoolaunch" asset catalog image resource.
     static let jamoaoolaunch = ImageResource(name: "jamoaoolaunch", bundle: resourceBundle)
 
+    /// The "sikokwwwplo" asset catalog image resource.
+    static let sikokwwwplo = ImageResource(name: "sikokwwwplo", bundle: resourceBundle)
+
     /// The "uploadcover" asset catalog image resource.
     static let uploadcover = ImageResource(name: "uploadcover", bundle: resourceBundle)
+
+    /// The "welldoner" asset catalog image resource.
+    static let welldoner = ImageResource(name: "welldoner", bundle: resourceBundle)
 
 }
 
@@ -1045,10 +1051,28 @@ extension AppKit.NSImage {
 #endif
     }
 
+    /// The "sikokwwwplo" asset catalog image.
+    static var sikokwwwplo: AppKit.NSImage {
+#if !targetEnvironment(macCatalyst)
+        .init(resource: .sikokwwwplo)
+#else
+        .init()
+#endif
+    }
+
     /// The "uploadcover" asset catalog image.
     static var uploadcover: AppKit.NSImage {
 #if !targetEnvironment(macCatalyst)
         .init(resource: .uploadcover)
+#else
+        .init()
+#endif
+    }
+
+    /// The "welldoner" asset catalog image.
+    static var welldoner: AppKit.NSImage {
+#if !targetEnvironment(macCatalyst)
+        .init(resource: .welldoner)
 #else
         .init()
 #endif
@@ -1791,10 +1815,28 @@ extension UIKit.UIImage {
 #endif
     }
 
+    /// The "sikokwwwplo" asset catalog image.
+    static var sikokwwwplo: UIKit.UIImage {
+#if !os(watchOS)
+        .init(resource: .sikokwwwplo)
+#else
+        .init()
+#endif
+    }
+
     /// The "uploadcover" asset catalog image.
     static var uploadcover: UIKit.UIImage {
 #if !os(watchOS)
         .init(resource: .uploadcover)
+#else
+        .init()
+#endif
+    }
+
+    /// The "welldoner" asset catalog image.
+    static var welldoner: UIKit.UIImage {
+#if !os(watchOS)
+        .init(resource: .welldoner)
 #else
         .init()
 #endif

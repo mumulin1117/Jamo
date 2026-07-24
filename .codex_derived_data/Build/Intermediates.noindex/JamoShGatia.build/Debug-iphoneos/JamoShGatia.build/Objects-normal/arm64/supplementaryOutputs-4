@@ -1,0 +1,37 @@
+{
+  "/Users/mac/Documents/Jamo/JamoShGatia/JamoShGatia/JamoCoCreateListViewController.swift" : {
+    "const-values" : "/Users/mac/Documents/Jamo/.codex_derived_data/Build/Intermediates.noindex/JamoShGatia.build/Debug-iphoneos/JamoShGatia.build/Objects-normal/arm64/JamoCoCreateListViewController.swiftconstvalues",
+    "dependencies" : "/Users/mac/Documents/Jamo/.codex_derived_data/Build/Intermediates.noindex/JamoShGatia.build/Debug-iphoneos/JamoShGatia.build/Objects-normal/arm64/JamoCoCreateListViewController.d",
+    "diagnostics" : "/Users/mac/Documents/Jamo/.codex_derived_data/Build/Intermediates.noindex/JamoShGatia.build/Debug-iphoneos/JamoShGatia.build/Objects-normal/arm64/JamoCoCreateListViewController.dia",
+    "object" : "/Users/mac/Documents/Jamo/.codex_derived_data/Build/Intermediates.noindex/JamoShGatia.build/Debug-iphoneos/JamoShGatia.build/Objects-normal/arm64/JamoCoCreateListViewController.o",
+    "swift-dependencies" : "/Users/mac/Documents/Jamo/.codex_derived_data/Build/Intermediates.noindex/JamoShGatia.build/Debug-iphoneos/JamoShGatia.build/Objects-normal/arm64/JamoCoCreateListViewController.swiftdeps"
+  },
+  "/Users/mac/Documents/Jamo/JamoShGatia/JamoShGatia/JamoCoCreateModels.swift" : {
+    "const-values" : "/Users/mac/Documents/Jamo/.codex_derived_data/Build/Intermediates.noindex/JamoShGatia.build/Debug-iphoneos/JamoShGatia.build/Objects-normal/arm64/JamoCoCreateModels.swiftconstvalues",
+    "dependencies" : "/Users/mac/Documents/Jamo/.codex_derived_data/Build/Intermediates.noindex/JamoShGatia.build/Debug-iphoneos/JamoShGatia.build/Objects-normal/arm64/JamoCoCreateModels.d",
+    "diagnostics" : "/Users/mac/Documents/Jamo/.codex_derived_data/Build/Intermediates.noindex/JamoShGatia.build/Debug-iphoneos/JamoShGatia.build/Objects-normal/arm64/JamoCoCreateModels.dia",
+    "object" : "/Users/mac/Documents/Jamo/.codex_derived_data/Build/Intermediates.noindex/JamoShGatia.build/Debug-iphoneos/JamoShGatia.build/Objects-normal/arm64/JamoCoCreateModels.o",
+    "swift-dependencies" : "/Users/mac/Documents/Jamo/.codex_derived_data/Build/Intermediates.noindex/JamoShGatia.build/Debug-iphoneos/JamoShGatia.build/Objects-normal/arm64/JamoCoCreateModels.swiftdeps"
+  },
+  "/Users/mac/Documents/Jamo/JamoShGatia/JamoShGatia/JamoCoCreatePublishViewController.swift" : {
+    "const-values" : "/Users/mac/Documents/Jamo/.codex_derived_data/Build/Intermediates.noindex/JamoShGatia.build/Debug-iphoneos/JamoShGatia.build/Objects-normal/arm64/JamoCoCreatePublishViewController.swiftconstvalues",
+    "dependencies" : "/Users/mac/Documents/Jamo/.codex_derived_data/Build/Intermediates.noindex/JamoShGatia.build/Debug-iphoneos/JamoShGatia.build/Objects-normal/arm64/JamoCoCreatePublishViewController.d",
+    "diagnostics" : "/Users/mac/Documents/Jamo/.codex_derived_data/Build/Intermediates.noindex/JamoShGatia.build/Debug-iphoneos/JamoShGatia.build/Objects-normal/arm64/JamoCoCreatePublishViewController.dia",
+    "object" : "/Users/mac/Documents/Jamo/.codex_derived_data/Build/Intermediates.noindex/JamoShGatia.build/Debug-iphoneos/JamoShGatia.build/Objects-normal/arm64/JamoCoCreatePublishViewController.o",
+    "swift-dependencies" : "/Users/mac/Documents/Jamo/.codex_derived_data/Build/Intermediates.noindex/JamoShGatia.build/Debug-iphoneos/JamoShGatia.build/Objects-normal/arm64/JamoCoCreatePublishViewController.swiftdeps"
+  },
+  "/Users/mac/Documents/Jamo/JamoShGatia/JamoShGatia/JamoCoCreateUserService.swift" : {
+    "const-values" : "/Users/mac/Documents/Jamo/.codex_derived_data/Build/Intermediates.noindex/JamoShGatia.build/Debug-iphoneos/JamoShGatia.build/Objects-normal/arm64/JamoCoCreateUserService.swiftconstvalues",
+    "dependencies" : "/Users/mac/Documents/Jamo/.codex_derived_data/Build/Intermediates.noindex/JamoShGatia.build/Debug-iphoneos/JamoShGatia.build/Objects-normal/arm64/JamoCoCreateUserService.d",
+    "diagnostics" : "/Users/mac/Documents/Jamo/.codex_derived_data/Build/Intermediates.noindex/JamoShGatia.build/Debug-iphoneos/JamoShGatia.build/Objects-normal/arm64/JamoCoCreateUserService.dia",
+    "object" : "/Users/mac/Documents/Jamo/.codex_derived_data/Build/Intermediates.noindex/JamoShGatia.build/Debug-iphoneos/JamoShGatia.build/Objects-normal/arm64/JamoCoCreateUserService.o",
+    "swift-dependencies" : "/Users/mac/Documents/Jamo/.codex_derived_data/Build/Intermediates.noindex/JamoShGatia.build/Debug-iphoneos/JamoShGatia.build/Objects-normal/arm64/JamoCoCreateUserService.swiftdeps"
+  },
+  "/Users/mac/Documents/Jamo/JamoShGatia/JamoShGatia/JamoCoCreateViewModel.swift" : {
+    "const-values" : "/Users/mac/Documents/Jamo/.codex_derived_data/Build/Intermediates.noindex/JamoShGatia.build/Debug-iphoneos/JamoShGatia.build/Objects-normal/arm64/JamoCoCreateViewModel.swiftconstvalues",
+    "dependencies" : "/Users/mac/Documents/Jamo/.codex_derived_data/Build/Intermediates.noindex/JamoShGatia.build/Debug-iphoneos/JamoShGatia.build/Objects-normal/arm64/JamoCoCreateViewModel.d",
+    "diagnostics" : "/Users/mac/Documents/Jamo/.codex_derived_data/Build/Intermediates.noindex/JamoShGatia.build/Debug-iphoneos/JamoShGatia.build/Objects-normal/arm64/JamoCoCreateViewModel.dia",
+    "object" : "/Users/mac/Documents/Jamo/.codex_derived_data/Build/Intermediates.noindex/JamoShGatia.build/Debug-iphoneos/JamoShGatia.build/Objects-normal/arm64/JamoCoCreateViewModel.o",
+    "swift-dependencies" : "/Users/mac/Documents/Jamo/.codex_derived_data/Build/Intermediates.noindex/JamoShGatia.build/Debug-iphoneos/JamoShGatia.build/Objects-normal/arm64/JamoCoCreateViewModel.swiftdeps"
+  }
+}

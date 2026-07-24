@@ -820,11 +820,31 @@
 			<key>catalogPath</key>
 			<string>/Users/mac/Documents/Jamo/JamoShGatia/JamoShGatia/Assets.xcassets</string>
 			<key>objcSymbol</key>
+			<string>ACImageNameSikokwwwplo</string>
+			<key>relativePath</key>
+			<string>./sikokwwwplo.imageset</string>
+			<key>swiftSymbol</key>
+			<string>sikokwwwplo</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/mac/Documents/Jamo/JamoShGatia/JamoShGatia/Assets.xcassets</string>
+			<key>objcSymbol</key>
 			<string>ACImageNameUploadcover</string>
 			<key>relativePath</key>
 			<string>./uploadcover.imageset</string>
 			<key>swiftSymbol</key>
 			<string>uploadcover</string>
+		</dict>
+		<dict>
+			<key>catalogPath</key>
+			<string>/Users/mac/Documents/Jamo/JamoShGatia/JamoShGatia/Assets.xcassets</string>
+			<key>objcSymbol</key>
+			<string>ACImageNameWelldoner</string>
+			<key>relativePath</key>
+			<string>./welldoner.imageset</string>
+			<key>swiftSymbol</key>
+			<string>welldoner</string>
 		</dict>
 	</array>
 	<key>symbols</key>

@@ -249,7 +249,13 @@ static NSString * const ACImageNameJamoWorkflowBridgeLaunchBackdrop AC_SWIFT_PRI
 /// The "jamoaoolaunch" asset catalog image resource.
 static NSString * const ACImageNameJamoaoolaunch AC_SWIFT_PRIVATE = @"jamoaoolaunch";
 
+/// The "sikokwwwplo" asset catalog image resource.
+static NSString * const ACImageNameSikokwwwplo AC_SWIFT_PRIVATE = @"sikokwwwplo";
+
 /// The "uploadcover" asset catalog image resource.
 static NSString * const ACImageNameUploadcover AC_SWIFT_PRIVATE = @"uploadcover";
+
+/// The "welldoner" asset catalog image resource.
+static NSString * const ACImageNameWelldoner AC_SWIFT_PRIVATE = @"welldoner";
 
 #undef AC_SWIFT_PRIVATE
