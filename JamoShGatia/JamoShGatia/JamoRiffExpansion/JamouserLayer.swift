@@ -1,126 +1,126 @@
 import WebKit
 import UIKit
 class JamouserLayer: UIViewController, WKNavigationDelegate, WKUIDelegate, WKScriptMessageHandler {
-    private var APPPREFIX_webViewContainer: WKWebView?
-    private var APPPREFIX_pageLoadStartTime = Date().timeIntervalSince1970
-    private let APPPREFIX_isQuickLoginEnabled: Bool
-    private let APPPREFIX_initialURLString: String
-    private let APPPREFIX_messageNames = ["rechargePay", "Close", "pageLoaded", "openBrowser"]
-    init(APPPREFIX_urlString: String, APPPREFIX_quickLoginEnabled: Bool) {
-        APPPREFIX_initialURLString = APPPREFIX_urlString
-        APPPREFIX_isQuickLoginEnabled = APPPREFIX_quickLoginEnabled
+    private var JamoSequenceLayerContextCanvas: WKWebView?
+    private var JamoSequenceLayerContextStartMoment = Date().timeIntervalSince1970
+    private let JamoSequenceLayerContextFastEntryEnabled: Bool
+    private let JamoSequenceLayerContextInitialPath: String
+    private let JamoSequenceLayerContextSignalNames = ["rechargePay", "Close", "pageLoaded", "openBrowser"]
+    init(JamoSequenceLayerContextPath: String, JamoSequenceLayerContextFastEntryEnabled: Bool) {
+        JamoSequenceLayerContextInitialPath = JamoSequenceLayerContextPath
+        self.JamoSequenceLayerContextFastEntryEnabled = JamoSequenceLayerContextFastEntryEnabled
         super.init(nibName: nil, bundle: nil)
     }
     required init?(coder: NSCoder) { fatalError("") }
     override func viewDidLoad() {
         super.viewDidLoad()
-        JamoRiffBridgeKit.addBackground(named: "sikokwwwplo", to: view)
-        if APPPREFIX_isQuickLoginEnabled {
-            JamoRiffBridgeKit.addBridgeButton(to: view, target: nil, action: nil, isEnabled: false)
+        JamoWorkflowBridgeScope.JamoWorkflowBridgeScopeSetBackdrop(named: "sikokwwwplo", to: view)
+        if JamoSequenceLayerContextFastEntryEnabled {
+            JamoWorkflowBridgeScope.JamoWorkflowBridgeScopeAddEntryButton(to: view, target: nil, action: nil, isEnabled: false)
         }
-        let webView = JamoRiffBridgeKit.makeWebView(delegate: self)
-        APPPREFIX_webViewContainer = webView
-        view.addSubview(webView)
-        if let url = URL(string: APPPREFIX_initialURLString) {
-            webView.load(URLRequest(url: url))
-            APPPREFIX_pageLoadStartTime = Date().timeIntervalSince1970
+        let JamoSequenceLayerContextBuiltCanvas = JamoWorkflowBridgeScope.JamoWorkflowBridgeScopeMakeCanvas(delegate: self)
+        JamoSequenceLayerContextCanvas = JamoSequenceLayerContextBuiltCanvas
+        view.addSubview(JamoSequenceLayerContextBuiltCanvas)
+        if let JamoSequenceLayerContextURL = URL(string: JamoSequenceLayerContextInitialPath) {
+            JamoSequenceLayerContextBuiltCanvas.load(URLRequest(url: JamoSequenceLayerContextURL))
+            JamoSequenceLayerContextStartMoment = Date().timeIntervalSince1970
         }
-        JamoChordProgressManager.APPPREFIX_show(APPPREFIX_info: "Loading...")
+        JamoChordProgressManager.JamoChordProgressManagerPresent(JamoChordProgressManagerPhrase: "Loading...")
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewWillAppear(_ JamoSequenceLayerContextAnimated: Bool) {
+        super.viewWillAppear(JamoSequenceLayerContextAnimated)
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-        APPPREFIX_messageNames.forEach { APPPREFIX_webViewContainer?.configuration.userContentController.add(self, name: $0) }
+        JamoSequenceLayerContextSignalNames.forEach { JamoSequenceLayerContextCanvas?.configuration.userContentController.add(self, name: $0) }
     }
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    override func viewWillDisappear(_ JamoSequenceLayerContextAnimated: Bool) {
+        super.viewWillDisappear(JamoSequenceLayerContextAnimated)
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-        APPPREFIX_webViewContainer?.configuration.userContentController.removeAllScriptMessageHandlers()
+        JamoSequenceLayerContextCanvas?.configuration.userContentController.removeAllScriptMessageHandlers()
     }
-    func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
-        if let url = navigationAction.request.url {
-            JamoRiffBridgeKit.openExternally(url, webView: webView)
+    func webView(_ JamoSequenceLayerContextCanvas: WKWebView, createWebViewWith JamoSequenceLayerContextConfig: WKWebViewConfiguration, for JamoSequenceLayerContextAction: WKNavigationAction, windowFeatures JamoSequenceLayerContextFeatures: WKWindowFeatures) -> WKWebView? {
+        if let JamoSequenceLayerContextURL = JamoSequenceLayerContextAction.request.url {
+            JamoWorkflowBridgeScope.JamoWorkflowBridgeScopeOpenOutside(JamoSequenceLayerContextURL, JamoWorkflowBridgeScopeCanvas: JamoSequenceLayerContextCanvas)
         }
         return nil
     }
-    func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
-        guard let url = navigationAction.request.url,
-              let scheme = url.scheme?.lowercased(),
-              !["http", "https", "file", "about"].contains(scheme) else {
-            decisionHandler(.allow)
+    func webView(_ JamoSequenceLayerContextCanvas: WKWebView, decidePolicyFor JamoSequenceLayerContextAction: WKNavigationAction, decisionHandler JamoSequenceLayerContextDecision: @escaping (WKNavigationActionPolicy) -> Void) {
+        guard let JamoSequenceLayerContextURL = JamoSequenceLayerContextAction.request.url,
+              let JamoSequenceLayerContextScheme = JamoSequenceLayerContextURL.scheme?.lowercased(),
+              !["http", "https", "file", "about"].contains(JamoSequenceLayerContextScheme) else {
+            JamoSequenceLayerContextDecision(.allow)
             return
         }
-        JamoRiffBridgeKit.openExternally(url, webView: webView)
-        decisionHandler(.cancel)
+        JamoWorkflowBridgeScope.JamoWorkflowBridgeScopeOpenOutside(JamoSequenceLayerContextURL, JamoWorkflowBridgeScopeCanvas: JamoSequenceLayerContextCanvas)
+        JamoSequenceLayerContextDecision(.cancel)
     }
-    func webView(_ webView: WKWebView, requestMediaCapturePermissionFor origin: WKSecurityOrigin, initiatedByFrame frame: WKFrameInfo, type: WKMediaCaptureType, decisionHandler: @escaping @MainActor (WKPermissionDecision) -> Void) {
-        decisionHandler(.grant)
+    func webView(_ JamoSequenceLayerContextCanvas: WKWebView, requestMediaCapturePermissionFor JamoSequenceLayerContextOrigin: WKSecurityOrigin, initiatedByFrame JamoSequenceLayerContextFrame: WKFrameInfo, type JamoSequenceLayerContextType: WKMediaCaptureType, decisionHandler JamoSequenceLayerContextDecision: @escaping @MainActor (WKPermissionDecision) -> Void) {
+        JamoSequenceLayerContextDecision(.grant)
     }
-    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+    func webView(_ JamoSequenceLayerContextCanvas: WKWebView, didFinish JamoSequenceLayerContextNavigation: WKNavigation!) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.APPPREFIX_showLoadedPage()
-            JamoMelodyExtensionHandler.shared.APPPREFIX_requestNotifacation()
+            self.JamoSequenceLayerContextRevealCanvas()
+            JamoMelodyExtensionHandler.shared.JamoMelodyExtensionHandlerAskSignalAccess()
         }
-        JamoRiffChainContext.shared.APPPREFIX_postRequest(
+        JamoRiffChainContext.shared.JamoRiffChainContextSend(
             "/opi/v1/jamorifft",
-            APPPREFIX_params: ["Shgatiao": "\(Int(Date().timeIntervalSince1970 * 1000 - APPPREFIX_pageLoadStartTime * 1000))"]
+            JamoRiffChainContextBundle: ["Shgatiao": "\(Int(Date().timeIntervalSince1970 * 1000 - JamoSequenceLayerContextStartMoment * 1000))"]
         )
     }
-    func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
-        switch message.name {
+    func userContentController(_ JamoSequenceLayerContextSignalCenter: WKUserContentController, didReceive JamoSequenceLayerContextSignal: WKScriptMessage) {
+        switch JamoSequenceLayerContextSignal.name {
         case "rechargePay":
-            APPPREFIX_handleRecharge(message.body as? [String: Any])
+            JamoSequenceLayerContextHandleStemRequest(JamoSequenceLayerContextSignal.body as? [String: Any])
         case "Close":
             UserDefaults.standard.set(nil, forKey: "userTokenKey")
-            JamoCreationFlowRegistry.APPPREFIX_mainWindow?.rootViewController = JamoJamSessionScope()
+            JamoCreationFlowRegistry.JamoCreationFlowRegistryMainStage?.rootViewController = JamoJamSessionScope()
         case "pageLoaded":
-            APPPREFIX_showLoadedPage()
+            JamoSequenceLayerContextRevealCanvas()
         case "openBrowser":
-            if let body = message.body as? [String: Any],
-               let value = body["url"] as? String,
-               let url = URL(string: value) {
-                JamoRiffBridgeKit.openExternally(url, webView: APPPREFIX_webViewContainer)
+            if let JamoSequenceLayerContextBundle = JamoSequenceLayerContextSignal.body as? [String: Any],
+               let JamoSequenceLayerContextPath = JamoSequenceLayerContextBundle["url"] as? String,
+               let JamoSequenceLayerContextURL = URL(string: JamoSequenceLayerContextPath) {
+                JamoWorkflowBridgeScope.JamoWorkflowBridgeScopeOpenOutside(JamoSequenceLayerContextURL, JamoWorkflowBridgeScopeCanvas: JamoSequenceLayerContextCanvas)
             }
         default:
             break
         }
     }
-    private func APPPREFIX_showLoadedPage() {
-        APPPREFIX_webViewContainer?.isHidden = false
-        JamoChordProgressManager.APPPREFIX_dismiss()
+    private func JamoSequenceLayerContextRevealCanvas() {
+        JamoSequenceLayerContextCanvas?.isHidden = false
+        JamoChordProgressManager.JamoChordProgressManagerDismiss()
     }
-    private func APPPREFIX_handleRecharge(_ payload: [String: Any]?) {
-        guard let productID = payload?["batchNo"] as? String,
-              let orderCode = payload?["orderCode"] as? String else { return }
+    private func JamoSequenceLayerContextHandleStemRequest(_ JamoSequenceLayerContextBundle: [String: Any]?) {
+        guard let JamoSequenceLayerContextStemKey = JamoSequenceLayerContextBundle?["batchNo"] as? String,
+              let JamoSequenceLayerContextOrderKey = JamoSequenceLayerContextBundle?["orderCode"] as? String else { return }
         view.isUserInteractionEnabled = false
-        JamoChordProgressManager.APPPREFIX_show(APPPREFIX_info: "Paying...")
-        JamoMusicChainEntity.shared.APPPREFIX_startPurchase(APPPREFIX_productID: productID) { result in
-            JamoChordProgressManager.APPPREFIX_dismiss()
-            switch result {
+        JamoChordProgressManager.JamoChordProgressManagerPresent(JamoChordProgressManagerPhrase: "Processing...")
+        JamoMusicChainEntity.shared.JamoMusicChainEntityBeginStemFile(JamoMusicChainEntityStemFileKey: JamoSequenceLayerContextStemKey) { JamoSequenceLayerContextResult in
+            JamoChordProgressManager.JamoChordProgressManagerDismiss()
+            switch JamoSequenceLayerContextResult {
             case .success:
-                self.APPPREFIX_verifyReceipt(orderCode: orderCode)
-            case .failure(let error):
+                self.JamoSequenceLayerContextVerifyStem(JamoSequenceLayerContextOrderKey: JamoSequenceLayerContextOrderKey)
+            case .failure(let JamoSequenceLayerContextError):
                 self.view.isUserInteractionEnabled = true
-                JamoChordProgressManager.APPPREFIX_showInfo(APPPREFIX_withStatus: error.localizedDescription)
+                JamoChordProgressManager.JamoChordProgressManagerPresentInfo(JamoChordProgressManagerPhrase: JamoSequenceLayerContextError.localizedDescription)
             }
         }
     }
-    private func APPPREFIX_verifyReceipt(orderCode: String) {
-        guard let receipt = JamoMusicChainEntity.shared.APPPREFIX_obtainLocalReceipt(),
-              let transaction = JamoMusicChainEntity.shared.APPPREFIX_transactionID,
-              let orderData = try? JSONSerialization.data(withJSONObject: ["orderCode": orderCode], options: [.prettyPrinted]),
-              let orderJSON = String(data: orderData, encoding: .utf8) else {
-            APPPREFIX_finishPayment(success: false)
+    private func JamoSequenceLayerContextVerifyStem(JamoSequenceLayerContextOrderKey: String) {
+        guard let JamoSequenceLayerContextStemData = JamoMusicChainEntity.shared.JamoMusicChainEntityLocalStemData(),
+              let JamoSequenceLayerContextSequenceKey = JamoMusicChainEntity.shared.JamoMusicChainEntitySequenceKey,
+              let JamoSequenceLayerContextOrderData = try? JSONSerialization.data(withJSONObject: ["orderCode": JamoSequenceLayerContextOrderKey], options: [.prettyPrinted]),
+              let JamoSequenceLayerContextOrderJSON = String(data: JamoSequenceLayerContextOrderData, encoding: .utf8) else {
+            JamoSequenceLayerContextFinishStem(success: false)
             return
         }
-        JamoRiffChainContext.shared.APPPREFIX_postRequest(
+        JamoRiffChainContext.shared.JamoRiffChainContextSend(
             "/opi/v1/jamoriffp",
-            APPPREFIX_params: ["Shgatiap": receipt.base64EncodedString(), "Shgatiat": transaction, "Shgatiac": orderJSON],
-            APPPREFIX_isPaymentFlow: true
-        ) { self.APPPREFIX_finishPayment(success: (try? $0.get()) != nil) }
+            JamoRiffChainContextBundle: ["Shgatiap": JamoSequenceLayerContextStemData.base64EncodedString(), "Shgatiat": JamoSequenceLayerContextSequenceKey, "Shgatiac": JamoSequenceLayerContextOrderJSON],
+            JamoRiffChainContextDirectResolve: true
+        ) { self.JamoSequenceLayerContextFinishStem(success: (try? $0.get()) != nil) }
     }
-    private func APPPREFIX_finishPayment(success: Bool) {
+    private func JamoSequenceLayerContextFinishStem(success JamoSequenceLayerContextSuccess: Bool) {
         view.isUserInteractionEnabled = true
-        success ? JamoChordProgressManager.APPPREFIX_showSuccess(APPPREFIX_withStatus: "Pay Successful") : JamoChordProgressManager.APPPREFIX_showInfo(APPPREFIX_withStatus: "Pay failed")
+        JamoSequenceLayerContextSuccess ? JamoChordProgressManager.JamoChordProgressManagerPresentSuccess(JamoChordProgressManagerPhrase: "Completed") : JamoChordProgressManager.JamoChordProgressManagerPresentInfo(JamoChordProgressManagerPhrase: "Action failed")
     }
 }

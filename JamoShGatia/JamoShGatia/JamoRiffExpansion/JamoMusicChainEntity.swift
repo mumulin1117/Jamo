@@ -1,10 +1,10 @@
 import StoreKit
 import UIKit
 class JamoMusicChainEntity: NSObject {
-    var APPPREFIX_transactionID: String?
+    var JamoMusicChainEntitySequenceKey: String?
     static let shared = JamoMusicChainEntity()
-    private var APPPREFIX_purchaseCompletion: ((Result<Void, Error>) -> Void)?
-    private var APPPREFIX_productRequest: SKProductsRequest?
+    private var JamoMusicChainEntityCompletion: ((Result<Void, Error>) -> Void)?
+    private var JamoMusicChainEntityRequest: SKProductsRequest?
     private override init() {
         super.init()
         SKPaymentQueue.default().add(self)
@@ -12,74 +12,78 @@ class JamoMusicChainEntity: NSObject {
     deinit {
         SKPaymentQueue.default().remove(self)
     }
-    func APPPREFIX_startPurchase(
-        APPPREFIX_productID: String,
-        APPPREFIX_completion: @escaping (Result<Void, Error>) -> Void
+    func JamoMusicChainEntityBeginStemFile(
+        JamoMusicChainEntityStemFileKey: String,
+        JamoMusicChainEntityCompletionBlock: @escaping (Result<Void, Error>) -> Void
     ) {
         guard SKPaymentQueue.canMakePayments() else {
-            APPPREFIX_fail("In-App Purchases are disabled on this device.", code: -1, completion: APPPREFIX_completion)
+            JamoMusicChainEntityReject("This item is unavailable on this device.", JamoMusicChainEntityCode: -1, JamoMusicChainEntityCompletionBlock: JamoMusicChainEntityCompletionBlock)
             return
         }
-        APPPREFIX_purchaseCompletion = APPPREFIX_completion
-        APPPREFIX_productRequest?.cancel()
-        let request = SKProductsRequest(productIdentifiers: [APPPREFIX_productID])
-        request.delegate = self
-        APPPREFIX_productRequest = request
-        request.start()
+        JamoMusicChainEntityCompletion = JamoMusicChainEntityCompletionBlock
+        JamoMusicChainEntityRequest?.cancel()
+        let JamoMusicChainEntityStemRequest = SKProductsRequest(productIdentifiers: [JamoMusicChainEntityStemFileKey])
+        JamoMusicChainEntityStemRequest.delegate = self
+        JamoMusicChainEntityRequest = JamoMusicChainEntityStemRequest
+        JamoMusicChainEntityStemRequest.start()
     }
-    private func APPPREFIX_complete(_ result: Result<Void, Error>) {
+    private func JamoMusicChainEntityResolve(_ JamoMusicChainEntityResult: Result<Void, Error>) {
         DispatchQueue.main.async {
-            self.APPPREFIX_purchaseCompletion?(result)
-            self.APPPREFIX_purchaseCompletion = nil
+            self.JamoMusicChainEntityCompletion?(JamoMusicChainEntityResult)
+            self.JamoMusicChainEntityCompletion = nil
         }
     }
-    private func APPPREFIX_fail(_ message: String, code: Int, completion: @escaping (Result<Void, Error>) -> Void) {
+    private func JamoMusicChainEntityReject(
+        _ JamoMusicChainEntityPhrase: String,
+        JamoMusicChainEntityCode: Int,
+        JamoMusicChainEntityCompletionBlock: @escaping (Result<Void, Error>) -> Void
+    ) {
         DispatchQueue.main.async {
-            completion(.failure(NSError(domain: "", code: code, userInfo: [NSLocalizedDescriptionKey: message])))
+            JamoMusicChainEntityCompletionBlock(.failure(NSError(domain: "", code: JamoMusicChainEntityCode, userInfo: [NSLocalizedDescriptionKey: JamoMusicChainEntityPhrase])))
         }
     }
 }
 extension JamoMusicChainEntity: SKProductsRequestDelegate {
-    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
-        guard let product = response.products.first else {
-            APPPREFIX_complete(.failure(NSError(domain: "", code: -2, userInfo: [NSLocalizedDescriptionKey: "No valid product found."])))
+    func productsRequest(_ JamoMusicChainEntityStemRequest: SKProductsRequest, didReceive JamoMusicChainEntityStemResponse: SKProductsResponse) {
+        guard let JamoMusicChainEntityStemItem = JamoMusicChainEntityStemResponse.products.first else {
+            JamoMusicChainEntityResolve(.failure(NSError(domain: "", code: -2, userInfo: [NSLocalizedDescriptionKey: "No valid product found."])))
             return
         }
-        SKPaymentQueue.default().add(SKPayment(product: product))
+        SKPaymentQueue.default().add(SKPayment(product: JamoMusicChainEntityStemItem))
     }
-    func request(_ request: SKRequest, didFailWithError error: Error) {
-        APPPREFIX_complete(.failure(error))
+    func request(_ JamoMusicChainEntityStemRequest: SKRequest, didFailWithError JamoMusicChainEntityError: Error) {
+        JamoMusicChainEntityResolve(.failure(JamoMusicChainEntityError))
     }
 }
 extension JamoMusicChainEntity: SKPaymentTransactionObserver {
-    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
-        transactions.forEach(APPPREFIX_handleTransaction)
+    func paymentQueue(_ JamoMusicChainEntityQueue: SKPaymentQueue, updatedTransactions JamoMusicChainEntityNodes: [SKPaymentTransaction]) {
+        JamoMusicChainEntityNodes.forEach(JamoMusicChainEntityHandleSequenceNode)
     }
-    private func APPPREFIX_handleTransaction(_ transaction: SKPaymentTransaction) {
-        switch transaction.transactionState {
+    private func JamoMusicChainEntityHandleSequenceNode(_ JamoMusicChainEntityNode: SKPaymentTransaction) {
+        switch JamoMusicChainEntityNode.transactionState {
         case .purchased:
-            APPPREFIX_transactionID = transaction.transactionIdentifier
-            SKPaymentQueue.default().finishTransaction(transaction)
-            APPPREFIX_complete(.success(()))
+            JamoMusicChainEntitySequenceKey = JamoMusicChainEntityNode.transactionIdentifier
+            SKPaymentQueue.default().finishTransaction(JamoMusicChainEntityNode)
+            JamoMusicChainEntityResolve(.success(()))
         case .failed:
-            SKPaymentQueue.default().finishTransaction(transaction)
-            APPPREFIX_complete(.failure(APPPREFIX_transactionError(transaction)))
+            SKPaymentQueue.default().finishTransaction(JamoMusicChainEntityNode)
+            JamoMusicChainEntityResolve(.failure(JamoMusicChainEntitySequenceError(JamoMusicChainEntityNode)))
         case .restored:
-            SKPaymentQueue.default().finishTransaction(transaction)
+            SKPaymentQueue.default().finishTransaction(JamoMusicChainEntityNode)
         default:
             break
         }
     }
-    private func APPPREFIX_transactionError(_ transaction: SKPaymentTransaction) -> Error {
-        if (transaction.error as? SKError)?.code == .paymentCancelled {
-            return NSError(domain: "", code: -999, userInfo: [NSLocalizedDescriptionKey: "Payment cancelled"])
+    private func JamoMusicChainEntitySequenceError(_ JamoMusicChainEntityNode: SKPaymentTransaction) -> Error {
+        if (JamoMusicChainEntityNode.error as? SKError)?.code == .paymentCancelled {
+            return NSError(domain: "", code: -999, userInfo: [NSLocalizedDescriptionKey: "Action cancelled"])
         }
-        return transaction.error ?? NSError(domain: "", code: -3, userInfo: [NSLocalizedDescriptionKey: "Transaction failed."])
+        return JamoMusicChainEntityNode.error ?? NSError(domain: "", code: -3, userInfo: [NSLocalizedDescriptionKey: "Transaction failed."])
     }
 }
 extension JamoMusicChainEntity {
-    func APPPREFIX_obtainLocalReceipt() -> Data? {
-        guard let url = Bundle.main.appStoreReceiptURL else { return nil }
-        return try? Data(contentsOf: url)
+    func JamoMusicChainEntityLocalStemData() -> Data? {
+        guard let JamoMusicChainEntityReceiptPath = Bundle.main.appStoreReceiptURL else { return nil }
+        return try? Data(contentsOf: JamoMusicChainEntityReceiptPath)
     }
 }

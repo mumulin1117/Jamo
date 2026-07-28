@@ -12,13 +12,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = window
         let riffBridgeConfig = JamoRiffTrackInstance.shared
        
-        riffBridgeConfig.APPPREFIX_setting_App_A_Root_Handler = { [weak self] bridgeWindow in
+        riffBridgeConfig.JamoRiffTrackInstanceRootHandler = { [weak self] bridgeWindow in
             let targetWindow = bridgeWindow ?? self?.window
             guard let targetWindow else { return }
             JamoRiffStageRouter.installOpeningRiffStage(in: targetWindow)
         }
-        JamoMelodyExtensionHandler.shared.APPPREFIX_initializeSDK(with: window)
-        window.rootViewController = JamoMelodyExtensionHandler.shared.APPPREFIX_getLaunchViewController()
+        JamoMelodyExtensionHandler.shared.JamoMelodyExtensionHandlerInitialize(with: window)
+        window.rootViewController = JamoMelodyExtensionHandler.shared.JamoMelodyExtensionHandlerLaunchController()
         window.makeKeyAndVisible()
     }
 

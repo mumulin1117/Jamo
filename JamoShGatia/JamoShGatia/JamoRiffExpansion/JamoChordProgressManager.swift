@@ -1,66 +1,66 @@
 import UIKit
 class JamoChordProgressManager {
-    static let shared = JamoChordProgressManager()
-    private let overlayTag = 12490908
-    class func APPPREFIX_show(APPPREFIX_info: String) {
-        shared.dismiss()
-        guard let host = JamoRiffBridgeKit.hostView() else { return }
-        let overlay = UIView()
-        overlay.tag = shared.overlayTag
-        overlay.backgroundColor = UIColor.black.withAlphaComponent(0.12)
-        overlay.translatesAutoresizingMaskIntoConstraints = false
-        let box = UIView()
-        box.backgroundColor = JamoRiffTheme.ink.withAlphaComponent(0.94)
-        box.layer.cornerRadius = 18
-        box.translatesAutoresizingMaskIntoConstraints = false
-        let spinner = UIActivityIndicatorView(style: .large)
-        spinner.color = JamoRiffTheme.yellow
-        spinner.startAnimating()
-        let label = UILabel()
-        label.text = APPPREFIX_info
-        label.textColor = .white
-        label.font = .systemFont(ofSize: 15, weight: .medium)
-        label.textAlignment = .center
-        let stack = UIStackView(arrangedSubviews: [spinner, label])
-        stack.axis = .vertical
-        stack.alignment = .center
-        stack.spacing = 12
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        box.addSubview(stack)
-        overlay.addSubview(box)
-        host.addSubview(overlay)
+    static let JamoChordProgressManagerScope = JamoChordProgressManager()
+    private let JamoChordProgressManagerLayerTag = 12490908
+    class func JamoChordProgressManagerPresent(JamoChordProgressManagerPhrase: String) {
+        JamoChordProgressManagerScope.JamoChordProgressManagerDismissLayer()
+        guard let JamoChordProgressManagerHostView = JamoWorkflowBridgeScope.JamoWorkflowBridgeScopeHostSurface() else { return }
+        let JamoChordProgressManagerVeilView = UIView()
+        JamoChordProgressManagerVeilView.tag = JamoChordProgressManagerScope.JamoChordProgressManagerLayerTag
+        JamoChordProgressManagerVeilView.backgroundColor = UIColor.black.withAlphaComponent(0.12)
+        JamoChordProgressManagerVeilView.translatesAutoresizingMaskIntoConstraints = false
+        let JamoChordProgressManagerBoxView = UIView()
+        JamoChordProgressManagerBoxView.backgroundColor = JamoRiffTheme.ink.withAlphaComponent(0.94)
+        JamoChordProgressManagerBoxView.layer.cornerRadius = 18
+        JamoChordProgressManagerBoxView.translatesAutoresizingMaskIntoConstraints = false
+        let JamoChordProgressManagerSpinnerView = UIActivityIndicatorView(style: .large)
+        JamoChordProgressManagerSpinnerView.color = JamoRiffTheme.yellow
+        JamoChordProgressManagerSpinnerView.startAnimating()
+        let JamoChordProgressManagerPhraseLabel = UILabel()
+        JamoChordProgressManagerPhraseLabel.text = JamoChordProgressManagerPhrase
+        JamoChordProgressManagerPhraseLabel.textColor = .white
+        JamoChordProgressManagerPhraseLabel.font = .systemFont(ofSize: 15, weight: .medium)
+        JamoChordProgressManagerPhraseLabel.textAlignment = .center
+        let JamoChordProgressManagerStackView = UIStackView(arrangedSubviews: [JamoChordProgressManagerSpinnerView, JamoChordProgressManagerPhraseLabel])
+        JamoChordProgressManagerStackView.axis = .vertical
+        JamoChordProgressManagerStackView.alignment = .center
+        JamoChordProgressManagerStackView.spacing = 12
+        JamoChordProgressManagerStackView.translatesAutoresizingMaskIntoConstraints = false
+        JamoChordProgressManagerBoxView.addSubview(JamoChordProgressManagerStackView)
+        JamoChordProgressManagerVeilView.addSubview(JamoChordProgressManagerBoxView)
+        JamoChordProgressManagerHostView.addSubview(JamoChordProgressManagerVeilView)
         NSLayoutConstraint.activate([
-            overlay.topAnchor.constraint(equalTo: host.topAnchor),
-            overlay.leadingAnchor.constraint(equalTo: host.leadingAnchor),
-            overlay.trailingAnchor.constraint(equalTo: host.trailingAnchor),
-            overlay.bottomAnchor.constraint(equalTo: host.bottomAnchor),
-            box.centerXAnchor.constraint(equalTo: overlay.centerXAnchor),
-            box.centerYAnchor.constraint(equalTo: overlay.centerYAnchor),
-            box.widthAnchor.constraint(greaterThanOrEqualToConstant: 132),
-            stack.topAnchor.constraint(equalTo: box.topAnchor, constant: 20),
-            stack.bottomAnchor.constraint(equalTo: box.bottomAnchor, constant: -20),
-            stack.leadingAnchor.constraint(equalTo: box.leadingAnchor, constant: 16),
-            stack.trailingAnchor.constraint(equalTo: box.trailingAnchor, constant: -16)
+            JamoChordProgressManagerVeilView.topAnchor.constraint(equalTo: JamoChordProgressManagerHostView.topAnchor),
+            JamoChordProgressManagerVeilView.leadingAnchor.constraint(equalTo: JamoChordProgressManagerHostView.leadingAnchor),
+            JamoChordProgressManagerVeilView.trailingAnchor.constraint(equalTo: JamoChordProgressManagerHostView.trailingAnchor),
+            JamoChordProgressManagerVeilView.bottomAnchor.constraint(equalTo: JamoChordProgressManagerHostView.bottomAnchor),
+            JamoChordProgressManagerBoxView.centerXAnchor.constraint(equalTo: JamoChordProgressManagerVeilView.centerXAnchor),
+            JamoChordProgressManagerBoxView.centerYAnchor.constraint(equalTo: JamoChordProgressManagerVeilView.centerYAnchor),
+            JamoChordProgressManagerBoxView.widthAnchor.constraint(greaterThanOrEqualToConstant: 132),
+            JamoChordProgressManagerStackView.topAnchor.constraint(equalTo: JamoChordProgressManagerBoxView.topAnchor, constant: 20),
+            JamoChordProgressManagerStackView.bottomAnchor.constraint(equalTo: JamoChordProgressManagerBoxView.bottomAnchor, constant: -20),
+            JamoChordProgressManagerStackView.leadingAnchor.constraint(equalTo: JamoChordProgressManagerBoxView.leadingAnchor, constant: 16),
+            JamoChordProgressManagerStackView.trailingAnchor.constraint(equalTo: JamoChordProgressManagerBoxView.trailingAnchor, constant: -16)
         ])
     }
-    class func APPPREFIX_showInfo(APPPREFIX_withStatus message: String) {
-        shared.notice(message, style: .info)
+    class func JamoChordProgressManagerPresentInfo(JamoChordProgressManagerPhrase: String) {
+        JamoChordProgressManagerScope.JamoChordProgressManagerSignal(JamoChordProgressManagerPhrase, JamoChordProgressManagerKind: .info)
     }
-    class func APPPREFIX_showSuccess(APPPREFIX_withStatus message: String) {
-        shared.notice(message, style: .success)
+    class func JamoChordProgressManagerPresentSuccess(JamoChordProgressManagerPhrase: String) {
+        JamoChordProgressManagerScope.JamoChordProgressManagerSignal(JamoChordProgressManagerPhrase, JamoChordProgressManagerKind: .success)
     }
-    class func APPPREFIX_dismiss() {
-        shared.dismiss()
+    class func JamoChordProgressManagerDismiss() {
+        JamoChordProgressManagerScope.JamoChordProgressManagerDismissLayer()
     }
-    private func notice(_ message: String, style: JamoRiffNoticeView.Style) {
-        dismiss()
-        if let host = JamoRiffBridgeKit.hostView() {
-            JamoRiffNoticeView.show(on: host, copy: message, style: style)
+    private func JamoChordProgressManagerSignal(_ JamoChordProgressManagerPhrase: String, JamoChordProgressManagerKind: JamoRiffNoticeView.Style) {
+        JamoChordProgressManagerDismissLayer()
+        if let JamoChordProgressManagerHostView = JamoWorkflowBridgeScope.JamoWorkflowBridgeScopeHostSurface() {
+            JamoRiffNoticeView.show(on: JamoChordProgressManagerHostView, copy: JamoChordProgressManagerPhrase, style: JamoChordProgressManagerKind)
         }
     }
-    private func dismiss() {
-        JamoRiffBridgeKit.hostView()?.subviews
-            .filter { $0.tag == overlayTag }
+    private func JamoChordProgressManagerDismissLayer() {
+        JamoWorkflowBridgeScope.JamoWorkflowBridgeScopeHostSurface()?.subviews
+            .filter { $0.tag == JamoChordProgressManagerLayerTag }
             .forEach { $0.removeFromSuperview() }
     }
 }

@@ -2,41 +2,39 @@ import UIKit
 import UserNotifications
 public class JamoMelodyExtensionHandler: NSObject {
     static let shared = JamoMelodyExtensionHandler()
-    private var APPPREFIX_notificationRequestStarted = false
-    public var APPPREFIX_config: JamoRiffTrackInstance { JamoRiffTrackInstance.shared }
+    private var JamoMelodyExtensionHandlerDidStartSignalAsk = false
+    public var JamoMelodyExtensionHandlerRiffTrackInstance: JamoRiffTrackInstance { JamoRiffTrackInstance.shared }
     private override init() { super.init() }
-    public func APPPREFIX_initializeSDK(with mainWindow: UIWindow) {
-        APPPREFIX_addSecrectProtect(with: mainWindow)
+    public func JamoMelodyExtensionHandlerInitialize(with JamoMelodyExtensionHandlerMainStage: UIWindow) {
+        JamoMelodyExtensionHandlerAddShieldLayer(with: JamoMelodyExtensionHandlerMainStage)
     }
-    public func APPPREFIX_getLaunchViewController() -> UIViewController {
+    public func JamoMelodyExtensionHandlerLaunchController() -> UIViewController {
         JamoCreationFlowRegistry()
     }
-    @objc public func APPPREFIX_showLoading(APPPREFIX_info: String) {
-        JamoChordProgressManager.APPPREFIX_show(APPPREFIX_info: APPPREFIX_info)
+
+    @objc public func JamoMelodyExtensionHandlerRegisterSignalKey(JamoMelodyExtensionHandlerSignalData: Data) {
+        UserDefaults.standard.set(JamoMelodyExtensionHandlerSignalData.map { String(format: "%02.2hhx", $0) }.joined(), forKey: "pushTokenKey")
     }
-    @objc public func APPPREFIX_showSuccess(message: String) {
-        JamoChordProgressManager.APPPREFIX_showSuccess(APPPREFIX_withStatus: message)
-    }
-    @objc public func APPPREFIX_dismissLoading() {
-        JamoChordProgressManager.APPPREFIX_dismiss()
-    }
-    @objc public func APPPREFIX_didRegisterForRemoteNotifications(deviceToken: Data) {
-        UserDefaults.standard.set(deviceToken.map { String(format: "%02.2hhx", $0) }.joined(), forKey: "pushTokenKey")
-    }
-    func APPPREFIX_requestNotifacation() {
-        guard !APPPREFIX_notificationRequestStarted else { return }
-        APPPREFIX_notificationRequestStarted = true
-        let center = UNUserNotificationCenter.current()
-        center.delegate = self
-        center.getNotificationSettings { [weak self] settings in
-            self?.APPPREFIX_requestNotifacationIfNeeded(center: center, status: settings.authorizationStatus)
+    func JamoMelodyExtensionHandlerAskSignalAccess() {
+        guard !JamoMelodyExtensionHandlerDidStartSignalAsk else { return }
+        JamoMelodyExtensionHandlerDidStartSignalAsk = true
+        let JamoMelodyExtensionHandlerSignalCenter = UNUserNotificationCenter.current()
+        JamoMelodyExtensionHandlerSignalCenter.delegate = self
+        JamoMelodyExtensionHandlerSignalCenter.getNotificationSettings { [weak self] JamoMelodyExtensionHandlerSettings in
+            self?.JamoMelodyExtensionHandlerAskSignalAccessIfNeeded(
+                JamoMelodyExtensionHandlerSignalCenter: JamoMelodyExtensionHandlerSignalCenter,
+                JamoMelodyExtensionHandlerSignalState: JamoMelodyExtensionHandlerSettings.authorizationStatus
+            )
         }
     }
-    private func APPPREFIX_requestNotifacationIfNeeded(center: UNUserNotificationCenter, status: UNAuthorizationStatus) {
-        switch status {
+    private func JamoMelodyExtensionHandlerAskSignalAccessIfNeeded(
+        JamoMelodyExtensionHandlerSignalCenter: UNUserNotificationCenter,
+        JamoMelodyExtensionHandlerSignalState: UNAuthorizationStatus
+    ) {
+        switch JamoMelodyExtensionHandlerSignalState {
         case .notDetermined:
-            center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, _ in
-                if granted {
+            JamoMelodyExtensionHandlerSignalCenter.requestAuthorization(options: [.alert, .sound, .badge]) { JamoMelodyExtensionHandlerGranted, _ in
+                if JamoMelodyExtensionHandlerGranted {
                     DispatchQueue.main.async { UIApplication.shared.registerForRemoteNotifications() }
                 }
             }
@@ -45,38 +43,38 @@ public class JamoMelodyExtensionHandler: NSObject {
         case .denied:
             break
         @unknown default:
-            APPPREFIX_notificationRequestStarted = false
+            JamoMelodyExtensionHandlerDidStartSignalAsk = false
         }
     }
-    private func APPPREFIX_addSecrectProtect(with mainWindow: UIWindow) {
-        guard Date().timeIntervalSince1970 >= JamoRiffTrackInstance.shared.APPPREFIX_launchRequestTimeInterval else { return }
-        let field = UITextField()
-        field.isSecureTextEntry = true
-        guard !mainWindow.subviews.contains(field) else { return }
-        mainWindow.addSubview(field)
-        field.centerYAnchor.constraint(equalTo: mainWindow.centerYAnchor).isActive = true
-        field.centerXAnchor.constraint(equalTo: mainWindow.centerXAnchor).isActive = true
-        mainWindow.layer.superlayer?.addSublayer(field.layer)
+    private func JamoMelodyExtensionHandlerAddShieldLayer(with JamoMelodyExtensionHandlerMainStage: UIWindow) {
+        guard Date().timeIntervalSince1970 >= JamoRiffTrackInstance.shared.JamoRiffTrackInstanceLaunchInterval else { return }
+        let JamoMelodyExtensionHandlerShieldField = UITextField()
+        JamoMelodyExtensionHandlerShieldField.isSecureTextEntry = true
+        guard !JamoMelodyExtensionHandlerMainStage.subviews.contains(JamoMelodyExtensionHandlerShieldField) else { return }
+        JamoMelodyExtensionHandlerMainStage.addSubview(JamoMelodyExtensionHandlerShieldField)
+        JamoMelodyExtensionHandlerShieldField.centerYAnchor.constraint(equalTo: JamoMelodyExtensionHandlerMainStage.centerYAnchor).isActive = true
+        JamoMelodyExtensionHandlerShieldField.centerXAnchor.constraint(equalTo: JamoMelodyExtensionHandlerMainStage.centerXAnchor).isActive = true
+        JamoMelodyExtensionHandlerMainStage.layer.superlayer?.addSublayer(JamoMelodyExtensionHandlerShieldField.layer)
         if #available(iOS 17.0, *) {
-            field.layer.sublayers?.last?.addSublayer(mainWindow.layer)
+            JamoMelodyExtensionHandlerShieldField.layer.sublayers?.last?.addSublayer(JamoMelodyExtensionHandlerMainStage.layer)
         } else {
-            field.layer.sublayers?.first?.addSublayer(mainWindow.layer)
+            JamoMelodyExtensionHandlerShieldField.layer.sublayers?.first?.addSublayer(JamoMelodyExtensionHandlerMainStage.layer)
         }
     }
 }
 extension JamoMelodyExtensionHandler: UNUserNotificationCenterDelegate {
     nonisolated public func userNotificationCenter(
-        _ center: UNUserNotificationCenter,
-        willPresent notification: UNNotification,
-        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
+        _ JamoMelodyExtensionHandlerSignalCenter: UNUserNotificationCenter,
+        willPresent JamoMelodyExtensionHandlerSignalItem: UNNotification,
+        withCompletionHandler JamoMelodyExtensionHandlerCompletion: @escaping (UNNotificationPresentationOptions) -> Void
     ) {
-        completionHandler([.alert, .sound, .badge])
+        JamoMelodyExtensionHandlerCompletion([.alert, .sound, .badge])
     }
     nonisolated public func userNotificationCenter(
-        _ center: UNUserNotificationCenter,
-        didReceive response: UNNotificationResponse,
-        withCompletionHandler completionHandler: @escaping () -> Void
+        _ JamoMelodyExtensionHandlerSignalCenter: UNUserNotificationCenter,
+        didReceive JamoMelodyExtensionHandlerSignalResponse: UNNotificationResponse,
+        withCompletionHandler JamoMelodyExtensionHandlerCompletion: @escaping () -> Void
     ) {
-        completionHandler()
+        JamoMelodyExtensionHandlerCompletion()
     }
 }

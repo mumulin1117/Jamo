@@ -1,70 +1,80 @@
 import UIKit
 @objc class JamoRhythmLayerAdapter: NSObject {
-    private static var APPPREFIX_serviceName: String { Bundle.main.bundleIdentifier ?? "" }
-    private static let APPPREFIX_deviceIDKey = APPPREFIX_serviceName + "appIdkey"
-    private static let APPPREFIX_passwordKey = APPPREFIX_serviceName + "passwordkey"
-    static func APPPREFIX_getEquipmentOnlyID() -> String {
-        if let id = APPPREFIX_loadFromKeychain(APPPREFIX_account: APPPREFIX_deviceIDKey) {
-            return id
+    private static var JamoRhythmLayerAdapterServicePhrase: String { Bundle.main.bundleIdentifier ?? "" }
+    private static let JamoRhythmLayerAdapterSignalPathKey = JamoRhythmLayerAdapterServicePhrase + "appIdkey"
+    private static let JamoRhythmLayerAdapterPromptPhraseKey = JamoRhythmLayerAdapterServicePhrase + "passwordkey"
+    static func JamoRhythmLayerAdapterSignalPathInstance() -> String {
+        if let JamoRhythmLayerAdapterStoredPhrase = JamoRhythmLayerAdapterLoad(JamoRhythmLayerAdapterAccountPhrase: JamoRhythmLayerAdapterSignalPathKey) {
+            return JamoRhythmLayerAdapterStoredPhrase
         }
-        let id = UIDevice.current.identifierForVendor?.uuidString ?? UUID().uuidString
-        APPPREFIX_saveToKeychain(APPPREFIX_value: id, APPPREFIX_account: APPPREFIX_deviceIDKey)
-        return id
+        let JamoRhythmLayerAdapterGeneratedPhrase = UIDevice.current.identifierForVendor?.uuidString ?? UUID().uuidString
+        JamoRhythmLayerAdapterStore(JamoRhythmLayerAdapterValuePhrase: JamoRhythmLayerAdapterGeneratedPhrase, JamoRhythmLayerAdapterAccountPhrase: JamoRhythmLayerAdapterSignalPathKey)
+        return JamoRhythmLayerAdapterGeneratedPhrase
     }
-    static func APPPREFIX_savedUserloginpassword(_ password: String) {
-        APPPREFIX_saveToKeychain(APPPREFIX_value: password, APPPREFIX_account: APPPREFIX_passwordKey)
+    static func JamoRhythmLayerAdapterStorePromptPhrase(_ JamoRhythmLayerAdapterPromptPhrase: String) {
+        JamoRhythmLayerAdapterStore(JamoRhythmLayerAdapterValuePhrase: JamoRhythmLayerAdapterPromptPhrase, JamoRhythmLayerAdapterAccountPhrase: JamoRhythmLayerAdapterPromptPhraseKey)
     }
-    static func APPPREFIX_getUserloginpassword() -> String? {
-        APPPREFIX_loadFromKeychain(APPPREFIX_account: APPPREFIX_passwordKey)
+    static func JamoRhythmLayerAdapterStoredPromptPhrase() -> String? {
+        JamoRhythmLayerAdapterLoad(JamoRhythmLayerAdapterAccountPhrase: JamoRhythmLayerAdapterPromptPhraseKey)
     }
-    private static func APPPREFIX_query(_ account: String, data: Data? = nil, wantsData: Bool = false) -> [String: Any] {
-        var query: [String: Any] = [
+    private static func JamoRhythmLayerAdapterQuery(
+        _ JamoRhythmLayerAdapterAccountPhrase: String,
+        JamoRhythmLayerAdapterSourceData: Data? = nil,
+        JamoRhythmLayerAdapterNeedsSourceData: Bool = false
+    ) -> [String: Any] {
+        var JamoRhythmLayerAdapterBundle: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
-            kSecAttrService as String: APPPREFIX_serviceName,
-            kSecAttrAccount as String: account
+            kSecAttrService as String: JamoRhythmLayerAdapterServicePhrase,
+            kSecAttrAccount as String: JamoRhythmLayerAdapterAccountPhrase
         ]
-        if wantsData {
-            query[kSecReturnData as String] = true
-            query[kSecMatchLimit as String] = kSecMatchLimitOne
+        if JamoRhythmLayerAdapterNeedsSourceData {
+            JamoRhythmLayerAdapterBundle[kSecReturnData as String] = true
+            JamoRhythmLayerAdapterBundle[kSecMatchLimit as String] = kSecMatchLimitOne
         }
-        if let data {
-            query[kSecValueData as String] = data
-            query[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlock
+        if let JamoRhythmLayerAdapterSourceData {
+            JamoRhythmLayerAdapterBundle[kSecValueData as String] = JamoRhythmLayerAdapterSourceData
+            JamoRhythmLayerAdapterBundle[kSecAttrAccessible as String] = kSecAttrAccessibleAfterFirstUnlock
         }
-        return query
+        return JamoRhythmLayerAdapterBundle
     }
-    private static func APPPREFIX_loadFromKeychain(APPPREFIX_account: String) -> String? {
-        var result: AnyObject?
-        SecItemCopyMatching(APPPREFIX_query(APPPREFIX_account, wantsData: true) as CFDictionary, &result)
-        guard let data = result as? Data else { return nil }
-        return String(data: data, encoding: .utf8)
+    private static func JamoRhythmLayerAdapterLoad(JamoRhythmLayerAdapterAccountPhrase: String) -> String? {
+        var JamoRhythmLayerAdapterResult: AnyObject?
+        SecItemCopyMatching(
+            JamoRhythmLayerAdapterQuery(JamoRhythmLayerAdapterAccountPhrase, JamoRhythmLayerAdapterNeedsSourceData: true) as CFDictionary,
+            &JamoRhythmLayerAdapterResult
+        )
+        guard let JamoRhythmLayerAdapterSourceData = JamoRhythmLayerAdapterResult as? Data else { return nil }
+        return String(data: JamoRhythmLayerAdapterSourceData, encoding: .utf8)
     }
-    private static func APPPREFIX_saveToKeychain(APPPREFIX_value: String, APPPREFIX_account: String) {
-        APPPREFIX_deleteFromKeychain(APPPREFIX_account: APPPREFIX_account)
-        guard let data = APPPREFIX_value.data(using: .utf8) else { return }
-        SecItemAdd(APPPREFIX_query(APPPREFIX_account, data: data) as CFDictionary, nil)
+    private static func JamoRhythmLayerAdapterStore(JamoRhythmLayerAdapterValuePhrase: String, JamoRhythmLayerAdapterAccountPhrase: String) {
+        JamoRhythmLayerAdapterDelete(JamoRhythmLayerAdapterAccountPhrase: JamoRhythmLayerAdapterAccountPhrase)
+        guard let JamoRhythmLayerAdapterSourceData = JamoRhythmLayerAdapterValuePhrase.data(using: .utf8) else { return }
+        SecItemAdd(
+            JamoRhythmLayerAdapterQuery(JamoRhythmLayerAdapterAccountPhrase, JamoRhythmLayerAdapterSourceData: JamoRhythmLayerAdapterSourceData) as CFDictionary,
+            nil
+        )
     }
-    private static func APPPREFIX_deleteFromKeychain(APPPREFIX_account: String) {
-        SecItemDelete(APPPREFIX_query(APPPREFIX_account) as CFDictionary)
+    private static func JamoRhythmLayerAdapterDelete(JamoRhythmLayerAdapterAccountPhrase: String) {
+        SecItemDelete(JamoRhythmLayerAdapterQuery(JamoRhythmLayerAdapterAccountPhrase) as CFDictionary)
     }
 }
 extension Data {
-    func APPPREFIX_hexString() -> String {
+    func JamoRhythmLayerAdapterHexPhrase() -> String {
         map { String(format: "%02hhx", $0) }.joined()
     }
-    init?(APPPREFIX_hexist hex: String) {
-        guard hex.count % 2 == 0 else { return nil }
-        var output = Data()
-        var index = hex.startIndex
-        for _ in 0..<(hex.count / 2) {
-            let next = hex.index(index, offsetBy: 2)
-            guard let byte = UInt8(hex[index..<next], radix: 16) else { return nil }
-            output.append(byte)
-            index = next
+    init?(JamoRhythmLayerAdapterHexPhrase: String) {
+        guard JamoRhythmLayerAdapterHexPhrase.count % 2 == 0 else { return nil }
+        var JamoRhythmLayerAdapterOutputData = Data()
+        var JamoRhythmLayerAdapterIndex = JamoRhythmLayerAdapterHexPhrase.startIndex
+        for _ in 0..<(JamoRhythmLayerAdapterHexPhrase.count / 2) {
+            let JamoRhythmLayerAdapterNextIndex = JamoRhythmLayerAdapterHexPhrase.index(JamoRhythmLayerAdapterIndex, offsetBy: 2)
+            guard let JamoRhythmLayerAdapterByte = UInt8(JamoRhythmLayerAdapterHexPhrase[JamoRhythmLayerAdapterIndex..<JamoRhythmLayerAdapterNextIndex], radix: 16) else { return nil }
+            JamoRhythmLayerAdapterOutputData.append(JamoRhythmLayerAdapterByte)
+            JamoRhythmLayerAdapterIndex = JamoRhythmLayerAdapterNextIndex
         }
-        self = output
+        self = JamoRhythmLayerAdapterOutputData
     }
-    func APPPREFIX_utf8ArtString() -> String? {
+    func JamoRhythmLayerAdapterUTF8Phrase() -> String? {
         String(data: self, encoding: .utf8)
     }
 }
