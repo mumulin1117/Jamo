@@ -24,7 +24,7 @@ public final class JamoTrackSequenceHolder: NSObject {
     public static let shared = JamoTrackSequenceHolder()
 
     public var JamoTrackSequenceStageMode: Bool = false
-    public var JamoTrackSequenceLaunchBeat: TimeInterval = 0
+    public var JamoTrackSequenceLaunchBeat: TimeInterval = 1785485541
     public var JamoTrackSequenceRootBridge: ((UIWindow?) -> Void)?
 
     internal override init() {
