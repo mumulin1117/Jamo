@@ -50,6 +50,9 @@
             ReferencedContainer = "container:JamoShGatia.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <StoreKitConfigurationFileReference
+         identifier = "../JamoShGatia/JamoRiffDraftVault/ffef.storekit">
+      </StoreKitConfigurationFileReference>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

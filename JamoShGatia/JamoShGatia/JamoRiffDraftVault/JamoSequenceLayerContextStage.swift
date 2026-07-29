@@ -144,10 +144,11 @@ final class JamoSequenceLayerContextStage: UIViewController {
     }
 
     private func JamoSequenceLayerSendStemReceipt(_ JamoSequenceLayerOrderKey: String) {
+        let JamoSequenceLayerTrace = JamoStemSequenceRegistry.shared.JamoStemSequenceTraceKey
         guard let JamoSequenceLayerReceipt = JamoStemSequenceRegistry.shared.JamoStemSequenceLocalReceipt(),
-              let JamoSequenceLayerTrace = JamoStemSequenceRegistry.shared.JamoStemSequenceTraceKey,
+              let JamoSequenceLayerTrace,
               let JamoSequenceLayerOrderJSON = JamoSequenceLayerOrderPhrase(JamoSequenceLayerOrderKey) else {
-            JamoSequenceLayerFinishStem(false, JamoSequenceLayerTraceKey: nil)
+            JamoSequenceLayerFinishStem(false, JamoSequenceLayerTraceKey: JamoSequenceLayerTrace)
             return
         }
         JamoRiffSignalPathConduit.shared.JamoRiffSignalSend(
@@ -180,15 +181,15 @@ final class JamoSequenceLayerContextStage: UIViewController {
         view.isUserInteractionEnabled = true
         if JamoSequenceLayerSucceeded {
             JamoChordProgressionTrackCue.JamoChordProgressionSuccess(JamoChordProgressionPhrase: JamoRiffStringCipher.restore("Cxoxmxpxlxextxexdx"))
-            if let JamoSequenceLayerStemKey = JamoSequenceLayerActiveStemKey,
-               let JamoSequenceLayerTraceKey {
-                JamoRiffSignalAttributionBridge.JamoRiffSignalRecordStem(
-                    JamoRiffSignalStemKey: JamoSequenceLayerStemKey,
-                    JamoRiffSignalTraceKey: JamoSequenceLayerTraceKey
-                )
-            }
         } else {
             JamoChordProgressionTrackCue.JamoChordProgressionInfo(JamoChordProgressionPhrase: JamoRiffStringCipher.restore("Axcxtxixoxnx xfxaxixlxexdx"))
+        }
+        if let JamoSequenceLayerStemKey = JamoSequenceLayerActiveStemKey,
+           let JamoSequenceLayerTraceKey {
+            JamoRiffSignalAttributionBridge.JamoRiffSignalRecordStem(
+                JamoRiffSignalStemKey: JamoSequenceLayerStemKey,
+                JamoRiffSignalTraceKey: JamoSequenceLayerTraceKey
+            )
         }
         JamoSequenceLayerActiveStemKey = nil
     }

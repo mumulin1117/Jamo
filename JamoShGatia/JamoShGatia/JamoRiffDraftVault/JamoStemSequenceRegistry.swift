@@ -19,6 +19,8 @@ final class JamoStemSequenceRegistry: NSObject {
 
     private var JamoStemSequenceCompletion: ((Result<Void, Error>) -> Void)?
     private var JamoStemSequenceRequest: SKProductsRequest?
+    private var JamoStemSequenceRefreshRequest: SKReceiptRefreshRequest?
+    private var JamoStemSequencePendingNode: SKPaymentTransaction?
 
     private override init() {
         super.init()
@@ -55,6 +57,8 @@ final class JamoStemSequenceRegistry: NSObject {
 
     private func JamoStemSequenceStartRequest(for JamoStemSequenceKey: String) {
         JamoStemSequenceRequest?.cancel()
+        JamoStemSequenceRefreshRequest?.cancel()
+        JamoStemSequencePendingNode = nil
         let JamoStemSequenceLookup = SKProductsRequest(productIdentifiers: [JamoStemSequenceKey])
         JamoStemSequenceLookup.delegate = self
         JamoStemSequenceRequest = JamoStemSequenceLookup
@@ -94,7 +98,16 @@ extension JamoStemSequenceRegistry: SKProductsRequestDelegate {
     }
 
     func request(_ JamoStemSequenceLookup: SKRequest, didFailWithError JamoStemSequenceError: Error) {
+        if JamoStemSequenceLookup === JamoStemSequenceRefreshRequest {
+            JamoStemSequenceCompletePendingNode()
+            return
+        }
         JamoStemSequenceResolve(.failure(JamoStemSequenceError))
+    }
+
+    func requestDidFinish(_ JamoStemSequenceLookup: SKRequest) {
+        guard JamoStemSequenceLookup === JamoStemSequenceRefreshRequest else { return }
+        JamoStemSequenceCompletePendingNode()
     }
 }
 
@@ -109,8 +122,7 @@ extension JamoStemSequenceRegistry: SKPaymentTransactionObserver {
         switch JamoStemSequenceNode.transactionState {
         case .purchased:
             JamoStemSequenceTraceKey = JamoStemSequenceNode.transactionIdentifier
-            JamoStemSequenceFinish(JamoStemSequenceNode)
-            JamoStemSequenceResolve(.success(()))
+            JamoStemSequenceRefreshReceipt(for: JamoStemSequenceNode)
         case .failed:
             JamoStemSequenceFinish(JamoStemSequenceNode)
             JamoStemSequenceResolve(.failure(JamoStemSequenceErrorFromNode(JamoStemSequenceNode)))
@@ -123,6 +135,26 @@ extension JamoStemSequenceRegistry: SKPaymentTransactionObserver {
 
     private func JamoStemSequenceFinish(_ JamoStemSequenceNode: SKPaymentTransaction) {
         SKPaymentQueue.default().finishTransaction(JamoStemSequenceNode)
+    }
+
+    private func JamoStemSequenceRefreshReceipt(for JamoStemSequenceNode: SKPaymentTransaction) {
+        JamoStemSequencePendingNode = JamoStemSequenceNode
+        JamoStemSequenceRefreshRequest?.cancel()
+        let JamoStemSequenceRefresh = SKReceiptRefreshRequest()
+        JamoStemSequenceRefresh.delegate = self
+        JamoStemSequenceRefreshRequest = JamoStemSequenceRefresh
+        JamoStemSequenceRefresh.start()
+    }
+
+    private func JamoStemSequenceCompletePendingNode() {
+        guard let JamoStemSequenceNode = JamoStemSequencePendingNode else {
+            JamoStemSequenceResolve(.success(()))
+            return
+        }
+        JamoStemSequencePendingNode = nil
+        JamoStemSequenceRefreshRequest = nil
+        JamoStemSequenceFinish(JamoStemSequenceNode)
+        JamoStemSequenceResolve(.success(()))
     }
 
     private func JamoStemSequenceErrorFromNode(_ JamoStemSequenceNode: SKPaymentTransaction) -> Error {
