@@ -1,31 +1,47 @@
 import UIKit
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
+final class JamoRiffChainContext: UIResponder, UIApplicationDelegate {
+    private enum JamoRiffChainPhrase {
+        static let JamoRiffChainStageConfiguration = JamoRiffStringCipher.restore("DDedfna8u6lCte JCyoXn1fdisg1uRrKantfi9ovn4")
+    }
 
-
-
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        JamoRiffPassAccessService.shared.startRiffPassObservation()
-        JamoRiffSignalAttributionBridge.JamoRiffSignalPrepareApplication(application, launchOptions: launchOptions)
+    func application(_ JamoRiffChainApplication: UIApplication, didFinishLaunchingWithOptions JamoRiffChainOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        JamoRiffChainPrepareLaunch(for: JamoRiffChainApplication, with: JamoRiffChainOptions)
         return true
     }
 
-    
-
-    func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
-        
-        
-        return UISceneConfiguration(name: JamoRiffStringCipher.restore("DDedfna8u6lCte JCyoXn1fdisg1uRrKantfi9ovn4"), sessionRole: connectingSceneSession.role)
+    func application(_ JamoRiffChainApplication: UIApplication, configurationForConnecting JamoRiffChainSession: UISceneSession, options JamoRiffChainOptions: UIScene.ConnectionOptions) -> UISceneConfiguration {
+        JamoRiffChainStageConfiguration(for: JamoRiffChainSession)
     }
 
- 
-
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        JamoMelodySignalConduit.shared.JamoMelodySignalStoreKey(JamoMelodySignalData: deviceToken)
-    }
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        JamoRiffSignalAttributionBridge.JamoRiffSignalOpenTrack(app, route: url, options: options)
+    func application(_ JamoRiffChainApplication: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken JamoRiffChainDeviceTone: Data) {
+        JamoMelodySignalConduit.shared.JamoMelodySignalStoreKey(JamoMelodySignalData: JamoRiffChainDeviceTone)
     }
 
+    func application(_ JamoRiffChainApplication: UIApplication, open JamoRiffChainRoute: URL, options JamoRiffChainOptions: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+        JamoRiffSignalAttributionBridge.JamoRiffSignalOpenTrack(
+            JamoRiffChainApplication,
+            route: JamoRiffChainRoute,
+            options: JamoRiffChainOptions
+        )
+    }
+
+    private func JamoRiffChainPrepareLaunch(
+        for JamoRiffChainApplication: UIApplication,
+        with JamoRiffChainOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) {
+        JamoRiffPassAccessService.shared.startRiffPassObservation()
+        JamoRiffSignalAttributionBridge.JamoRiffSignalPrepareApplication(
+            JamoRiffChainApplication,
+            launchOptions: JamoRiffChainOptions
+        )
+    }
+
+    private func JamoRiffChainStageConfiguration(for JamoRiffChainSession: UISceneSession) -> UISceneConfiguration {
+        UISceneConfiguration(
+            name: JamoRiffChainPhrase.JamoRiffChainStageConfiguration,
+            sessionRole: JamoRiffChainSession.role
+        )
+    }
 }

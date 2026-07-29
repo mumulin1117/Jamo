@@ -7,10 +7,10 @@ final class JamoStemSequenceRegistry: NSObject {
         static let JamoStemSequenceMissingItemCode = -2
         static let JamoStemSequenceFailedCode = -3
         static let JamoStemSequenceCancelledCode = -999
-        static let JamoStemSequenceUnavailableCopy = "This item is unavailable on this device."
-        static let JamoStemSequenceMissingItemCopy = "No valid product found."
-        static let JamoStemSequenceCancelledCopy = "Action cancelled"
-        static let JamoStemSequenceFailedCopy = "Transaction failed."
+        static let JamoStemSequenceUnavailableCopy = JamoRiffStringCipher.restore("Txhxixsx xixtxexmx xixsx xuxnxaxvxaxixlxaxbxlxex xoxnx xtxhxixsx xdxexvxixcxex.x")
+        static let JamoStemSequenceMissingItemCopy = JamoRiffStringCipher.restore("Nxox xvxaxlxixdx xpxrxoxdxuxcxtx xfxoxuxnxdx.x")
+        static let JamoStemSequenceCancelledCopy = JamoRiffStringCipher.restore("Axcxtxixoxnx xcxaxnxcxexlxlxexdx")
+        static let JamoStemSequenceFailedCopy = JamoRiffStringCipher.restore("Txrxaxnxsxaxcxtxixoxnx xfxaxixlxexdx.x")
     }
 
     static let shared = JamoStemSequenceRegistry()
@@ -78,7 +78,7 @@ final class JamoStemSequenceRegistry: NSObject {
     }
 
     private func JamoStemSequenceError(_ JamoStemSequenceCopy: String, code JamoStemSequenceCode: Int) -> Error {
-        NSError(domain: "", code: JamoStemSequenceCode, userInfo: [NSLocalizedDescriptionKey: JamoStemSequenceCopy])
+        NSError(domain: JamoRiffStringCipher.restore(""), code: JamoStemSequenceCode, userInfo: [NSLocalizedDescriptionKey: JamoStemSequenceCopy])
     }
 }
 

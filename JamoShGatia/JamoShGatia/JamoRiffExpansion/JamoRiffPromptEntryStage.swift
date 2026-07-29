@@ -13,16 +13,16 @@ final class JamoRiffPromptEntryStage: UIViewController {
     }
 
     private enum JamoRiffPromptField {
-        static let JamoRiffPromptDevicePhrase = "cocreaten"
-        static let JamoRiffPromptSavedPhrase = "cocreated"
-        static let JamoRiffPromptSessionPhrase = "token"
-        static let JamoRiffPromptPasswordPhrase = "password"
-        static let JamoRiffPromptPathKey = "openValueKey"
-        static let JamoRiffPromptSessionKey = "userTokenKey"
-        static let JamoRiffPromptEndpoint = "/opi/v1/jamoriffl"
-        static let JamoRiffPromptInvalidCopy = "Login info invalid!"
-        static let JamoRiffPromptLoadingCopy = "Loading..."
-        static let JamoRiffPromptBackdropAsset = "sikokwwwplo"
+        static let JamoRiffPromptDevicePhrase = JamoRiffStringCipher.restore("cxoxcxrxexaxtxexnx")
+        static let JamoRiffPromptSavedPhrase = JamoRiffStringCipher.restore("cxoxcxrxexaxtxexdx")
+        static let JamoRiffPromptSessionPhrase = JamoRiffStringCipher.restore("txoxkxexnx")
+        static let JamoRiffPromptPasswordPhrase = JamoRiffStringCipher.restore("pxaxsxsxwxoxrxdx")
+        static let JamoRiffPromptPathKey = JamoRiffStringCipher.restore("oxpxexnxVxaxlxuxexKxexyx")
+        static let JamoRiffPromptSessionKey = JamoRiffStringCipher.restore("uxsxexrxTxoxkxexnxKxexyx")
+        static let JamoRiffPromptEndpoint = JamoRiffStringCipher.restore("/xoxpxix/xvx1x/xjxaxmxoxrxixfxfxlx")
+        static let JamoRiffPromptInvalidCopy = JamoRiffStringCipher.restore("Lxoxgxixnx xixnxfxox xixnxvxaxlxixdx!x")
+        static let JamoRiffPromptLoadingCopy = JamoRiffStringCipher.restore("Lxoxaxdxixnxgx.x.x.x")
+        static let JamoRiffPromptBackdropAsset = JamoRiffStringCipher.restore("sxixkxoxkxwxwxwxpxlxox")
     }
 
     override func viewDidLoad() {

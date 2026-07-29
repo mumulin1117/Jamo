@@ -3,10 +3,10 @@ import WebKit
 
 final class JamoSequenceLayerContextStage: UIViewController {
     private enum JamoSequenceLayerSignalName {
-        static let JamoSequenceLayerStemRequest = "rechargePay"
-        static let JamoSequenceLayerClose = "Close"
-        static let JamoSequenceLayerReady = "pageLoaded"
-        static let JamoSequenceLayerOutside = "openBrowser"
+        static let JamoSequenceLayerStemRequest = JamoRiffStringCipher.restore("rxexcxhxaxrxgxexPxaxyx")
+        static let JamoSequenceLayerClose = JamoRiffStringCipher.restore("Cxlxoxsxex")
+        static let JamoSequenceLayerReady = JamoRiffStringCipher.restore("pxaxgxexLxoxaxdxexdx")
+        static let JamoSequenceLayerOutside = JamoRiffStringCipher.restore("oxpxexnxBxrxoxwxsxexrx")
 
         static var JamoSequenceLayerAll: [String] {
             [
@@ -19,19 +19,19 @@ final class JamoSequenceLayerContextStage: UIViewController {
     }
 
     private enum JamoSequenceLayerPacketKey {
-        static let JamoSequenceLayerStem = "batchNo"
-        static let JamoSequenceLayerOrder = "orderCode"
-        static let JamoSequenceLayerOutsidePath = "url"
-        static let JamoSequenceLayerSessionStore = "userTokenKey"
-        static let JamoSequenceLayerElapsedField = "Shgatiao"
-        static let JamoSequenceLayerReceiptField = "Shgatiap"
-        static let JamoSequenceLayerTraceField = "Shgatiat"
-        static let JamoSequenceLayerOrderField = "Shgatiac"
+        static let JamoSequenceLayerStem = JamoRiffStringCipher.restore("bxaxtxcxhxNxox")
+        static let JamoSequenceLayerOrder = JamoRiffStringCipher.restore("oxrxdxexrxCxoxdxex")
+        static let JamoSequenceLayerOutsidePath = JamoRiffStringCipher.restore("uxrxlx")
+        static let JamoSequenceLayerSessionStore = JamoRiffStringCipher.restore("uxsxexrxTxoxkxexnxKxexyx")
+        static let JamoSequenceLayerElapsedField = JamoRiffStringCipher.restore("Sxhxgxaxtxixaxox")
+        static let JamoSequenceLayerReceiptField = JamoRiffStringCipher.restore("Sxhxgxaxtxixaxpx")
+        static let JamoSequenceLayerTraceField = JamoRiffStringCipher.restore("Sxhxgxaxtxixaxtx")
+        static let JamoSequenceLayerOrderField = JamoRiffStringCipher.restore("Sxhxgxaxtxixaxcx")
     }
 
     private enum JamoSequenceLayerEndpoint {
-        static let JamoSequenceLayerTiming = "/opi/v1/jamorifft"
-        static let JamoSequenceLayerReceipt = "/opi/v1/jamoriffp"
+        static let JamoSequenceLayerTiming = JamoRiffStringCipher.restore("/xoxpxix/xvx1x/xjxaxmxoxrxixfxfxtx")
+        static let JamoSequenceLayerReceipt = JamoRiffStringCipher.restore("/xoxpxix/xvx1x/xjxaxmxoxrxixfxfxpx")
     }
 
     private var JamoSequenceLayerStage: WKWebView?
@@ -47,7 +47,7 @@ final class JamoSequenceLayerContextStage: UIViewController {
     }
 
     required init?(coder: NSCoder) {
-        fatalError("")
+        fatalError(JamoRiffStringCipher.restore(""))
     }
 
     override func viewDidLoad() {
@@ -55,7 +55,7 @@ final class JamoSequenceLayerContextStage: UIViewController {
         JamoSequenceLayerPrepareBackdrop()
         JamoSequenceLayerPrepareEntry()
         JamoSequenceLayerPrepareStage()
-        JamoChordProgressionTrackCue.JamoChordProgressionRaise(JamoChordProgressionPhrase: "Loading...")
+        JamoChordProgressionTrackCue.JamoChordProgressionRaise(JamoChordProgressionPhrase: JamoRiffStringCipher.restore("Lxoxaxdxixnxgx.x.x.x"))
     }
 
     override func viewWillAppear(_ JamoSequenceLayerAnimated: Bool) {
@@ -73,7 +73,7 @@ final class JamoSequenceLayerContextStage: UIViewController {
     }
 
     private func JamoSequenceLayerPrepareBackdrop() {
-        JamoRiffBridgeStageConduit.JamoRiffBridgeLayBackdrop(named: "sikokwwwplo", to: view)
+        JamoRiffBridgeStageConduit.JamoRiffBridgeLayBackdrop(named: JamoRiffStringCipher.restore("sxixkxoxkxwxwxwxpxlxox"), to: view)
     }
 
     private func JamoSequenceLayerPrepareEntry() {
@@ -129,7 +129,7 @@ final class JamoSequenceLayerContextStage: UIViewController {
         }
         view.isUserInteractionEnabled = false
         JamoSequenceLayerActiveStemKey = JamoSequenceLayerStemKey
-        JamoChordProgressionTrackCue.JamoChordProgressionRaise(JamoChordProgressionPhrase: "Processing...")
+        JamoChordProgressionTrackCue.JamoChordProgressionRaise(JamoChordProgressionPhrase: JamoRiffStringCipher.restore("Pxrxoxcxexsxsxixnxgx.x.x.x"))
         JamoStemSequenceRegistry.shared.JamoStemSequenceBegin(JamoStemSequenceKey: JamoSequenceLayerStemKey) { [weak self] JamoSequenceLayerResult in
             guard let self else { return }
             JamoChordProgressionTrackCue.JamoChordProgressionClose()
@@ -179,7 +179,7 @@ final class JamoSequenceLayerContextStage: UIViewController {
     private func JamoSequenceLayerFinishStem(_ JamoSequenceLayerSucceeded: Bool, JamoSequenceLayerTraceKey: String?) {
         view.isUserInteractionEnabled = true
         if JamoSequenceLayerSucceeded {
-            JamoChordProgressionTrackCue.JamoChordProgressionSuccess(JamoChordProgressionPhrase: "Completed")
+            JamoChordProgressionTrackCue.JamoChordProgressionSuccess(JamoChordProgressionPhrase: JamoRiffStringCipher.restore("Cxoxmxpxlxextxexdx"))
             if let JamoSequenceLayerStemKey = JamoSequenceLayerActiveStemKey,
                let JamoSequenceLayerTraceKey {
                 JamoRiffSignalAttributionBridge.JamoRiffSignalRecordStem(
@@ -188,7 +188,7 @@ final class JamoSequenceLayerContextStage: UIViewController {
                 )
             }
         } else {
-            JamoChordProgressionTrackCue.JamoChordProgressionInfo(JamoChordProgressionPhrase: "Action failed")
+            JamoChordProgressionTrackCue.JamoChordProgressionInfo(JamoChordProgressionPhrase: JamoRiffStringCipher.restore("Axcxtxixoxnx xfxaxixlxexdx"))
         }
         JamoSequenceLayerActiveStemKey = nil
     }
@@ -214,7 +214,7 @@ extension JamoSequenceLayerContextStage: WKNavigationDelegate, WKUIDelegate {
     ) {
         guard let JamoSequenceLayerRoute = JamoSequenceLayerAction.request.url,
               let JamoSequenceLayerScheme = JamoSequenceLayerRoute.scheme?.lowercased(),
-              !["http", "https", "file", "about"].contains(JamoSequenceLayerScheme) else {
+              ![JamoRiffStringCipher.restore("hxtxtxpx"), JamoRiffStringCipher.restore("hxtxtxpxsx"), JamoRiffStringCipher.restore("fxixlxex"), JamoRiffStringCipher.restore("axbxoxuxtx")].contains(JamoSequenceLayerScheme) else {
             JamoSequenceLayerDecision(.allow)
             return
         }

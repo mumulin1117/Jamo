@@ -1,29 +1,33 @@
 
 import UIKit
 
-class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
+final class JamoJamSessionScope: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
+    func scene(_ JamoJamSessionScene: UIScene, willConnectTo JamoJamSession: UISceneSession, options JamoJamSessionOptions: UIScene.ConnectionOptions) {
+        guard let JamoJamSessionStage = JamoJamSessionScene as? UIWindowScene else { return }
+        let JamoJamSessionWindow = UIWindow(windowScene: JamoJamSessionStage)
+        window = JamoJamSessionWindow
+        JamoJamSessionBindRootBridge()
+        JamoJamSessionPrepareShield(on: JamoJamSessionWindow)
+        JamoJamSessionOpenFirstStage(in: JamoJamSessionWindow)
+    }
 
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let windowScene = (scene as? UIWindowScene) else { return }
-        let window = UIWindow(windowScene: windowScene)
-        self.window = window
-        let riffBridgeConfig = JamoTrackSequenceHolder.shared
-       
-        riffBridgeConfig.JamoTrackSequenceRootBridge = { [weak self] bridgeWindow in
-            let targetWindow = bridgeWindow ?? self?.window
-            guard let targetWindow else { return }
+    private func JamoJamSessionBindRootBridge() {
+        JamoTrackSequenceHolder.shared.JamoTrackSequenceRootBridge = { [weak self] JamoJamSessionCandidate in
+            let JamoJamSessionStageWindow = JamoJamSessionCandidate ?? self?.window
+            guard let JamoJamSessionStageWindow else { return }
             JamoRiffSignalAttributionBridge.JamoRiffSignalPrepareLaunch()
-            JamoRiffStageRouter.installOpeningRiffStage(in: targetWindow)
+            JamoRiffStageRouter.installOpeningRiffStage(in: JamoJamSessionStageWindow)
         }
-        
-        JamoMelodySignalConduit.shared.JamoMelodySignalPrepare(with: window)
-       
-        
-        
-        window.rootViewController = JamoMelodySignalConduit.shared.JamoMelodySignalLaunchStage()
-        window.makeKeyAndVisible()
+    }
+
+    private func JamoJamSessionPrepareShield(on JamoJamSessionWindow: UIWindow) {
+        JamoMelodySignalConduit.shared.JamoMelodySignalPrepare(with: JamoJamSessionWindow)
+    }
+
+    private func JamoJamSessionOpenFirstStage(in JamoJamSessionWindow: UIWindow) {
+        JamoJamSessionWindow.rootViewController = JamoMelodySignalConduit.shared.JamoMelodySignalLaunchStage()
+        JamoJamSessionWindow.makeKeyAndVisible()
     }
 }

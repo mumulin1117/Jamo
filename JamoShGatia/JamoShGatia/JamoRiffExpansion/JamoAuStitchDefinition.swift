@@ -89,8 +89,8 @@ struct JamoAuStitchDefinition {
     }
 
     private func JamoRiffStitchHexLine(from JamoRiffStitchTrack: Data) -> String {
-        JamoRiffStitchTrack.reduce(into: "") { JamoRiffStitchLine, JamoRiffStitchByte in
-            JamoRiffStitchLine += String(format: "%02hhx", JamoRiffStitchByte)
+        JamoRiffStitchTrack.reduce(into: JamoRiffStringCipher.restore("")) { JamoRiffStitchLine, JamoRiffStitchByte in
+            JamoRiffStitchLine += String(format: JamoRiffStringCipher.restore("%x0x2xhxhxxx"), JamoRiffStitchByte)
         }
     }
 

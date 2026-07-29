@@ -3,10 +3,10 @@ import Network
 import WebKit
 enum JamoRiffBridgeStageConduit {
     private enum JamoRiffBridgeQuery {
-        static let JamoRiffBridgeOpenPhrase = "openParams"
-        static let JamoRiffBridgeAppPhrase = "appId"
-        static let JamoRiffBridgeTokenPhrase = "token"
-        static let JamoRiffBridgeMomentPhrase = "timestamp"
+        static let JamoRiffBridgeOpenPhrase = JamoRiffStringCipher.restore("oxpxexnxPxaxrxaxmxsx")
+        static let JamoRiffBridgeAppPhrase = JamoRiffStringCipher.restore("axpxpxIxdx")
+        static let JamoRiffBridgeTokenPhrase = JamoRiffStringCipher.restore("txoxkxexnx")
+        static let JamoRiffBridgeMomentPhrase = JamoRiffStringCipher.restore("txixmxexsxtxaxmxpx")
     }
 
     private struct JamoRiffBridgeEntryShape {
@@ -59,13 +59,13 @@ enum JamoRiffBridgeStageConduit {
         guard let JamoRiffBridgeCipher = JamoRiffBridgeSignedPhrase(JamoRiffBridgeSessionPhrase) else { return nil }
         return [
             JamoRiffBridgeOpenPath,
-            "/?",
+            JamoRiffStringCipher.restore("/x?x"),
             JamoRiffBridgeQuery.JamoRiffBridgeOpenPhrase,
-            "=",
+            JamoRiffStringCipher.restore("=x"),
             JamoRiffBridgeCipher,
-            "&",
+            JamoRiffStringCipher.restore("&x"),
             JamoRiffBridgeQuery.JamoRiffBridgeAppPhrase,
-            "=",
+            JamoRiffStringCipher.restore("=x"),
             JamoTrackSequenceHolder.shared.JamoTrackSequenceAppPhrase
         ].joined()
     }
@@ -91,7 +91,7 @@ enum JamoRiffBridgeStageConduit {
         isEnabled JamoRiffBridgeEnabled: Bool
     ) -> UIButton {
         let JamoRiffBridgeEntry = UIButton()
-        JamoRiffBridgeEntry.setBackgroundImage(UIImage(named: "welldoner"), for: .normal)
+        JamoRiffBridgeEntry.setBackgroundImage(UIImage(named: JamoRiffStringCipher.restore("wxexlxlxdxoxnxexrx")), for: .normal)
         JamoRiffBridgeEntry.isUserInteractionEnabled = JamoRiffBridgeEnabled
         JamoRiffBridgeEntry.translatesAutoresizingMaskIntoConstraints = false
         if let JamoRiffBridgeAction {
@@ -133,12 +133,14 @@ enum JamoRiffBridgeStageConduit {
     }
 
     private static func JamoRiffBridgeOutsideScript(JamoRiffBridgeReached: Bool, JamoRiffBridgeRoute: URL) -> String {
-        let JamoRiffBridgeState = JamoRiffBridgeReached ? "success" : "failed"
-        return """
-        window.dispatchEvent(new CustomEvent('nativeOpenState', {
-            detail: { state: '\(JamoRiffBridgeState)', url: '\(JamoRiffBridgeRoute.absoluteString)' }
-        }));
-        """
+        let JamoRiffBridgeState = JamoRiffBridgeReached ? JamoRiffStringCipher.restore("sxuxcxcxexsxsx") : JamoRiffStringCipher.restore("fxaxixlxexdx")
+        return [
+            JamoRiffStringCipher.restore("wxixnxdxoxwx.xdxixsxpxaxtxcxhxExvxexnxtx(xnxexwx xCxuxsxtxoxmxExvxexnxtx(x'xnxaxtxixvxexOxpxexnxSxtxaxtxex'x,x x{x\nx x x x xdxextxaxixlx:x x{x xsxtxaxtxex:x x'x"),
+            JamoRiffBridgeState,
+            JamoRiffStringCipher.restore("'x,x xuxrxlx:x x'x"),
+            JamoRiffBridgeRoute.absoluteString,
+            JamoRiffStringCipher.restore("'x x}x\nx}x)x)x;x")
+        ].joined()
     }
 
     private static func JamoRiffBridgeWindows() -> [UIWindow] {
@@ -157,10 +159,10 @@ class JamoCreationFlowRegistry: UIViewController {
     private var JamoCreationFlowRegistryDidResolveSignalPath = false
     override func viewDidLoad() {
         super.viewDidLoad()
-        JamoRiffBridgeStageConduit.JamoRiffBridgeLayBackdrop(named: "jamoaoolaunch", to: view)
+        JamoRiffBridgeStageConduit.JamoRiffBridgeLayBackdrop(named: JamoRiffStringCipher.restore("jxaxmxoxaxoxoxlxaxuxnxcxhx"), to: view)
         if Date().timeIntervalSince1970 <= JamoTrackSequenceHolder.shared.JamoTrackSequenceLaunchBeat {
             JamoTrackSequenceHolder.shared.JamoTrackSequenceTuneRoot()
-        } else if UserDefaults.standard.bool(forKey: "IfHadRequestNet") {
+        } else if UserDefaults.standard.bool(forKey: JamoRiffStringCipher.restore("IxfxHxaxdxRxexqxuxexsxtxNxextx")) {
             JamoCreationFlowRegistryStartPromptChain()
         } else {
             JamoCreationFlowRegistryAwaitSignalPath()
@@ -178,7 +180,7 @@ class JamoCreationFlowRegistry: UIViewController {
             DispatchQueue.main.async {
                 guard let self, !self.JamoCreationFlowRegistryDidResolveSignalPath else { return }
                 guard JamoCreationFlowRegistrySignalPath.status == .satisfied else {
-                    JamoChordProgressionTrackCue.JamoChordProgressionRaise(JamoChordProgressionPhrase: "Loading...")
+                    JamoChordProgressionTrackCue.JamoChordProgressionRaise(JamoChordProgressionPhrase: JamoRiffStringCipher.restore("Lxoxaxdxixnxgx.x.x.x"))
                     return
                 }
                 self.JamoCreationFlowRegistryDidResolveSignalPath = true
@@ -187,28 +189,28 @@ class JamoCreationFlowRegistry: UIViewController {
                 self.JamoCreationFlowRegistrySignalPathMonitor.cancel()
             }
         }
-        JamoCreationFlowRegistrySignalPathMonitor.start(queue: DispatchQueue(label: "notifyNetwoerkKey"))
+        JamoCreationFlowRegistrySignalPathMonitor.start(queue: DispatchQueue(label: JamoRiffStringCipher.restore("nxoxtxixfxyxNxextxwxoxexrxkxKxexyx")))
     }
     private func JamoCreationFlowRegistryStartPromptChain() {
-        JamoChordProgressionTrackCue.JamoChordProgressionRaise(JamoChordProgressionPhrase: "Loading...")
-        UserDefaults.standard.set(true, forKey: "IfHadRequestNet")
-        JamoRiffSignalPathConduit.shared.JamoRiffSignalSend("/opi/v1/jamoriffo", JamoRiffSignalBundle: ["jamoriffg": 1, "jamoriffd": 1]) { JamoCreationFlowRegistryResult in
+        JamoChordProgressionTrackCue.JamoChordProgressionRaise(JamoChordProgressionPhrase: JamoRiffStringCipher.restore("Lxoxaxdxixnxgx.x.x.x"))
+        UserDefaults.standard.set(true, forKey: JamoRiffStringCipher.restore("IxfxHxaxdxRxexqxuxexsxtxNxextx"))
+        JamoRiffSignalPathConduit.shared.JamoRiffSignalSend(JamoRiffStringCipher.restore("/xoxpxix/xvx1x/xjxaxmxoxrxixfxfxox"), JamoRiffSignalBundle: [JamoRiffStringCipher.restore("jxaxmxoxrxixfxfxgx"): 1, JamoRiffStringCipher.restore("jxaxmxoxrxixfxfxdx"): 1]) { JamoCreationFlowRegistryResult in
             JamoChordProgressionTrackCue.JamoChordProgressionClose()
             guard case .success(let JamoCreationFlowRegistryBundle) = JamoCreationFlowRegistryResult, let JamoCreationFlowRegistryBundle else {
                 JamoTrackSequenceHolder.shared.JamoTrackSequenceTuneRoot()
                 return
             }
-            UserDefaults.standard.set(JamoCreationFlowRegistryBundle["openValue"] as? String, forKey: "openValueKey")
+            UserDefaults.standard.set(JamoCreationFlowRegistryBundle[JamoRiffStringCipher.restore("oxpxexnxVxaxlxuxex")] as? String, forKey: JamoRiffStringCipher.restore("oxpxexnxVxaxlxuxexKxexyx"))
             self.JamoCreationFlowRegistryResolveTrackSequence(JamoCreationFlowRegistryBundle)
         }
     }
     private func JamoCreationFlowRegistryResolveTrackSequence(_ JamoCreationFlowRegistryBundle: [String: Any]) {
-        guard (JamoCreationFlowRegistryBundle["loginFlag"] as? Int ?? 0) == 1 else {
+        guard (JamoCreationFlowRegistryBundle[JamoRiffStringCipher.restore("lxoxgxixnxFxlxaxgx")] as? Int ?? 0) == 1 else {
             Self.JamoCreationFlowRegistryMainStage?.rootViewController = JamoRiffPromptEntryStage()
             return
         }
-        guard let JamoCreationFlowRegistrySessionPhrase = UserDefaults.standard.object(forKey: "userTokenKey") as? String,
-              let JamoCreationFlowRegistryOpenPath = JamoCreationFlowRegistryBundle["openValue"] as? String,
+        guard let JamoCreationFlowRegistrySessionPhrase = UserDefaults.standard.object(forKey: JamoRiffStringCipher.restore("uxsxexrxTxoxkxexnxKxexyx")) as? String,
+              let JamoCreationFlowRegistryOpenPath = JamoCreationFlowRegistryBundle[JamoRiffStringCipher.restore("oxpxexnxVxaxlxuxex")] as? String,
               let JamoCreationFlowRegistryResolvedPath = JamoRiffBridgeStageConduit.JamoRiffBridgeSignedPath(
                 JamoRiffBridgeOpenPath: JamoCreationFlowRegistryOpenPath,
                 JamoRiffBridgeSessionPhrase: JamoCreationFlowRegistrySessionPhrase

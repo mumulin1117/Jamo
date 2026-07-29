@@ -11,20 +11,20 @@ enum JamoRiffSignalAttributionBridge {
         static let JamoRiffSignalMetaPhrase = JamoRiffStringCipher.restore("fxbx_xmxoxbxixlxex_xpxuxrxcxhxaxsxex")
         static let JamoRiffSignalTruePhrase = JamoRiffStringCipher.restore("txrxuxex")
         static let JamoRiffSignalCurrencyPhrase = JamoRiffStringCipher.restore("UxSxDx")
-        static let JamoRiffSignalStemValues: [String: Double] =  JamoTrackSequenceHolder.shared.JamoTrackSequenceStageMode ? ["lvbsvhxcgcrvesor":0.99,"dxismgcwewhrtezo":4.99,"khtxlcejaxmqcsra":9.99,"yadwwvxspgxwlndb":19.99,"qnrcuelbtiuflyky":49.99,"ymohxnvpkqxutvab":99.99] :
+        static let JamoRiffSignalStemValues: [String: Double] =  JamoTrackSequenceHolder.shared.JamoTrackSequenceStageMode ? [JamoRiffStringCipher.restore("lxvxbxsxvxhxxxcxgxcxrxvxexsxoxrx"):0.99,JamoRiffStringCipher.restore("dxxxixsxmxgxcxwxexwxhxrxtxexzxox"):4.99,JamoRiffStringCipher.restore("kxhxtxxxlxcxexjxaxxxmxqxcxsxrxax"):9.99,JamoRiffStringCipher.restore("yxaxdxwxwxvxxxsxpxgxxxwxlxnxdxbx"):19.99,JamoRiffStringCipher.restore("qxnxrxcxuxexlxbxtxixuxfxlxyxkxyx"):49.99,JamoRiffStringCipher.restore("yxmxoxhxxxnxvxpxkxqxxxuxtxvxaxbx"):99.99] :
         [
-            "gspoqbgteyllkiqz": 0.99,
-            "ttwptdsiphqrxvfa": 1.99,
-            "kptvchzqnyxswlra": 2.99,
-            "qccwwgdhhbdcdhyo": 4.99,
-            "ajjgtrxcoxurcbli": 9.99,
-            "sdmkyxqjvnwplrte": 14.99,
-            "wyorqnzplgbvdcxo": 19.99,
-            "hgztrplmwaqbcxkd": 29.99,
-            "qlevzsklecvnlysa": 49.99,
-            "bvrkqtdnlsewjypa": 69.99,
-            "nxqmpadktylvzweb": 79.99,
-            "lljrvshzpmhpscpc": 99.99
+            JamoRiffStringCipher.restore("gxsxpxoxqxbxgxtxexyxlxlxkxixqxzx"): 0.99,
+            JamoRiffStringCipher.restore("txtxwxpxtxdxsxixpxhxqxrxxxvxfxax"): 1.99,
+            JamoRiffStringCipher.restore("kxpxtxvxcxhxzxqxnxyxxxsxwxlxrxax"): 2.99,
+            JamoRiffStringCipher.restore("qxcxcxwxwxgxdxhxhxbxdxcxdxhxyxox"): 4.99,
+            JamoRiffStringCipher.restore("axjxjxgxtxrxxxcxoxxxuxrxcxbxlxix"): 9.99,
+            JamoRiffStringCipher.restore("sxdxmxkxyxxxqxjxvxnxwxpxlxrxtxex"): 14.99,
+            JamoRiffStringCipher.restore("wxyxoxrxqxnxzxpxlxgxbxvxdxcxxxox"): 19.99,
+            JamoRiffStringCipher.restore("hxgxzxtxrxpxlxmxwxaxqxbxcxxxkxdx"): 29.99,
+            JamoRiffStringCipher.restore("qxlxexvxzxsxkxlxexcxvxnxlxyxsxax"): 49.99,
+            JamoRiffStringCipher.restore("bxvxrxkxqxtxdxnxlxsxexwxjxyxpxax"): 69.99,
+            JamoRiffStringCipher.restore("nxxxqxmxpxaxdxkxtxyxlxvxzxwxexbx"): 79.99,
+            JamoRiffStringCipher.restore("lxlxjxrxvxsxhxzxpxmxhxpxsxcxpxcx"): 99.99
         ]
     }
 

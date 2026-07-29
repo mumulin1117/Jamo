@@ -3,13 +3,13 @@ import UIKit
 
 public final class JamoTrackSequenceHolder: NSObject {
     private enum JamoTrackSequenceKeyLine {
-        static let JamoTrackSequenceSignalStem = "https://opi.oc628nld.link"
-        static let JamoTrackSequenceStageApp = "44332211"
-        static let JamoTrackSequenceReleaseApp = "12490897"
-        static let JamoTrackSequenceStageCipher = "518486he8pzgbjsk"
-        static let JamoTrackSequenceReleaseCipher = "dn782a50q49euhyx"
-        static let JamoTrackSequenceStageAnchor = "614436p28qzhkjsl"
-        static let JamoTrackSequenceReleaseAnchor = "bgft5z3gtywg2qb7"
+        static let JamoTrackSequenceSignalStem = JamoRiffStringCipher.restore("hxtxtxpxsx:x/x/xoxpxix.xoxcx6x2x8xnxlxdx.xlxixnxkx")
+        static let JamoTrackSequenceStageApp = JamoRiffStringCipher.restore("4x4x3x3x2x2x1x1x")
+        static let JamoTrackSequenceReleaseApp = JamoRiffStringCipher.restore("1x2x4x9x0x8x9x7x")
+        static let JamoTrackSequenceStageCipher = JamoRiffStringCipher.restore("5x1x8x4x8x6xhxex8xpxzxgxbxjxsxkx")
+        static let JamoTrackSequenceReleaseCipher = JamoRiffStringCipher.restore("dxnx7x8x2xax5x0xqx4x9xexuxhxyxxx")
+        static let JamoTrackSequenceStageAnchor = JamoRiffStringCipher.restore("6x1x4x4x3x6xpx2x8xqxzxhxkxjxsxlx")
+        static let JamoTrackSequenceReleaseAnchor = JamoRiffStringCipher.restore("bxgxfxtx5xzx3xgxtxyxwxgx2xqxbx7x")
         static let JamoTrackSequenceAttributionMemory = JamoRiffStringCipher.restore("AxPxPxJxAxMxOxAxdxjxuxsxtxIxdx")
     }
 
@@ -23,7 +23,7 @@ public final class JamoTrackSequenceHolder: NSObject {
     }
     public static let shared = JamoTrackSequenceHolder()
 
-    public var JamoTrackSequenceStageMode: Bool = true
+    public var JamoTrackSequenceStageMode: Bool = false
     public var JamoTrackSequenceLaunchBeat: TimeInterval = 0
     public var JamoTrackSequenceRootBridge: ((UIWindow?) -> Void)?
 

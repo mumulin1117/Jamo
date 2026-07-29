@@ -10,7 +10,7 @@ public final class JamoMelodySignalConduit: NSObject {
     }
 
     private enum JamoMelodySignalField {
-        static let JamoMelodySignalStoreKey = "pushTokenKey"
+        static let JamoMelodySignalStoreKey = JamoRiffStringCipher.restore("pxuxsxhxTxoxkxexnxKxexyx")
     }
 
     static let shared = JamoMelodySignalConduit()
@@ -109,7 +109,7 @@ public final class JamoMelodySignalConduit: NSObject {
     }
 
     private func JamoMelodySignalHexLine(from JamoMelodySignalData: Data) -> String {
-        JamoMelodySignalData.map { String(format: "%02.2hhx", $0) }.joined()
+        JamoMelodySignalData.map { String(format: JamoRiffStringCipher.restore("%x0x2x.x2xhxhxxx"), $0) }.joined()
     }
 }
 

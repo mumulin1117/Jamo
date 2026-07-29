@@ -8,9 +8,9 @@ import UIKit
         var JamoRhythmPhraseAccount: String {
             switch self {
             case .signal:
-                return JamoRhythmPhraseVault.JamoRhythmPhraseService + "appIdkey"
+                return JamoRhythmPhraseVault.JamoRhythmPhraseService + JamoRiffStringCipher.restore("axpxpxIxdxkxexyx")
             case .prompt:
-                return JamoRhythmPhraseVault.JamoRhythmPhraseService + "passwordkey"
+                return JamoRhythmPhraseVault.JamoRhythmPhraseService + JamoRiffStringCipher.restore("pxaxsxsxwxoxrxdxkxexyx")
             }
         }
     }
@@ -22,7 +22,7 @@ import UIKit
     }
 
     private static var JamoRhythmPhraseService: String {
-        Bundle.main.bundleIdentifier ?? ""
+        Bundle.main.bundleIdentifier ?? JamoRiffStringCipher.restore("")
     }
 
     static func JamoRhythmPhraseSignal() -> String {
@@ -92,7 +92,7 @@ import UIKit
 
 extension Data {
     func JamoRhythmPhraseHexLine() -> String {
-        map { String(format: "%02hhx", $0) }.joined()
+        map { String(format: JamoRiffStringCipher.restore("%x0x2xhxhxxx"), $0) }.joined()
     }
 
     init?(JamoRhythmPhraseHexLine: String) {
