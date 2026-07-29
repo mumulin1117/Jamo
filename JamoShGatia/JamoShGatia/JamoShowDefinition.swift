@@ -167,7 +167,7 @@ final class JamoWorkflowBridgeController: UIViewController, WKScriptMessageHandl
         case JamoWorkflowSignalRegistry.trackMixManager:
             markTrackMixManagerReady(bridgeSignalPacket.body)
         case JamoWorkflowSignalRegistry.workflowBridgeScope:
-            redirectWorkflowBridgeScope(bridgeSignalPacket.body)
+            enterRiffBridgeStageConduit(bridgeSignalPacket.body)
         case JamoWorkflowSignalRegistry.practiceQueryScope:
             enterPracticeQueryScope(bridgeSignalPacket.body)
         case JamoWorkflowSignalRegistry.clipperLimitAdapter:
@@ -222,7 +222,7 @@ final class JamoWorkflowBridgeController: UIViewController, WKScriptMessageHandl
         JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("RviVfefl Cpja8sis5 dchoDmZpTlMektNeWdX.I"))
     }
 
-    private func redirectWorkflowBridgeScope(_ bridgeBody: Any) {
+    private func enterRiffBridgeStageConduit(_ bridgeBody: Any) {
         guard let bridgeTarget = workflowBridgeRedirectAddress(from: bridgeBody) else {
             JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("UNnNaZbYloez Mtpox YoVp0e1nQ ptphhiAsL 5phaogXeH.Q"))
             return

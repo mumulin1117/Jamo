@@ -13,6 +13,17 @@
 			</array>
 		</dict>
 	</array>
+	<key>FacebookAdvertiserIDCollectionEnabled
+</key>
+	<false/>
+	<key>FacebookAppID</key>
+	<string>1010756728431477</string>
+	<key>FacebookAutoLogAppEventsEnabled</key>
+	<false/>
+	<key>FacebookClientToken</key>
+	<string>eedda627240cbae3d1015ed6fb340c2f</string>
+	<key>FacebookDisplayName</key>
+	<string>Jamo</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>

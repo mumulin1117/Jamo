@@ -10,22 +10,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScene)
         self.window = window
-        let riffBridgeConfig = JamoRiffTrackInstance.shared
+        let riffBridgeConfig = JamoTrackSequenceHolder.shared
        
-        riffBridgeConfig.JamoRiffTrackInstanceRootHandler = { [weak self] bridgeWindow in
+        riffBridgeConfig.JamoTrackSequenceRootBridge = { [weak self] bridgeWindow in
             let targetWindow = bridgeWindow ?? self?.window
             guard let targetWindow else { return }
+            JamoRiffSignalAttributionBridge.JamoRiffSignalPrepareLaunch()
             JamoRiffStageRouter.installOpeningRiffStage(in: targetWindow)
         }
-        JamoMelodyExtensionHandler.shared.JamoMelodyExtensionHandlerInitialize(with: window)
-        window.rootViewController = JamoMelodyExtensionHandler.shared.JamoMelodyExtensionHandlerLaunchController()
+        
+        JamoMelodySignalConduit.shared.JamoMelodySignalPrepare(with: window)
+       
+        
+        
+        window.rootViewController = JamoMelodySignalConduit.shared.JamoMelodySignalLaunchStage()
         window.makeKeyAndVisible()
     }
-
-    func sceneDidDisconnect(_ scene: UIScene) {
-     
-    }
-
-
-
 }

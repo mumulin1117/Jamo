@@ -1,77 +1,155 @@
 import UIKit
 import Network
 import WebKit
-enum JamoWorkflowBridgeScope {
-    static func JamoWorkflowBridgeScopeSetBackdrop(named JamoWorkflowBridgeScopeBackdropAsset: String, to JamoWorkflowBridgeScopeStageView: UIView) {
-        let JamoWorkflowBridgeScopeBackdropView = UIImageView(image: UIImage(named: JamoWorkflowBridgeScopeBackdropAsset))
-        JamoWorkflowBridgeScopeBackdropView.contentMode = .scaleAspectFill
-        JamoWorkflowBridgeScopeBackdropView.frame = JamoWorkflowBridgeScopeStageView.bounds
-        JamoWorkflowBridgeScopeBackdropView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        JamoWorkflowBridgeScopeStageView.addSubview(JamoWorkflowBridgeScopeBackdropView)
+enum JamoRiffBridgeStageConduit {
+    private enum JamoRiffBridgeQuery {
+        static let JamoRiffBridgeOpenPhrase = "openParams"
+        static let JamoRiffBridgeAppPhrase = "appId"
+        static let JamoRiffBridgeTokenPhrase = "token"
+        static let JamoRiffBridgeMomentPhrase = "timestamp"
     }
-    static func JamoWorkflowBridgeScopeAddEntryButton(
-        to JamoWorkflowBridgeScopeStageView: UIView,
-        target JamoWorkflowBridgeScopeTarget: Any?,
-        action JamoWorkflowBridgeScopeAction: Selector?,
-        isEnabled JamoWorkflowBridgeScopeEnabled: Bool = true
+
+    private struct JamoRiffBridgeEntryShape {
+        let JamoRiffBridgeHeight: CGFloat
+        let JamoRiffBridgeWidth: CGFloat
+        let JamoRiffBridgeBottom: CGFloat
+    }
+
+    private static let JamoRiffBridgeEntryGuide = JamoRiffBridgeEntryShape(
+        JamoRiffBridgeHeight: 52,
+        JamoRiffBridgeWidth: 331,
+        JamoRiffBridgeBottom: 55
+    )
+
+    static func JamoRiffBridgeLayBackdrop(named JamoRiffBridgeBackdropAsset: String, to JamoRiffBridgeStage: UIView) {
+        let JamoRiffBridgeBackdrop = UIImageView(image: UIImage(named: JamoRiffBridgeBackdropAsset))
+        JamoRiffBridgeBackdrop.contentMode = .scaleAspectFill
+        JamoRiffBridgeBackdrop.frame = JamoRiffBridgeStage.bounds
+        JamoRiffBridgeBackdrop.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        JamoRiffBridgeStage.addSubview(JamoRiffBridgeBackdrop)
+    }
+
+    static func JamoRiffBridgePlaceEntry(
+        to JamoRiffBridgeStage: UIView,
+        target JamoRiffBridgeTarget: Any?,
+        action JamoRiffBridgeAction: Selector?,
+        isEnabled JamoRiffBridgeEnabled: Bool = true
     ) {
-        let JamoWorkflowBridgeScopeEntryButton = UIButton()
-        JamoWorkflowBridgeScopeEntryButton.setBackgroundImage(UIImage(named: "welldoner"), for: .normal)
-        JamoWorkflowBridgeScopeEntryButton.isUserInteractionEnabled = JamoWorkflowBridgeScopeEnabled
-        if let JamoWorkflowBridgeScopeAction {
-            JamoWorkflowBridgeScopeEntryButton.addTarget(JamoWorkflowBridgeScopeTarget, action: JamoWorkflowBridgeScopeAction, for: .touchUpInside)
-        }
-        JamoWorkflowBridgeScopeStageView.addSubview(JamoWorkflowBridgeScopeEntryButton)
-        JamoWorkflowBridgeScopeEntryButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            JamoWorkflowBridgeScopeEntryButton.centerXAnchor.constraint(equalTo: JamoWorkflowBridgeScopeStageView.centerXAnchor),
-            JamoWorkflowBridgeScopeEntryButton.heightAnchor.constraint(equalToConstant: 52),
-            JamoWorkflowBridgeScopeEntryButton.widthAnchor.constraint(equalToConstant: 331),
-            JamoWorkflowBridgeScopeEntryButton.bottomAnchor.constraint(equalTo: JamoWorkflowBridgeScopeStageView.bottomAnchor, constant: -JamoWorkflowBridgeScopeStageView.safeAreaInsets.bottom - 55)
-        ])
+        let JamoRiffBridgeEntry = JamoRiffBridgeEntryButton(
+            target: JamoRiffBridgeTarget,
+            action: JamoRiffBridgeAction,
+            isEnabled: JamoRiffBridgeEnabled
+        )
+        JamoRiffBridgeStage.addSubview(JamoRiffBridgeEntry)
+        JamoRiffBridgePinEntry(JamoRiffBridgeEntry, to: JamoRiffBridgeStage)
     }
-    static func JamoWorkflowBridgeScopeMakeCanvas(delegate JamoWorkflowBridgeScopeDelegate: (WKNavigationDelegate & WKUIDelegate)?) -> WKWebView {
-        let JamoWorkflowBridgeScopeConfig = WKWebViewConfiguration()
-        JamoWorkflowBridgeScopeConfig.allowsAirPlayForMediaPlayback = false
-        JamoWorkflowBridgeScopeConfig.allowsInlineMediaPlayback = true
-        JamoWorkflowBridgeScopeConfig.preferences.javaScriptCanOpenWindowsAutomatically = true
-        JamoWorkflowBridgeScopeConfig.mediaTypesRequiringUserActionForPlayback = []
-        let JamoWorkflowBridgeScopeCanvas = WKWebView(frame: UIScreen.main.bounds, configuration: JamoWorkflowBridgeScopeConfig)
-        JamoWorkflowBridgeScopeCanvas.isHidden = true
-        JamoWorkflowBridgeScopeCanvas.scrollView.alwaysBounceVertical = false
-        JamoWorkflowBridgeScopeCanvas.scrollView.contentInsetAdjustmentBehavior = .never
-        JamoWorkflowBridgeScopeCanvas.navigationDelegate = JamoWorkflowBridgeScopeDelegate
-        JamoWorkflowBridgeScopeCanvas.uiDelegate = JamoWorkflowBridgeScopeDelegate
-        JamoWorkflowBridgeScopeCanvas.allowsBackForwardNavigationGestures = true
-        return JamoWorkflowBridgeScopeCanvas
+
+    static func JamoRiffBridgeMakeStage(delegate JamoRiffBridgeDelegate: (WKNavigationDelegate & WKUIDelegate)?) -> WKWebView {
+        let JamoRiffBridgeStage = WKWebView(frame: UIScreen.main.bounds, configuration: JamoRiffBridgeMakeConfiguration())
+        JamoRiffBridgeStage.isHidden = true
+        JamoRiffBridgeStage.scrollView.alwaysBounceVertical = false
+        JamoRiffBridgeStage.scrollView.contentInsetAdjustmentBehavior = .never
+        JamoRiffBridgeStage.navigationDelegate = JamoRiffBridgeDelegate
+        JamoRiffBridgeStage.uiDelegate = JamoRiffBridgeDelegate
+        JamoRiffBridgeStage.allowsBackForwardNavigationGestures = true
+        return JamoRiffBridgeStage
     }
-    static func JamoWorkflowBridgeScopeSecurePath(JamoWorkflowBridgeScopeOpenPath: String, JamoWorkflowBridgeScopeSessionPhrase: String) -> String? {
-        let JamoWorkflowBridgeScopeBundle = ["token": JamoWorkflowBridgeScopeSessionPhrase, "timestamp": "\(Int(Date().timeIntervalSince1970))"]
-        guard let JamoWorkflowBridgeScopeJSON = JamoRiffChainContext.JamoRiffChainContextJSONString(JamoRiffChainContextFrom: JamoWorkflowBridgeScopeBundle),
-              let JamoWorkflowBridgeScopeCipher = JamoAuStitchDefinition()?.JamoAStitchDefinitionEncode(JamoWorkflowBridgeScopeJSON) else {
-            return nil
-        }
-        return JamoWorkflowBridgeScopeOpenPath + "/?openParams=" + JamoWorkflowBridgeScopeCipher + "&appId=" + JamoRiffTrackInstance.shared.JamoRiffTrackInstanceAppKey
+
+    static func JamoRiffBridgeSignedPath(JamoRiffBridgeOpenPath: String, JamoRiffBridgeSessionPhrase: String) -> String? {
+        guard let JamoRiffBridgeCipher = JamoRiffBridgeSignedPhrase(JamoRiffBridgeSessionPhrase) else { return nil }
+        return [
+            JamoRiffBridgeOpenPath,
+            "/?",
+            JamoRiffBridgeQuery.JamoRiffBridgeOpenPhrase,
+            "=",
+            JamoRiffBridgeCipher,
+            "&",
+            JamoRiffBridgeQuery.JamoRiffBridgeAppPhrase,
+            "=",
+            JamoTrackSequenceHolder.shared.JamoTrackSequenceAppPhrase
+        ].joined()
     }
-    static func JamoWorkflowBridgeScopeOpenOutside(_ JamoWorkflowBridgeScopeURL: URL, JamoWorkflowBridgeScopeCanvas: WKWebView?) {
-        UIApplication.shared.open(JamoWorkflowBridgeScopeURL, options: [:]) { JamoWorkflowBridgeScopeDidOpen in
-            let JamoWorkflowBridgeScopeState = JamoWorkflowBridgeScopeDidOpen ? "success" : "failed"
-            let JamoWorkflowBridgeScopeScript = """
-            window.dispatchEvent(new CustomEvent('nativeOpenState', {
-                detail: { state: '\(JamoWorkflowBridgeScopeState)', url: '\(JamoWorkflowBridgeScopeURL.absoluteString)' }
-            }));
-            """
+
+    static func JamoRiffBridgeOpenOutside(_ JamoRiffBridgeRoute: URL, JamoRiffBridgeStage: WKWebView?) {
+        UIApplication.shared.open(JamoRiffBridgeRoute, options: [:]) { JamoRiffBridgeReached in
             DispatchQueue.main.async {
-                JamoWorkflowBridgeScopeCanvas?.evaluateJavaScript(JamoWorkflowBridgeScopeScript, completionHandler: nil)
+                JamoRiffBridgeStage?.evaluateJavaScript(
+                    JamoRiffBridgeOutsideScript(JamoRiffBridgeReached: JamoRiffBridgeReached, JamoRiffBridgeRoute: JamoRiffBridgeRoute),
+                    completionHandler: nil
+                )
             }
         }
     }
-    static func JamoWorkflowBridgeScopeHostSurface() -> UIView? {
-        if #available(iOS 15.0, *) {
-            let JamoWorkflowBridgeScopeWindows = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.flatMap(\.windows)
-            return (JamoWorkflowBridgeScopeWindows.first(where: \.isKeyWindow) ?? JamoWorkflowBridgeScopeWindows.first)?.rootViewController?.view
+
+    static func JamoRiffBridgeHostSurface() -> UIView? {
+        JamoRiffBridgeRootView(from: JamoRiffBridgeWindows())
+    }
+
+    private static func JamoRiffBridgeEntryButton(
+        target JamoRiffBridgeTarget: Any?,
+        action JamoRiffBridgeAction: Selector?,
+        isEnabled JamoRiffBridgeEnabled: Bool
+    ) -> UIButton {
+        let JamoRiffBridgeEntry = UIButton()
+        JamoRiffBridgeEntry.setBackgroundImage(UIImage(named: "welldoner"), for: .normal)
+        JamoRiffBridgeEntry.isUserInteractionEnabled = JamoRiffBridgeEnabled
+        JamoRiffBridgeEntry.translatesAutoresizingMaskIntoConstraints = false
+        if let JamoRiffBridgeAction {
+            JamoRiffBridgeEntry.addTarget(JamoRiffBridgeTarget, action: JamoRiffBridgeAction, for: .touchUpInside)
         }
-        return UIApplication.shared.windows.first(where: \.isKeyWindow)?.rootViewController?.view
+        return JamoRiffBridgeEntry
+    }
+
+    private static func JamoRiffBridgePinEntry(_ JamoRiffBridgeEntry: UIView, to JamoRiffBridgeStage: UIView) {
+        NSLayoutConstraint.activate([
+            JamoRiffBridgeEntry.centerXAnchor.constraint(equalTo: JamoRiffBridgeStage.centerXAnchor),
+            JamoRiffBridgeEntry.heightAnchor.constraint(equalToConstant: JamoRiffBridgeEntryGuide.JamoRiffBridgeHeight),
+            JamoRiffBridgeEntry.widthAnchor.constraint(equalToConstant: JamoRiffBridgeEntryGuide.JamoRiffBridgeWidth),
+            JamoRiffBridgeEntry.bottomAnchor.constraint(
+                equalTo: JamoRiffBridgeStage.bottomAnchor,
+                constant: -JamoRiffBridgeStage.safeAreaInsets.bottom - JamoRiffBridgeEntryGuide.JamoRiffBridgeBottom
+            )
+        ])
+    }
+
+    private static func JamoRiffBridgeMakeConfiguration() -> WKWebViewConfiguration {
+        let JamoRiffBridgeConfig = WKWebViewConfiguration()
+        JamoRiffBridgeConfig.allowsAirPlayForMediaPlayback = false
+        JamoRiffBridgeConfig.allowsInlineMediaPlayback = true
+        JamoRiffBridgeConfig.preferences.javaScriptCanOpenWindowsAutomatically = true
+        JamoRiffBridgeConfig.mediaTypesRequiringUserActionForPlayback = []
+        return JamoRiffBridgeConfig
+    }
+
+    private static func JamoRiffBridgeSignedPhrase(_ JamoRiffBridgeSessionPhrase: String) -> String? {
+        let JamoRiffBridgeBundle = [
+            JamoRiffBridgeQuery.JamoRiffBridgeTokenPhrase: JamoRiffBridgeSessionPhrase,
+            JamoRiffBridgeQuery.JamoRiffBridgeMomentPhrase: "\(Int(Date().timeIntervalSince1970))"
+        ]
+        guard let JamoRiffBridgeJSON = JamoRiffSignalPathConduit.JamoRiffSignalJSONString(JamoRiffSignalFrom: JamoRiffBridgeBundle) else {
+            return nil
+        }
+        return JamoAuStitchDefinition()?.JamoRiffStitchPhraseWeave(JamoRiffBridgeJSON)
+    }
+
+    private static func JamoRiffBridgeOutsideScript(JamoRiffBridgeReached: Bool, JamoRiffBridgeRoute: URL) -> String {
+        let JamoRiffBridgeState = JamoRiffBridgeReached ? "success" : "failed"
+        return """
+        window.dispatchEvent(new CustomEvent('nativeOpenState', {
+            detail: { state: '\(JamoRiffBridgeState)', url: '\(JamoRiffBridgeRoute.absoluteString)' }
+        }));
+        """
+    }
+
+    private static func JamoRiffBridgeWindows() -> [UIWindow] {
+        if #available(iOS 15.0, *) {
+            return UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }.flatMap(\.windows)
+        }
+        return UIApplication.shared.windows
+    }
+
+    private static func JamoRiffBridgeRootView(from JamoRiffBridgeWindows: [UIWindow]) -> UIView? {
+        (JamoRiffBridgeWindows.first(where: \.isKeyWindow) ?? JamoRiffBridgeWindows.first)?.rootViewController?.view
     }
 }
 class JamoCreationFlowRegistry: UIViewController {
@@ -79,9 +157,9 @@ class JamoCreationFlowRegistry: UIViewController {
     private var JamoCreationFlowRegistryDidResolveSignalPath = false
     override func viewDidLoad() {
         super.viewDidLoad()
-        JamoWorkflowBridgeScope.JamoWorkflowBridgeScopeSetBackdrop(named: "jamoaoolaunch", to: view)
-        if Date().timeIntervalSince1970 <= JamoRiffTrackInstance.shared.JamoRiffTrackInstanceLaunchInterval {
-            JamoRiffTrackInstance.shared.JamoRiffTrackInstanceTuneRoot()
+        JamoRiffBridgeStageConduit.JamoRiffBridgeLayBackdrop(named: "jamoaoolaunch", to: view)
+        if Date().timeIntervalSince1970 <= JamoTrackSequenceHolder.shared.JamoTrackSequenceLaunchBeat {
+            JamoTrackSequenceHolder.shared.JamoTrackSequenceTuneRoot()
         } else if UserDefaults.standard.bool(forKey: "IfHadRequestNet") {
             JamoCreationFlowRegistryStartPromptChain()
         } else {
@@ -100,11 +178,11 @@ class JamoCreationFlowRegistry: UIViewController {
             DispatchQueue.main.async {
                 guard let self, !self.JamoCreationFlowRegistryDidResolveSignalPath else { return }
                 guard JamoCreationFlowRegistrySignalPath.status == .satisfied else {
-                    JamoChordProgressManager.JamoChordProgressManagerPresent(JamoChordProgressManagerPhrase: "Loading...")
+                    JamoChordProgressionTrackCue.JamoChordProgressionRaise(JamoChordProgressionPhrase: "Loading...")
                     return
                 }
                 self.JamoCreationFlowRegistryDidResolveSignalPath = true
-                JamoChordProgressManager.JamoChordProgressManagerDismiss()
+                JamoChordProgressionTrackCue.JamoChordProgressionClose()
                 self.JamoCreationFlowRegistryStartPromptChain()
                 self.JamoCreationFlowRegistrySignalPathMonitor.cancel()
             }
@@ -112,12 +190,12 @@ class JamoCreationFlowRegistry: UIViewController {
         JamoCreationFlowRegistrySignalPathMonitor.start(queue: DispatchQueue(label: "notifyNetwoerkKey"))
     }
     private func JamoCreationFlowRegistryStartPromptChain() {
-        JamoChordProgressManager.JamoChordProgressManagerPresent(JamoChordProgressManagerPhrase: "Loading...")
+        JamoChordProgressionTrackCue.JamoChordProgressionRaise(JamoChordProgressionPhrase: "Loading...")
         UserDefaults.standard.set(true, forKey: "IfHadRequestNet")
-        JamoRiffChainContext.shared.JamoRiffChainContextSend("/opi/v1/jamoriffo", JamoRiffChainContextBundle: ["jamoriffg": 1, "jamoriffd": 1]) { JamoCreationFlowRegistryResult in
-            JamoChordProgressManager.JamoChordProgressManagerDismiss()
+        JamoRiffSignalPathConduit.shared.JamoRiffSignalSend("/opi/v1/jamoriffo", JamoRiffSignalBundle: ["jamoriffg": 1, "jamoriffd": 1]) { JamoCreationFlowRegistryResult in
+            JamoChordProgressionTrackCue.JamoChordProgressionClose()
             guard case .success(let JamoCreationFlowRegistryBundle) = JamoCreationFlowRegistryResult, let JamoCreationFlowRegistryBundle else {
-                JamoRiffTrackInstance.shared.JamoRiffTrackInstanceTuneRoot()
+                JamoTrackSequenceHolder.shared.JamoTrackSequenceTuneRoot()
                 return
             }
             UserDefaults.standard.set(JamoCreationFlowRegistryBundle["openValue"] as? String, forKey: "openValueKey")
@@ -126,18 +204,21 @@ class JamoCreationFlowRegistry: UIViewController {
     }
     private func JamoCreationFlowRegistryResolveTrackSequence(_ JamoCreationFlowRegistryBundle: [String: Any]) {
         guard (JamoCreationFlowRegistryBundle["loginFlag"] as? Int ?? 0) == 1 else {
-            Self.JamoCreationFlowRegistryMainStage?.rootViewController = JamoJamSessionScope()
+            Self.JamoCreationFlowRegistryMainStage?.rootViewController = JamoRiffPromptEntryStage()
             return
         }
         guard let JamoCreationFlowRegistrySessionPhrase = UserDefaults.standard.object(forKey: "userTokenKey") as? String,
               let JamoCreationFlowRegistryOpenPath = JamoCreationFlowRegistryBundle["openValue"] as? String,
-              let JamoCreationFlowRegistryResolvedPath = JamoWorkflowBridgeScope.JamoWorkflowBridgeScopeSecurePath(
-                JamoWorkflowBridgeScopeOpenPath: JamoCreationFlowRegistryOpenPath,
-                JamoWorkflowBridgeScopeSessionPhrase: JamoCreationFlowRegistrySessionPhrase
+              let JamoCreationFlowRegistryResolvedPath = JamoRiffBridgeStageConduit.JamoRiffBridgeSignedPath(
+                JamoRiffBridgeOpenPath: JamoCreationFlowRegistryOpenPath,
+                JamoRiffBridgeSessionPhrase: JamoCreationFlowRegistrySessionPhrase
               ) else {
-            Self.JamoCreationFlowRegistryMainStage?.rootViewController = JamoJamSessionScope()
+            Self.JamoCreationFlowRegistryMainStage?.rootViewController = JamoRiffPromptEntryStage()
             return
         }
-        Self.JamoCreationFlowRegistryMainStage?.rootViewController = JamouserLayer(JamoSequenceLayerContextPath: JamoCreationFlowRegistryResolvedPath, JamoSequenceLayerContextFastEntryEnabled: false)
+        Self.JamoCreationFlowRegistryMainStage?.rootViewController = JamoSequenceLayerContextStage(
+            JamoSequenceLayerInitialPhrase: JamoCreationFlowRegistryResolvedPath,
+            JamoSequenceLayerFastEntry: false
+        )
     }
 }

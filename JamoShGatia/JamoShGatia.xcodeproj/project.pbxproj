@@ -6,8 +6,15 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		F59E5B566EE164C0710CA92A /* Pods_JamoShGatia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36D9330A068404769F0F0B60 /* Pods_JamoShGatia.framework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		049959CB2FE14DDE00F87202 /* JamoShGatia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JamoShGatia.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		24BEAD51E9154ADC01097EF8 /* Pods-JamoShGatia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JamoShGatia.release.xcconfig"; path = "Target Support Files/Pods-JamoShGatia/Pods-JamoShGatia.release.xcconfig"; sourceTree = "<group>"; };
+		36D9330A068404769F0F0B60 /* Pods_JamoShGatia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_JamoShGatia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		68B034D6986E6361F135A667 /* Pods-JamoShGatia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JamoShGatia.debug.xcconfig"; path = "Target Support Files/Pods-JamoShGatia/Pods-JamoShGatia.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -36,17 +43,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F59E5B566EE164C0710CA92A /* Pods_JamoShGatia.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		039E4117FE5F14C620EA7EF1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				36D9330A068404769F0F0B60 /* Pods_JamoShGatia.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		049959C22FE14DDE00F87202 = {
 			isa = PBXGroup;
 			children = (
 				049959CD2FE14DDE00F87202 /* JamoShGatia */,
 				049959CC2FE14DDE00F87202 /* Products */,
+				DE1194FF1F0AE80652BDAA3D /* Pods */,
+				039E4117FE5F14C620EA7EF1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,6 +76,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		DE1194FF1F0AE80652BDAA3D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				68B034D6986E6361F135A667 /* Pods-JamoShGatia.debug.xcconfig */,
+				24BEAD51E9154ADC01097EF8 /* Pods-JamoShGatia.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -65,9 +92,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 049959DE2FE14DE100F87202 /* Build configuration list for PBXNativeTarget "JamoShGatia" */;
 			buildPhases = (
+				46ECC1C62467A86B2CCFE61C /* [CP] Check Pods Manifest.lock */,
 				049959C72FE14DDE00F87202 /* Sources */,
 				049959C82FE14DDE00F87202 /* Frameworks */,
 				049959C92FE14DDE00F87202 /* Resources */,
+				25F19EC22F9BB8EC061DF1C2 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -77,8 +106,6 @@
 				049959CD2FE14DDE00F87202 /* JamoShGatia */,
 			);
 			name = JamoShGatia;
-			packageProductDependencies = (
-			);
 			productName = JamoShGatia;
 			productReference = 049959CB2FE14DDE00F87202 /* JamoShGatia.app */;
 			productType = "com.apple.product-type.application";
@@ -127,6 +154,52 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		25F19EC22F9BB8EC061DF1C2 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-JamoShGatia/Pods-JamoShGatia-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-JamoShGatia/Pods-JamoShGatia-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-JamoShGatia/Pods-JamoShGatia-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		46ECC1C62467A86B2CCFE61C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-JamoShGatia-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		049959C72FE14DDE00F87202 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -140,6 +213,7 @@
 /* Begin XCBuildConfiguration section */
 		049959DF2FE14DE100F87202 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 68B034D6986E6361F135A667 /* Pods-JamoShGatia.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -147,6 +221,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = JamoShGatia/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Jamo;
@@ -182,6 +257,7 @@
 		};
 		049959E02FE14DE100F87202 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 24BEAD51E9154ADC01097EF8 /* Pods-JamoShGatia.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -189,6 +265,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = JamoShGatia/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Jamo;
