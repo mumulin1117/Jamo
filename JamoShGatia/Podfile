@@ -6,7 +6,6 @@ target 'JamoShGatia' do
   use_frameworks!
 
   # Pods for JamoShGatia
-pod 'Adjust'
-  
+  pod 'Adjust', '~> 5.1.1'
 pod 'FBSDKCoreKit'
 end

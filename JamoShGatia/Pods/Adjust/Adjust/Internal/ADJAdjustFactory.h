@@ -18,7 +18,6 @@
 + (double)sessionInterval;
 + (double)subsessionInterval;
 + (double)requestTimeout;
-+ (double)verifyRequestTimeout;
 + (NSNumber *)attStatus;
 + (NSString *)idfa;
 + (NSTimeInterval)timerInterval;

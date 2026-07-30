@@ -24,7 +24,6 @@
 #import "ADJPurchaseVerificationResult.h"
 #import "ADJSessionFailure.h"
 #import "ADJSessionSuccess.h"
-#import "ADJStoreInfo.h"
 #import "ADJThirdPartySharing.h"
 #import "Adjust.h"
 #import "AdjustSdk.h"

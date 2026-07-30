@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface ADJActivityState : NSObject <NSSecureCoding, NSCopying>
+@interface ADJActivityState : NSObject <NSCoding, NSCopying>
 
 // Persistent data
 @property (nonatomic, assign) BOOL enabled;
@@ -21,6 +21,7 @@
 @property (nonatomic, assign) BOOL updatePackagesAttData;
 
 @property (nonatomic, copy) NSString *adid;
+@property (nonatomic, strong) NSDictionary *attributionDetails;
 
 @property (nonatomic, assign) int trackingManagerAuthorizationStatus;
 

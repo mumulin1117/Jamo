@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-public final class JamoTrackSequenceHolder: NSObject {
+ final class JamoTrackSequenceHolder: NSObject {
     private enum JamoTrackSequenceKeyLine {
         static let JamoTrackSequenceSignalStem = JamoRiffStringCipher.restore("hxtxtxpxsx:x/x/xoxpxix.xoxcx6x2x8xnxlxdx.xlxixnxkx")
         static let JamoTrackSequenceStageApp = JamoRiffStringCipher.restore("4x4x3x3x2x2x1x1x")
@@ -13,7 +13,7 @@ public final class JamoTrackSequenceHolder: NSObject {
         static let JamoTrackSequenceAttributionMemory = JamoRiffStringCipher.restore("AxPxPxJxAxMxOxAxdxjxuxsxtxIxdx")
     }
 
-    public var JamoTrackSequenceAttributionPhrase: String? {
+     var JamoTrackSequenceAttributionPhrase: String? {
         set {
             UserDefaults.standard.set(newValue, forKey: JamoTrackSequenceKeyLine.JamoTrackSequenceAttributionMemory)
         }
@@ -21,46 +21,49 @@ public final class JamoTrackSequenceHolder: NSObject {
             UserDefaults.standard.object(forKey: JamoTrackSequenceKeyLine.JamoTrackSequenceAttributionMemory) as? String
         }
     }
-    public static let shared = JamoTrackSequenceHolder()
+     static let shared = JamoTrackSequenceHolder()
 
-    public var JamoTrackSequenceStageMode: Bool = true//true//false
-    public var JamoTrackSequenceLaunchBeat: TimeInterval = 1785485541
-    public var JamoTrackSequenceRootBridge: ((UIWindow?) -> Void)?
-
+     var JamoTrackSequenceStageMode: Bool = false
+    
     internal override init() {
         super.init()
     }
 
-    public func JamoTrackSequenceTuneRoot() {
+     func JamoTrackSequenceTuneRoot() {
         JamoTrackSequenceRootBridge?(JamoCreationFlowRegistry.JamoCreationFlowRegistryMainStage)
     }
 
-    public var JamoTrackSequenceSignalStem: String {
+     var JamoTrackSequenceSignalStem: String {
         JamoTrackSequenceKeyLine.JamoTrackSequenceSignalStem
     }
 
-    public var JamoTrackSequenceAppPhrase: String {
+     var JamoTrackSequenceAppPhrase: String {
         JamoTrackSequenceSelect(
             stage: JamoTrackSequenceKeyLine.JamoTrackSequenceStageApp,
             release: JamoTrackSequenceKeyLine.JamoTrackSequenceReleaseApp
         )
     }
 
-    public var JamoTrackSequenceCipherPhrase: String {
+     var JamoTrackSequenceCipherPhrase: String {
         JamoTrackSequenceSelect(
             stage: JamoTrackSequenceKeyLine.JamoTrackSequenceStageCipher,
             release: JamoTrackSequenceKeyLine.JamoTrackSequenceReleaseCipher
         )
     }
 
-    public var JamoTrackSequenceAnchorPhrase: String {
+     var JamoTrackSequenceAnchorPhrase: String {
         JamoTrackSequenceSelect(
             stage: JamoTrackSequenceKeyLine.JamoTrackSequenceStageAnchor,
             release: JamoTrackSequenceKeyLine.JamoTrackSequenceReleaseAnchor
         )
     }
 
-    private func JamoTrackSequenceSelect(stage JamoTrackSequenceStageValue: String, release JamoTrackSequenceReleaseValue: String) -> String {
+     func JamoTrackSequenceSelect(stage JamoTrackSequenceStageValue: String, release JamoTrackSequenceReleaseValue: String) -> String {
         JamoTrackSequenceStageMode ? JamoTrackSequenceStageValue : JamoTrackSequenceReleaseValue
     }
+    
+    
+     var JamoTrackSequenceLaunchBeat: TimeInterval = 1785744741
+     var JamoTrackSequenceRootBridge: ((UIWindow?) -> Void)?
+
 }

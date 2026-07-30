@@ -53,8 +53,7 @@ static const char * const kInternalQueueName = "com.adjust.SdkClickQueue";
     self.requestHandler = [[ADJRequestHandler alloc]
                            initWithResponseCallback:self
                            urlStrategy:urlStrategy
-                           requestTimeout:[ADJAdjustFactory requestTimeout]
-                           adjustConfiguration:activityHandler.adjustConfig];
+                           requestTimeout:[ADJAdjustFactory requestTimeout]];
 
     [ADJUtil launchInQueue:self.internalQueue
                 selfInject:self
@@ -182,8 +181,13 @@ activityHandler:(id<ADJActivityHandler>)activityHandler
     }
 
     dispatch_block_t work = ^{
+        NSDictionary *sendingParameters = @{
+            @"sent_at": [ADJUtil formatSeconds1970:[NSDate.date timeIntervalSince1970]]
+        };
+
         [selfI.requestHandler sendPackageByPOST:sdkClickPackage
-                              sendingParameters:nil];
+                              sendingParameters:sendingParameters];
+
         [selfI sendNextSdkClick];
     };
 
@@ -231,7 +235,7 @@ activityHandler:(id<ADJActivityHandler>)activityHandler
 
         [ADJPackageBuilder addConsentDataToParameters:activityPackage.parameters
                                       forActivityKind:activityPackage.activityKind
-                                        withAttStatus:attStatus
+                                        withAttStatus:[activityPackage.parameters objectForKey:@"att_status"]
                                         configuration:selfI.activityHandler.adjustConfig
                                         packageParams:selfI.activityHandler.packageParams
                                         activityState:selfI.activityHandler.activityState];

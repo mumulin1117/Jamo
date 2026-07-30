@@ -274,7 +274,7 @@ final class JamoProfileViewModel {
 
     private func buildRiffMomentDisplay(from work: JamoCoCreateWork, currentPlayerAnchor: String) -> JamoProfileRiffMomentDisplay {
         let leadingTrack = work.tracks.first
-        let trackDuration = audioDuration(for: leadingTrack)
+        let trackDuration = singnerDuration(for: leadingTrack)
         let sessionCount = max(work.participantCount ?? work.participants?.count ?? work.tracks.count, 0)
 
         return JamoProfileRiffMomentDisplay(
@@ -391,7 +391,7 @@ final class JamoProfileViewModel {
         }
     }
 
-    private func audioDuration(for track: JamoCoCreateTrack?) -> TimeInterval {
+    private func singnerDuration(for track: JamoCoCreateTrack?) -> TimeInterval {
         guard let track else { return 0 }
         return JamoRiffLocalMediaShelf.audioDuration(for: track.mp3FileName, fallback: track.duration)
     }

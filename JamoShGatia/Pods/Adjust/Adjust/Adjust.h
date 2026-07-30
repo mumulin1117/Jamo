@@ -2,7 +2,7 @@
 //  Adjust.h
 //  Adjust SDK
 //
-//  V5.5.0
+//  V5.1.1
 //  Created by Christian Wellenbrock (@wellle) on 23rd July 2013.
 //  Copyright (c) 2012-Present Adjust GmbH. All rights reserved.
 //
@@ -153,37 +153,12 @@ extern NSString * __nonnull const ADJEnvironmentProduction;
 + (void)adidWithCompletionHandler:(nonnull ADJAdidGetterBlock)completion;
 
 /**
- * @brief Get current adjust identifier for the user through a callback with timeout.
- *
- * @param timeoutMs Timeout in milliseconds. If adid is not available within this time,
- *                  the completion block will be called with nil adid.
- * @param completion Completion block to get the adid value delivered to.
- *
- * @note Adjust identifier is available only after installation has been successfully tracked.
- */
-+ (void)adidWithTimeout:(NSInteger)timeoutMs
-      completionHandler:(nonnull ADJAdidGetterBlock)completion;
-
-/**
  * @brief Get current attribution for the user through a callback.
  *
  * @note Attribution information is available only after installation has been successfully tracked
  *       and attribution information arrived after that from the backend.
  */
 + (void)attributionWithCompletionHandler:(nonnull ADJAttributionGetterBlock)completion;
-
-/**
- * @brief Get current attribution for the user through a callback with timeout.
- *
- * @param timeoutMs Timeout in milliseconds. If attribution is not available within this time,
- *                  the completion block will be called with nil attribution.
- * @param completion Completion block to get the attribution value delivered to.
- *
- * @note Attribution information is available only after installation has been successfully tracked
- *       and attribution information arrived after that from the backend.
- */
-+ (void)attributionWithTimeout:(NSInteger)timeoutMs
-             completionHandler:(nonnull ADJAttributionGetterBlock)completion;
 
 /**
  * @brief Get current Adjust SDK version string through a callback.
@@ -311,23 +286,6 @@ extern NSString * __nonnull const ADJEnvironmentProduction;
 + (void)lastDeeplinkWithCompletionHandler:(nonnull ADJLastDeeplinkGetterBlock)completion;
 
 /**
- * @brief Enable COPPA (Children's Online Privacy Protection Act) compliant for the application when is in first session delay
- */
-+ (void)enableCoppaComplianceInDelay;
-
-/**
- * @brief Disable COPPA (Children's Online Privacy Protection Act) compliant for the application when is in first session delay
- */
-+ (void)disableCoppaComplianceInDelay;
-
-/**
- * @brief Custom defined unique device ID (optional) when is in first session delay.
- *
- * @note Make sure to have a UNIQUE external ID for each user / device.
- */
-+ (void)setExternalDeviceIdInDelay:(nullable NSString *)externalDeviceId;
-
-/**
  * @brief Verify in-app-purchase.
  *
  * @param purchase   Purchase object.
@@ -344,11 +302,6 @@ extern NSString * __nonnull const ADJEnvironmentProduction;
  */
 + (void)verifyAndTrackAppStorePurchase:(nonnull ADJEvent *)event
                  withCompletionHandler:(nonnull ADJVerificationResultBlock)completion;
-
-/**
- * @brief End the first session delay that can be configured on ADJConfig instance.
- */
-+ (void)endFirstSessionDelay;
 
 /**
  * Obtain singleton Adjust object.

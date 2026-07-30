@@ -13,20 +13,20 @@
 #import "ADJActivityState.h"
 #import "ADJActivityPackage.h"
 #import "ADJGlobalParameters.h"
+#import "ADJActivityHandler.h"
 #import "ADJThirdPartySharing.h"
-#import "ADJStoreInfo.h"
 
 @interface ADJPackageBuilder : NSObject
 
 @property (nonatomic, copy) NSString * _Nullable deeplink;
-
-@property (nonatomic, copy) NSString * _Nullable referrer;
 
 @property (nonatomic, copy) NSString * _Nullable reftag;
 
 @property (nonatomic, copy) NSDate * _Nullable clickTime;
 
 @property (nonatomic, copy) NSDate * _Nullable purchaseTime;
+
+@property (nonatomic, strong) NSDictionary * _Nullable attributionDetails;
 
 @property (nonatomic, strong) NSDictionary * _Nullable deeplinkParameters;
 
@@ -39,14 +39,11 @@
                                config:(ADJConfig * _Nullable)adjustConfig
                      globalParameters:(ADJGlobalParameters * _Nullable)globalParameters
                 trackingStatusManager:(ADJTrackingStatusManager * _Nullable)trackingStatusManager
-             firstSessionDelayManager:(ADJFirstSessionDelayManager * _Nullable)firstSessionDelayManager
-                            createdAt:(double)createdAt
-                           odmEnabled:(BOOL)odmEnabled;
+                            createdAt:(double)createdAt;
 
 - (ADJActivityPackage * _Nullable)buildSessionPackage;
 
-- (ADJActivityPackage * _Nullable)buildEventPackage:(ADJEvent * _Nullable)event
-                                  withEventSequence:(NSUInteger)eventSequence;
+- (ADJActivityPackage * _Nullable)buildEventPackage:(ADJEvent * _Nullable)event;
 
 - (ADJActivityPackage * _Nullable)buildInfoPackage:(NSString * _Nullable)infoSource;
 
@@ -58,10 +55,6 @@
 
 - (ADJActivityPackage * _Nullable)buildClickPackage:(NSString * _Nullable)clickSource
                                           linkMeUrl:(NSString * _Nullable)linkMeUrl;
-
-- (ADJActivityPackage * _Nullable)buildClickPackage:(NSString * _Nullable)clickSource
-                                            odmInfo:(NSString * _Nullable)odmInfo
-                                              error:(NSError * _Nullable)error;
 
 - (ADJActivityPackage * _Nullable)buildPurchaseVerificationPackageWithPurchase:(ADJAppStorePurchase * _Nullable)purchase;
 
@@ -92,10 +85,6 @@
             forKey:(NSString * _Nullable)key;
 
 + (void)parameters:(NSMutableDictionary * _Nullable)parameters
-       setUInteger:(NSUInteger)value
-            forKey:(NSString * _Nullable)key;
-
-+ (void)parameters:(NSMutableDictionary * _Nullable)parameters
          setDouble:(double)value
             forKey:(NSString * _Nullable)key;
 
@@ -110,22 +99,15 @@ setNumberWithoutRounding:(NSNumber * _Nullable)value
 + (BOOL)isAdServicesPackage:(ADJActivityPackage * _Nullable)activityPackage;
 
 + (void)addConsentDataToParameters:(NSMutableDictionary * _Nullable)parameters
-                     configuration:(ADJConfig * _Nullable)adjConfig;
-
-+ (void)addConsentDataToParameters:(NSMutableDictionary * _Nullable)parameters
                    forActivityKind:(ADJActivityKind)activityKind
-                     withAttStatus:(int)attStatus
+                     withAttStatus:(NSString * _Nullable)attStatusString
                      configuration:(ADJConfig * _Nullable)adjConfig
                      packageParams:(ADJPackageParams * _Nullable)packageParams
                      activityState:(ADJActivityState *_Nullable)activityState;
 
 + (void)removeConsentDataFromParameters:(nonnull NSMutableDictionary *)parameters;
 
-+ (void)updateAttStatus:(int)attStatus
-           inParameters:(nonnull NSMutableDictionary *)parameters;
-
-+ (void)removeAttStatusFromParameters:(nonnull NSMutableDictionary *)parameters;
-
++ (void)updateAttStatusInParameters:(nonnull NSMutableDictionary *)parameters;
 
 @end
 // TODO change to ADJ...

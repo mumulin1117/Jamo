@@ -22,7 +22,7 @@ final class JamoCoCreateEditorViewController: JamoRiffBaseStageViewController {
     private var isCompletingSave = false
     private var microphonePromptView: JamoCoCreateEditorMicrophonePromptView?
     private var hasMicrophonePermission = false
-    private var sourceAudioPlayer: AVAudioPlayer?
+    private var sourceSingnerPlayer: AVAudioPlayer?
     private var sourcePlaybackTimer: Timer?
     private var sourcePreviewMP3FileName: String?
     private var isSourcePreviewPlaying = false
@@ -31,7 +31,7 @@ final class JamoCoCreateEditorViewController: JamoRiffBaseStageViewController {
     private var clipPreviewPlayer: AVAudioPlayer?
     private var clipPreviewTimer: Timer?
     private var isClipPreviewPlaying = false
-    private var audioRecorder: AVAudioRecorder?
+    private var asinnerRecorder: AVAudioRecorder?
     private var activeRecordingURL: URL?
     private var clipPreviewVolume: Float = 1
     private var volumeBeforeSheet: Float = 1
@@ -816,20 +816,20 @@ final class JamoCoCreateEditorViewController: JamoRiffBaseStageViewController {
         }
 
         do {
-            if sourcePreviewMP3FileName != fileName || sourceAudioPlayer == nil {
+            if sourcePreviewMP3FileName != fileName || sourceSingnerPlayer == nil {
                 stopSourcePreviewPlayback(resetProgress: true)
-                sourceAudioPlayer = try AVAudioPlayer(contentsOf: audioURL)
-                sourceAudioPlayer?.prepareToPlay()
+                sourceSingnerPlayer = try AVAudioPlayer(contentsOf: audioURL)
+                sourceSingnerPlayer?.prepareToPlay()
                 sourcePreviewMP3FileName = fileName
             }
-            guard let sourceAudioPlayer else {
+            guard let sourceSingnerPlayer else {
                 JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("UTnRaqbGljeF Ot5oL xpclIatyz jsTo1ugrlcPeP Og4uViktIa3rk RaKujdwi2oZ.J"))
                 return
             }
-            if sourceAudioPlayer.currentTime >= max(sourceAudioPlayer.duration - 0.2, 0) {
-                sourceAudioPlayer.currentTime = 0
+            if sourceSingnerPlayer.currentTime >= max(sourceSingnerPlayer.duration - 0.2, 0) {
+                sourceSingnerPlayer.currentTime = 0
             }
-            guard sourceAudioPlayer.play() else {
+            guard sourceSingnerPlayer.play() else {
                 isSourcePreviewPlaying = false
                 updateSourcePreviewPlaybackViews()
                 JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("Upnga1b8l2eQ zt4o2 BpLlxagyu gsQoou9rFcOeD Sg6usiZt4aer0 HavuUdkicoF.6"))
@@ -848,11 +848,11 @@ final class JamoCoCreateEditorViewController: JamoRiffBaseStageViewController {
     private func stopSourcePreviewPlayback(resetProgress: Bool) {
         stopSourcePlaybackTimer()
         if resetProgress {
-            sourceAudioPlayer?.stop()
-            sourceAudioPlayer?.currentTime = 0
+            sourceSingnerPlayer?.stop()
+            sourceSingnerPlayer?.currentTime = 0
             sourcePreviewMP3FileName = nil
         } else {
-            sourceAudioPlayer?.pause()
+            sourceSingnerPlayer?.pause()
         }
         isSourcePreviewPlaying = false
         updateSourcePreviewPlaybackViews()
@@ -873,14 +873,14 @@ final class JamoCoCreateEditorViewController: JamoRiffBaseStageViewController {
     }
 
     private func handleSourcePlaybackTick() {
-        guard let sourceAudioPlayer else {
+        guard let sourceSingnerPlayer else {
             stopSourcePreviewPlayback(resetProgress: true)
             return
         }
-        let remaining = max(sourceAudioPlayer.duration - sourceAudioPlayer.currentTime, 0)
-        if remaining <= 0.15 || !sourceAudioPlayer.isPlaying {
-            sourceAudioPlayer.stop()
-            sourceAudioPlayer.currentTime = 0
+        let remaining = max(sourceSingnerPlayer.duration - sourceSingnerPlayer.currentTime, 0)
+        if remaining <= 0.15 || !sourceSingnerPlayer.isPlaying {
+            sourceSingnerPlayer.stop()
+            sourceSingnerPlayer.currentTime = 0
             isSourcePreviewPlaying = false
             sourcePreviewMP3FileName = nil
             stopSourcePlaybackTimer()
@@ -897,14 +897,14 @@ final class JamoCoCreateEditorViewController: JamoRiffBaseStageViewController {
     }
 
     private func sourcePreviewDurationText() -> String {
-        guard let sourceAudioPlayer else {
+        guard let sourceSingnerPlayer else {
             return snapshot?.source?.parts.first(where: { ($0.mp3FileName ?? "").isEmpty == false })?.durationText
                 ?? snapshot?.source?.parts.first?.durationText
                 ?? JamoRiffStringCipher.restore("0l:d0k05")
         }
-        let remaining = isSourcePreviewPlaying || sourceAudioPlayer.currentTime > 0
-            ? max(sourceAudioPlayer.duration - sourceAudioPlayer.currentTime, 0)
-            : sourceAudioPlayer.duration
+        let remaining = isSourcePreviewPlaying || sourceSingnerPlayer.currentTime > 0
+            ? max(sourceSingnerPlayer.duration - sourceSingnerPlayer.currentTime, 0)
+            : sourceSingnerPlayer.duration
         return durationText(remaining)
     }
 
@@ -1248,8 +1248,8 @@ final class JamoCoCreateEditorViewController: JamoRiffBaseStageViewController {
     }
 
     private func currentRecordingDuration() -> TimeInterval {
-        if let audioRecorder {
-            return max(audioRecorder.currentTime, 0)
+        if let asinnerRecorder {
+            return max(asinnerRecorder.currentTime, 0)
         }
         guard let recordingStartDate else { return 0 }
         return max(Date().timeIntervalSince(recordingStartDate), 0)
@@ -1298,7 +1298,7 @@ final class JamoCoCreateEditorViewController: JamoRiffBaseStageViewController {
             guard recorder.record() else {
                 throw CocoaError(.fileWriteUnknown)
             }
-            audioRecorder = recorder
+            asinnerRecorder = recorder
             activeRecordingURL = audioURL
             render(result)
             startRecordingTimer()
@@ -1387,8 +1387,8 @@ final class JamoCoCreateEditorViewController: JamoRiffBaseStageViewController {
     }
 
     private func discardActiveRecording(removeFile: Bool) {
-        audioRecorder?.stop()
-        audioRecorder = nil
+        asinnerRecorder?.stop()
+        asinnerRecorder = nil
         if removeFile, let activeRecordingURL {
             try? FileManager.default.removeItem(at: activeRecordingURL)
         }
@@ -1473,8 +1473,8 @@ final class JamoCoCreateEditorViewController: JamoRiffBaseStageViewController {
 
     @objc private func stopRecordingTapped() {
         let duration = currentRecordingDuration()
-        audioRecorder?.stop()
-        audioRecorder = nil
+        asinnerRecorder?.stop()
+        asinnerRecorder = nil
         stopRecordingTimer()
         guard let activeRecordingURL else {
             render(viewModel.cancelRecording())

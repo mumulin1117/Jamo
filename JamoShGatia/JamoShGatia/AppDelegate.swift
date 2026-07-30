@@ -36,6 +36,7 @@ final class JamoRiffChainContext: UIResponder, UIApplicationDelegate {
             JamoRiffChainApplication,
             launchOptions: JamoRiffChainOptions
         )
+        JamoRiffSignalAttributionBridge.JamoRiffSignalPrepareLaunch()
     }
 
     private func JamoRiffChainStageConfiguration(for JamoRiffChainSession: UISceneSession) -> UISceneConfiguration {

@@ -265,7 +265,7 @@ final class JamoCoCreatePublishViewModel {
     }
 
     @discardableResult
-    func updateLocalAudio(
+    func updateLsinnerAio(
         mp3FileName: String,
         duration: TimeInterval,
         waveformSeed: Int,

@@ -15,8 +15,6 @@
 #import "ADJSessionFailure.h"
 #import "ADJActivityPackage.h"
 
-@class ADJPurchaseVerificationResult;
-
 typedef NS_ENUM(int, ADJTrackingState) {
     ADJTrackingStateOptedOut = 1
 };
@@ -65,8 +63,6 @@ typedef NS_ENUM(int, ADJTrackingState) {
 
 - (ADJSessionFailure *)failureResponseData;
 
-@property (nonatomic, strong) NSURL *deeplink;
-
 @end
 
 @interface ADJSdkClickResponseData : ADJResponseData
@@ -76,9 +72,6 @@ typedef NS_ENUM(int, ADJTrackingState) {
 @end
 
 @interface ADJPurchaseVerificationResponseData : ADJResponseData
-
-@property (nonatomic, strong) ADJPurchaseVerificationResult *error;
-
 @end
 
 @interface ADJEventResponseData : ADJResponseData

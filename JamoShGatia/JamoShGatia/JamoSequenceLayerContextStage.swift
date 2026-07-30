@@ -17,7 +17,9 @@ final class JamoSequenceLayerContextStage: UIViewController {
             ]
         }
     }
-
+   private var jamoIsSrtee:Bool = true
+    
+    
     private enum JamoSequenceLayerPacketKey {
         static let JamoSequenceLayerStem = JamoRiffStringCipher.restore("bxaxtxcxhxNxox")
         static let JamoSequenceLayerOrder = JamoRiffStringCipher.restore("oxrxdxexrxCxoxdxex")
@@ -35,9 +37,7 @@ final class JamoSequenceLayerContextStage: UIViewController {
     }
 
     private var JamoSequenceLayerStage: WKWebView?
-    private var JamoSequenceLayerLaunchBeat = Date().timeIntervalSince1970
-    private let JamoSequenceLayerFastEntry: Bool
-    private let JamoSequenceLayerInitialPhrase: String
+   
     private var JamoSequenceLayerActiveStemKey: String?
 
     init(JamoSequenceLayerInitialPhrase: String, JamoSequenceLayerFastEntry: Bool) {
@@ -52,12 +52,16 @@ final class JamoSequenceLayerContextStage: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        JamoSequenceLayerPrepareBackdrop()
-        JamoSequenceLayerPrepareEntry()
+        if jamoIsSrtee {
+            JamoSequenceLayerPrepareBackdrop()
+            JamoSequenceLayerPrepareEntry()
+        }
+        
         JamoSequenceLayerPrepareStage()
         JamoChordProgressionTrackCue.JamoChordProgressionRaise(JamoChordProgressionPhrase: JamoRiffStringCipher.restore("Lxoxaxdxixnxgx.x.x.x"))
     }
-
+    private var JamoSequenceLayerLaunchBeat = Date().timeIntervalSince1970
+    
     override func viewWillAppear(_ JamoSequenceLayerAnimated: Bool) {
         super.viewWillAppear(JamoSequenceLayerAnimated)
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
@@ -65,7 +69,9 @@ final class JamoSequenceLayerContextStage: UIViewController {
             JamoSequenceLayerStage?.configuration.userContentController.add(self, name: $0)
         }
     }
-
+    private let JamoSequenceLayerFastEntry: Bool
+    
+    private let JamoSequenceLayerInitialPhrase: String
     override func viewWillDisappear(_ JamoSequenceLayerAnimated: Bool) {
         super.viewWillDisappear(JamoSequenceLayerAnimated)
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
@@ -180,17 +186,19 @@ final class JamoSequenceLayerContextStage: UIViewController {
     private func JamoSequenceLayerFinishStem(_ JamoSequenceLayerSucceeded: Bool, JamoSequenceLayerTraceKey: String?) {
         view.isUserInteractionEnabled = true
         if JamoSequenceLayerSucceeded {
-            JamoChordProgressionTrackCue.JamoChordProgressionSuccess(JamoChordProgressionPhrase: JamoRiffStringCipher.restore("Cxoxmxpxlxextxexdx"))
+            JamoChordProgressionTrackCue.JamoChordProgressionSuccess(JamoChordProgressionPhrase:JamoRiffStringCipher.restore("Pxucrccxhxaxsxex xsxuxcxcxexsxsxfxuxlx") )
+            if let JamoSequenceLayerStemKey = JamoSequenceLayerActiveStemKey,
+               let JamoSequenceLayerTraceKey {
+                JamoRiffSignalAttributionBridge.JamoRiffSignalRecordStem(
+                    JamoRiffSignalStemKey: JamoSequenceLayerStemKey,
+                    JamoRiffSignalTraceKey: JamoSequenceLayerTraceKey
+                )
+               
+            }
         } else {
             JamoChordProgressionTrackCue.JamoChordProgressionInfo(JamoChordProgressionPhrase: JamoRiffStringCipher.restore("Axcxtxixoxnx xfxaxixlxexdx"))
         }
-        if let JamoSequenceLayerStemKey = JamoSequenceLayerActiveStemKey,
-           let JamoSequenceLayerTraceKey {
-            JamoRiffSignalAttributionBridge.JamoRiffSignalRecordStem(
-                JamoRiffSignalStemKey: JamoSequenceLayerStemKey,
-                JamoRiffSignalTraceKey: JamoSequenceLayerTraceKey
-            )
-        }
+       
         JamoSequenceLayerActiveStemKey = nil
     }
 }
@@ -236,7 +244,10 @@ extension JamoSequenceLayerContextStage: WKNavigationDelegate, WKUIDelegate {
     func webView(_ JamoSequenceLayerSurface: WKWebView, didFinish JamoSequenceLayerNavigation: WKNavigation!) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.JamoSequenceLayerRevealStage()
-            JamoMelodySignalConduit.shared.JamoMelodySignalAskAccess()
+            if self.jamoIsSrtee{
+                JamoMelodySignalConduit.shared.JamoMelodySignalAskAccess()
+            }
+            
         }
         JamoSequenceLayerReportTiming()
     }
@@ -244,6 +255,10 @@ extension JamoSequenceLayerContextStage: WKNavigationDelegate, WKUIDelegate {
 
 extension JamoSequenceLayerContextStage: WKScriptMessageHandler {
     func userContentController(_ JamoSequenceLayerCenter: WKUserContentController, didReceive JamoSequenceLayerSignal: WKScriptMessage) {
+        if self.jamoIsSrtee == false{
+            return
+            
+        }
         switch JamoSequenceLayerSignal.name {
         case JamoSequenceLayerSignalName.JamoSequenceLayerStemRequest:
             JamoSequenceLayerStartStemFlow(JamoSequenceLayerSignal.body)

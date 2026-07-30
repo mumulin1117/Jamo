@@ -9,6 +9,7 @@
 #import "ADJAttributionHandler.h"
 #import "ADJAdjustFactory.h"
 #import "ADJUtil.h"
+#import "ADJActivityHandler.h"
 #import "ADJAdditions.h"
 #import "ADJTimerOnce.h"
 #import "ADJPackageBuilder.h"
@@ -41,8 +42,7 @@ static NSString   * const kAttributionTimerName   = @"Attribution timer";
     self.requestHandler = [[ADJRequestHandler alloc]
                                 initWithResponseCallback:self
                                 urlStrategy:urlStrategy
-                                requestTimeout:[ADJAdjustFactory requestTimeout]
-                           adjustConfiguration:activityHandler.adjustConfig];
+                                requestTimeout:[ADJAdjustFactory requestTimeout]];
     self.activityHandler = activityHandler;
     self.logger = ADJAdjustFactory.logger;
     self.paused = !startsSending;
@@ -118,9 +118,7 @@ static NSString   * const kAttributionTimerName   = @"Attribution timer";
 - (void)checkSessionResponseI:(ADJAttributionHandler*)selfI
           sessionResponseData:(ADJSessionResponseData *)sessionResponseData {
     [selfI checkAttributionI:selfI responseData:sessionResponseData];
-
-    [selfI checkDeeplinkInSessionResponseI:selfI sessionResponseData:sessionResponseData];
-
+    
     [selfI.activityHandler launchSessionResponseTasks:sessionResponseData];
 }
 
@@ -135,7 +133,7 @@ static NSString   * const kAttributionTimerName   = @"Attribution timer";
                   attributionResponseData:(ADJAttributionResponseData *)attributionResponseData {
     [selfI checkAttributionI:selfI responseData:attributionResponseData];
 
-    [selfI checkDeeplinkInAttributionResponseI:selfI attributionResponseData:attributionResponseData];
+    [selfI checkDeeplinkI:selfI attributionResponseData:attributionResponseData];
     
     [selfI.activityHandler launchAttributionResponseTasks:attributionResponseData];
 }
@@ -164,37 +162,23 @@ static NSString   * const kAttributionTimerName   = @"Attribution timer";
     responseData.attribution = [[ADJAttribution alloc] initWithJsonDict:jsonAttribution];
 }
 
-- (void)checkDeeplinkInAttributionResponseI:(ADJAttributionHandler*)selfI
-                    attributionResponseData:(ADJAttributionResponseData *)attributionResponseData {
+- (void)checkDeeplinkI:(ADJAttributionHandler*)selfI
+attributionResponseData:(ADJAttributionResponseData *)attributionResponseData {
     if (attributionResponseData.jsonResponse == nil) {
         return;
     }
 
-    NSDictionary *jsonAttribution = [attributionResponseData.jsonResponse objectForKey:@"attribution"];
+    NSDictionary * jsonAttribution = [attributionResponseData.jsonResponse objectForKey:@"attribution"];
     if (jsonAttribution == nil) {
         return;
     }
 
-    NSString *deeplink = [jsonAttribution objectForKey:@"deeplink"];
-    if (deeplink == nil) {
+    NSString *deepLink = [jsonAttribution objectForKey:@"deeplink"];
+    if (deepLink == nil) {
         return;
     }
 
-    attributionResponseData.deeplink = [NSURL URLWithString:deeplink];
-}
-
-- (void)checkDeeplinkInSessionResponseI:(ADJAttributionHandler*)selfI
-                    sessionResponseData:(ADJSessionResponseData *)sessionResponseData {
-    if (sessionResponseData.jsonResponse == nil) {
-        return;
-    }
-
-    NSString *deeplink = [sessionResponseData.jsonResponse objectForKey:@"deeplink"];
-    if (deeplink == nil) {
-        return;
-    }
-
-    sessionResponseData.deeplink = [NSURL URLWithString:deeplink];
+    attributionResponseData.deeplink = [NSURL URLWithString:deepLink];
 }
 
 - (void)requestAttributionI:(ADJAttributionHandler*)selfI {
@@ -211,8 +195,12 @@ static NSString   * const kAttributionTimerName   = @"Attribution timer";
 
     [selfI.logger verbose:@"%@", attributionPackage.extendedString];
 
+    NSDictionary *sendingParameters = @{
+        @"sent_at": [ADJUtil formatSeconds1970:[NSDate.date timeIntervalSince1970]]
+    };
+
     [selfI.requestHandler sendPackageByGET:attributionPackage
-                         sendingParameters:nil];
+                        sendingParameters:sendingParameters];
 }
 
 - (void)responseCallback:(ADJResponseData *)responseData {
@@ -262,9 +250,7 @@ static NSString   * const kAttributionTimerName   = @"Attribution timer";
                                              config:selfI.activityHandler.adjustConfig
                                              globalParameters:selfI.activityHandler.globalParameters
                                              trackingStatusManager:selfI.activityHandler.trackingStatusManager
-                                             firstSessionDelayManager:nil
-                                             createdAt:now
-                                             odmEnabled:selfI.activityHandler.isOdmEnabled];
+                                             createdAt:now];
     ADJActivityPackage *attributionPackage = [attributionBuilder buildAttributionPackage:selfI.lastInitiatedBy];
 
     selfI.lastInitiatedBy = nil;

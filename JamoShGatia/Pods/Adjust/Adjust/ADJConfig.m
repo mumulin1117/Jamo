@@ -10,7 +10,6 @@
 #import "ADJAdjustFactory.h"
 #import "ADJLogger.h"
 #import "ADJUtil.h"
-#import "ADJStoreInfo.h"
 
 @interface ADJConfig()
 
@@ -64,7 +63,6 @@
     _isDeviceIdsReadingOnceEnabled = NO;
     _isCostDataInAttributionEnabled = NO;
     _isCoppaComplianceEnabled = NO;
-    _isAppTrackingTransparencyUsageEnabled = YES;
 
     return self;
 }
@@ -115,14 +113,6 @@
     _isCoppaComplianceEnabled = YES;
 }
 
-- (void)disableAppTrackingTransparencyUsage {
-    _isAppTrackingTransparencyUsageEnabled = NO;
-}
-
-- (void)enableFirstSessionDelay {
-    _isFirstSessionDelayEnabled = YES;
-}
-
 - (void)setUrlStrategy:(nullable NSArray *)urlStrategyDomains
          useSubdomains:(BOOL)useSubdomains
        isDataResidency:(BOOL)isDataResidency {
@@ -139,12 +129,6 @@
 
     _useSubdomains = useSubdomains;
     _isDataResidency = isDataResidency;
-}
-
-- (void)setStoreInfo:(ADJStoreInfo *)storeInfo {
-    @synchronized (self) {
-        _storeInfo = [storeInfo copy];
-    }
 }
 
 - (void)setDelegate:(NSObject<AdjustDelegate> *)delegate {
@@ -250,10 +234,7 @@
         copy->_isIdfaReadingEnabled = self.isIdfaReadingEnabled;
         copy->_isIdfvReadingEnabled = self.isIdfvReadingEnabled;
         copy->_isDeviceIdsReadingOnceEnabled = self.isDeviceIdsReadingOnceEnabled;
-        copy->_storeInfo = [self.storeInfo copyWithZone:zone];
         copy.eventDeduplicationIdsMaxSize = self.eventDeduplicationIdsMaxSize;
-        copy->_isAppTrackingTransparencyUsageEnabled = self.isAppTrackingTransparencyUsageEnabled;
-        copy->_isFirstSessionDelayEnabled = self.isFirstSessionDelayEnabled;
         // AdjustDelegate not copied
     }
 

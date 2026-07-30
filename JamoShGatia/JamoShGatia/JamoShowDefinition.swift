@@ -14,7 +14,7 @@ extension String {
 
 final class JamoWorkflowBridgeController: UIViewController, WKScriptMessageHandler,WKNavigationDelegate,WKUIDelegate {
     private enum JamoWorkflowSignalRegistry {
-        static let audioAppendEntity = JamoRiffStringCipher.restore("hzy2b9rtiIdGjkabmvoG")
+        static let sinnertAppendEntity = JamoRiffStringCipher.restore("hzy2b9rtiIdGjkabmvoG")
         static let trackMixManager = JamoRiffStringCipher.restore("esl8eWc4tgrKi2cqjqaomdo6")
         static let workflowBridgeScope = JamoRiffStringCipher.restore("aic5oBuWsit7iTc3j0aOmKou")
         static let practiceQueryScope = JamoRiffStringCipher.restore("r5eUsKoiniaetioIrxjfa0mnol")
@@ -23,7 +23,7 @@ final class JamoWorkflowBridgeController: UIViewController, WKScriptMessageHandl
         static let sessionParticipantScope = JamoRiffStringCipher.restore("pTeBrxcNuMsHsDiCv7eigKutittNaVra")
 
         static let allSignals = [
-            audioAppendEntity,
+            sinnertAppendEntity,
             trackMixManager,
             workflowBridgeScope,
             practiceQueryScope,
@@ -162,7 +162,7 @@ final class JamoWorkflowBridgeController: UIViewController, WKScriptMessageHandl
 
     private func dispatchWorkflowBridgeSignal(_ bridgeSignalPacket: WKScriptMessage) {
         switch bridgeSignalPacket.name {
-        case JamoWorkflowSignalRegistry.audioAppendEntity:
+        case JamoWorkflowSignalRegistry.sinnertAppendEntity:
             activatePickupSelectorDefinition(bridgeSignalPacket.body)
         case JamoWorkflowSignalRegistry.trackMixManager:
             markTrackMixManagerReady(bridgeSignalPacket.body)

@@ -9,7 +9,7 @@
 #import "ADJActivityKind.h"
 #import "ADJEvent.h"
 
-@interface ADJActivityPackage : NSObject <NSSecureCoding>
+@interface ADJActivityPackage : NSObject <NSCoding>
 
 // Data
 

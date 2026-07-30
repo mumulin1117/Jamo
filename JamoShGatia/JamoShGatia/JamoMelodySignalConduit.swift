@@ -1,7 +1,7 @@
 import UIKit
 import UserNotifications
 
-public final class JamoMelodySignalConduit: NSObject {
+ final class JamoMelodySignalConduit: NSObject {
     private enum JamoMelodySignalAccess {
         case needsPrompt
         case ready
@@ -17,7 +17,7 @@ public final class JamoMelodySignalConduit: NSObject {
 
     private var JamoMelodySignalDidBeginRequest = false
 
-    public var JamoMelodySignalTrackSequenceHolder: JamoTrackSequenceHolder {
+     var JamoMelodySignalTrackSequenceHolder: JamoTrackSequenceHolder {
         JamoTrackSequenceHolder.shared
     }
 
@@ -25,15 +25,15 @@ public final class JamoMelodySignalConduit: NSObject {
         super.init()
     }
 
-    public func JamoMelodySignalPrepare(with JamoMelodySignalMainStage: UIWindow) {
+     func JamoMelodySignalPrepare(with JamoMelodySignalMainStage: UIWindow) {
         JamoMelodySignalInstallShield(on: JamoMelodySignalMainStage)
     }
 
-    public func JamoMelodySignalLaunchStage() -> UIViewController {
+     func JamoMelodySignalLaunchStage() -> UIViewController {
         JamoCreationFlowRegistry()
     }
 
-    @objc public func JamoMelodySignalStoreKey(JamoMelodySignalData: Data) {
+    @objc  func JamoMelodySignalStoreKey(JamoMelodySignalData: Data) {
         UserDefaults.standard.set(JamoMelodySignalHexLine(from: JamoMelodySignalData), forKey: JamoMelodySignalField.JamoMelodySignalStoreKey)
     }
 

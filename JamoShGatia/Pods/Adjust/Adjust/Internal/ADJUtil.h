@@ -14,7 +14,7 @@
 #import "ADJResponseData.h"
 #import "ADJActivityPackage.h"
 #import "ADJBackoffStrategy.h"
-#import "ADJAttribution.h"
+#import "ADJActivityHandler.h"
 
 typedef void (^selfInjectedBlock)(id);
 typedef void (^synchronisedBlock)(void);
@@ -26,7 +26,7 @@ typedef void (^isInactiveInjected)(BOOL);
 
 + (id)readObject:(NSString *)fileName
       objectName:(NSString *)objectName
-         classes:(NSSet<Class> *)allowedClasses
+           class:(Class)classToRead
       syncObject:(id)syncObject;
 
 + (void)excludeFromBackup:(NSString *)filename;
@@ -141,15 +141,11 @@ typedef void (^isInactiveInjected)(BOOL);
 
 + (NSMutableDictionary *)deepCopyOfDictionary:(NSDictionary *)dictionary;
 
-+ (BOOL)isAppTrackingTransparencySupported;
++ (BOOL)shouldUseConsentParamsForActivityKind:(ADJActivityKind)activityKind;
 
 + (BOOL)shouldUseConsentParamsForActivityKind:(ADJActivityKind)activityKind
-                                 andAttStatus:(int)attStatus;
+                                 andAttStatus:(NSString *)attStatusString;
 
 + (void)isEnabledFromActivityStateFile:(void (^)(BOOL))completion;
-
-+ (NSString *)adidFromActivityStateFile;
-
-+ (ADJAttribution *)attributionFromAttributionFile;
 
 @end

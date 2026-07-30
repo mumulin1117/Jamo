@@ -14,12 +14,10 @@ final class JamoJamSessionScope: UIResponder, UIWindowSceneDelegate {
     }
 
     private func JamoJamSessionBindRootBridge() {
-//        let JamoJamSessionStageWindow = JamoJamSessionCandidate ?? self?.window
-//        guard let JamoJamSessionStageWindow else { return }
-        JamoRiffSignalAttributionBridge.JamoRiffSignalPrepareLaunch()
-        
         JamoTrackSequenceHolder.shared.JamoTrackSequenceRootBridge = { [weak self] JamoJamSessionCandidate in
-            JamoRiffStageRouter.installOpeningRiffStage(in: JamoJamSessionCandidate!)
+            let JamoJamSessionStageWindow = JamoJamSessionCandidate ?? self?.window
+            guard let JamoJamSessionStageWindow else { return }
+            JamoRiffStageRouter.installOpeningRiffStage(in: JamoJamSessionStageWindow)
         }
     }
 

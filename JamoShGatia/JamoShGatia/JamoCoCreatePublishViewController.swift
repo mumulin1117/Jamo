@@ -1027,7 +1027,7 @@ final class JamoRiffPublishStageViewController: JamoRiffBaseStageViewController,
             return
         }
 
-        let snapshot = viewModel.updateLocalAudio(
+        let snapshot = viewModel.updateLsinnerAio(
             mp3FileName: url.lastPathComponent,
             duration: duration,
             waveformSeed: waveformSeed,

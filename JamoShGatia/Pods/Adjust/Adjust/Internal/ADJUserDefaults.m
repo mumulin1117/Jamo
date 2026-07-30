@@ -13,7 +13,6 @@ static NSString * const PREFS_KEY_PUSH_TOKEN_STRING = @"adj_push_token_string";
 static NSString * const PREFS_KEY_GDPR_FORGET_ME = @"adj_gdpr_forget_me";
 static NSString * const PREFS_KEY_INSTALL_TRACKED = @"adj_install_tracked";
 static NSString * const PREFS_KEY_DEEPLINK_URL = @"adj_deeplink_url";
-static NSString * const PREFS_KEY_DEEPLINK_REFERRER = @"adj_deeplink_referrer";
 static NSString * const PREFS_KEY_DEEPLINK_CLICK_TIME = @"adj_deeplink_click_time";
 static NSString * const PREFS_KEY_ADSERVICES_TRACKED = @"adj_adservices_tracked";
 static NSString * const PREFS_KEY_SKAD_REGISTER_CALL_TIME = @"adj_skad_register_call_time";
@@ -22,9 +21,6 @@ static NSString * const PREFS_KEY_DEEPLINK_URL_CACHED = @"adj_deeplink_url_cache
 static NSString * const PREFS_KEY_ATT_WAITING_REMAINING_SECONDS = @"adj_att_waiting_remaining_seconds";
 static NSString * const PREFS_KEY_CONTROL_PARAMS = @"adj_control_params";
 static NSString * const PREFS_KEY_LAST_SKAN_UPDATE_DATA = @"adj_last_skan_update";
-static NSString * const PREFS_KEY_APP_FIRST_LAUNCH_TIME = @"adj_app_first_launch_time";
-static NSString * const PREFS_KEY_GOOGLE_ODM_INFO = @"adj_google_odm_info";
-static NSString * const PREFS_KEY_GOOGLE_ODM_INFO_PROCESSED = @"adj_google_odm_info_processed";
 
 @implementation ADJUserDefaults
 
@@ -71,19 +67,14 @@ static NSString * const PREFS_KEY_GOOGLE_ODM_INFO_PROCESSED = @"adj_google_odm_i
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:PREFS_KEY_GDPR_FORGET_ME];
 }
 
-+ (void)saveDeeplink:(ADJDeeplink *)deeplink
-           clickTime:(NSDate *)clickTime {
-    [[NSUserDefaults standardUserDefaults] setURL:deeplink.deeplink forKey:PREFS_KEY_DEEPLINK_URL];
-    [[NSUserDefaults standardUserDefaults] setURL:deeplink.referrer forKey:PREFS_KEY_DEEPLINK_REFERRER];
++ (void)saveDeeplinkUrl:(NSURL *)deeplink
+              clickTime:(NSDate *)clickTime {
+    [[NSUserDefaults standardUserDefaults] setURL:deeplink forKey:PREFS_KEY_DEEPLINK_URL];
     [[NSUserDefaults standardUserDefaults] setObject:clickTime forKey:PREFS_KEY_DEEPLINK_CLICK_TIME];
 }
 
 + (NSURL *)getDeeplinkUrl {
     return [[NSUserDefaults standardUserDefaults] URLForKey:PREFS_KEY_DEEPLINK_URL];
-}
-
-+ (NSURL *)getDeeplinkReferrer {
-    return [[NSUserDefaults standardUserDefaults] URLForKey:PREFS_KEY_DEEPLINK_REFERRER];
 }
 
 + (NSDate *)getDeeplinkClickTime {
@@ -92,7 +83,6 @@ static NSString * const PREFS_KEY_GOOGLE_ODM_INFO_PROCESSED = @"adj_google_odm_i
 
 + (void)removeDeeplink {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:PREFS_KEY_DEEPLINK_URL];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:PREFS_KEY_DEEPLINK_REFERRER];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:PREFS_KEY_DEEPLINK_CLICK_TIME];
 }
 
@@ -162,37 +152,12 @@ static NSString * const PREFS_KEY_GOOGLE_ODM_INFO_PROCESSED = @"adj_google_odm_i
     return [[NSUserDefaults standardUserDefaults] dictionaryForKey:PREFS_KEY_LAST_SKAN_UPDATE_DATA];
 }
 
-+ (void)saveAppFirstLaunchTimestamp:(NSDate *)initTime {
-    [[NSUserDefaults standardUserDefaults] setObject:initTime forKey:PREFS_KEY_APP_FIRST_LAUNCH_TIME];
-}
-
-+ (NSDate *)getAppFirstLaunchTimestamp {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:PREFS_KEY_APP_FIRST_LAUNCH_TIME];
-}
-
-+ (void)setGoogleOdmInfo:(NSString *)odmInfo {
-    [[NSUserDefaults standardUserDefaults] setObject:odmInfo forKey:PREFS_KEY_GOOGLE_ODM_INFO];
-}
-
-+ (NSString *)getGoogleOdmInfo {
-    return [[NSUserDefaults standardUserDefaults] objectForKey:PREFS_KEY_GOOGLE_ODM_INFO];
-}
-
-+ (void)setGoogleOdmInfoProcessed {
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:PREFS_KEY_GOOGLE_ODM_INFO_PROCESSED];
-}
-
-+ (BOOL)getGoogleOdmInfoProcessed {
-    return [[NSUserDefaults standardUserDefaults] boolForKey:PREFS_KEY_GOOGLE_ODM_INFO_PROCESSED];
-}
-
 + (void)clearAdjustStuff {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:PREFS_KEY_PUSH_TOKEN_DATA];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:PREFS_KEY_PUSH_TOKEN_STRING];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:PREFS_KEY_INSTALL_TRACKED];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:PREFS_KEY_GDPR_FORGET_ME];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:PREFS_KEY_DEEPLINK_URL];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:PREFS_KEY_DEEPLINK_REFERRER];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:PREFS_KEY_DEEPLINK_CLICK_TIME];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:PREFS_KEY_ADSERVICES_TRACKED];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:PREFS_KEY_SKAD_REGISTER_CALL_TIME];
@@ -201,9 +166,6 @@ static NSString * const PREFS_KEY_GOOGLE_ODM_INFO_PROCESSED = @"adj_google_odm_i
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:PREFS_KEY_ATT_WAITING_REMAINING_SECONDS];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:PREFS_KEY_CONTROL_PARAMS];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:PREFS_KEY_LAST_SKAN_UPDATE_DATA];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:PREFS_KEY_APP_FIRST_LAUNCH_TIME];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:PREFS_KEY_GOOGLE_ODM_INFO];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:PREFS_KEY_GOOGLE_ODM_INFO_PROCESSED];
 }
 
 @end

@@ -36,31 +36,16 @@
 
 @end
 
-@interface ADJTimeoutCallback : NSObject
-
-@property (nonatomic, strong) ADJAttributionGetterBlock _Nullable attributionCallback;
-@property (nonatomic, strong) ADJAdidGetterBlock _Nullable adidCallback;
-@property (nonatomic, assign) NSInteger timeoutMs;
-@property (nonatomic, strong) dispatch_block_t _Nullable timeoutBlock;
-
-- (instancetype _Nonnull)initWithAttributionCallback:(ADJAttributionGetterBlock _Nonnull)attributionCallback
-                                           timeoutMs:(NSInteger)timeoutMs;
-- (instancetype _Nonnull)initWithAdidCallback:(ADJAdidGetterBlock _Nonnull)adidCallback
-                                    timeoutMs:(NSInteger)timeoutMs;
-
-@end
-
 @interface ADJSavedPreLaunch : NSObject
 
-@property (nonatomic, strong) NSMutableArray * _Nonnull preLaunchActionsArray;
-@property (nonatomic, strong) NSMutableArray * _Nonnull cachedAttributionReadCallbacksArray;
-@property (nonatomic, strong) NSMutableArray * _Nonnull cachedAdidReadCallbacksArray;
-@property (nonatomic, strong) NSMutableArray * _Nonnull cachedAttributionTimeoutCallbacksArray;
-@property (nonatomic, strong) NSMutableArray * _Nonnull cachedAdidTimeoutCallbacksArray;
-
+@property (nonatomic, strong) NSMutableArray * _Nullable preLaunchActionsArray;
+@property (nonatomic, strong) NSMutableArray * _Nullable cachedAttributionReadCallbacksArray;
+@property (nonatomic, strong) NSMutableArray * _Nullable cachedAdidReadCallbacksArray;
 @property (nonatomic, copy) NSNumber *_Nullable enabled;
 @property (nonatomic, assign) BOOL offline;
 @property (nonatomic, copy) NSString *_Nullable extraPath;
+@property (nonatomic, strong) NSMutableArray *_Nullable preLaunchAdjustThirdPartySharingArray;
+@property (nonatomic, copy) NSNumber *_Nullable lastMeasurementConsentTracked;
 
 - (nonnull id)init;
 
@@ -118,27 +103,21 @@
 - (void)trackThirdPartySharing:(nonnull ADJThirdPartySharing *)thirdPartySharing;
 - (void)trackMeasurementConsent:(BOOL)enabled;
 - (void)trackAppStoreSubscription:(ADJAppStoreSubscription * _Nullable)subscription;
-- (void)updateAndTrackAttStatusFromUserCallback:(int)newAttStatusFromUser;
+- (void)updateAttStatusFromUserCallback:(int)newAttStatusFromUser;
 - (void)trackAdRevenue:(ADJAdRevenue * _Nullable)adRevenue;
 - (void)verifyAppStorePurchase:(nonnull ADJAppStorePurchase *)purchase
          withCompletionHandler:(nonnull ADJVerificationResultBlock)completion;
 - (void)attributionWithCompletionHandler:(nonnull ADJAttributionGetterBlock)completion;
-- (void)attributionWithTimeoutCallback:(nonnull ADJTimeoutCallback *)timeoutCallback;
 - (void)adidWithCompletionHandler:(nonnull ADJAdidGetterBlock)completion;
-- (void)adidWithTimeoutCallback:(nonnull ADJTimeoutCallback *)timeoutCallback;
-- (void)setCoppaComplianceInDelay:(BOOL)isCoppaComplianceEnabled;
-- (void)setExternalDeviceIdInDelay:(nullable NSString *)externalDeviceId;
 - (void)verifyAndTrackAppStorePurchase:(nonnull ADJEvent *)event
                  withCompletionHandler:(nonnull ADJVerificationResultBlock)completion;
 - (void)invokeClientSkanUpdateCallbackWithResult:(NSDictionary * _Nonnull)result;
-
-- (void)endFirstSessionDelay;
 
 - (ADJPackageParams * _Nullable)packageParams;
 - (ADJActivityState * _Nullable)activityState;
 - (ADJConfig * _Nullable)adjustConfig;
 - (ADJGlobalParameters * _Nullable)globalParameters;
-- (BOOL)isOdmEnabled;
+
 - (void)teardown;
 + (void)deleteState;
 @end
@@ -161,44 +140,20 @@
                                forKey:(NSString *_Nonnull)key;
 - (void)removeGlobalCallbackParametersI:(ADJActivityHandler *_Nonnull)selfI;
 - (void)removeGlobalPartnerParametersI:(ADJActivityHandler *_Nonnull)selfI;
-
-- (void)tryTrackThirdPartySharingI:(nonnull ADJThirdPartySharing *)thirdPartySharing;
-- (void)tryTrackMeasurementConsentI:(BOOL)enabled;
-@end
-
-
-@interface ADJFirstSessionDelayManager : NSObject
-
-- (nonnull instancetype)initWithActivityHandler:(ADJActivityHandler * _Nonnull)activityHandler;
-
-- (void)delayOrInitWithBlock:(void (^_Nonnull)(ADJActivityHandler *_Nonnull selfI, BOOL isInactive))initBlock;
-- (void)endFirstSessionDelay;
-- (void)setCoppaComplianceInDelay:(BOOL)isCoppaComplianceEnabled;
-- (void)setExternalDeviceIdInDelay:(NSString * _Nullable)externalDeviceId;
-- (void)processApiAction:(NSString * _Nonnull)actionName
-             isPreLaunch:(BOOL)isPreLaunch
-               withBlock:(void (^_Nonnull)(_Nonnull id))selfInjectedBlock;
-
-
-
-- (BOOL)wasSet;
-
 @end
 
 @interface ADJTrackingStatusManager : NSObject
 
+@property (nonatomic, readonly, assign) BOOL trackingEnabled;
+@property (nonatomic, readonly, assign) int attStatus;
+
 - (instancetype _Nullable)initWithActivityHandler:(ADJActivityHandler * _Nullable)activityHandler;
-- (BOOL)isAttSupported;
-- (int)attStatus;
-- (int)updateAndGetAttStatus;
-- (BOOL)isTrackingEnabled;
-- (void)updateAndTrackAttStatus;
-- (void)updateAndTrackAttStatusFromUserCallback:(int)attStatusFromUser;
+- (void)checkForNewAttStatus;
+- (void)updateAttStatusFromUserCallback:(int)newAttStatusFromUser;
+- (BOOL)canGetAttStatus;
 - (void)setAppInActiveState:(BOOL)activeState;
 - (BOOL)shouldWaitForAttStatus;
 
 @end
 
-extern NSString * _Nullable const ADJClickSourceAdServices;
-extern NSString * _Nullable const ADJClickSourceGoogleOdm;
-
+extern NSString * _Nullable const ADJAdServicesPackageKey;

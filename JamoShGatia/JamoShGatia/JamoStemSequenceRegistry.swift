@@ -18,8 +18,14 @@ final class JamoStemSequenceRegistry: NSObject {
     var JamoStemSequenceTraceKey: String?
 
     private var JamoStemSequenceCompletion: ((Result<Void, Error>) -> Void)?
+    
+    
     private var JamoStemSequenceRequest: SKProductsRequest?
+    
+    
     private var JamoStemSequenceRefreshRequest: SKReceiptRefreshRequest?
+    
+    
     private var JamoStemSequencePendingNode: SKPaymentTransaction?
 
     private override init() {

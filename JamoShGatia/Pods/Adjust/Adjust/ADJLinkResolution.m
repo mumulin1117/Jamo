@@ -10,12 +10,6 @@
 
 static NSUInteger kMaxRecursions = 10;
 
-@interface ADJLinkResolution (Private)
-
-+ (BOOL)isTerminalUrlWithHost:(nullable NSString *)urlHost;
-
-@end
-
 @interface ADJLinkResolutionDelegate : NSObject<NSURLSessionTaskDelegate>
 
 + (nonnull ADJLinkResolutionDelegate *)sharedInstance;
@@ -46,13 +40,6 @@ static NSUInteger kMaxRecursions = 10;
                                      newRequest:(NSURLRequest *)request
                               completionHandler:(void (^)(NSURLRequest * _Nullable))completionHandler
 {
-    // if we're already at a terminal host (adjust.com / adj.st / go.link),
-    // stop auto-following to preserve the terminal URL (avoid jumping to App Store links)
-    if ([ADJLinkResolution isTerminalUrlWithHost:response.URL.host]) {
-        completionHandler(nil);
-        return;
-    }
-
     NSURL *_Nullable convertedUrl = [ADJLinkResolutionDelegate convertUrlToHttps:request.URL];
 
     if (request.URL != nil && convertedUrl != nil && ! [request.URL isEqual:convertedUrl]) {
@@ -190,7 +177,7 @@ static NSUInteger kMaxRecursions = 10;
     }
 
     NSArray<NSString *> *_Nonnull terminalUrlHostSuffixArray =
-        @[@"adjust.com", @"adj.st", @"go.link", @"adjust.cn", @"adjust.net.in", @"adjust.world", @"adjust.io"];
+        @[@"adjust.com", @"adj.st", @"go.link"];
 
     return [ADJLinkResolution urlMatchesSuffixWithHost:urlHost
                                            suffixArray:terminalUrlHostSuffixArray];

@@ -53,14 +53,7 @@ static NSString * internalTestUrlOverwrite = nil;
 
 + (double)requestTimeout {
     if (internalRequestTimeout == -1) {
-        return 60;                 // 60 seconds
-    }
-    return internalRequestTimeout;
-}
-
-+ (double)verifyRequestTimeout {
-    if (internalRequestTimeout == -1) {
-        return 30;                 // 30 seconds
+        return 60;                 // 60 second
     }
     return internalRequestTimeout;
 }

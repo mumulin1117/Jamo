@@ -42,7 +42,7 @@ final class JamoCoCreateDetailViewController: JamoRiffBaseStageViewController {
     private var hasRequestedRemoteUsers = false
     private var snapshot: JamoCoCreateDetailSnapshot?
     private var isPlaying = false
-    private var audioPlayer: AVAudioPlayer?
+    private var singlerPolayer: AVAudioPlayer?
     private var playbackTimer: Timer?
     private var activeMP3FileName: String?
     private var activePlaybackID: String?
@@ -554,27 +554,27 @@ final class JamoCoCreateDetailViewController: JamoRiffBaseStageViewController {
             JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("N5oN QgKuniLtcaJrG Gamurdui2oM siGsO qaGvTaNi7leaWb5lHeG.i"))
             return
         }
-        guard let audioURL = JamoRiffLocalMediaShelf.resourceURL(named: fileName) else {
+        guard let sinnerpath = JamoRiffLocalMediaShelf.resourceURL(named: fileName) else {
             JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("UQnJadb1lver GtloH glOodaRdY TtdhQiVs0 igEuxiMtyafrG raguAdKiLos.n"))
             return
         }
 
         do {
-            if activePlaybackID != id || activeMP3FileName != fileName || audioPlayer == nil {
+            if activePlaybackID != id || activeMP3FileName != fileName || singlerPolayer == nil {
                 stopPlayback(resetProgress: true)
-                audioPlayer = try AVAudioPlayer(contentsOf: audioURL)
-                audioPlayer?.prepareToPlay()
+                singlerPolayer = try AVAudioPlayer(contentsOf: sinnerpath)
+                singlerPolayer?.prepareToPlay()
                 activeMP3FileName = fileName
                 activePlaybackID = id
             }
-            guard let audioPlayer else {
+            guard let singlerPolayer else {
                 JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("UinVa8bAlMeG xtAop ApjlEa3yd otdhXitsY Vg8u7iZtkajrU GaLugdAiTo1.V"))
                 return
             }
-            if audioPlayer.currentTime >= max(audioPlayer.duration - 0.2, 0) {
-                audioPlayer.currentTime = 0
+            if singlerPolayer.currentTime >= max(singlerPolayer.duration - 0.2, 0) {
+                singlerPolayer.currentTime = 0
             }
-            guard audioPlayer.play() else {
+            guard singlerPolayer.play() else {
                 isPlaying = false
                 updatePlaybackViews()
                 JamoRiffNoticeView.show(on: view, copy: JamoRiffStringCipher.restore("Uhn0anbwl1eg Qt2o2 Sp3lKazyO 4tkhqibsv ygpuhi5tkaPrD va6uOdpiwoE.l"))
@@ -591,7 +591,7 @@ final class JamoCoCreateDetailViewController: JamoRiffBaseStageViewController {
     }
 
     private func pausePlayback() {
-        audioPlayer?.pause()
+        singlerPolayer?.pause()
         isPlaying = false
         stopPlaybackTimer()
         updatePlaybackViews()
@@ -600,12 +600,12 @@ final class JamoCoCreateDetailViewController: JamoRiffBaseStageViewController {
     private func stopPlayback(resetProgress: Bool) {
         stopPlaybackTimer()
         if resetProgress {
-            audioPlayer?.stop()
-            audioPlayer?.currentTime = 0
+            singlerPolayer?.stop()
+            singlerPolayer?.currentTime = 0
             activePlaybackID = nil
             activeMP3FileName = nil
         } else {
-            audioPlayer?.pause()
+            singlerPolayer?.pause()
         }
         isPlaying = false
         updatePlaybackViews()
@@ -626,14 +626,14 @@ final class JamoCoCreateDetailViewController: JamoRiffBaseStageViewController {
     }
 
     private func handlePlaybackTick() {
-        guard let audioPlayer else {
+        guard let singlerPolayer else {
             stopPlayback(resetProgress: true)
             return
         }
-        let remaining = max(audioPlayer.duration - audioPlayer.currentTime, 0)
-        if remaining <= 0.15 || !audioPlayer.isPlaying {
-            audioPlayer.stop()
-            audioPlayer.currentTime = 0
+        let remaining = max(singlerPolayer.duration - singlerPolayer.currentTime, 0)
+        if remaining <= 0.15 || !singlerPolayer.isPlaying {
+            singlerPolayer.stop()
+            singlerPolayer.currentTime = 0
             isPlaying = false
             stopPlaybackTimer()
             activePlaybackID = nil
@@ -661,20 +661,20 @@ final class JamoCoCreateDetailViewController: JamoRiffBaseStageViewController {
     }
 
     private func currentHeroDurationText(_ snapshot: JamoCoCreateDetailSnapshot) -> String {
-        if let audioPlayer, activePlaybackID == heroPlaybackID, activeMP3FileName == primaryMP3FileName() {
-            let remaining = isPlaying || audioPlayer.currentTime > 0
-                ? max(audioPlayer.duration - audioPlayer.currentTime, 0)
-                : audioPlayer.duration
+        if let singlerPolayer, activePlaybackID == heroPlaybackID, activeMP3FileName == primaryMP3FileName() {
+            let remaining = isPlaying || singlerPolayer.currentTime > 0
+                ? max(singlerPolayer.duration - singlerPolayer.currentTime, 0)
+                : singlerPolayer.duration
             return durationText(remaining)
         }
         return snapshot.currentParts.first?.durationText ?? JamoRiffStringCipher.restore("0h:X0q0m")
     }
 
     private func currentPartDurationText(_ part: JamoCoCreatePartDisplay) -> String {
-        if let audioPlayer, activePlaybackID == part.id, activeMP3FileName == part.mp3FileName {
-            let remaining = isPlaying || audioPlayer.currentTime > 0
-                ? max(audioPlayer.duration - audioPlayer.currentTime, 0)
-                : audioPlayer.duration
+        if let singlerPolayer, activePlaybackID == part.id, activeMP3FileName == part.mp3FileName {
+            let remaining = isPlaying || singlerPolayer.currentTime > 0
+                ? max(singlerPolayer.duration - singlerPolayer.currentTime, 0)
+                : singlerPolayer.duration
             return durationText(remaining)
         }
         return part.durationText

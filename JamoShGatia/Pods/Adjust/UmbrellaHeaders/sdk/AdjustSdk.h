@@ -24,4 +24,3 @@
 #import <AdjustSdk/ADJAppStorePurchase.h>
 #import <AdjustSdk/ADJPurchaseVerificationResult.h>
 #import <AdjustSdk/ADJDeeplink.h>
-#import <AdjustSdk/ADJStoreInfo.h>
